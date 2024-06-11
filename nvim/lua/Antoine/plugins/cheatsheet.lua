@@ -16,6 +16,7 @@ M.opts = {
       { "Toggle file explorer", "󱁐 ee" },
       { "Toggle file explorer on current file", "󱁐 ef" },
       { "Collapse file explorer", "󱁐 ec" },
+      { "Expand All", "E" },
 			{ "Add file", "a" },
 			{ "Open file", "⏎/o" },
 			{ "Rename file", "r" },
@@ -29,6 +30,7 @@ M.opts = {
 			{ "Copy name", "y" },
 			{ "Copy relative path", "Y" },
 			{ "Copy absolute path", "gy" },
+      { "Get help", "g?" },
 		},
 		["Comment"] = {
 			{ "Comment line toggle", "gcc" },
