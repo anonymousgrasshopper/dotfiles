@@ -74,15 +74,13 @@ vim.opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
-vim.opt.foldlevel      = 99
-vim.opt.foldlevelstart = 199
-vim.opt.foldmethod     = "expr"
+vim.opt.foldlevel      = 99     -- only close folds with at least 100 lines
+vim.opt.foldlevelstart = 99     -- no folds closed upon entering buffer
+vim.opt.foldmethod     = "expr" -- use treesitter to determine the level of each line
 vim.opt.foldexpr       ="v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext       = ""
---vim.opt.foldcolumn     = "0"  --size of column for folding indications
-vim.opt.foldlevelstart = 1
-vim.opt.foldnestmax    = 4
--- vim.opt.conceallevel   = true
+vim.opt.foldcolumn     = "0"  --size of column for folding indications
+vim.opt.conceallevel   = 2    -- replace concealed text by predefined fillchars
 
 ------ sync cwd directory with buffer ------
 vim.opt.autochdir      = true

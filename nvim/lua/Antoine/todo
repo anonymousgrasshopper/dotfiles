@@ -1,6 +1,5 @@
 remove bits/stdc++.h errors
 change background colors, fine tune, cheatsheet, ...
 setup debugging for cpp
-disable autofold
 scrollbar
 neotree
