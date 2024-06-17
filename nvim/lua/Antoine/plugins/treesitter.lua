@@ -22,6 +22,7 @@ return {
 				"markdown",
 				"markdown_inline",
 				"vim",
+        "vimdoc",
 			},
 			incremental_selection = {
 				enable = true,

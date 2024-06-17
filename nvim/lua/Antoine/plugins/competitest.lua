@@ -108,7 +108,7 @@ return {
 			view_output_diff = false,
 
 			testcases_directory = ".",
-			testcases_use_single_file = false,
+			testcases_use_single_file = true,
 			testcases_auto_detect_storage = true,
 			testcases_single_file_format = "$(FNOEXT).testcases",
 			testcases_input_file_format = "$(FNOEXT)_input$(TCNUM).txt",
