@@ -12,7 +12,7 @@ M.opts = {
 		"                                      ",
 	},
 	keymaps = {
-		["Nvim Tree"] = {
+		["File Tree"] = {
       { "Toggle file explorer", "󱁐 ee" },
       { "Toggle file explorer on current file", "󱁐 ef" },
       { "Collapse file explorer", "󱁐 ec" },
@@ -58,6 +58,11 @@ M.opts = {
       { "Close completion window", "Ctrl+e" },
       { "Abort completion", "⏎" },
     },
+    ["LSP"] = {
+      { "Stop LSP", ":LspStop" },
+      { "Restart LSP", ":LspRestart"},
+      { "Informations about active LSP", ":LspInfo" },
+    },
 		["Restore session"] = {
 			{ "Restore session for cwd", "󱁐 wr" },
 			{ "Save session for auto session root dir", "󱁐 ws" },
@@ -79,9 +84,11 @@ M.opts = {
 		["Miscellaneous"] = {
 			{ "Open Cheatsheet", "󱁐 ch" },
 			{ "Reload Plugin", "󱁐 rl" },
-      { "Toggle Undotree", "󱁐 <F5>" },
+      { "Toggle Undotree", "󱁐 utree" },
       { "Maximise/minimize current buffer", "󱁐 sm" },
       { "Format file", "󱁐 format" },
+      { "Clear message line", "Ctrl+l" },
+      { "Find Nerd icons", "󱁐 nerdy"},
 		},
 	},
 }

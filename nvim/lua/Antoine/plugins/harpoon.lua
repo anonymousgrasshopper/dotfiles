@@ -22,5 +22,5 @@ return {
     key = function()
       return vim.loop.cwd()
     end,
-  }, 
+  },
 }
