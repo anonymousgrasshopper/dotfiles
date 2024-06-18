@@ -24,6 +24,7 @@ return {
 		})
 
 		telescope.load_extension("fzf")
+    telescope.load_extension("nerdy")
 
 		-- keymaps
 		vim.keymap.set( "n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
@@ -31,5 +32,4 @@ return {
 		vim.keymap.set( "n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 		vim.keymap.set( "n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 	end,
-  require('telescope').load_extension('nerdy'),
 }

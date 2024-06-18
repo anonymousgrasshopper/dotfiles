@@ -88,7 +88,8 @@ M.opts = {
       { "Maximise/minimize current buffer", "󱁐 sm" },
       { "Format file", "󱁐 format" },
       { "Clear message line", "Ctrl+l" },
-      { "Find Nerd icons", "󱁐 nerdy"},
+      { "Find Nerd icons", "󱁐 nerdy" },
+      { "Browse link", ":Browse" },
 		},
 	},
 }
@@ -111,7 +112,7 @@ extensions = {
 				end,
 			},
 		},
-		filetypes = { "Cheatsheet" },
+		filetypes = { "nvcheatsheet" },
 	},
 }
 
