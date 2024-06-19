@@ -23,12 +23,12 @@ vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchar
 vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
-vim.opt.sidescrolloff  = 4      -- always have >= 4 lines above below your cursor
+vim.opt.sidescrolloff  = 4      -- always have >= 4 lines above and below your cursor (excepted at <bof> and <eof>)
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 
 ------ line wrapping and auto-commenting ------
-vim.opt.wrap           = true   -- enable/disable line wrapping
+vim.opt.wrap           = false  -- enable/disable line wrapping
 vim.opt.breakindent    = true   -- 
 vim.opt.breakindentopt = { "min:30", "shift:-1" }
 vim.opt.linebreak      = true   --
@@ -56,8 +56,9 @@ vim.opt.splitbelow     = true   -- split horizontal window to the bottom
 vim.opt.winminwidth    = 5      -- minimum window width
 
 ------popup windows ------
-vim.opt.pumblend       = 15
+vim.opt.pumblend       = 20   -- transparency of the window
 vim.opt.pumheight      = 10   -- Maximum number of entries in a popup
+vim.opt.updatetime     = 250  -- delay for LSP pop-up windows to appear
 vim.opt.completeopt    = "menu,menuone,noselect"
 vim.cmd([[autocmd WinScrolled * hi PmenuSel blend=5]]) -- doesn't work
 

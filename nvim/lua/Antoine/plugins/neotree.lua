@@ -130,7 +130,7 @@ return {
       commands = {},
       window = {
         position = "left",
-        width = 40,
+        width = 30,
         mapping_options = {
           noremap = true,
           nowait = true,
@@ -310,6 +310,8 @@ return {
       }
     })
 
-    vim.cmd([[nnoremap \ :Neotree toggle<cr>]])
+    -- vim.keymap.set("n", "<leader>b", <cmd>cd ..<CR>, { desc = "Go back one directory"})
+    vim.api.nvim_create_autocmd("ExitPre", {command = ":Neotree close",})
+    vim.cmd([[nnoremap \ :Neotree toggle<cr><C-l>]])
   end
 }

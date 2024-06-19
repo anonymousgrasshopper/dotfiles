@@ -11,6 +11,7 @@ return {
       violet = "#FF61EF",
       yellow = "#FFDA7B",
       red = "#FF4A4A",
+      grey = "#656c8a",
       fg = "#c3ccdc",
       bg = "#2c3043",
       inactive_bg = "#14171a",
@@ -19,27 +20,27 @@ return {
     local lualine_theme = {
       normal = {
         a = { bg = colors.blue, fg = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
+        b = { bg = colors.grey, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
       },
       insert = {
         a = { bg = colors.green, fg = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
+        b = { bg = colors.grey, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
       },
       visual = {
         a = { bg = colors.violet, fg = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
+        b = { bg = colors.grey, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
       },
       command = {
         a = { bg = colors.yellow, fg = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
+        b = { bg = colors.grey, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
       },
       replace = {
         a = { bg = colors.red, fg = colors.bg, gui = "bold" },
-        b = { bg = colors.bg, fg = colors.fg },
+        b = { bg = colors.grey, fg = colors.fg },
         c = { bg = colors.bg, fg = colors.fg },
       },
       inactive = {
