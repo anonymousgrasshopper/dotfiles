@@ -1,6 +1,13 @@
 return {
 	"xeluxee/competitest.nvim",
+  lazy = true,
 	dependencies = "MunifTanjim/nui.nvim",
+  keys = {
+    { "<leader>++add", "<cmd>CompetiTest add_testcase<CR>", desc = "" },
+		{ "<leader>++delete", "<cmd>CompetiTest delete_testcase<CR>", desc = "" },
+		{ "<leader>++run", "<cmd>CompetiTest run<CR>", desc = "" },
+    { "<leader>++show", "<cmd>CompetiTest show_ui<CR>", desc = "" },
+  },
 	config = function()
 		require("competitest").setup({
 			local_config_file_name = "competitest.lua",
@@ -34,7 +41,7 @@ return {
 				},
 			},
 			runner_ui = {
-				interface = "popup",
+				interface = "split",
 				selector_show_nu = false,
 				selector_show_rnu = false,
 				show_nu = true,
@@ -66,6 +73,19 @@ return {
 					{ 4, "tc" },
 					{ 5, { { 1, "so" }, { 1, "si" } } },
 					{ 5, { { 1, "eo" }, { 1, "se" } } },
+          -- { 1,
+          --   {
+          --     { 1,
+          --       { 1, "so" },
+          --       { 1, "si" },
+          --       { 1, "eo" },
+          --     },
+          --     { 1,
+          --       { 1, "tc" },
+          --       { 3, "se" },
+          --     },
+          --   },
+          -- },
 				},
 			},
 			split_ui = {
@@ -76,7 +96,7 @@ return {
 					{ 1, "tc" },
 					{ 1, { { 1, "so" }, { 1, "eo" } } },
 					{ 1, { { 1, "si" }, { 1, "se" } } },
-				},
+          				},
 				total_height = 0.4,
 				horizontal_layout = {
 					{ 2, "tc" },
@@ -130,10 +150,5 @@ return {
 			open_received_contests = true,
 			replace_received_testcases = false,
 		})
-		-- CompetiTest shortcuts
-		vim.keymap.set("n", "<leader>c++add", "<cmd>CompetiTest add_testcase<CR>")
-		vim.keymap.set("n", "<leader>c++delete", "<cmd>CompetiTest delete_testcase<CR>")
-		vim.keymap.set("n", "<leader>c++run", "<cmd>CompetiTest run<CR>")
-		vim.keymap.set("n", "<leader>c++show", "<cmd>CompetiTest show_ui<CR>")
 	end,
 }

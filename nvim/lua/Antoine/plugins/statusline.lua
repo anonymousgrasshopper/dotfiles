@@ -1,3 +1,13 @@
+local competitest_line = {
+  filetypes = {'CompetiTest'},
+  inactive_sections = {
+    lualine_b = { function()
+      return vim.b.competitest_title or 'CompetiTest'
+    end },
+    lualine_a = {"filetype"},
+  },
+}
+
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -49,12 +59,13 @@ return {
         c = { bg = colors.inactive_bg, fg = colors.semilightgray },
       },
     }
-    -- configure lualine with modified theme
+
     lualine.setup({
       options = {
         theme = lualine_theme,
         disabled_filetypes = { "alpha" },
       },
+      ignore_focus = {'CompetiTest'},
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch" },
@@ -87,10 +98,12 @@ return {
         },
       },
       extensions = {
+        --{"competitest_line"},
         "lazy",
         "fugitive",
         "mason",
         "nvim-dap-ui",
+        "toggleterm",
       }
     })
   end,

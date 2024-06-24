@@ -4,13 +4,32 @@ end
 return {
   {
     "rebelot/kanagawa.nvim",
-    priority = 100,
     config = function()
       require("kanagawa").setup({
         overrides = function(colors)
           return {
-            color("NvChAsciiHeader", colors.palette.sumiInk3, colors.palette.fujiWhite), -- Title
-            color("NvChSection", colors.palette.sumiInk2),                               -- Each card
+            NormalFloat = { bg = "none" },
+            FloatBorder = { bg = "none" },
+            FloatTitle = { bg = "none" },
+
+            Pmenu = { fg = colors.theme.ui.shade0, bg = colors.theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+            PmenuSel = { fg = "NONE", bg = colors.theme.ui.bg_p2 },
+            PmenuSbar = { bg = colors.theme.ui.bg_m1 },
+            PmenuThumb = { bg = colors.theme.ui.bg_p2 },
+
+            -- Save an hlgroup with dark background and dimmed foreground
+            -- so that you can use it where your still want darker windows.
+            -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
+            NormalDark = { fg = colors.theme.ui.fg_dim, bg = colors.theme.ui.bg_m3 },
+
+            LazyNormal = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
+            MasonNormal = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
+
+            color("NeoTreeWinSeparator", colors.palette.sumiInk3, colors.palette.crystalBlue),
+            color("WinSeparator", colors.palette.autumnred, colors.palette.sumiInk3),
+
+            color("NvChAsciiHeader", colors.palette.sumiInk3, colors.palette.fujiWhite),
+            color("NvChSection", colors.palette.sumiInk2),
             color("NvCheatsheetWhite", colors.palette.oldWhite, colors.palette.sumiInk3),
             color("NvCheatsheetGray", colors.palette.dragonGray, colors.palette.sumiInk3),
             color("NvCheatsheetBlue", colors.palette.dragonBlue2, colors.palette.sumiInk3),
@@ -32,18 +51,17 @@ return {
           },
         },
       })
-      vim.cmd.colorscheme("kanagawa-wave")
+      vim.cmd("colorscheme kanagawa-wave")
     end,
   },
   {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = true,
-    -- priority = 100,
     config = function()
       require("catppuccin").setup()
       -- vim.cmd("colorscheme catppuccin")
-      local mocha = require("catppuccin.palettes").get_palette("mocha")
+      local mocha = require("catppuccin.colors.palettes").get_colors.palette("mocha")
       require("catppuccin").setup({
         integrations = {
           alpha = true,
@@ -67,7 +85,6 @@ return {
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    -- priority = 100,
     opts = {},
     config = function()
       -- vim.cmd("colorscheme tokyonight")

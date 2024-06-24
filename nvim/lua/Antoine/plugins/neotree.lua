@@ -1,6 +1,11 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
+  keys = {
+    {"\\", ":Neotree toggle<cr><C-l>", desc = ""},
+  },
+  event = "VeryLazy",
+  priority = 100,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
@@ -146,8 +151,8 @@ return {
           ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           -- Read `# Preview Mode` for more information
           ["l"] = "focus_preview",
-          ["S"] = "open_split",
-          ["s"] = "open_vsplit",
+          ["S"] = "", -- "open_split",
+          ["s"] = "", -- "open_vsplit",
           -- ["S"] = "split_with_window_picker",
           -- ["s"] = "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
@@ -310,8 +315,6 @@ return {
       }
     })
 
-    -- vim.keymap.set("n", "<leader>b", <cmd>cd ..<CR>, { desc = "Go back one directory"})
     vim.api.nvim_create_autocmd("ExitPre", {command = ":Neotree close",})
-    vim.cmd([[nnoremap \ :Neotree toggle<cr><C-l>]])
   end
 }

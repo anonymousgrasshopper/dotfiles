@@ -2,15 +2,17 @@
 ---------------------------- OPTIONS ----------------------------
 -----------------------------------------------------------------
 
------- folding ------
 vim.opt.fillchars = {
-  foldopen = "",
+  foldopen  = "",
   foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
+  fold      = " ",
+  foldsep   = " ",
+  diff      = "╱",
+  eob       = " ",
+  vert      = "│"  -- ▎
 }
+
+------ folding ------
 vim.opt.foldlevel      = 99     -- only close folds with at least 100 lines
 vim.opt.foldlevelstart = 99     -- no folds closed upon entering buffer
 vim.opt.foldmethod     = "expr" -- use treesitter to determine the level of each line
@@ -23,7 +25,8 @@ vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchar
 vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
-vim.opt.sidescrolloff  = 4      -- always have >= 4 lines above and below your cursor (excepted at <bof> and <eof>)
+vim.opt.scrolloff      = 4      -- have >= 4 lines above and below your cursor when possible
+vim.opt.scrolloff      = 4      -- have >= 4 columns above and below your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 
@@ -54,13 +57,17 @@ vim.opt.splitkeep      = "screen"
 vim.opt.splitright     = true   -- split vertical window to the right
 vim.opt.splitbelow     = true   -- split horizontal window to the bottom
 vim.opt.winminwidth    = 5      -- minimum window width
+vim.o.winwidth         = 10
+vim.o.equalalways      = false
 
 ------popup windows ------
+vim.o.timeout          = true -- enable timeout for mapped sequences to complete 
+vim.o.timeoutlen       = 500  -- time in milliseconds to wait for a mapped sequence to complete 
 vim.opt.pumblend       = 20   -- transparency of the window
 vim.opt.pumheight      = 10   -- Maximum number of entries in a popup
 vim.opt.updatetime     = 250  -- delay for LSP pop-up windows to appear
 vim.opt.completeopt    = "menu,menuone,noselect"
-vim.cmd([[autocmd WinScrolled * hi PmenuSel blend=5]]) -- doesn't work
+
 
 ------ statusline ------
 vim.opt.laststatus     = 3      -- since we have a statusline,

@@ -4,6 +4,16 @@
 
 vim.g.mapleader = " "
 
+------ buffers ------
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>bd", "delete buffer", { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+
 ------ tabs ------
 vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
 vim.keymap.set("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
@@ -46,12 +56,6 @@ vim.keymap.set("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to Right Window" 
 vim.keymap.set("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 vim.keymap.set("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
------- move to next line displayed on screen instead of next line ------
-vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
-vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
-
 ------ Move to window using the <ctrl> hjkl keys ------
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
@@ -72,20 +76,9 @@ vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" })
 vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
------- buffers ------
-vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>bd", "delete buffer", { desc = "Delete Buffer" })
-vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
-
 ------ search highlights ------
-vim.keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
-vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
-vim.keymap.set("n", "<leader>ur", "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", { desc = "Redraw / Clear hlsearch / Diff Update" })
+vim.keymap.set("n", "<leader>nh", "<cmd>nohl<CR>", { desc = "Clear search highlights" })
+vim.keymap.set("n", "<leader>L", "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", { desc = "Redraw / Clear hlsearch / Diff Update" })
 
 ------ window management ------
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
@@ -99,15 +92,8 @@ vim.keymap.set("n", "<leader>tn", "<cmd>ta<CR>", { desc = "Go to next tab" })
 vim.keymap.set("n", "<leader>tp", "<cmd>tp<CR>", { desc = "Go to previous tab" })
 vim.keymap.set("n", "<leader>tb", "<cmd>tb<CR>", { desc = "Open current buffer in new tab" })
 
------- Add undo break-points ------
-vim.keymap.set("i", ",", ",<c-g>u")
-vim.keymap.set("i", ".", ".<c-g>u")
-vim.keymap.set("i", ";", ";<c-g>u")
-
------- keywordprg ------
-vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
-
 ------ indenting ------
+vim.keymap.set({"n", "v"}, "<leader>i", "gg=G<C-o>", { desc = "Indent file" })
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 
@@ -115,9 +101,8 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
------- pasting and indenting ------
+------ pasting ------
 vim.keymap.set("n", "<leader>p", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
-vim.keymap.set({"n", "v"}, "<leader>i", "gg=G<C-o>", { desc = "Indent file" })
 
 ------ increment/decrement numbers ------
 vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
@@ -136,7 +121,8 @@ vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 ------ toggle options ------
-vim.keymap.set("n", "<leader>uT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
+vim.keymap.set("n", "<leader>treesitter", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
+vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
 
 ------ inspect ------
 vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
@@ -148,4 +134,17 @@ vim.keymap.set("n", "<F3>", ":w <CR> :!g++ -fsanitize=address -std=c++17 -Wall -
 ------ competitive programming templates ------
 vim.keymap.set("n","<leader>template", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"OUI\":\"NON\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\n\nint main() {\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n\n}", { desc = "Insert CP template" })
 vim.keymap.set("n","<leader>codeforces", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"OUI\":\"NON\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n////////////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n\n\b}", { desc = "Insert Codeforces template" })
------- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n------ vim.keymap.set("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })------ vim.keymap.set("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })------ vim.keymap.set("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })------ vim.keymap.set("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })------ vim.keymap.set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })------ vim.keymap.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+
+------ improved up and downn motions ------
+vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
+------ Add undo break-points ------
+vim.keymap.set("i", ",", ",<c-g>u")
+vim.keymap.set("i", ".", ".<c-g>u")
+vim.keymap.set("i", ";", ";<c-g>u")
+
+------ keywordprg ------
+vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })

@@ -1,7 +1,7 @@
 return {
   {
     "jay-babu/mason-nvim-dap.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
@@ -16,12 +16,14 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-neotest/nvim-nio",
       "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
-      local dap = require("dap")
+      local dap   = require("dap")
       local dapui = require("dapui")
 
       dap.listeners.before.attach.dapui_config = function()

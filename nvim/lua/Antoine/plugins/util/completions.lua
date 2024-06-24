@@ -1,7 +1,9 @@
-local WIDE_HEIGHT = 40 
+local WIDE_HEIGHT = 40
 return {
   {
     "hrsh7th/cmp-nvim-lsp",
+    event = { "BufReadPre", "BufNewFile" },
+    priority = 100,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -41,8 +43,9 @@ return {
         window = {
           completion = {
             border       = "single",
-            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None", -- 'FloatBorder:NormalFloat', --'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None',
+            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
             winblend     = vim.o.pumblend,
+            max_width    = 38,
             scrolloff    = 0,
             col_offset   = 0,
             side_padding = 1,
@@ -51,8 +54,8 @@ return {
           documentation = {
             max_height   = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
             max_width    = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
-            border       = "single",--{ '', '', '', ' ', '', '', '', ' ' },
-            winhighlight = 'FloatBorder:NormalFloat',
+            border       = "single",
+            winhighlight = "Normal:CmpPmenu",
             winblend     = vim.o.pumblend,
           },
         },
@@ -69,9 +72,11 @@ return {
 
         -- sources for autocompletion
         sources = cmp.config.sources({
-          { name = "nvim_lsp" },
+          --{ name = "nvim_lsp" }, -- get completions from attached LSPs
           { name = "luasnip" }, -- snippets
-          { name = "buffer" },  -- text within current buffer
+          { name = "buffer" }, -- text within current buffer
+          { name = "emoji" }, -- get emojis as completions
+          { name = "path" }, -- filesystem path
         }),
 
         -- configure lspkind for pictograms in completion menu

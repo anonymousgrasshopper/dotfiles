@@ -44,10 +44,10 @@ M.opts = {
 			{ "Add comment at the end of line", "gcA" },
 		},
 		["Competitest"] = {
-			{ "Add Testcase", "󱁐 c++add" },
-			{ "Delete Testcase", "󱁐 c++delete" },
-			{ "Run Program", "󱁐 c++run" },
-			{ "Show pop-up Interface", "󱁐 c++show" },
+			{ "Add Testcase", "󱁐 ++add" },
+			{ "Delete Testcase", "󱁐 ++delete" },
+			{ "Run Program", "󱁐 ++run" },
+			{ "Show pop-up Interface", "󱁐 ++show" },
 		},
     ["Completions"] = {
       { "Previous suggestion", "Ctrl+k" },
@@ -90,6 +90,7 @@ M.opts = {
       { "Clear message line", "Ctrl+l" },
       { "Find Nerd icons", "󱁐 nerdy" },
       { "Browse link", ":Browse" },
+      { "Change identifier", "󱁐 rn"}
 		},
 	},
 }
@@ -115,5 +116,4 @@ extensions = {
 		filetypes = { "nvcheatsheet" },
 	},
 }
-
-return M
+ return M
