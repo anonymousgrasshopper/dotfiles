@@ -1,15 +1,15 @@
 **remove bits/stdc++.h errors**
 setup debugging for cpp
-final touch
+
 make colorizer work
 lualine bug with competitest custom extension
 
 plugins :
-yanky
+yanky    
 sceptre  
 windows     remove vim maximiser? 
 symbols outline
 folke/styler  
-theprimeagen/refactoring
+~~theprimeagen/refactoring~~
 persistence??????
 PEEK.nvim  DENO NOT COOPERATIVE
