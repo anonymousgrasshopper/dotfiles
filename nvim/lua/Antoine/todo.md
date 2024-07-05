@@ -1,7 +1,4 @@
-**remove bits/stdc++.h errors**
-setup debugging for cpp
-final touch
-make colorizer work (this shit is broken open issue)
+make colorizer work
 lualine bug with competitest custom extension
 long completion windows when using lsp
 
