@@ -3,10 +3,13 @@ return {
   lazy = true,
 	dependencies = "MunifTanjim/nui.nvim",
   keys = {
+    { "<leader>contest", "<cmd>CompetiTest receive contest<CR>", desc = "Receive contest" },
+    { "<leader>problem", "<cmd>CompetiTest receive problem<CR>", desc = "Receive problem" },
     { "<leader>++add", "<cmd>CompetiTest add_testcase<CR>", desc = "" },
 		{ "<leader>++delete", "<cmd>CompetiTest delete_testcase<CR>", desc = "" },
 		{ "<leader>++run", "<cmd>CompetiTest run<CR>", desc = "" },
     { "<leader>++show", "<cmd>CompetiTest show_ui<CR>", desc = "" },
+    { "<leader>++nocomp", "<cmd>CompetiTest run_no_compile<CR>", desc = "" },
   },
 	config = function()
 		require("competitest").setup({
@@ -110,7 +113,7 @@ return {
 			compile_directory = ".",
 			compile_command = {
 				c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
-				cpp = { exec = "g++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+				cpp = { exec = "g++", args = { "-Wall", "-Wextra", "-Wshadow", "-Wconversion", "-Wfloat-equal", "-Wduplicated-cond", "-Wlogical-op", "$(FNAME)", "-o", "$(FNOEXT)" } },
 				rust = { exec = "rustc", args = { "$(FNAME)" } },
 				java = { exec = "javac", args = { "$(FNAME)" } },
 			},
@@ -136,16 +139,16 @@ return {
 
 			companion_port = 27121,
 			receive_print_message = true,
-			template_file = false,
+			template_file = "~/Informatique/Codeforces/template.cpp",
 			evaluate_template_modifiers = false,
 			date_format = "%c",
 			received_files_extension = "cpp",
-			received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
+			received_problems_path = "$(HOME)/Informatique/Codeforces/$(CONTEST)/$(PROBLEM).$(FEXT)",
 			received_problems_prompt_path = true,
-			received_contests_directory = "$(CWD)",
+			received_contests_directory = "$(HOME)/Informatique/Codeforces/$(CONTEST)",
 			received_contests_problems_path = "$(PROBLEM).$(FEXT)",
 			received_contests_prompt_directory = true,
-			received_contests_prompt_extension = true,
+			received_contests_prompt_extension = false,
 			open_received_problems = true,
 			open_received_contests = true,
 			replace_received_testcases = false,

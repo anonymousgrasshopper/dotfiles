@@ -1,13 +1,3 @@
-local competitest_line = {
-  filetypes = {'CompetiTest'},
-  inactive_sections = {
-    lualine_b = { function()
-      return vim.b.competitest_title or 'CompetiTest'
-    end },
-    lualine_a = {"filetype"},
-  },
-}
-
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -98,7 +88,6 @@ return {
         },
       },
       extensions = {
-        --{"competitest_line"},
         "lazy",
         "fugitive",
         "mason",
