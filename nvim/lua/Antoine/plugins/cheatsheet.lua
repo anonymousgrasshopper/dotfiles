@@ -44,10 +44,10 @@ M.opts = {
 			{ "Add comment at the end of line", "gcA" },
 		},
 		["Competitest"] = {
-			{ "Add Testcase", "󱁐 ++add" },
-			{ "Delete Testcase", "󱁐 ++delete" },
-			{ "Run Program", "󱁐 ++run" },
-			{ "Show pop-up Interface", "󱁐 ++show" },
+			{ "Add Testcase", "󱁐 add" },
+			{ "Delete Testcase", "󱁐 delete" },
+			{ "Run Program", "󱁐 run" },
+			{ "Show pop-up Interface", "󱁐 show" },
 		},
     ["Completions"] = {
       { "Previous suggestion", "Ctrl+k" },
@@ -57,6 +57,12 @@ M.opts = {
       -- { "", "Ctrl+󱁐" },
       { "Close completion window", "Ctrl+e" },
       { "Abort completion", "⏎" },
+    },
+    ["Sceptre"] = {
+    { "Toggle Spectre", "󱁐 S",},
+    {  "Search current word", "󱁐 sw" },
+    { "Search current word", "󱁐 sw" },
+    { "Search on current file", "󱁐 sp" },
     },
     ["LSP"] = {
       { "Stop LSP", ":LspStop" },
@@ -90,7 +96,8 @@ M.opts = {
       { "Clear message line", "Ctrl+l" },
       { "Find Nerd icons", "󱁐 nerdy" },
       { "Browse link", ":Browse" },
-      { "Change identifier", "󱁐 rn"}
+      { "Change identifier", "󱁐 rn"},
+      { "Toggle code outline window", "󱁐 a"},
 		},
 	},
 }

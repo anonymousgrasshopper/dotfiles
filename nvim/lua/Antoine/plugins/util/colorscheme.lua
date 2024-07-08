@@ -18,7 +18,7 @@ return {
             FloatBorder = { bg = "none" },
             FloatTitle = { bg = "none" },
 
-            Pmenu = { fg = colors.theme.ui.shade0, bg = colors.theme.ui.bg_p1 },  -- add `blend = vim.o.pumblend` to enable transparency
+            Pmenu = { fg = colors.theme.ui.shade0, bg = colors.theme.ui.bg_p1 },
             PmenuSel = { fg = "NONE", bg = colors.theme.ui.bg_p2 },
             PmenuSbar = { bg = colors.theme.ui.bg_m1 },
             PmenuThumb = { bg = colors.theme.ui.bg_p2 },

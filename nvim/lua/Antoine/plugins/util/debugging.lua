@@ -9,7 +9,7 @@ return {
     opts = {
       handler = {
         ensure_installed = {
-          "cpptools",
+          "codelldb",
         }
       }
     },
@@ -39,16 +39,18 @@ return {
         dapui.close()
       end
 
+      dapui.setup()
+
       dap.adapters.codelldb = {
-        type = 'server',
+        type = "server",
         port = "${port}",
         executable = {
           -- CHANGE THIS to your path!
-          command = '/absolute/path/to/codelldb/extension/adapter/codelldb',
+          command = "/home/Antoine/.local/share/nvim/mason/bin/codelldb",
           args = {"--port", "${port}"},
 
           -- On windows you may have to uncomment this:
-          -- detached = false,
+          --detached = false,
         }
       }
 
