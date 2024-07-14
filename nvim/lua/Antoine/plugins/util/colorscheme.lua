@@ -19,7 +19,7 @@ return {
             FloatTitle = { bg = "none" },
 
             Pmenu = { fg = colors.theme.ui.shade0, bg = colors.theme.ui.bg_p1 },
-            PmenuSel = { fg = "NONE", bg = colors.theme.ui.bg_p2 },
+            PmenuSel = { fg = "none", bg = colors.theme.ui.bg_p2 },
             PmenuSbar = { bg = colors.theme.ui.bg_m1 },
             PmenuThumb = { bg = colors.theme.ui.bg_p2 },
 
@@ -31,7 +31,7 @@ return {
             LazyNormal = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
             MasonNormal = { bg = colors.theme.ui.bg_m3, fg = colors.theme.ui.fg_dim },
 
-            NeoTreeWinSeparator = { bg = colors.palette.sumiInk3, fg = colors.palette.crystalBlue },
+            NeoTreeWinSeparator = { bg = "none", fg = colors.palette.crystalBlue },
             WinSeparator = { fg = "#54546D", bg = "none"},
 
             NvChAsciiHeader = { bg = colors.palette.sumiInk3, fg = colors.palette.fujiWhite },

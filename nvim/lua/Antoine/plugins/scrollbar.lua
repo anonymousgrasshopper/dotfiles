@@ -1,7 +1,7 @@
 return {
   "lewis6991/satellite.nvim",
   --event = { "BufReadPre", "BufNewFile" },
-  lazy = true,
+  lazy = false,
   priority = 90,
   config = function()
     require("satellite").setup {

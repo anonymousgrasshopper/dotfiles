@@ -81,7 +81,7 @@ return {
 			split_ui = {
 				position = "right",
 				relative_to_editor = true,
-				total_width = 0.3,
+				total_width = 0.4,
 				vertical_layout = {
 					{ 1, "tc" },
 					{ 1, { { 1, "so" }, { 1, "eo" } } },
@@ -99,7 +99,7 @@ return {
 			save_all_files = false,
 			compile_directory = ".",
 			compile_command = {
-				c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
+				c = { exec = "gcc", args = { "-g", "-Wall", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
 				cpp = { exec = "g++", args = { "-Wall", "-Wextra", "-Wshadow", "-Wconversion", "-Wfloat-equal", "-Wduplicated-cond", "-Wlogical-op", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
 				rust = { exec = "rustc", args = { "$(FNAME)" } },
 				java = { exec = "javac", args = { "$(FNAME)" } },

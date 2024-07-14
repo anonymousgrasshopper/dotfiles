@@ -101,8 +101,9 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
------- pasting ------
+------ yanking and pasting ------
 vim.keymap.set("n", "<leader>p", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
+vim.keymap.set( {"n", "v"}, "<A-a>", 'ggVG+"y', { desc = "Copy file text to \"+" } )
 
 ------ increment/decrement numbers ------
 vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
@@ -129,7 +130,9 @@ vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
 vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
 
 ------ compile C++ code ------
-vim.keymap.set("n", "<F3>", ":w <CR> :!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
+vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
+vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR><leader>dc", { desc = "Save file, compile and start debugger" })
+-- CAUTION : Doesn't work if filepath contains blank characters
 
 ------ competitive programming templates ------
 vim.keymap.set("n","<leader>template", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\n\nint main() {\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n\n}<esc>ki<tab>", { desc = "Insert CP template" })

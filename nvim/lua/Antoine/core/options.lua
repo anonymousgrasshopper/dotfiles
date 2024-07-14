@@ -26,7 +26,7 @@ vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
 vim.opt.scrolloff      = 4      -- have >= 4 lines above and below your cursor when possible
-vim.opt.scrolloff      = 4      -- have >= 4 columns above and below your cursor when possible
+vim.opt.sidescrolloff  = 6      -- have >= 4 columns above and below your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 
@@ -36,7 +36,7 @@ vim.opt.breakindent    = true   --
 vim.opt.breakindentopt = { "min:30", "shift:-1" }
 vim.opt.linebreak      = true   --
 vim.opt.breakat        = " "    --
-vim.cmd([[autocmd BufEnter * set formatoptions=jcoqlnt2]])
+vim.cmd([[autocmd BufEnter * set formatoptions=jcqlnt2]])
 
 ------ writing, undo & backup ------
 vim.opt.autowrite      = false  -- enable/disable autowrite
@@ -92,7 +92,7 @@ vim.opt.background     = "dark" -- colorschemes that can be light or dark will b
 vim.opt.backspace      = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
 ------ change cwd ------
---vim.opt.autochdir      = true   -- sync cwd directory with buffer's
+vim.opt.autochdir      = false  -- sync cwd directory with buffer's
 
 ------ command-line completion ------
 vim.opt.wildmode = "longest:full,full"

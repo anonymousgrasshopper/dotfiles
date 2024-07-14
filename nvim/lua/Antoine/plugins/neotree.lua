@@ -32,7 +32,6 @@ return {
     },
   },
   config = function ()
-    -- If you want icons for diagnostic errors, you'll need to define them somewhere:
     vim.fn.sign_define("DiagnosticSignError",
       {text = " ", texthl = "DiagnosticSignError"})
     vim.fn.sign_define("DiagnosticSignWarn",
@@ -151,18 +150,18 @@ return {
           ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           -- Read `# Preview Mode` for more information
           ["l"] = "focus_preview",
-          ["S"] = "", -- "open_split",
-          ["s"] = "", -- "open_vsplit",
-          -- ["S"] = "split_with_window_picker",
-          -- ["s"] = "vsplit_with_window_picker",
+          ["-"] = "open_split",  -- don't use "S" to avoid messing leap up
+          ["|"] = "open_vsplit", -- don't use "s" to avoid messing leap up
+          ["S"] = "", -- "split_with_window_picker",
+          ["s"] = "",  -- "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
           -- ["<cr>"] = "open_drop",
           -- ["t"] = "open_tab_drop",
           ["w"] = "open_with_window_picker",
           --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
-          ["C"] = "close_node",
+          ["z"] = "close_node",
           -- ['C'] = 'close_all_subnodes',
-          ["z"] = "close_all_nodes",
+          ["Z"] = "close_all_nodes",
           ["E"] = "expand_all_nodes",
           ["a"] = {
             "add",
@@ -239,7 +238,7 @@ return {
           mappings = {
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
-            ["H"] = "toggle_hidden",
+            ["h"] = "toggle_hidden",
             ["/"] = "fuzzy_finder",
             ["D"] = "fuzzy_finder_directory",
             ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
