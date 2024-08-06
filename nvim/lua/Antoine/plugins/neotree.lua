@@ -2,7 +2,7 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   keys = {
-    {"\\", ":Neotree toggle<cr><C-l>", desc = ""},
+    { "\\", "<cmd>Neotree toggle<CR>", desc = "Toggle file explorer" },
   },
   event = "VeryLazy",
   priority = 100,

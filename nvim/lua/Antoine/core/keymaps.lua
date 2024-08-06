@@ -110,7 +110,7 @@ vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
 vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
 
 ------ lazy ------
-vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim ui" })
 
 ------ new file ------
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
@@ -131,7 +131,7 @@ vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree
 
 ------ compile C++ code ------
 vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
-vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR><leader>dc", { desc = "Save file, compile and start debugger" })
+vim.keymap.set("n", "<F4>", "<cmd>w<CR><cmd>!g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR><leader>dc", { desc = "Save file, compile and start debugger" })
 -- CAUTION : Doesn't work if filepath contains blank characters
 
 ------ competitive programming templates ------

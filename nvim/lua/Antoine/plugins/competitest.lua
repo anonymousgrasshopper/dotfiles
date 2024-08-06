@@ -81,13 +81,13 @@ return {
 			split_ui = {
 				position = "right",
 				relative_to_editor = true,
-				total_width = 0.4,
+				total_width = 0.3,
 				vertical_layout = {
 					{ 1, "tc" },
 					{ 1, { { 1, "so" }, { 1, "eo" } } },
 					{ 1, { { 1, "si" }, { 1, "se" } } },
           				},
-				total_height = 0.4,
+				total_height = 0.2,
 				horizontal_layout = {
 					{ 2, "tc" },
 					{ 3, { { 1, "so" }, { 1, "si" } } },
