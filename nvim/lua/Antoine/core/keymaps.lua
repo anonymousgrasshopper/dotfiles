@@ -102,8 +102,8 @@ vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = 
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 ------ yanking and pasting ------
-vim.keymap.set("n", "<leader>p", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
-vim.keymap.set( {"n", "v"}, "<A-a>", 'ggVG+"y', { desc = "Copy file text to \"+" } )
+vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
+vim.keymap.set( {"n", "v"}, "<A-a>", 'ggVG"+y', { desc = "Copy file text to \"+" } )
 
 ------ increment/decrement numbers ------
 vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
