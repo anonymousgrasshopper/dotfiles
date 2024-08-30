@@ -36,7 +36,7 @@ return {
       }):find()
     end
     -- keymaps
-    vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = "Add file to Harpoon"})
+    vim.keymap.set("n", "<A-a>", function() harpoon:list():add() end, { desc = "Add file to Harpoon"})
     vim.keymap.set("n", "<A-h>", function() toggle_telescope(harpoon:list()) end, {desc = "Toggle Harpoon ui"})
 
     vim.keymap.set("n", "<A-p>", function() harpoon:list():select(1) end)

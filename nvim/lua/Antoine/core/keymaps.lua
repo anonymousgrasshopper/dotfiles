@@ -103,7 +103,8 @@ vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = 
 
 ------ yanking and pasting ------
 vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
-vim.keymap.set( {"n", "v"}, "<A-a>", 'ggVG"+y', { desc = "Copy file text to \"+" } )
+vim.keymap.set( {"n", "v"}, "<C-a>", 'ggVG"+y', { desc = "Yank file text into \"+" } )
+vim.keymap.set( "v", "<C-z>", '"+y', { desc = "Yank selected text into \"+" } )
 
 ------ increment/decrement numbers ------
 vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
@@ -132,11 +133,11 @@ vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree
 ------ compile C++ code ------
 vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
 vim.keymap.set("n", "<F4>", "<cmd>w<CR><cmd>!g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR><leader>dc", { desc = "Save file, compile and start debugger" })
--- CAUTION : Doesn't work if filepath contains blank characters
+-- UNDOCUMENTED FEATURE : Doesn't work if filepath contains blank characters
 
 ------ competitive programming templates ------
 vim.keymap.set("n","<leader>template", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\n\nint main() {\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n\n}<esc>ki<tab>", { desc = "Insert CP template" })
-vim.keymap.set("n","<leader>codeforces", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n///////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n<tab>int nbTests; cin >> nbTests;\n<tab>while(nbTests--){\n<tab><tab>solve();\n}\n}<esc>10kO", { desc = "Insert Codeforces template" })
+vim.keymap.set("n","<leader>codeforces", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n///////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n<tab>int nbTests; cin >> nbTests;\n<tab>while (nbTests--) {\n<tab><tab>solve();\n}\n}<esc>10kO", { desc = "Insert Codeforces template" })
 
 ------ improved up and downn motions ------
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })

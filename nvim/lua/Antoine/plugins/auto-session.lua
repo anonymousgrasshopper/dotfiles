@@ -1,6 +1,6 @@
 return {
 	"rmagatti/auto-session",
-  event = "VeryLazy",
+  lazy = false,
   priority = 95,
   keys = {
     { "<leader>rs", "<cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
@@ -10,8 +10,8 @@ return {
 		local auto_session = require("auto-session")
 
 		auto_session.setup({
-			auto_restore_enabled = false,
-			auto_session_suppress_dirs = { },
+			auto_restore = true,
+			suppressed_dirs = { },
 		})
 	end,
 }
