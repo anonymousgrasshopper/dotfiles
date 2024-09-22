@@ -10,6 +10,9 @@
 return {
   {
     "rebelot/kanagawa.nvim",
+    lazy=true,
+    event = "UiEnter",
+    priority=1000,
     config = function()
       require("kanagawa").setup({
         overrides = function(colors)

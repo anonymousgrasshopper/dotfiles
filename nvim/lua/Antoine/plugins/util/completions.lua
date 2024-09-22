@@ -72,7 +72,7 @@ return {
 
         -- sources for autocompletion
         sources = cmp.config.sources({
-          --{ name = "nvim_lsp" }, -- get completions from attached LSPs
+          { name = "nvim_lsp" }, -- get completions from attached LSPs
           { name = "luasnip" }, -- snippets
           { name = "buffer" }, -- text within current buffer
           { name = "emoji" }, -- get emojis as completions

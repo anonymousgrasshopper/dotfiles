@@ -105,6 +105,7 @@ vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = 
 vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
 vim.keymap.set( {"n", "v"}, "<C-a>", 'ggVG"+y', { desc = "Yank file text into \"+" } )
 vim.keymap.set( "v", "<C-z>", '"+y', { desc = "Yank selected text into \"+" } )
+vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register"})
 
 ------ increment/decrement numbers ------
 vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
@@ -125,19 +126,11 @@ vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 ------ toggle options ------
 vim.keymap.set("n", "<leader>treesitter", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
 vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
+vim.keymap.set("n", "<leader>autochdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
 
 ------ inspect ------
 vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
 vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
-
------- compile C++ code ------
-vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
-vim.keymap.set("n", "<F4>", "<cmd>w<CR><cmd>!g++ -g -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR><leader>dc", { desc = "Save file, compile and start debugger" })
--- UNDOCUMENTED FEATURE : Doesn't work if filepath contains blank characters
-
------- competitive programming templates ------
-vim.keymap.set("n","<leader>template", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\n\nint main() {\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n\n}<esc>ki<tab>", { desc = "Insert CP template" })
-vim.keymap.set("n","<leader>codeforces", "i#include <bits/stdc++.h>\nusing namespace std;\n#define ANSWER cout<<(ans?\"YES\":\"NO\")<<'\\n'\n#define dbg(x) cerr<<#x<<\" = \"<<x<<'\\n'\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n///////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n<tab>int nbTests; cin >> nbTests;\n<tab>while (nbTests--) {\n<tab><tab>solve();\n}\n}<esc>10kO", { desc = "Insert Codeforces template" })
 
 ------ improved up and downn motions ------
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -152,3 +145,25 @@ vim.keymap.set("i", ";", ";<c-g>u")
 
 ------ keywordprg ------
 vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
+
+------ go to nvim config directory ------
+vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reveal<Cr>E")
+
+
+-----------------------------------------------------------------
+-------------------- COMPETITIVE PROGRAMMING --------------------
+-----------------------------------------------------------------
+
+
+------ compile C++ code ------
+vim.keymap.set("n", "<leader>dbg", ':!clang++ --debug ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. ' -o ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe", { desc = "Create debuggable executable" })
+-- vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
+-- UNDOCUMENTED FEATURE : Doesn't work if filepath contains blank characters
+
+------ competitive programming templates ------
+vim.keymap.set("n","<leader>codeforces", "i#pragma GCC optimize(\"O3,unroll-loops\")\n#pragma GCC target(\"avx2,bmi,bmi2,lzcnt,popcnt\")\n\n#include <bits/stdc++.h>\nusing namespace std;\n#define all(x) x.begin(), x.end()\n#define REP(i,a,b) for(int i=0;i<a;i+=b)\n#define dbg(x) cerr<<__LINE__<<#x<<\" = \"<<x\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n///////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n<tab>int nbTests; cin >> nbTests;\n<tab>while (nbTests--) {\n<tab><tab>solve();\n}\n}<esc>10kO", { desc = "Insert Codeforces template" })
+vim.keymap.set("n","<leader>template", "i#pragma GCC optimize(\"O3,unroll-loops\")\n#pragma GCC target(\"avx2,bmi,bmi2,lzcnt,popcnt\")\n\n#include <bits/stdc++.h>\nusing namespace std;\n#define all(x) x.begin(), x.end()\n#define REP(i,a,b) for(int i=0;i<a;i+=b)\n#define dbg(x) cerr<<__LINE<<#x<<\" = \"<<x\n#define f      first        //    .\n#define s      second       //   .'.\n#define nint   new int      //   |o|\n#define nchar  new char     //  .'o'.\n#define bltn __builtin      //  |.-.|\n#define pb     push_back    //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\n\nint main() {\nios::sync_with_stdio(false); cin.tie(nullptr);\n}<Esc>ki\t<Esc>o", { desc = "Insert CP template" })
+vim.keymap.set("n", "<leader>setio", 'Ovoid setIO(string name = "") {\n  if (sz(name)) {\n    freopen((name+".in").c_str(), "r", stdin);\n    freopen((name+".out").c_str(), "w", stdout);\n  }\n}\n', { desc = "Add io function for USACO" })
+
+------ shortcuts ------
+vim.keymap.set("n", "<leader>array", "0iint n; cin >> n;\nint* array = new int [n];\nREP(i,0,n) cin >> array[i];\n")

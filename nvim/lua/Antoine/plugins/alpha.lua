@@ -50,7 +50,7 @@ return {
 			dashboard.button("\\", "  > Toggle file explorer", "<cmd>Neotree toggle<CR>"),
 			dashboard.button("󱁐 ff", "󰱼 > Find File", "<cmd>Telescope find_files<CR>"),
 			dashboard.button("󱁐 fs", "  > Find Word", "<cmd>Telescope live_grep<CR>"),
-			dashboard.button("󱁐 r", "󰁯  > Restore Session For Current Directory", "<cmd>SessionRestore<CR>"),
+			dashboard.button("󱁐 rs", "󰁯  > Restore Session For Current Directory", 'function() require("persistence").load({ last = true }) end'),
 			dashboard.button("q", " > Quit Neovim", "<cmd>qa<CR>"),
 		}
 

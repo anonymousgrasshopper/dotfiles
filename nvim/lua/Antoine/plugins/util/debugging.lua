@@ -1,7 +1,7 @@
 return {
   {
     "jay-babu/mason-nvim-dap.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "VeryLazy",
     dependencies = {
       "williamboman/mason.nvim",
       "mfussenegger/nvim-dap",
@@ -18,8 +18,8 @@ return {
     "mfussenegger/nvim-dap",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "nvim-neotest/nvim-nio",
       "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
       "theHamsta/nvim-dap-virtual-text",
     },
     config = function()
@@ -58,7 +58,7 @@ return {
           type = "codelldb",
           request = "launch",
           program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            return vim.fn.input('Path to executable: ', vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. '.exe', 'file')
           end,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
@@ -68,5 +68,5 @@ return {
       vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, { desc = "Toggle breakpoint at current line" })
       vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Start or continue debugging" })
     end,
-  }
+  },
 }

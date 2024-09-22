@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
     local opts = {
       focusable = false,
       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      winblend = vim.o.pumblend,
       border = 'single',
       source = 'always',
       prefix = ' ',
@@ -28,7 +29,7 @@ return {
   {
     "williamboman/mason.nvim",
     event = { "VeryLazy", "BufReadPre", "BufNewFile" },
-    priority = 90,  -- We need to install our LSPs before calling lspconfig
+    priority = 90,  -- We need to install LSPs before calling lspconfig
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
     },
@@ -47,7 +48,6 @@ return {
       })
 
       mason_lspconfig.setup({
-        -- list of servers for mason to install
         ensure_installed = {
           "clangd",
           "lua_ls",
