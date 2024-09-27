@@ -91,7 +91,8 @@ return {
         "lazy",
         "fugitive",
         "mason",
-        -- "nvim-dap-ui",
+        "nvim-dap-ui",
+        "neo-tree",
         "toggleterm",
       }
     })

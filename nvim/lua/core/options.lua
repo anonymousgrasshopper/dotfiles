@@ -17,7 +17,7 @@ vim.opt.foldlevel      = 99     -- only close folds with at least 100 lines
 vim.opt.foldlevelstart = 99     -- no folds closed upon entering buffer
 vim.opt.foldmethod     = "expr" -- use treesitter to determine the level of each line
 vim.opt.foldexpr       ="v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext       = ""
+vim.opt.foldtext       ="v:folddashes.substitute(getline(v:foldstart),'','>','')"
 vim.opt.foldcolumn     = "0"    --size of column for folding indications
 vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
 
@@ -25,8 +25,8 @@ vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchar
 vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
-vim.opt.scrolloff      = 4      -- have >= 4 lines above and below your cursor when possible
-vim.opt.sidescrolloff  = 6      -- have >= 4 columns above and below your cursor when possible
+vim.opt.scrolloff      = 6      -- have >= 4 lines above and below your cursor when possible
+vim.opt.sidescrolloff  = 8      -- have >= 4 columns around your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 

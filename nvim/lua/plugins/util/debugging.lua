@@ -65,8 +65,26 @@ return {
         },
       }
 
-      vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, { desc = "Toggle breakpoint at current line" })
       vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Start or continue debugging" })
+      vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, { desc = "Toggle breakpoint at current line" })
+      vim.keymap.set('n', '<leader>dov',  dap.step_over )
+      vim.keymap.set('n', '<leader>din',  dap.step_into )
+      vim.keymap.set('n', '<leader>dout',  dap.step_out )
+      vim.keymap.set('n', '<leader>dr',  dap.repl.open )
+      vim.keymap.set('n', '<leader>dl',  dap.run_last )
+      vim.keymap.set({'n', 'v'}, '<leader>dh', function() require('dap.ui.widgets').hover() end )
+      vim.keymap.set({'n', 'v'}, '<leader>dp', function() require('dap.ui.widgets').preview() end)
+      vim.keymap.set('n', '<leader>df',
+        function() local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.frames)
+        end
+      )
+      vim.keymap.set('n', '<leader>ds',
+        function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.scopes)
+        end
+      )
     end,
   },
 }

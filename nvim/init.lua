@@ -1,6 +1,6 @@
-require("Antoine.core.options")
-require("Antoine.core.keymaps")
-require("Antoine.core.autocmd")
+require("core.options")
+require("core.keymaps")
+require("core.autocmd")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -17,8 +17,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup( --default plugin priority is 50
   {
-	  { import = "Antoine.plugins.util" },
-	  { import = "Antoine.plugins" },
+	  { import = "plugins.util" },
+	  { import = "plugins" },
   },
   {
 	  change_detection = {

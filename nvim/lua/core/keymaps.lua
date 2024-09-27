@@ -156,7 +156,8 @@ vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reve
 
 
 ------ compile C++ code ------
-vim.keymap.set("n", "<leader>dbg", ':!clang++ --debug ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. ' -o ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe", { desc = "Create debuggable executable" })
+vim.keymap.set("n", "<leader>dbg", ':!clang++ --debug ' ..  vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. ' -o ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe", { expr = true })
+vim.keymap.set("n", "<leader>dag", vim.fn.fnamemodify(vim.fn.expand("%"), ":t"), {expr=true})
 -- vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
 -- UNDOCUMENTED FEATURE : Doesn't work if filepath contains blank characters
 
