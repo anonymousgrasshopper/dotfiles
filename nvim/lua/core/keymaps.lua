@@ -10,7 +10,6 @@ vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>bd", "delete buffer", { desc = "Delete Buffer" })
 vim.keymap.set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
@@ -39,7 +38,7 @@ local diagnostic_goto = function(next, severity)
     go({ severity = severity })
   end
 end
-vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 vim.keymap.set("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
 vim.keymap.set("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
 vim.keymap.set("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
@@ -124,9 +123,8 @@ vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 ------ toggle options ------
-vim.keymap.set("n", "<leader>treesitter", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
 vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
-vim.keymap.set("n", "<leader>autochdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
+vim.keymap.set("n", "<leader>chdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
 
 ------ inspect ------
 vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
@@ -156,10 +154,9 @@ vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reve
 
 
 ------ compile C++ code ------
-vim.keymap.set("n", "<leader>dbg", ':!clang++ --debug ' ..  vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. ' -o ' .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe", { expr = true })
-vim.keymap.set("n", "<leader>dag", vim.fn.fnamemodify(vim.fn.expand("%"), ":t"), {expr=true})
--- vim.keymap.set("n", "<F3>", "<cmd>w<CR><cmd>!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % <CR>", { desc = "Save file and compile" })
--- UNDOCUMENTED FEATURE : Doesn't work if filepath contains blank characters
+vim.keymap.set("n", "<leader>dbg", function()
+return ":!clang++ --debug " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. " -o " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe<CR>"
+end, { expr = true })
 
 ------ competitive programming templates ------
 vim.keymap.set("n","<leader>codeforces", "i#pragma GCC optimize(\"O3,unroll-loops\")\n#pragma GCC target(\"avx2,bmi,bmi2,lzcnt,popcnt\")\n\n#include <bits/stdc++.h>\nusing namespace std;\n#define all(x) x.begin(), x.end()\n#define REP(i,a,b) for(int i=0;i<a;i+=b)\n#define dbg(x) cerr<<__LINE__<<#x<<\" = \"<<x\n#define f      first	    	//    .\n#define s      second	    	//   .'.\n#define nint   new int  		//   |o|\n#define nchar  new char	  	//  .'o'.\n#define bltn __builtin	   	//  |.-.|\n#define pb     push_back	  //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n\n///////////////////////////////////\n\nvoid solve() {\n \bint n; cin >> n;\n\n\b}\n\n///////////////////////////////////\n\nint main(){\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n<tab>int nbTests; cin >> nbTests;\n<tab>while (nbTests--) {\n<tab><tab>solve();\n}\n}<esc>10kO", { desc = "Insert Codeforces template" })

@@ -4,6 +4,9 @@ return {
   keys = {
     { "\\", "<cmd>Neotree toggle<CR>", desc = "Toggle file explorer" },
   },
+  cmd = {
+    "Neotree toggle",
+  },
   event = "VeryLazy",
   priority = 100,
   dependencies = {

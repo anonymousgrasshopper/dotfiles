@@ -4,10 +4,10 @@ return {
   config = function ()
     require('neoscroll').setup({
       mappings = {
-        '<C-u>', '<C-d>',
-        '<C-b>', '<C-f>',
-        '<C-y>', '<C-e>',
-        'zt', 'zz', 'zb',
+        '<C-u>', '<C-d>',  -- up / down
+        '<C-b>', '<C-f>',  -- forward /backwards
+        '<C-y>', '<C-e>',  -- 3 lines up/down
+        'zt', 'zz', 'zb',  -- top / center /bottom  line
       },
     })
   end
