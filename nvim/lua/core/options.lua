@@ -3,7 +3,7 @@
 -----------------------------------------------------------------
 
 vim.opt.fillchars = {
-  foldopen  = "",
+foldopen  = "",
   foldclose = "",
   fold      = " ",
   foldsep   = " ",
@@ -25,8 +25,8 @@ vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchar
 vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
-vim.opt.scrolloff      = 6      -- have >= 4 lines above and below your cursor when possible
-vim.opt.sidescrolloff  = 8      -- have >= 4 columns around your cursor when possible
+vim.opt.scrolloff      = 2      -- have >= 4 lines above and below your cursor when possible
+vim.opt.sidescrolloff  = 4      -- have >= 4 columns around your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 
@@ -43,7 +43,7 @@ vim.opt.autowrite      = false  -- enable/disable autowrite
 vim.opt.swapfile       = false  -- disable swapfiles
 vim.opt.undofile       = true   -- save undofiles
 vim.opt.undolevels     = 1024   -- number of inverted operations that can be done per file
-vim.opt.confirm        = true   -- when quitting with unsaved changes, open dialog instead of asking to override
+vim.opt.confirm        = false  -- when quitting with unsaved changes, open dialog instead of asking to override
 vim.o.sessionoptions   = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 ------ tabs & indentation ------
