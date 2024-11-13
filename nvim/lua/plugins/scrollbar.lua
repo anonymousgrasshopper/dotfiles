@@ -47,7 +47,7 @@ return {
           -- SatelliteGitSignsDelete (default links to GitSignsDelete)
         },
         marks = {
-          enable = true,
+          enable = false,
           show_builtins = false, -- shows the builtin marks like [ ] < >
           key = 'm'
           -- Highlights:
