@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include <vector>
 using namespace std;
 
 #define line() cerr << "Line " << __LINE__ << " : ";
@@ -11,22 +12,32 @@ inline string dbg_format(bool& x) {
   return (x ? "true" : "false");
 }
 inline string dbg_format(char& x) {
-  return "\"" + to_string(x) + "\"";
+  return "\'" + to_string(x) + "\'";
 }
 inline string dbg_format(string& x) {
   return "\"" + x + "\"";
 }
-template<typename T>
-T dbg_format(T x) {
-  return x;
-}
 template <typename A, typename B>
-string dbg_format(pair<A,B> x) {
-  return dbg_format(x.first) + dbg_format(x.second);
+inline string dbg_format(pair<A,B> x) {
+  return "(" + dbg_format(x.first) + "," + dbg_format(x.second) + ")";
 }
 template <typename A, typename B, typename C>
-string dbg_format(tuple<A,B,C> x) {
-  return dbg_format(x.get(0)) + dbg_format(x.get(1)) + dbg_format(x.get(2));
+inline string dbg_format(tuple<A,B,C> x) {
+  return "(" + dbg_format(x.get(0)) + "," + dbg_format(x.get(1)) + "," + dbg_format(x.get(2)) + ")";
+}
+template <typename T>
+inline string dbg_format(vector<T>& vec) {
+  string str = "[ ";
+  for (T x : vec) {
+    str += dbg_format(x);
+    str += " ";
+  }
+  str += "] ";
+  return str;
+}
+template <typename T>
+inline string dbg_format(T x) {
+  return to_string(x);
 }
 
 #define GET_MACRO_VAR(_1,_2,_3,_4,NAME,...) NAME
