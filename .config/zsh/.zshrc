@@ -53,7 +53,7 @@ bindkey '^n' history-search-forward
 
 # History
 HISTSIZE=10000
-HISTFILE=~/.cache/zsh/zsh_history
+HISTFILE=$HOME/.local/state/zsh/zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 HIST_STAMPS="dd/mm/yyyy"
