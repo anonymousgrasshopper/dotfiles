@@ -1,12 +1,18 @@
+autoload -Uz compinit
+[ -d $HOME/.cache/zsh ] || mkdir -p $HOME/.cache/zsh
+zstyle ':completion:*' cache-path "$HOME/.cache/zsh/zcompcache"
+compinit -w -d "$HOME/.cache/zsh/zcompdump"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+source $HOME/.config/zsh/p10k.zsh
 
 # Set the directory where zinit and plugins are stored
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
@@ -47,7 +53,7 @@ bindkey '^n' history-search-forward
 
 # History
 HISTSIZE=10000
-HISTFILE=~/.zsh/.zsh_history
+HISTFILE=~/.cache/zsh/zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 HIST_STAMPS="dd/mm/yyyy"
@@ -60,12 +66,23 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 # Environment Variables
-export CPLUS_INCLUDE_PATH=/home/Antoine/Informatique/Library
+export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 export LANG=en_US.UTF-8
 export EDITOR="nvim"
 
+export PYTHON_HISTORY=$HOME/.local/state/python/history
+export WGETRC="$HOME/.config/wget/wgetrc"
+
 # Aliases
-source ~/.zsh/aliases.zsh
+source ~/.config/zsh/aliases.zsh
+
+# Start tmux on shell startup
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  # exec tmux
+# fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Run zoxide
+eval "$(zoxide init zsh)"
