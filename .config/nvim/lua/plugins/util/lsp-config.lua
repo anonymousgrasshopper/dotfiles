@@ -25,6 +25,8 @@ vim.api.nvim_create_autocmd("CursorHold", {
   end
 })
 
+local WIDE_HEIGHT = 40
+
 return {
   {
     "williamboman/mason.nvim",
@@ -107,6 +109,26 @@ return {
         end,
         settings = {
           Lua = {}
+        },
+
+        window = {
+          completion = {
+            border       = "single",
+            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+            winblend     = vim.o.pumblend,
+            max_width    = 38,
+            scrolloff    = 0,
+            col_offset   = 0,
+            side_padding = 1,
+            scrollbar    = false,
+          },
+          documentation = {
+            max_height   = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
+            max_width    = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
+            border       = "single",
+            winhighlight = "Normal:CmpPmenu",
+            winblend     = vim.o.pumblend,
+          },
         },
       })
 

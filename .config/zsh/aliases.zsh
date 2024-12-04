@@ -3,6 +3,7 @@
 # Commands
 alias rm="rm -i"
 alias grep="grep --color=auto"
+alias diff="diff --color=auto"
 alias ls="exa --group-directories-first"
 alias find="fd"
 alias cd="z"

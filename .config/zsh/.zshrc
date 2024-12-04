@@ -69,6 +69,7 @@ setopt hist_find_no_dups
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 export LANG=en_US.UTF-8
 export EDITOR="nvim"
+export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH
 
 export PYTHON_HISTORY=$HOME/.local/state/python/history
 export WGETRC="$HOME/.config/wget/wgetrc"
