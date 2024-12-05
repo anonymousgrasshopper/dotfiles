@@ -1,6 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
-  event = "VeryLazy",
+  event = "UiEnter",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   version = "*",
   opts = {
@@ -12,9 +12,11 @@ return {
       offsets = {
         {
           filetype = "neo-tree",
+          raw = " %{%v:lua.__get_selector()%} ",
           text = "File Explorer",
           highlight = "Directory",
           text_align = "center",
+          separator = "│",
         },
       },
     },

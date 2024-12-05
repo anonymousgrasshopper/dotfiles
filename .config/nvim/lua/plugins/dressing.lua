@@ -1,5 +1,5 @@
 return {
   "stevearc/dressing.nvim",
-  event = "VeryLazy",
+  event = "UiEnter",
   priority = 85,
 }

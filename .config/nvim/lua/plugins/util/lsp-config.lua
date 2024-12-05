@@ -25,7 +25,13 @@ vim.api.nvim_create_autocmd("CursorHold", {
   end
 })
 
-local WIDE_HEIGHT = 40
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "single",
+})
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = "single",
+})
 
 return {
   {
@@ -90,7 +96,6 @@ return {
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
             runtime = {
               -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
               version = 'LuaJIT'
             },
             -- Make the server aware of Neovim runtime files
@@ -110,27 +115,8 @@ return {
         settings = {
           Lua = {}
         },
-
-        window = {
-          completion = {
-            border       = "single",
-            winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-            winblend     = vim.o.pumblend,
-            max_width    = 38,
-            scrolloff    = 0,
-            col_offset   = 0,
-            side_padding = 1,
-            scrollbar    = false,
-          },
-          documentation = {
-            max_height   = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
-            max_width    = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
-            border       = "single",
-            winhighlight = "Normal:CmpPmenu",
-            winblend     = vim.o.pumblend,
-          },
-        },
       })
+      require 'lspconfig'.clangd.setup { handlers=handlers }
 
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})

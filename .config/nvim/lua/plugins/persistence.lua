@@ -1,6 +1,6 @@
--- vim.api.nvim_create_autocmd( {"UiEnter" }, {
---   callback = function() require("persistence").load() end,
--- })
+vim.api.nvim_create_autocmd( {"UiEnter" }, {
+  callback = function() require("persistence").load() end,
+})
 
 return {
   "folke/persistence.nvim",
