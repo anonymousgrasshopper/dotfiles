@@ -160,7 +160,10 @@ vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\
 local escape_spaces = function (path)
   local skip_next = false
   local nb_added_chars = 0
-  for i = 1,path:len() do
+  for i = 1,2*path:len()+1 do
+    if i > path:len() then
+      return path
+    end
     if not skip_next then
       if path:sub(i,i) == ' ' then
         path = path:sub(1,i-1) .. "\\" .. path:sub(i,path:len()+nb_added_chars)
@@ -171,7 +174,6 @@ local escape_spaces = function (path)
       skip_next = false
     end
   end
-  return path
 end
 vim.keymap.set("n", "<leader>dbg", function()
   return ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
