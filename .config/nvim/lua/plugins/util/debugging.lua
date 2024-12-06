@@ -1,10 +1,9 @@
 return {
   {
     "jay-babu/mason-nvim-dap.nvim",
-    event = "VeryLazy",
+    lazy = true,
     dependencies = {
       "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
     },
     opts = {
       handler = {
@@ -16,11 +15,12 @@ return {
   },
   {
     "mfussenegger/nvim-dap",
-    lazy=true,
+    lazy = true,
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
       { "theHamsta/nvim-dap-virtual-text", opts = {} },
+      "mfussenegger/nvim-dap",
     },
     cmd = { "DapContinue", "DapToggleBreakpoint" },
     keys = {

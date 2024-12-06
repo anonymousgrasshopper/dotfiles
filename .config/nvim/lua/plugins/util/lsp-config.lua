@@ -36,7 +36,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 return {
   {
     "williamboman/mason.nvim",
-    event = { "VeryLazy", "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     priority = 90,  -- We need to install LSPs before calling lspconfig
     dependencies = {
       "williamboman/mason-lspconfig.nvim",

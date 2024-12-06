@@ -4,11 +4,9 @@
 
 return {
   "folke/persistence.nvim",
-  lazy=true,
-  event = "VeryLazy",
+  event = { "BufReadPre", "BufNewFile" },
   keys = {
     {"<leader>rs", function() require("persistence").load({ last = true }) end, desc = "restore last session" },
   },
-  opts = {
-  }
+  opts = { }
 }

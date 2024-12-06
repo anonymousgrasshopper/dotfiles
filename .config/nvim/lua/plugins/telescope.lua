@@ -1,11 +1,21 @@
 return {
 	"nvim-telescope/telescope.nvim",
   lazy = true,
+  cmd =  {
+    "Telescope",
+  },
   keys = {
-		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Fuzzy find files in cwd" },
-		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Fuzzy find recent files" },
-    { "<leader>fs", "<cmd>Telescope live_grep<cr>", desc = "Find string in cwd" },
-    { "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "Find string under cursor in cwd" },
+		{ "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Fuzzy find files in cwd" },
+		{ "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Fuzzy find recent files" },
+    { "<leader>fs", "<cmd>Telescope live_grep<CR>", desc = "Find string in cwd" },
+    { "<leader>fc", "<cmd>Telescope grep_string<CR>", desc = "Find string under cursor in cwd" },
+
+    { "<leader>sr", "<cmd>Telescope registers<CR>", desc = "marks" },
+    { "<leader>sm", "<cmd>Telescope marks<CR>", desc = "marks" },
+    { "<leader>sj", "<cmd>Telescope jumplist<CR>", desc = "Jumplist" },
+    { "<leader>sk", "<cmd>Telescope keymaps<CR>", desc = "Key Maps" },
+    { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
   },
 	branch = "0.1.x",
 	dependencies = {

@@ -168,7 +168,7 @@ local escape_spaces = function (path)
       if path:sub(i,i) == ' ' then
         path = path:sub(1,i-1) .. "\\" .. path:sub(i,path:len()+nb_added_chars)
         skip_next = true
-        nb_added_chars = nb_added_chars +1
+        nb_added_chars = nb_added_chars + 1
       end
     else
       skip_next = false
