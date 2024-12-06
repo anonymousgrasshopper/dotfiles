@@ -160,7 +160,7 @@ vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\
 
 ------ compile C++ code ------
 vim.keymap.set("n", "<leader>dbg", function()
-return ":!clang++ --debug " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t") .. " -o " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":t:r") .. ".exe<CR>"
+  return ":!clang++ --debug " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":g? ?\\ ?") .. " -o " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:g? ?\\ ?") .. ".exe<CR>"
 end, { expr = true })
 
 ------ competitive programming templates ------

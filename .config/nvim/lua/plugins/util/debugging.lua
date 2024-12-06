@@ -22,10 +22,11 @@ return {
       "nvim-neotest/nvim-nio",
       { "theHamsta/nvim-dap-virtual-text", opts = {} },
     },
+    cmd = { "DapContinue", "DapToggleBreakpoint" },
     keys = {
       { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
       { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
-      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+      { "<leader>dt", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
       { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Breakpoint Condition" },
       { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
       { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
@@ -38,9 +39,11 @@ return {
       { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
       { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
-      { "<leader>dt", function() require("dap").terminate() require("dapui").close() end, desc = "Terminate" },
+      { "<leader>dT", function() require("dap").terminate() require("dapui").close() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
       { "<leader>du", function() require("dapui").toggle() end, desc = "ToggleUI", silent = false },
+      { "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
+      { "<leader>de", function() require("dapui").eval() end, desc = "EvalLine", silent = false },
     },
 
     config = function()
@@ -83,8 +86,24 @@ return {
           end,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
+          stdio = {"input.txt", "output.txt", "err.txt"},
         },
       }
+
+      local signs = {
+        Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
+        Breakpoint = " ",
+        BreakpointCondition = " ",
+        BreakpointRejected = { " ", "DiagnosticError" },
+        LogPoint = ".>",
+      }
+      for name, sign in pairs(signs) do
+        sign = type(sign) == "table" and sign or { sign }
+        vim.fn.sign_define(
+          "Dap" .. name,
+          { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+        )
+      end
 
       vim.keymap.set('n', '<leader>dl',  dap.run_last )
       vim.keymap.set({'n', 'v'}, '<leader>dh', function() require('dap.ui.widgets').hover() end )
@@ -101,3 +120,20 @@ return {
     end,
   },
 }
+
+--     keys = { "<F5>", "<F8>", "<F9>", "<F10>",
+--       -- { "<leader>dT", ":DapTerminate<cr>", desc = "Terminate", silent = false },
+--       -- { "<leader>db", ":DapToggleBreakpoint<cr>", desc = "ToggleBreakpoint", silent = false },
+--       -- { "<leader>dc", ":DapContinue<cr>", desc = "Continue", silent = false },
+--       { "<leader>dl", function() require("dap").run_last() end, desc = "RunLast", silent = false },
+--       { "<leader>dn", ":DapStepOver<cr>", desc = "StepOver", silent = false },
+--       { "<leader>do", ":DapStepOut<cr>", desc = "StepOut", silent = false },
+--       { "<leader>ds", ":DapStepInto<cr>", desc = "StepInto", silent = false },
+--       { "<leader>dt",
+--         function()
+--           require("dap").terminate()
+--           require("dapui").close()
+--         end
+--         , desc = "TerminateClose", silent = false },
+--       { "<leader>du", function() require("dapui").toggle() end, desc = "ToggleUI", silent = false },
+--     },
