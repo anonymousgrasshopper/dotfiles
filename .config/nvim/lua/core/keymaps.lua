@@ -151,16 +151,30 @@ vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reve
 ------ clean up copied LaTeX from AoPS ------
 vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\1/g", {})
 
--- vim.api.nvim.keymap.set("n", ":wq", "<cmd>Neotree close<CR><cmd>wq><CR>")
-
 -----------------------------------------------------------------
 -------------------- COMPETITIVE PROGRAMMING --------------------
 -----------------------------------------------------------------
 
 
 ------ compile C++ code ------
+local escape_spaces = function (path)
+  local skip_next = false
+  local nb_added_chars = 0
+  for i = 1,path:len() do
+    if not skip_next then
+      if path:sub(i,i) == ' ' then
+        path = path:sub(1,i-1) .. "\\" .. path:sub(i,path:len()+nb_added_chars)
+        skip_next = true
+        nb_added_chars = nb_added_chars +1
+      end
+    else
+      skip_next = false
+    end
+  end
+  return path
+end
 vim.keymap.set("n", "<leader>dbg", function()
-  return ":!clang++ --debug " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":g? ?\\ ?") .. " -o " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:g? ?\\ ?") .. ".exe<CR>"
+  return ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
 end, { expr = true })
 
 ------ competitive programming templates ------
