@@ -1,0 +1,9 @@
+{
+  "array" : {
+    "prefix" : "array",
+    "body" : [
+      "${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
+    ],
+    "desciption": "Dynamic array"
+  }
+}

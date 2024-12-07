@@ -44,6 +44,7 @@ return {
       { "<leader>du", function() require("dapui").toggle() end, desc = "ToggleUI", silent = false },
       { "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
       { "<leader>de", function() require("dapui").eval() end, desc = "EvalLine", silent = false },
+      { "<leader>dl", function() require("dap").run_last() end, desc = "RunLast", silent = false },
     },
 
     config = function()
@@ -120,20 +121,3 @@ return {
     end,
   },
 }
-
---     keys = { "<F5>", "<F8>", "<F9>", "<F10>",
---       -- { "<leader>dT", ":DapTerminate<cr>", desc = "Terminate", silent = false },
---       -- { "<leader>db", ":DapToggleBreakpoint<cr>", desc = "ToggleBreakpoint", silent = false },
---       -- { "<leader>dc", ":DapContinue<cr>", desc = "Continue", silent = false },
---       { "<leader>dl", function() require("dap").run_last() end, desc = "RunLast", silent = false },
---       { "<leader>dn", ":DapStepOver<cr>", desc = "StepOver", silent = false },
---       { "<leader>do", ":DapStepOut<cr>", desc = "StepOut", silent = false },
---       { "<leader>ds", ":DapStepInto<cr>", desc = "StepInto", silent = false },
---       { "<leader>dt",
---         function()
---           require("dap").terminate()
---           require("dapui").close()
---         end
---         , desc = "TerminateClose", silent = false },
---       { "<leader>du", function() require("dapui").toggle() end, desc = "ToggleUI", silent = false },
---     },

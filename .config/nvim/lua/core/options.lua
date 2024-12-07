@@ -69,7 +69,6 @@ vim.opt.pumheight      = 10   -- Maximum number of entries in a popup
 vim.opt.updatetime     = 250  -- delay for LSP pop-up windows to appear
 vim.opt.completeopt    = "menu,menuone,noselect"
 
-
 ------ statusline ------
 vim.opt.laststatus     = 3      -- since we have a statusline,
 vim.opt.showmode       = false  -- we want to disable the
@@ -102,3 +101,6 @@ vim.opt.shortmess      = "tToOcCFI"
 
 ------ bell ------
 vim.opt.belloff        = "all"    -- disable all bell sounds from Neovim
+
+------ spellcheck ------
+vim.opt.spelllang      = "en_us,fr"

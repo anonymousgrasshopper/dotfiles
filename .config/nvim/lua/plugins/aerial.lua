@@ -1,10 +1,82 @@
+local icons = {
+  Array         = " ",
+  Boolean       = "󰨙 ",
+  Class         = " ",
+  Codeium       = "󰘦 ",
+  Color         = " ",
+  Control       = " ",
+  Collapsed     = " ",
+  Constant      = "󰏿 ",
+  Constructor   = " ",
+  Copilot       = " ",
+  Enum          = " ",
+  EnumMember    = " ",
+  Event         = " ",
+  Field         = " ",
+  File          = " ",
+  Folder        = " ",
+  Function      = "󰊕 ",
+  Interface     = " ",
+  Key           = " ",
+  Keyword       = " ",
+  Method        = "󰊕 ",
+  Module        = " ",
+  Namespace     = "󰦮 ",
+  Null          = " ",
+  Number        = "󰎠 ",
+  Object        = " ",
+  Operator      = " ",
+  Package       = " ",
+  Property      = " ",
+  Reference     = " ",
+  Snippet       = " ",
+  String        = " ",
+  Struct        = "󰆼 ",
+  Supermaven    = " ",
+  TabNine       = "󰏚 ",
+  Text          = " ",
+  TypeParameter = " ",
+  Unit          = " ",
+  Value         = " ",
+  Variable      = "󰀫 ",
+}
+
 return {
   "stevearc/aerial.nvim",
   lazy = true,
   keys = {
     {"<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outilne window"},
   },
-  config = function()
-    require("aerial").setup()
+  opts = function()
+    vim.api.nvim_create_autocmd("ExitPre", {command = "AerialCloseAll",})
+
+    icons.lua = { Package = icons.Control }
+
+    ---@type table<string, string[]>|false
+    local filter_kind = false
+
+    local opts = {
+      attach_mode = "global",
+      backends = { "lsp", "treesitter", "markdown", "man" },
+      show_guides = true,
+      layout = {
+        resize_to_content = false,
+        win_opts = {
+          winhl = "Normal:NormalFloat,FloatBorder:NormalFloat,SignColumn:SignColumnSB",
+          signcolumn = "yes",
+          statuscolumn = " ",
+        },
+      },
+      icons = icons,
+      filter_kind = filter_kind,
+      -- stylua: ignore
+      guides = {
+        mid_item   = "├╴",
+        last_item  = "└╴",
+        nested_top = "│ ",
+        whitespace = "  ",
+      },
+    }
+    return opts
   end,
 }

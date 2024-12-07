@@ -75,10 +75,6 @@ vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Down" })
 vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Up" })
 
------- search highlights ------
-vim.keymap.set("n", "<leader>nh", "<cmd>nohl<CR>", { desc = "Clear search highlights" })
-vim.keymap.set("n", "<leader>L", "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", { desc = "Redraw / Clear hlsearch / Diff Update" })
-
 ------ window management ------
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
 vim.keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
@@ -107,30 +103,6 @@ vim.keymap.set( {"n", "v"}, "<C-a>", 'ggVG"+y', { desc = "Yank file text into \"
 vim.keymap.set( "v", "<C-z>", '"+y', { desc = "Yank selected text into \"+" } )
 vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register"})
 
------- increment/decrement numbers ------
-vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
-vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
-
------- lazy ------
-vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim ui" })
-
------- new file ------
-vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
-
-vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-
-vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
-vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
-
------- toggle options ------
-vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
-vim.keymap.set("n", "<leader>chdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
-
------- inspect ------
-vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
-vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
-
 ------ improved up and downn motions ------
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 vim.keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -142,6 +114,34 @@ vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
 vim.keymap.set("i", ";", ";<c-g>u")
 
+------ search highlights ------
+vim.keymap.set("n", "<leader>nh", "<cmd>nohl<CR>", { desc = "Clear search highlights" })
+vim.keymap.set("n", "<leader>L", "<cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>", { desc = "Redraw / Clear hlsearch / Diff Update" })
+
+------ increment/decrement numbers ------
+vim.keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" })
+vim.keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" })
+
+------ lazy ------
+vim.keymap.set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Open Lazy.nvim ui" })
+
+------ new file ------
+vim.keymap.set("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+
+------ toggle options ------
+vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
+vim.keymap.set("n", "<leader>chdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
+
+------ inspect ------
+vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
+vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
+
+------ quickfix and location lists ------
+vim.keymap.set("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+vim.keymap.set("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
+vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
+
 ------ keywordprg ------
 vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
@@ -150,11 +150,6 @@ vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reve
 
 ------ clean up copied LaTeX from AoPS ------
 vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\1/g", {})
-
------------------------------------------------------------------
--------------------- COMPETITIVE PROGRAMMING --------------------
------------------------------------------------------------------
-
 
 ------ compile C++ code ------
 local escape_spaces = function (path)
@@ -185,6 +180,3 @@ end, { expr = true })
 vim.keymap.set("n","<leader>template", "i#pragma GCC optimize(\"O3,unroll-loops\")\n#include <bits/stdc++.h>\nusing namespace std;\n#define REP(i,a,b) for(int i=0;i<a;i+=b)\n#define all(x) x.begin(), x.end()\n#define rall(x) x.rbegin(), x.rend()\n#define f      first        //    .\n#define s      second       //   .'.\n#define nint   new int      //   |o|\n#define nchar  new char     //  .'o'.\n#define bltn __builtin      //  |.-.|\n#define pb     push_back    //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n#ifdef LOCAL\n#include \"dbg.h\"\n#else\n#define n(...) 42\n#define id(...) 42\n#define dbg(...) 42\n#define line(...) 42\n#define dbgarr(...) 42\n#define dbg_var(...) 42\n#endif\n\n///////////////////////////////////\n\n\n///////////////////////////////////\n\n\nint main() {<Esc>oios::sync_with_stdio(false); cin.tie(nullptr);\n}<Esc>ki\t<Esc>o", { desc = "Insert Codeforces template" })
 vim.keymap.set("n","<leader>codeforces", "i#pragma GCC optimize(\"O3,unroll-loops\")\n#include <bits/stdc++.h>\nusing namespace std;\n#define REP(i,a,b) for(int i=0;i<a;i+=b)\n#define all(x) x.begin(), x.end()\n#define rall(x) x.rbegin(), x.rend()\n#define f      first        //    .\n#define s      second       //   .'.\n#define nint   new int      //   |o|\n#define nchar  new char     //  .'o'.\n#define bltn __builtin      //  |.-.|\n#define pb     push_back    //  ' ; '\nusing ll    =  long long          ;\nusing vi    =  vector<int>        ;\nusing uint  =  unsigned int       ;\nusing vc    =  vector<char>       ;\nusing vii   =  vector<int,int>    ;\nusing vvi   =  vector<vector<int>>;\n#ifdef LOCAL\n#include \"dbg.h\"\n#else\n#define n(...) 42\n#define id(...) 42\n#define dbg(...) 42\n#define line(...) 42\n#define dbgarr(...) 42\n#define dbg_var(...) 42\n#endif\n\n///////////////////////////////////\n\nvoid solve() {\n}\n\n///////////////////////////////////\n\nint main() {\n \bios::sync_with_stdio(false); cin.tie(nullptr);\n  int nbTests; cin >> nbTests;\n  while(nbTests--){\n    solve();\n}\n}<Esc>10kO", { desc = "Insert Codeforces template" })
 vim.keymap.set("n", "<leader>setio", 'Ovoid setIO(string name = "") {\n \bif (sz(name)) {\n    freopen((name+".in").c_str(), "r", stdin);\n    freopen((name+".out").c_str(), "w", stdout);\n  }\n}\n', { desc = "Add io function for USACO" })
-
------- shortcuts ------
-vim.keymap.set("n", "<leader>array", "0iint n; cin >> n;\nint* array = new int [n];\nREP(i,0,n) cin >> array[i];\n")

@@ -36,27 +36,14 @@ return {
 
             NeoTreeWinSeparator = { bg = "none", fg = colors.palette.crystalBlue },
             WinSeparator = { fg = "#54546D", bg = "none"},
-
-            NvChAsciiHeader = { bg = colors.palette.sumiInk3, fg = colors.palette.fujiWhite },
-            NvChSection = { bg = colors.palette.sumiInk2 },
-            NvCheatsheetWhite = { bg = colors.palette.oldWhite, fg = colors.palette.sumiInk3 },
-            NvCheatsheetGray = { bg = colors.palette.dragonGray, fg = colors.palette.sumiInk3 },
-            NvCheatsheetBlue = { bg = colors.palette.dragonBlue2, fg = colors.palette.sumiInk3 },
-            NvCheatsheetCyan = { bg = colors.palette.lotusCyan, fg = colors.palette.sumiInk3 },
-            NvCheatsheetRed = { bg = colors.palette.waveRed, fg = colors.palette.sumiInk3 },
-            NvCheatsheetGreen = { bg = colors.palette.springGreen, fg = colors.palette.sumiInk3 },
-            NvCheatsheetOrange = { bg = colors.palette.surimiOrange, fg = colors.palette.sumiInk3 },
-            NvCheatsheetPurple = { bg = colors.palette.dragonPink, fg = colors.palette.sumiInk3 },
-            NvCheatsheetMagenta = { bg = colors.palette.dragonPink, fg = colors.palette.sumiInk3 },
-            NvCheatsheetYellow = { bg = colors.palette.boatYellow1, fg = colors.palette.sumiInk3 },
           }
         end,
         colors = {
           palette = {
             -- change all usages of these colors
-            sumiInk3 = "#14141a", -- main background color
-            sumiInk4 = "#14141a", -- line number background color
-            sumiInk2 = "#1c1c25", -- cheatsheet column color
+            -- sumiInk3 = "#14141a", -- main background color
+            -- sumiInk4 = "#14141a", -- line number background color
+            -- sumiInk2 = "#1c1c25", -- cheatsheet column color
           },
         },
       })

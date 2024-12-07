@@ -15,14 +15,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup( --default plugin priority is 50
-  {
+require("lazy").setup({
+  spec = {
 	  { import = "plugins.util" },
 	  { import = "plugins" },
   },
-  {
-	  change_detection = {
-		notify = false,
-	  },
-  }
-)
+  change_detection = {
+    notify = false,
+  },
+  install = { colorscheme = { "kanagawa-wave" } },
+})
