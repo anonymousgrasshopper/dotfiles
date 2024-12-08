@@ -93,9 +93,11 @@
     }
   },
   "equation": {
-    "prefix": "equ",
+    "prefix": "\\eq",
     "body": [
-      "equation"
+      "\\begin{equation}",
+      "$1",
+      "\\end{equation}"
     ],
     "luasnip": {
       "autotrigger": true
