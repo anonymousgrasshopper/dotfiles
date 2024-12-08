@@ -1,0 +1,20 @@
+{
+  "LuaSnip": {
+    "prefix": "snip",
+    "body": [
+      ",",
+      "\"${1}\": {",
+        "\t\"prefix\": \"$2\",",
+        "\t\"body\": [",
+          "\t\t\"${3}\"",
+        "\t],",
+        "\t\"luasnip\": {",
+          "\t\t\"autotrigger\": ${4:true}${5:,\n\t\t\"wordTrig\": false}",
+        "\t}",
+      "}"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  }
+}

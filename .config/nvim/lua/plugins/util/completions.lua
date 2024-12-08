@@ -17,6 +17,12 @@ return {
         -- install jsregexp (optional).
         build = "make install_jsregexp",
         config = function ()
+          require("luasnip").config.set_config({
+            history = true,
+            updateevents = "TextChanged,TextChangedI",
+            enable_autosnippets = true,
+          })
+
           vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
           vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
         end
@@ -24,6 +30,7 @@ return {
       "saadparwaiz1/cmp_luasnip",     -- for autocompletion
       "rafamadriz/friendly-snippets", -- useful snippets
       "onsails/lspkind.nvim",         -- pictograms
+      "micangl/cmp-vimtex"            -- LaTeX
     },
     config = function()
       local cmp = require("cmp")
@@ -74,15 +81,48 @@ return {
           ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),    -- scroll documentation backwards
           ["<C-f>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation forward
+          ["<C-u>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation backwards
+          ["<C-d>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation forward
           ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
           ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
-          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+          ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if luasnip.expandable() then
+                luasnip.expand()
+              else
+                cmp.confirm({
+                  select = true,
+                })
+              end
+            else
+              fallback()
+            end
+          end),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
+            elseif cmp.visible() then
+              cmp.select_next_item()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            elseif cmp.visible() then
+              cmp.select_prev_item()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
 
         -- sources for autocompletion
         sources = cmp.config.sources({
           { name = "nvim_lsp" }, -- get completions from attached LSPs
           { name = "luasnip" }, -- snippets
+          { name = "vimtex" }, -- LaTeX
           { name = "buffer" }, -- text within current buffer
           { name = "emoji" }, -- get emojis as completions
           { name = "path" }, -- filesystem path

@@ -1,0 +1,84 @@
+{
+  "template": {
+    "prefix": "\\template",
+    "body": [
+      "\\documentclass{${3:article}}",
+      "\\title{$1}",
+      "\\author{$2}",
+      "\\date{\\today}",
+      "",
+      "\\begin{document}",
+      "\\maketitle",
+      "$4",
+      "\\end{document}"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "environment": {
+    "prefix": "beg",
+    "body": [
+      "\\begin{$1}\n\t${2}\n\\end{$1}"
+    ],
+    "description": "Environment",
+    "luasnip": {
+      "priority": 2000,
+      "autotrigger": true
+    }
+  },
+  "table of contents": {
+    "prefix": "\\toc",
+    "body": [
+      "\\tableofcontents"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "usepackage": {
+    "prefix": "\\pack",
+    "body": [
+      "\\usepackage{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "section": {
+    "prefix": "\\sec",
+    "body": [
+      "\\section{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "math": {
+    "prefix": "[",
+    "body": [
+      "\\[$1\\"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "inline math": {
+    "prefix": "$",
+    "body": [
+      "$$1$"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "equation": {
+    "prefix": "equ",
+    "body": [
+      "equation"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  }
+}
