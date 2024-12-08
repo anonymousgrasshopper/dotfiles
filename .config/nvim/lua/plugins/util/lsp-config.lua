@@ -16,10 +16,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
       focusable = false,
       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
       winblend = vim.o.pumblend,
-      border = 'single',
-      source = 'always',
-      prefix = ' ',
-      scope = 'cursor',
+      border = "single",
+      source = "always",
+      prefix = " ",
+      scope = "cursor",
     }
     vim.diagnostic.open_float(nil, opts)
   end
@@ -59,6 +59,8 @@ return {
         ensure_installed = {
           "clangd",
           "lua_ls",
+          "bashls",
+          "pylsp",
         },
       })
     end,
@@ -84,19 +86,20 @@ return {
       lspconfig.clangd.setup({
         capabilities = capabilities,
       })
+      lspconfig.clangd.setup { handlers=handlers }
 
       lspconfig.lua_ls.setup({
         -- capabilities = capabilities  
         on_init = function(client)
           local path = client.workspace_folders[1].name
-          if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
+          if vim.loop.fs_stat(path.."/.luarc.json") or vim.loop.fs_stat(path.."/.luarc.jsonc") then
             return
           end
 
-          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
-              -- Tell the language server which version of Lua you're using
-              version = 'LuaJIT'
+              -- Tell the language server which version of Lua you"re using
+              version = "LuaJIT"
             },
             -- Make the server aware of Neovim runtime files
             workspace = {
@@ -111,7 +114,10 @@ return {
           Lua = {}
         },
       })
-      require 'lspconfig'.clangd.setup { handlers=handlers }
+
+      lspconfig.bashls.setup {
+        filetypes = {"sh", "bash", "zsh"}
+      }
 
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})
