@@ -38,6 +38,7 @@ return {
     "williamboman/mason.nvim",
     event = { "BufReadPre", "BufNewFile" },
     priority = 90,  -- We need to install LSPs before calling lspconfig
+    cmd = { "Mason" },
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
     },

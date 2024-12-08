@@ -1,8 +1,3 @@
-autoload -Uz compinit
-[ -d $HOME/.cache/zsh ] || mkdir -p $HOME/.cache/zsh
-zstyle ':completion:*' cache-path "$HOME/.cache/zsh/zcompcache"
-compinit -w -d "$HOME/.cache/zsh/zcompdump"
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -66,13 +61,15 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 # Environment Variables
+export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 export LANG=en_US.UTF-8
 export EDITOR="nvim"
-export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH
 
 export PYTHON_HISTORY=$HOME/.local/state/python/history
+export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export WGETRC="$HOME/.config/wget/wgetrc"
+export RANGER_LOAD_DEFAULT_RC=false
 
 # Aliases
 source ~/.config/zsh/aliases.zsh
@@ -87,3 +84,7 @@ source ~/.config/zsh/aliases.zsh
 
 # Run zoxide
 eval "$(zoxide init zsh)"
+
+if [ -f $ZDOTDIR/.zsh_sysinit ]; then
+. $ZDOTDIR/.zsh_sysinit
+fi
