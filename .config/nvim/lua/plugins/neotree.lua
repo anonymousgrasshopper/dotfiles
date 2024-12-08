@@ -45,11 +45,12 @@ return {
       {text = "󰌵", texthl = "DiagnosticSignHint"})
 
     require("neo-tree").setup({
-      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = "rounded",
       enable_git_status = true,
       enable_diagnostics = false,
       open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
+      bind_to_cwd = false,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
       sort_function = nil , -- use a custom function for sorting files and directories in the tree 
       -- sort_function = function (a,b)
@@ -206,8 +207,15 @@ return {
             --"node_modules"
           },
           hide_by_pattern = { -- uses glob style patterns
-            --"*.meta",
-            --"*/src/*/tsconfig.json",
+            "*.aux",
+            "*.fdb_latexmk",
+            "*.fls",
+            "*.log",
+            "*.out",
+            "*.pre",
+            "*.synctex.gz",
+            "*.toc",
+            "*.fls",
           },
           always_show = { -- remains visible even if other settings would normally hide it
             --".gitignored",
@@ -220,11 +228,10 @@ return {
             --"thumbs.db"
           },
           never_show_by_pattern = { -- uses glob style patterns
-            --".null-ls_*",
           },
         },
         follow_current_file = {
-          enabled = false, -- This will find and focus the file in the active buffer every time
+          enabled = true, -- This will find and focus the file in the active buffer every time
           --               -- the current file is changed while the tree is open.
           leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
         },

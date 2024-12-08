@@ -39,7 +39,17 @@
   "usepackage": {
     "prefix": "\\pack",
     "body": [
-      "\\usepackage{$1}"
+      "\\usepackage[$2]{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true
+    }
+  },
+  "french": {
+    "prefix": "\\french",
+    "body": [
+      "\\usepackage[T1]{fontenc}",
+      "\\usepackage[french]{babel}"
     ],
     "luasnip": {
       "autotrigger": true
@@ -72,6 +82,16 @@
       "autotrigger": true
     }
   },
+  "fraction": {
+    "prefix": "\\frac",
+    "body": [
+      "\\frac{$1}{$2}"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
   "equation": {
     "prefix": "equ",
     "body": [
@@ -79,6 +99,36 @@
     ],
     "luasnip": {
       "autotrigger": true
+    }
+  },
+  "mathbb": {
+    "prefix": "\\bb",
+    "body": [
+      "\\mathbb{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
+  "mathcal": {
+    "prefix": "\\cal",
+    "body": [
+      "\\mathcal{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
+  "mathfrak": {
+    "prefix": "\\frak",
+    "body": [
+      "\\mathfrak{$1}"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
     }
   }
 }

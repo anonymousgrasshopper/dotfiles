@@ -146,7 +146,7 @@ vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 vim.keymap.set("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
 ------ go to nvim config directory ------
-vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree reveal<Cr>E")
+vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree<Cr>")
 
 ------ clean up copied LaTeX from AoPS ------
 vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\1/g", {})
