@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "lspinfo",
     "notify",
     "spectre_panel",
-    "dap",
+    "CompetiTest",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
