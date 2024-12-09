@@ -5,7 +5,6 @@ vim.api.nvim_create_autocmd("Filetype", {
     "cpp"
   },
   callback = function ()
-    print("hallo kamarade")
     vim.schedule(function ()
       vim.keymap.set("n", "<localleader>ctst", "<cmd>CompetiTest receive contest<CR>", { desc = "Receive contest", buffer = true })
       vim.keymap.set("n", "<localleader>pb", "<cmd>CompetiTest receive problem<CR>", { desc = "Receive problem", buffer = true })

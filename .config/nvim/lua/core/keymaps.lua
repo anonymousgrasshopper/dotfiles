@@ -170,6 +170,15 @@ local escape_spaces = function (path)
     end
   end
 end
-vim.keymap.set("n", "<leader>dbg", function()
-  return ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
-end, { expr = true })
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = {
+    "cpp"
+  },
+  callback = function ()
+    vim.schedule(function ()
+      vim.keymap.set("n", "<leader>dbg", function()
+        return ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
+      end, { expr = true })
+    end)
+  end
+})
