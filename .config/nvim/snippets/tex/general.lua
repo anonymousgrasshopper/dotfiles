@@ -5,8 +5,7 @@ local i = ls.insert_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local tex = {}
-tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
-tex.in_text = function() return not tex.in_mathzone() end
+tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
@@ -18,7 +17,7 @@ return {
         \title{<>}
         \author{<>}
         \date{\today}
-        
+
         \begin{document}
         \maketitle
           <>
@@ -31,7 +30,7 @@ return {
         i(0),
       }
     ),
-    { condition = line_begin }
+    { condition = tex.in_text * line_begin }
   ),
   s({ trig = "toc", descr = "Table of contents", snippetType = "autosnippet" },
     t("\\tableofcontents"),
@@ -45,10 +44,16 @@ return {
         i(1),
       }
     ),
-    { condition = line_begin }
+    { condition = tex.in_text * line_begin }
   ),
   s({ trig = "fr", descr = "Français", snippetType = "autosnippet" },
-    t("\\usepackage[T1]{fontenc}\n\\usepackage[french]{babel}"),
-    { condition = line_begin }
+    fmta(
+      [[
+        \usepackage[T1]{fontenc}
+        \usepackage[french]{babel}
+      ]],
+      {}
+    ),
+    { condition = tex.in_text * line_begin }
   )
 }

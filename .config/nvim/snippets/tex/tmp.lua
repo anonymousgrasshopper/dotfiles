@@ -29,7 +29,7 @@ end
 
 local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
-tex.in_text = function() return not tex.in_mathzone() end
+tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 

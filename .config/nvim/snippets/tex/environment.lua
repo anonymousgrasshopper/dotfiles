@@ -4,6 +4,9 @@ local i = ls.insert_node
 local rep = require("luasnip.extras").rep
 local fmta = require("luasnip.extras.fmt").fmta
 
+local tex = {}
+tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
+
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
@@ -20,7 +23,7 @@ return {
         rep(1),
       }
     ),
-    { condition = line_begin }
+    { condition = tex.in_text * line_begin }
   ),
   s({ trig = "se", descr = "section", snippetType = "autosnippet" },
     fmta(
@@ -31,7 +34,7 @@ return {
         i(1),
       }
     ),
-  { condition = line_begin }
+    { condition = tex.in_text * line_begin }
   ),
   s({ trig = "sb", descr = "section", snippetType = "autosnippet" },
     fmta(
@@ -42,6 +45,6 @@ return {
         i(1),
       }
     ),
-  { condition = line_begin }
+    { condition = tex.in_text * line_begin }
   ),
 }

@@ -61,8 +61,6 @@ return {
           "clangd",
           "lua_ls",
           "bashls",
-          "texlab",
-          "ltex",
           "pylsp",
         },
       })

@@ -16,14 +16,13 @@ end
 
 local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
-tex.in_text = function() return not tex.in_mathzone() end
 
 return {
   s({ trig = "[", descr = "display math",  wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       "\\[<>\\",
       {
-        i(1),
+        d(1, get_visual),
       }
     )
   ),
@@ -31,7 +30,7 @@ return {
     fmta(
       "$<>$",
       {
-        i(1),
+        d(1, get_visual),
       }
     )
   ),
@@ -41,10 +40,10 @@ return {
         \sum_{<>=<>}^{<>}<>
       ]],
       {
-        i(2, "i"),
-        i(3, "0"),
-        i(4, "n"),
-        i(1),
+        i(1, "i"),
+        i(2, "0"),
+        i(3, "n"),
+        i(0),
       }
     ),
     { condition = tex.in_mathzone }
@@ -55,10 +54,10 @@ return {
         \prod_{<>=<>}^{<>}<>
       ]],
       {
-        i(2, "i"),
-        i(3, "0"),
-        i(4, "n"),
-        i(1),
+        i(1, "i"),
+        i(2, "0"),
+        i(3, "n"),
+        i(0),
       }
     ),
     { condition = tex.in_mathzone }
@@ -81,9 +80,9 @@ return {
         d(1, get_visual),
       }
     ),
-    {condition = tex.in_mathzone}
+    { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}]);", descr = "subscript wordTrig=false", regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}]);", descr = "subscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>_{<>}",
       {
@@ -91,7 +90,7 @@ return {
         d(1, get_visual),
       }
     ),
-    {condition = tex.in_mathzone}
+    { condition = tex.in_mathzone }
   ),
   s({ trig = "([%w%)%]%}])__", descr = "subscript and superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
@@ -102,6 +101,33 @@ return {
         i(2),
       }
     ),
-    {condition = tex.in_mathzone}
+    { condition = tex.in_mathzone }
   ),
+  s({ trig = "\\floor", descr = "floor", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\left\\lfoor <> \\right\\rfloor",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\ceil", descr = "ceil", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\left\\lceil <> \\right\\rceil",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\cbrt", descr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\sqrt[3]{<>}",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  )
 }
