@@ -1,18 +1,19 @@
+vim.g.maplocalleader = ','
+
 return {
 	"xeluxee/competitest.nvim",
-  lazy = true,
 	dependencies = "MunifTanjim/nui.nvim",
   keys = {
-    { "<leader>contest", "<cmd>CompetiTest receive contest<CR>", desc = "Receive contest" },
-    { "<leader>problem", "<cmd>CompetiTest receive problem<CR>", desc = "Receive problem" },
-    { "<leader>add", "<cmd>CompetiTest add_testcase<CR>", desc = "" },
-		{ "<leader>delete", "<cmd>CompetiTest delete_testcase<CR>", desc = "" },
-		{ "<leader>run", "<cmd>CompetiTest run<CR>", desc = "" },
-    { "<leader>show", "<cmd>CompetiTest show_ui<CR>", desc = "" },
-    { "<leader>nocomp", "<cmd>CompetiTest run_no_compile<CR>", desc = "" },
+    { "<localleader>ctst", "<cmd>CompetiTest receive contest<CR>", desc = "Receive contest" },
+    { "<localleader>pb", "<cmd>CompetiTest receive problem<CR>", desc = "Receive problem" },
+    { "<localleader>add", "<cmd>CompetiTest add_testcase<CR>", desc = "Add testcase" },
+		{ "<localleader>dlt", "<cmd>CompetiTest delete_testcase<CR>", desc = "Delete testcase" },
+		{ "<localleader>run", "<cmd>CompetiTest run<CR>", desc = "Run code on tests" },
+    { "<localleader>show", "<cmd>CompetiTest show_ui<CR>", desc = "Show ui" },
+    { "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", desc = "Run the code on tests without recompiling" },
   },
   cmd = {
-    "CompetiTest edit_testcase",
+    "CompetiTest",
   },
 	config = function()
 		require("competitest").setup({

@@ -21,7 +21,7 @@ return {
         tailwind = false, -- Enable tailwind colors
         -- parsers can contain values used in |user_default_options|
         sass = { enable = false, parsers = { "css" }, }, -- Enable sass colors
-        virtualtext = "■",
+        -- virtualtext = "■",
         -- update color values even if buffer is not focused
         -- example use: cmp_menu, cmp_docs
         always_update = false

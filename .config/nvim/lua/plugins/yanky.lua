@@ -1,6 +1,5 @@
 return {
   "gbprod/yanky.nvim",
-  lazy = true,
   keys = {
     {"p", "<Plug>(YankyPutAfter)"},
     {"P", "<Plug>(YankyPutBefore)"},

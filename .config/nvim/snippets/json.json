@@ -1,6 +1,6 @@
 {
   "LuaSnip": {
-    "prefix": "snip",
+    "prefix": "snp",
     "body": [
       ",",
       "\"${1}\": {",

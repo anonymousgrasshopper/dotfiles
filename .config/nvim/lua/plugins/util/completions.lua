@@ -21,10 +21,22 @@ return {
             history = true,
             updateevents = "TextChanged,TextChangedI",
             enable_autosnippets = true,
+            store_selection_keys = "<Tab>",
+            delete_check_events = "TextChanged",
+            ext_opts = {
+              [require("luasnip.util.types").choiceNode] = {
+                active = {
+                  virt_text = { { "choiceNode", "Comment" } },
+                },
+              },
+            },
+            ft_func = require("luasnip.extras.filetype_functions").from_cursor,
           })
 
           vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
           vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
+
+          vim.keymap.set("n", "<Leader>snip", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
         end
       },
       "saadparwaiz1/cmp_luasnip",     -- for autocompletion
@@ -39,7 +51,13 @@ return {
 
       -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
       require("luasnip.loaders.from_vscode").lazy_load()
+
       require("luasnip.loaders.from_vscode").lazy_load({
+        paths = {
+          vim.fn.stdpath("config") .. "/snippets",
+        },
+      })
+      require("luasnip.loaders.from_lua").lazy_load({
         paths = {
           vim.fn.stdpath("config") .. "/snippets",
         },

@@ -1,7 +1,6 @@
 return {
   "lewis6991/satellite.nvim",
   event = { "BufReadPre", "BufNewFile" },
-  lazy = true,
   priority = 90,
   config = function()
     require("satellite").setup {
@@ -16,7 +15,7 @@ return {
           -- Supports any number of symbols
           symbols = { '⎺', '⎻', '⎼', '⎽' }
           -- Highlights:
-          -- - SatelliteCursor (default links to NonText
+          -- - SatelliteCursor (default links to NonText)
         },
         search = {
           enable = true,
@@ -49,7 +48,7 @@ return {
         marks = {
           enable = false,
           show_builtins = false, -- shows the builtin marks like [ ] < >
-          key = 'm'
+          key = 'm',
           -- Highlights:
           -- SatelliteMark (default links to Normal)
         },

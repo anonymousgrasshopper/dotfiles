@@ -43,12 +43,11 @@ local icons = {
 
 return {
   "stevearc/aerial.nvim",
-  lazy = true,
   keys = {
-    {"<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outilne window"},
+    { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outilne window" },
   },
   opts = function()
-    vim.api.nvim_create_autocmd("ExitPre", {command = "AerialCloseAll",})
+    vim.api.nvim_create_autocmd("ExitPre", { command = "AerialCloseAll" })
 
     icons.lua = { Package = icons.Control }
 
@@ -63,19 +62,21 @@ return {
         resize_to_content = false,
         win_opts = {
           winhl = "Normal:NormalFloat,FloatBorder:NormalFloat,SignColumn:SignColumnSB",
-          signcolumn = "yes",
-          statuscolumn = " ",
+          signcolumn = "no",
+          statuscolumn = "",
         },
       },
       icons = icons,
       filter_kind = filter_kind,
-      -- stylua: ignore
       guides = {
         mid_item   = "├╴",
         last_item  = "└╴",
         nested_top = "│ ",
         whitespace = "  ",
       },
+      ignore = {
+        filetypes = { "neo-tree", "CompetiTest" },
+      }
     }
     return opts
   end,
