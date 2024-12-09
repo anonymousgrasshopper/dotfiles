@@ -3,7 +3,7 @@ export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 export LANG=en_US.UTF-8
 export EDITOR="nvim"
-export BROWSE="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
+export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # programs-specific variables
 export PYTHON_HISTORY=$HOME/.local/state/python/history
