@@ -19,7 +19,7 @@ return {
         \date{\today}
 
         \begin{document}
-        \maketitle
+          \maketitle
           <>
         \end{document}
       ]],

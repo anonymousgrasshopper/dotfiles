@@ -28,9 +28,10 @@ return {
   s({ trig = "se", descr = "section", snippetType = "autosnippet" },
     fmta(
       [[
-        \section{<>}
+        \section<>{<>}
       ]],
       {
+        i(2),
         i(1),
       }
     ),
@@ -39,9 +40,10 @@ return {
   s({ trig = "sb", descr = "section", snippetType = "autosnippet" },
     fmta(
       [[
-        \subsection{<>}
+        \subsection<>{<>}
       ]],
       {
+        i(2),
         i(1),
       }
     ),
