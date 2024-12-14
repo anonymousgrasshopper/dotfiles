@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+if [[ ! -f $1/"input.txt" ]]; then
+  touch $1/"input.txt"
+fi
+if [[ ! -f $1/"output.txt" ]]; then
+  touch $1/"output.txt"
+fi
+if [[ ! -f $1/"err.txt" ]]; then
+  touch $1/"err.txt"
+fi

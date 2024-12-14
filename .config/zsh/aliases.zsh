@@ -1,13 +1,16 @@
 # For a full list of active aliases, run `alias`.
 
 # Commands
+alias :q="exit"
+alias :qa="exit"
 alias rm="rm -i"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
-alias ls="exa --group-directories-first"
-alias find="fd"
+
 alias cd="z"
-alias :q="exit"
+alias cat="bat"
+alias find="fd"
+alias ls="exa --group-directories-first"
 
 # Programs
 alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"

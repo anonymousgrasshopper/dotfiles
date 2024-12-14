@@ -11,5 +11,6 @@ export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export WGETRC="$HOME/.config/wget/wgetrc"
 export RANGER_LOAD_DEFAULT_RC=false
 
-# for using X servers in WSL
+# setting graphics and audio in WSL
 export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+export PULSE_SERVER=tcp:$(grep nameserver /etc/resolv.conf | awk '{print $2}');

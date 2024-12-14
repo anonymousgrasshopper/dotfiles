@@ -3,17 +3,33 @@
     "prefix": "for",
     "body": [
       "for (int ${1:i}=0;$1<${2:max};$1${3:++}) {\n\t$4\n}"
+    ]
+  },
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for (${1:auto} ${2:x} : ${3:array}) {\n\t$4\n}"
+    ]
+  },
+  "cout": {
+    "prefix": "cout",
+    "body": [
+      "cout << "
     ],
     "luasnip": {
-      "autotrigger": true
+      "autotrigger": true,
+      "wordTrig": false
     }
   },
-  "array" : {
-    "prefix" : "arr",
-    "body" : [
-      "${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
+  "cin": {
+    "prefix": "cin",
+    "body": [
+      "cin >> "
     ],
-    "desciption": "Dynamic array"
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
   },
   "first": {
     "prefix": ".f ",
@@ -35,6 +51,16 @@
       "wordTrig": false
     }
   },
+  "push_back": {
+    "prefix": ".pb(",
+    "body": [
+      ".push_back($1"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
   "long long": {
     "prefix": "ll ",
     "body": [
@@ -43,6 +69,13 @@
     "luasnip": {
       "autotrigger": true
     }
+  },
+  "array" : {
+    "prefix" : "arr",
+    "body" : [
+      "${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
+    ],
+    "desciption": "Dynamic array"
   },
   "vector<int>": {
     "prefix": "vi ",
@@ -69,36 +102,6 @@
     ],
     "luasnip": {
       "autotrigger": true
-    }
-  },
-  "push_back": {
-    "prefix": ".pb(",
-    "body": [
-      ".push_back($1"
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "all": {
-    "prefix": "all(",
-    "body": [
-      "$1.begin(),$1.end("
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "rall": {
-    "prefix": "rall(",
-    "body": [
-      "$1.rbegin(),$1.rend("
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
     }
   },
   "builtin": {

@@ -80,3 +80,7 @@ eval "$(zoxide init zsh)"
 if [ -f $ZDOTDIR/.zsh_sysinit ]; then
 . $ZDOTDIR/.zsh_sysinit
 fi
+
+if [ -f $HOME/.config/ranger/plugins/ranger_cd.sh ]; then
+  source $HOME/.config/ranger/plugins/ranger_cd.sh
+fi

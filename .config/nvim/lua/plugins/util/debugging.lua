@@ -1,3 +1,38 @@
+local escape_spaces = function (path)
+  local skip_next = false
+  local nb_added_chars = 0
+  for i = 1,2*path:len()+1 do
+    if i > path:len() then
+      return path
+    end
+    if not skip_next then
+      if path:sub(i,i) == ' ' then
+        path = path:sub(1,i-1) .. "\\" .. path:sub(i,path:len()+nb_added_chars)
+        skip_next = true
+        nb_added_chars = nb_added_chars + 1
+      end
+    else
+      skip_next = false
+    end
+  end
+end
+
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = {
+    "cpp"
+  },
+  callback = function ()
+    vim.schedule(function ()
+      vim.keymap.set("n", "<leader>dbg", function()
+        return ":!codelldb_stdio_redirection ".. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "<CR>" .. ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
+      end, { expr = true })
+      vim.keymap.set("n", ",dbg", function()
+        return ":!codelldb_stdio_redirection ".. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "<CR>" .. ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
+      end, { expr = true })
+    end)
+  end
+})
+
 return {
   {
     "jay-babu/mason-nvim-dap.nvim",
@@ -50,6 +85,7 @@ return {
     config = function()
       local dap   = require("dap")
       local dapui = require("dapui")
+      local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "/"
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
@@ -87,7 +123,7 @@ return {
           end,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
-          stdio = {"input.txt", "output.txt", "err.txt"},
+          stdio = { path .. "input.txt", path .. "output.txt", path .. "err.txt"},
         },
       }
 
