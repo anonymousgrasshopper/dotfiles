@@ -150,3 +150,17 @@ vim.keymap.set("n", "<leader>cdrc", "<cmd>cd ~/.config/nvim<Cr><cmd>Neotree<Cr>"
 
 ------ clean up copied LaTeX from AoPS ------
 vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\1/g", {})
+
+------ Compile and run SFML programs ------
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = {
+    "cpp"
+  },
+  callback = function ()
+    vim.schedule(function ()
+      vim.keymap.set("n", "<leader>sf", function()
+        return "<cmd>!compile_sfml " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r") .. "<CR>"
+      end, { expr = true })
+    end)
+  end
+})
