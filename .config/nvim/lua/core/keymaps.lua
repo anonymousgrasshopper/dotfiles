@@ -97,8 +97,8 @@ vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = 
 vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 ------ yanking and pasting ------
-vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
-vim.keymap.set("n", "<leader>p", "hi<C-R><C-P>+<ESC>", { desc = "Paste text from \"+" })
+vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from \"+ after cursor" })
+vim.keymap.set("n", "<leader>p", "hi<C-R><C-P>+<ESC>", { desc = "Paste text from \"+ before cursor" })
 vim.keymap.set( {"n", "v"}, "<C-a>", 'ggVG"+y<C-o>', { desc = "Yank file text into \"+" })
 vim.keymap.set( "v", "<C-z>", '"+y', { desc = "Yank selected text into \"+" })
 vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register"})
