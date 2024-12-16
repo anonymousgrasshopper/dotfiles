@@ -35,20 +35,6 @@ vim.api.nvim_create_autocmd("Filetype", {
 
 return {
   {
-    "jay-babu/mason-nvim-dap.nvim",
-    lazy = true,
-    dependencies = {
-      "williamboman/mason.nvim",
-    },
-    opts = {
-      handler = {
-        ensure_installed = {
-          "codelldb",
-        }
-      }
-    },
-  },
-  {
     "mfussenegger/nvim-dap",
     lazy = true,
     dependencies = {
