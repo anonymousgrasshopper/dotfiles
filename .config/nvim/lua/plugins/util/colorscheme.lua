@@ -32,9 +32,6 @@ return {
         colors = {
           palette = {
             -- change all usages of these colors
-            -- sumiInk3 = "#14141a", -- main background color
-            -- sumiInk4 = "#14141a", -- line number background color
-            -- sumiInk2 = "#1c1c25", -- cheatsheet column color
           },
         },
       })

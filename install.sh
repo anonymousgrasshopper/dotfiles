@@ -2,8 +2,9 @@
 
 # colors
 RED='\033[0;31m'
-WHITE='\033[0;37m'
+BLUE="\e[0;94m"
 GREEN='\033[0;32m'
+WHITE='\033[0;37m'
 
 # check the user is running the script as root
 if [[ "$EUID" -ne 0 ]]; then
@@ -14,8 +15,9 @@ fi
 # check wether the default shell is zsh or not
 if [[ "$SHELL" != "/bin/zsh" && "$SHELL" != "/usr/bin/zsh" ]]; then # since the script is being runned as root, the user may use zsh but still be prompted
   echo -e "${WHITE}Install zsh if it is not already installed on your system and make it your default shell :"
-  echo -e "${WHITE}> ${GREEN}chsh \$USER"
-  echo -e "${WHITE}> ${GREEN}/bin/zsh"
+  echo -e "${WHITE}> ${BLUE}chsh \$USER"
+  echo -e "${WHITE}> ${BLUE}/bin/zsh"
+  echo ""
 fi
 
 # configure /etc/zsh files for dotfiles-free home directory
@@ -28,14 +30,14 @@ if [[ -f "/etc/zsh/zshrc" ]]; then
     fi
   done < /etc/zsh/zshrc
   if [[ $zdotdir == false ]]; then
-    echo -e "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
+    echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
   fi
 else
   if [[ ! -d /etc/zsh ]]; then
     mkdir /etc/zsh
   fi
   touch /etc/zsh/zshrc
-  echo -e "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
+  echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
 fi
 if [[ -f "/etc/zsh/zshenv" ]]; then
   zsh_newuser_install=false
@@ -46,11 +48,11 @@ if [[ -f "/etc/zsh/zshenv" ]]; then
     fi
   done < /etc/zsh/zshenv
   if [[ $zsh_newuser_install == false ]]; then
-    echo -e "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
+    echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
   fi
 else
   touch /etc/zsh/zshrc
-  echo -e "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
+  echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
 fi
 
 # Install required packages
@@ -62,13 +64,13 @@ if [[ -f "/etc/arch-release" ]]; then
       pacman -S bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh
       ;;
     *)
-      echo -e "${WHITE}Make sure the following packages are installed :"
-      echo -e "${GREEN}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
+      echo -e "${GREEN}Make sure the following packages are installed :"
+      echo -e "${BLUE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
       ;;
   esac
 else
-  echo -e "${WHITE}Make sure the following packages are installed :"
-  echo -e "${GREEN}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux ueberzug unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
+  echo -e "${GREEN}Make sure the following packages are installed :"
+  echo -e "${BLUE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux ueberzug unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
 fi
 
 # copy scripts to /usr/local/bin

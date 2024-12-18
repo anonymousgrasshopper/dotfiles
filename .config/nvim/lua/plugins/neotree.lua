@@ -212,7 +212,6 @@ return {
             "*.log",
             "*.out",
             "*.pre",
-            "*.synctex.gz",
             "*.toc",
             "*.fls",
           },
@@ -227,6 +226,7 @@ return {
             --"thumbs.db"
           },
           never_show_by_pattern = { -- uses glob style patterns
+            "*.synctex.gz",
           },
         },
         follow_current_file = {
