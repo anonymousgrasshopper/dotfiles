@@ -1,12 +1,12 @@
 # X410 WSL2 Helper
 # https://x410.dev/cookbook/#wsl
 # --------------------
-# Setting up D-Bus for Ubuntu
+# Setting up D-Bus for Ubuntu / Arch / probably other distros
 # --------------------
 
 sudo_autopasswd()
 {
-    echo "write your password for sudo here" | sudo -Svp ""
+    echo "Type your password here" | sudo -Svp ""
     # Default timeout for caching your sudo password: 15 minutes
 
     # If you're uncomfortable entering your password here,

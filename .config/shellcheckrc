@@ -1,1 +1,3 @@
-disable=SC2148
+disable=SC1090,SC2296
+shell=bash
+external-sources=true

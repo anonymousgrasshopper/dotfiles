@@ -1,4 +1,5 @@
 local ls = require("luasnip")
+local t = ls.text_node
 local s = ls.snippet
 local sn = ls.snippet_node
 local i = ls.insert_node
@@ -72,6 +73,50 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
+  s({ trig = "\\floor", descr = "floor", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\left\\lfoor <> \\right\\rfloor",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\ceil", descr = "ceil", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\left\\lceil <> \\right\\rceil",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "sq", descr = "square root", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\sqrt{<>}",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\cbrt", descr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      "\\sqrt[3]{<>}",
+      {
+        d(1, get_visual),
+      }
+    ),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "cd", descr = "cdot", wordTrig = false, snippetType = "autosnippet"},
+    t("\\cdot"),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "ty", descr = "lemniscate", snippetType = "autosnippet" },
+    t("\\infty"),
+    { condition = tex.in_mathzone }
+  ),
   s({ trig = "([%w%)%]%}])'", descr = "superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>^{<>}",
@@ -103,31 +148,8 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\floor", descr = "floor", wordTrig = false, snippetType = "autosnippet" },
-    fmta(
-      "\\left\\lfoor <> \\right\\rfloor",
-      {
-        d(1, get_visual),
-      }
-    ),
-    { condition = tex.in_mathzone }
-  ),
-  s({ trig = "\\ceil", descr = "ceil", wordTrig = false, snippetType = "autosnippet" },
-    fmta(
-      "\\left\\lceil <> \\right\\rceil",
-      {
-        d(1, get_visual),
-      }
-    ),
-    { condition = tex.in_mathzone }
-  ),
-  s({ trig = "\\cbrt", descr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
-    fmta(
-      "\\sqrt[3]{<>}",
-      {
-        d(1, get_visual),
-      }
-    ),
+  s({ trig = "²", descr = "sqare", wordTrig = false, snippetType = "autosnippet"},
+    t("^2"),
     { condition = tex.in_mathzone }
   )
 }
