@@ -24,10 +24,10 @@ vim.api.nvim_create_autocmd("Filetype", {
   callback = function ()
     vim.schedule(function ()
       vim.keymap.set("n", "<leader>dbg", function()
-        return ":!codelldb_stdio_redirection ".. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "<CR>" .. ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
+        return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>"
       end, { expr = true })
       vim.keymap.set("n", ",dbg", function()
-        return ":!codelldb_stdio_redirection ".. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "<CR>" .. ":!clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe<CR>"
+        return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>"
       end, { expr = true })
     end)
   end

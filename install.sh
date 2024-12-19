@@ -106,7 +106,7 @@ for folder in *; do
   if [[ ! -d "$HOME_DIR/.config/$folder" ]]; then
     cp -r "$folder" "$HOME_DIR/.config/"
   else
-    echo -en "${RED}Would you like to :\n-1 : create a backup of your current $folder config before replacing it\n-2 : delete your current $folder config and replace it\n-3 : skip this step and keep your current $folder config ?\n${WHITE}Enter number : "
+    echo -en "${RED}Would you like to :\n-1 : create a backup of your current $folder config before replacing it\n-2 : delete your current $folder config and replace it\n-3 : skip this step and keep your current $folder config ?\n${WHITE}Enter number (default 3) : "
     read answer
     case "$answer" in
       1) 
