@@ -1,28 +1,21 @@
-local WIDE_HEIGHT = 40
 return {
   {
-    "hrsh7th/cmp-nvim-lsp",
-    event = { "BufReadPre", "BufNewFile" },
-    priority = 100,
-  },
-  {
     "hrsh7th/nvim-cmp",
-    event = { "ModeChanged" },
+    event = { "ModeChanged" }, -- instead of InsertEnter to be able to use LuaSnip visual snippets before inserting text
     dependencies = {
-      "hrsh7th/cmp-buffer", -- source for text in buffer
-      "hrsh7th/cmp-path",   -- source for file system paths
       {
-        "L3MON4D3/LuaSnip", -- follow latest release.
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
         version = "v2.*",   -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         -- install jsregexp (optional).
         build = "make install_jsregexp",
         config = function ()
           require("luasnip").config.set_config({
-            history = true,
-            updateevents = "TextChanged,TextChangedI",
-            enable_autosnippets = true,
+            history              = true,
+            updateevents         = "TextChanged,TextChangedI",
+            enable_autosnippets  = true,
+            delete_check_events  = "TextChanged",
             store_selection_keys = "<Tab>",
-            delete_check_events = "TextChanged",
             ext_opts = {
               [require("luasnip.util.types").choiceNode] = {
                 active = {
@@ -36,9 +29,12 @@ return {
           vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
           vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
 
-          vim.keymap.set("n", "<Leader>snip", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
+          vim.keymap.set("n", "<Leader>snp", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
         end
       },
+      "hrsh7th/cmp-path",             -- source for file system paths
+      "hrsh7th/cmp-nvim-lsp",         -- source for LSPs
+      "hrsh7th/cmp-buffer",           -- source for text in buffer
       "saadparwaiz1/cmp_luasnip",     -- for autocompletion
       "rafamadriz/friendly-snippets", -- useful snippets
       "onsails/lspkind.nvim",         -- pictograms
@@ -48,6 +44,8 @@ return {
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       local lspkind = require("lspkind")
+
+      local WIDE_HEIGHT = 40
 
       -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
       require("luasnip.loaders.from_vscode").lazy_load()
@@ -99,8 +97,8 @@ return {
           ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),    -- scroll documentation backwards
           ["<C-f>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation forward
-          ["<C-u>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation backwards
-          ["<C-d>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation forward
+          ["<C-u>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation up
+          ["<C-d>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation down
           ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
           ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
           ['<CR>'] = cmp.mapping(function(fallback)
@@ -140,9 +138,8 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" }, -- get completions from attached LSPs
           { name = "luasnip" }, -- snippets
-          { name = "vimtex" }, -- LaTeX
           { name = "buffer" }, -- text within current buffer
-          { name = "emoji" }, -- get emojis as completions
+          { name = "vimtex" }, -- LaTeX
           { name = "path" }, -- filesystem path
         }),
 
@@ -156,9 +153,15 @@ return {
         },
       })
 
+      -- If you want insert `(` after select function or method item
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
     end,
   }
 }

@@ -44,30 +44,30 @@ local icons = {
 return {
   "stevearc/aerial.nvim",
   keys = {
-    { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outilne window" },
+    { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
   },
   opts = function()
-    vim.api.nvim_create_autocmd("ExitPre", { command = "AerialCloseAll" })
-
     icons.lua = { Package = icons.Control }
-
-    ---@type table<string, string[]>|false
-    local filter_kind = false
 
     local opts = {
       attach_mode = "global",
       backends = { "lsp", "treesitter", "markdown", "man" },
       show_guides = true,
       layout = {
-        resize_to_content = false,
+        min_width = 20,
+        resize_to_content = true,
         win_opts = {
           winhl = "Normal:NormalFloat,FloatBorder:NormalFloat,SignColumn:SignColumnSB",
           signcolumn = "no",
           statuscolumn = "",
         },
       },
+      close_automatic_events = { "unsupported" },
+      filter_kind = false,
       icons = icons,
-      filter_kind = filter_kind,
+      manage_folds = true,
+      link_folds_to_tree = true,
+      link_tree_to_folds = true,
       guides = {
         mid_item   = "├╴",
         last_item  = "└╴",

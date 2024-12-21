@@ -337,7 +337,5 @@ return {
         end,
       },
     }
-
-    vim.api.nvim_create_autocmd("ExitPre", {command = "Neotree close",})
   end
 }

@@ -40,8 +40,7 @@ return {
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "nvim-neotest/nvim-nio",
-      { "theHamsta/nvim-dap-virtual-text", opts = {} },
-      "mfussenegger/nvim-dap",
+      "theHamsta/nvim-dap-virtual-text",
     },
     cmd = { "DapContinue", "DapToggleBreakpoint" },
     keys = {
@@ -58,14 +57,15 @@ return {
       { "<leader>dj", function() require("dap").down() end, desc = "Down" },
       { "<leader>dk", function() require("dap").up() end, desc = "Up" },
       { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
-      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
+      { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle repl" },
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dT", function() require("dap").terminate() require("dapui").close() end, desc = "Terminate" },
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-      { "<leader>du", function() require("dapui").toggle() end, desc = "ToggleUI", silent = false },
+      { "<leader>dw", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
+      { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
       { "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
-      { "<leader>de", function() require("dapui").eval() end, desc = "EvalLine", silent = false },
-      { "<leader>dl", function() require("dap").run_last() end, desc = "RunLast", silent = false },
+      { "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
+      { "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
     },
 
     config = function()
@@ -92,10 +92,9 @@ return {
         type = "server",
         port = "${port}",
         executable = {
-          command = "/home/Antoine/.local/share/nvim/mason/bin/codelldb",
+          command = vim.env.HOME .. "/.local/share/nvim/mason/bin/codelldb",
           args = {"--port", "${port}"},
-          -- On windows you may have to uncomment this:
-           detached = false,
+          -- detached = false,
         }
       }
 
@@ -128,9 +127,6 @@ return {
         )
       end
 
-      vim.keymap.set('n', '<leader>dl',  dap.run_last )
-      vim.keymap.set({'n', 'v'}, '<leader>dh', function() require('dap.ui.widgets').hover() end )
-      vim.keymap.set({'n', 'v'}, '<leader>dp', function() require('dap.ui.widgets').preview() end)
       vim.keymap.set('n', '<leader>df',
         function() local widgets = require('dap.ui.widgets')
           widgets.centered_float(widgets.frames)

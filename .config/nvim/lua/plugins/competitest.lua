@@ -12,7 +12,8 @@ vim.api.nvim_create_autocmd("Filetype", {
       vim.keymap.set("n", "<localleader>dlt", "<cmd>CompetiTest delete_testcase<CR>", { desc = "Delete testcase", buffer = true })
       vim.keymap.set("n", "<localleader>run", "<cmd>CompetiTest run<CR>", { desc = "Run code on tests", buffer = true })
       vim.keymap.set("n", "<localleader>show", "<cmd>CompetiTest show_ui<CR>", { desc = "Show ui", buffer = true })
-      vim.keymap.set("n", "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", { desc = "Run the code on tests without recompiling", buffer = true})
+      vim.keymap.set("n", "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", { desc = "Run the code on tests without recompiling", buffer = true })
+      vim.keymap.set("n", "<localleader>edit", ":CompetiTest edit_testcase ", { desc = "Edit testcase", buffer = true })
     end)
   end
 })

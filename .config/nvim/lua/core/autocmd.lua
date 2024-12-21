@@ -16,7 +16,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "tutor",
     "checkhealth",
     "lspinfo",
-    "notify",
     "spectre_panel",
     "CompetiTest",
   },

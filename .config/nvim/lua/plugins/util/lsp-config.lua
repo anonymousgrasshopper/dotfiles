@@ -109,7 +109,7 @@ return {
       lspconfig.clangd.setup { handlers=handlers }
 
       lspconfig.lua_ls.setup({
-        -- capabilities = capabilities  
+        capabilities = capabilities,
         on_init = function(client)
           local path = client.workspace_folders[1].name
           if vim.loop.fs_stat(path.."/.luarc.json") or vim.loop.fs_stat(path.."/.luarc.jsonc") then
@@ -136,7 +136,7 @@ return {
       })
 
       lspconfig.bashls.setup {
-        filetypes = {"sh", "bash", "zsh"}
+        filetypes = { "sh", "bash", "zsh" }
       }
 
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
