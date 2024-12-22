@@ -12,13 +12,10 @@ return {
     "Autosession",
   },
 
-  ---enables autocomplete for opts
-  ---@module "auto-session"
-  ---@type AutoSession.Config
   opts = {
     auto_restore = false,
     bypass_save_filetypes = { "alpha" },
-    pre_save_commands = {
+    pre_save_cmds = {
       "Neotree close",
       "AerialCloseAll",
     }

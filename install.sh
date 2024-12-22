@@ -74,7 +74,7 @@ else
 fi
 
 # copy scripts to /usr/local/bin
-cd scripts || echo -e "Error : scripts folder is not present in the script's directory" exit
+cd scripts || { echo -e "Error : scripts folder is not present in the script's directory"; exit; }
 printf '\n'
 for file in *; do
   if [[ ! -f "/usr/local/bin/$file" ]]; then
@@ -100,28 +100,28 @@ if [[ "$WORKING_DIR" =~ (/home/[^/]+) ]]; then
 else
   HOME_DIR="/root"
 fi
-cd "$WORKING_DIR/.config" || echo -e "Error : .config folder is not present in the script's directory" exit
+cd "$WORKING_DIR/.config" || { echo -e "Error : .config folder is not present in the script's directory"; exit; }
 printf '\n'
-for folder in *; do
-  if [[ ! -d "$HOME_DIR/.config/$folder" ]]; then
-    cp -r "$folder" "$HOME_DIR/.config/"
+for item in *; do
+  if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item"  ]]; then
+    cp -r "$item" "$HOME_DIR/.config/"
   else
-    echo -en "${RED}Would you like to :\n-1 : create a backup of your current $folder config before replacing it\n-2 : delete your current $folder config and replace it\n-3 : skip this step and keep your current $folder config ?\n${WHITE}Enter number (default 3) : "
+    echo -en "${RED}Would you like to :\n-1 : create a backup of your current $item config before replacing it\n-2 : delete your current $item config and replace it\n-3 : skip this step and keep your current $item config ?\n${WHITE}Enter number (default 3) : "
     read answer
     case "$answer" in
       1) 
-        if [[ -d "$HOME_DIR/.config/$folder-backup" ]]; then
-          rm -rf "$HOME_DIR/.config/$folder-backup"
+        if [[ -d "$HOME_DIR/.config/$item-backup" || -f "$HOME_DIR/.config/$item-backup" ]]; then
+          rm -rf "$HOME_DIR/.config/$item-backup"
         fi
-        mv "$HOME_DIR/.config/$folder" "$HOME_DIR/.config/$folder-backup"
-        cp -r "$folder" "$HOME_DIR/.config/"
-        chmod -R 777 "$HOME_DIR/.config/$folder"
-        chmod -R 777 "$HOME_DIR/.config/$folder-backup"
+        mv "$HOME_DIR/.config/$item" "$HOME_DIR/.config/$item-backup"
+        cp -r "$item" "$HOME_DIR/.config/"
+        chmod -R 777 "$HOME_DIR/.config/$item"
+        chmod -R 777 "$HOME_DIR/.config/$item-backup"
         ;;
       2)
-        rm -rf "$HOME_DIR/.config/$folder"
-        cp -r "$folder" "$HOME_DIR/.config/"
-        chmod -R 777 "$HOME_DIR/.config/$folder"
+        rm -rf "$HOME_DIR/.config/$item"
+        cp -r "$item" "$HOME_DIR/.config/"
+        chmod -R 777 "$HOME_DIR/.config/$item"
         ;;
       *)
         echo -e "${WHITE}Skipping..."

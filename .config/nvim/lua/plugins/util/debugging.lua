@@ -1,3 +1,5 @@
+vim.g.maplocalleader = ','
+
 local escape_spaces = function (path)
   local skip_next = false
   local nb_added_chars = 0
@@ -17,22 +19,6 @@ local escape_spaces = function (path)
   end
 end
 
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern = {
-    "cpp"
-  },
-  callback = function ()
-    vim.schedule(function ()
-      vim.keymap.set("n", "<leader>dbg", function()
-        return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>"
-      end, { expr = true })
-      vim.keymap.set("n", ",dbg", function()
-        return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>"
-      end, { expr = true })
-    end)
-  end
-})
-
 return {
   {
     "mfussenegger/nvim-dap",
@@ -44,6 +30,11 @@ return {
     },
     cmd = { "DapContinue", "DapToggleBreakpoint" },
     keys = {
+      { "<leader>dbg", function() return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>" end, expr = true, ft = "cpp" },
+      { "<localleader>dbg", function() return "<cmd>!codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR>" .. "<cmd>!nohup clang++ --debug " .. escape_spaces(vim.fn.expand("%")) .. " -o " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r")) .. ".exe &<CR><CR>" end, expr = true, ft = "cpp" },
+      { "<leader>rm", function() return "<cmd>!remove_codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>" end, expr = true, ft = "cpp" },
+      { "<localleader>rm", function() return "<cmd>!remove_codelldb_stdio_redirection ".. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>" end, expr = true, ft = "cpp" },
+
       { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
       { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
       { "<leader>dt", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
@@ -71,7 +62,7 @@ return {
     config = function()
       local dap   = require("dap")
       local dapui = require("dapui")
-      local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:h") .. "/"
+      local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
@@ -108,7 +99,7 @@ return {
           end,
           cwd = '${workspaceFolder}',
           stopOnEntry = false,
-          stdio = { path .. "input.txt", path .. "output.txt", path .. "err.txt"},
+          stdio = { path .. ".input", path .. ".output", path .. ".errors"},
         },
       }
 

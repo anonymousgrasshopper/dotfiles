@@ -46,6 +46,9 @@ return {
   keys = {
     { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
   },
+  cmd = {
+    "AerialCloseAll",
+  },
   opts = function()
     icons.lua = { Package = icons.Control }
 

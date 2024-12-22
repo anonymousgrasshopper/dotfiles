@@ -1,28 +1,20 @@
 vim.g.maplocalleader = ','
 
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern = {
-    "cpp"
-  },
-  callback = function ()
-    vim.schedule(function ()
-      vim.keymap.set("n", "<localleader>ctst", "<cmd>CompetiTest receive contest<CR>", { desc = "Receive contest", buffer = true })
-      vim.keymap.set("n", "<localleader>pb", "<cmd>CompetiTest receive problem<CR>", { desc = "Receive problem", buffer = true })
-      vim.keymap.set("n", "<localleader>add", "<cmd>CompetiTest add_testcase<CR>", { desc = "Add testcase", buffer = true })
-      vim.keymap.set("n", "<localleader>dlt", "<cmd>CompetiTest delete_testcase<CR>", { desc = "Delete testcase", buffer = true })
-      vim.keymap.set("n", "<localleader>run", "<cmd>CompetiTest run<CR>", { desc = "Run code on tests", buffer = true })
-      vim.keymap.set("n", "<localleader>show", "<cmd>CompetiTest show_ui<CR>", { desc = "Show ui", buffer = true })
-      vim.keymap.set("n", "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", { desc = "Run the code on tests without recompiling", buffer = true })
-      vim.keymap.set("n", "<localleader>edit", ":CompetiTest edit_testcase ", { desc = "Edit testcase", buffer = true })
-    end)
-  end
-})
-
 return {
   "xeluxee/competitest.nvim",
   dependencies = "MunifTanjim/nui.nvim",
   cmd = {
     "CompetiTest",
+  },
+  keys = {
+    { "<localleader>ctst", "<cmd>CompetiTest receive contest<CR>", ft = "cpp", desc = "Receive contest" },
+    { "<localleader>pb", "<cmd>CompetiTest receive problem<CR>", ft = "cpp", desc = "Receive problem" },
+    { "<localleader>add", "<cmd>CompetiTest add_testcase<CR>", ft = "cpp", desc = "Add testcase" },
+    { "<localleader>dlt", "<cmd>CompetiTest delete_testcase<CR>", ft = "cpp", desc = "Delete testcase" },
+    { "<localleader>run", "<cmd>CompetiTest run<CR>", ft = "cpp", desc = "Run code on tests" },
+    { "<localleader>show", "<cmd>CompetiTest show_ui<CR>", ft = "cpp", desc = "Show ui" },
+    { "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", ft = "cpp", desc = "Run the code on tests without recompiling" },
+    { "<localleader>edit", ":CompetiTest edit_testcase ", ft = "cpp", desc = "Edit testcase" },
   },
   config = function()
     require("competitest").setup({

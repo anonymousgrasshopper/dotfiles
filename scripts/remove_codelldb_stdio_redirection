@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ -f "$1.input" ]]; then
+  rm "$1.input"
+fi
+if [[ -f "$1.output" ]]; then
+  rm "$1.output"
+fi
+if [[ -f "$1.errors" ]]; then
+  rm "$1.errors"
+fi

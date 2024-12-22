@@ -1,10 +1,10 @@
 #!/bin/bash
-if [[ ! -f "$1/input.txt" ]]; then
-  touch "$1/input.txt"
+if [[ ! -f "$1.input" ]]; then
+  touch "$1.input"
 fi
-if [[ ! -f "$1/output.txt" ]]; then
-  touch "$1/output.txt"
+if [[ ! -f "$1.output" ]]; then
+  touch "$1.output"
 fi
-if [[ ! -f "$1/err.txt" ]]; then
-  touch "$1/err.txt"
+if [[ ! -f "$1.err" ]]; then
+  touch "$1.errors"
 fi

@@ -143,6 +143,8 @@ return {
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+
+      vim.keymap.set("n", "<leader>vtxt", "<cmd>lua vim.diagnostic.config({virtual_text=(not virtual_text)})<CR>", { silent = true })
     end,
   },
 }
