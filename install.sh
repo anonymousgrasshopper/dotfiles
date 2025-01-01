@@ -57,18 +57,18 @@ fi
 
 # Install required packages
 if [[ -f "/etc/arch-release" ]]; then
-  echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) "
+  echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
   read answer
   case "$answer" in
     [yY][eE][sS]|[yY]) 
-      pacman -S bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh
+      pacman -S bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh
       ;;
     *)
       echo -e "${GREEN}Make sure the following packages are installed :"
-      echo -e "${WHITE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
+      echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
       ;;
   esac
-  echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) "
+  echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) ${WHITE}"
   read answer
   case "$answer" in
     [yY][eE][sS]|[yY]) 
@@ -77,7 +77,7 @@ if [[ -f "/etc/arch-release" ]]; then
     esac
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
-  echo -e "${WHITE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux ueberzug unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
+  echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
 fi
 
 # copy scripts to /usr/local/bin
@@ -88,7 +88,7 @@ for file in *; do
     cp "$file" "/usr/local/bin/"
     chmod +x "/usr/local/bin/$file"
   else
-    echo -en "${BLUE}Would you like to delete your current $file script to replace it with the one in this repo ? (y/n) "
+    echo -en "${BLUE}Would you like to delete your current $file script to replace it with the one in this repo ? (y/n) ${WHITE}"
     read answer
     case "$answer" in 
       [yY][eE][sS]|[yY])
@@ -107,13 +107,13 @@ if [[ "$WORKING_DIR" =~ (/home/[^/]+) ]]; then
 else
   HOME_DIR="/root"
 fi
-cd "$WORKING_DIR/.config" || { echo -e "Error : .config folder is not present in the script's directory"; exit; }
+cd "$WORKING_DIR/config" || { echo -e "Error : config folder is not present in the script's directory"; exit; }
 printf '\n'
 for item in *; do
   if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item"  ]]; then
     cp -r "$item" "$HOME_DIR/.config/"
   else
-    echo -en "${RED}Would you like to :\n-1 : create a backup of your current $item config before replacing it\n-2 : delete your current $item config and replace it\n-3 : skip this step and keep your current $item config ?\n${WHITE}Enter number (default 3) : "
+    echo -en "${RED}Would you like to :\n- 1 : create a backup of your current $item config before replacing it\n- 2 : delete your current $item config and replace it\n- 3 : skip this step and keep your current $item config ?\n${WHITE}Enter a number (default 3) : "
     read answer
     case "$answer" in
       1) 
