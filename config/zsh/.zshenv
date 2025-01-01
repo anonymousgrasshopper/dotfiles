@@ -11,10 +11,10 @@ export PYTHON_HISTORY=$HOME/.local/state/python/history
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export WGETRC=$HOME/.config/wget/wgetrc
-export RANGER_LOAD_DEFAULT_RC=false
 
 # XDG environment variables
 export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DOWNLOAD_DIR="$HOME/Téléchargements"
 
 # using bat as man's pager
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"

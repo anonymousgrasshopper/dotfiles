@@ -19,7 +19,6 @@ alias fzf='fzf --preview="bat {}"'
 alias inv='nvim $(fzf -m --preview="bat {}")'
 
 # Programs
-alias ranger='ranger --choosedir=$HOME/.cache/ranger/.rangerdir; LASTDIR=`cat $HOME/.cache/ranger/.rangerdir`; cd "$LASTDIR"'
 alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 alias python="python3"
 alias py="python3"

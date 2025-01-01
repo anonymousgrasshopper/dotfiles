@@ -101,6 +101,10 @@ done
 cd ..
 
 # copy .config folders
+if [[ ! -d $HOME/.config ]]; then
+  mkdir $HOME/.config
+fi
+
 WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 if [[ "$WORKING_DIR" =~ (/home/[^/]+) ]]; then
   HOME_DIR=${BASH_REMATCH[1]}
