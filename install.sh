@@ -68,6 +68,13 @@ if [[ -f "/etc/arch-release" ]]; then
       echo -e "${WHITE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"
       ;;
   esac
+  echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) "
+  read answer
+  case "$answer" in
+    [yY][eE][sS]|[yY]) 
+      pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
+      ;;
+    esac
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
   echo -e "${WHITE}bat eza fd fzf git github-cli man-db neovim npm python ranger ripgrep tmux ueberzug unzip wget xdotool zathura zathura-pdf-mupdf zoxide zsh"

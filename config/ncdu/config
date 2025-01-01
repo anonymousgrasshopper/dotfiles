@@ -1,0 +1,7 @@
+-2
+--one-file-system
+--no-follow-symlinks
+--color dark
+--show-itemcount
+--group-directories-first
+--graph-style eighth-block
