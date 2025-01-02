@@ -1,35 +1,35 @@
 [manager]
-marker_copied = { fg = "#98bb6c" }
-marker_cut = { fg = "#e46876" }
-marker_marked = { fg = "#957fb8" }
-marker_selected = { fg = "#ffa066" }
-
 cwd = { fg = "#e6c384" }
 hovered = { reversed = true }
-preview_hovered = { reversed = true }
+preview_hovered = { }
 
-find_keyword = { fg = "#ffa066", bg = "#1f1f28" }
+find_keyword = { fg = "#DCA561", bg = "#1f1f28" }
 find_position = {}
 
 tab_active = { reversed = true }
 tab_inactive = {}
 tab_width = 1
 
+marker_copied = { fg = "#98bb6c" }
+marker_cut = { fg = "#e46876" }
+marker_selected = { fg = "#ffa066" }
+marker_marked = { fg = "#957fb8" }
+
 count_copied = { fg = "#1f1f28", bg = "#98bb6c" }
 count_cut = { fg = "#1f1f28", bg = "#e46876" }
-count_selected = { fg = "#1f1f28", bg = "#e6c384" }
+count_selected = { fg = "#1f1f28", bg = "#ffa066" }
 
 border_symbol = "│"
 border_style = { fg = "#54546D" }
 
 
 [mode]
-normal_main = { fg = "#1f1f28", bg = "#7e9cd8" }
-normal_alt = { fg = "#7e9cd8", bg = "#2a2a37" }
+normal_main = { fg = "#1f1f28", bg = "#7E9CD8" }
+normal_alt = { fg = "#9CABCA", bg = "#54546D" }
 select_main = { fg = "#1f1f28", bg = "#957fb8" }
-select_alt = { fg = "#957fb8", bg = "#2a2a37" }
-unset_main = { fg = "#1f1f28", bg = "#e6c384" }
-unset_alt = { fg = "#e6c384", bg = "#2a2a37" }
+select_alt = { fg = "#9CABCA", bg = "#54546D" }
+unset_main = { fg = "#1f1f28", bg = "#DCA561" }
+unset_alt = { fg = "#9CABCA", bg = "#54546D" }
 
 
 [status]
@@ -49,23 +49,23 @@ perm_sep = { fg = "#957fb8" }
 
 
 [pick]
-border = { fg = "#7fb4ca" }
+border = { fg = "#54546D" }
 active = { fg = "#957fb8", bold = true }
 inactive = {}
 
 [input]
-border = { fg = "#7fb4ca" }
-title = {}
+border = { fg = "#54546D" }
+title = { fg = "#DCD7BA" }
 value = {}
 selected = { reversed = true }
 
 [completion]
-border = { fg = "#7fb4ca" }
+border = { fg = "#54546D" }
 active = { reversed = true }
 inactive = {}
 
 [tasks]
-border = { fg = "#7fb4ca" }
+border = { fg = "#54546D" }
 title = {}
 hovered = { fg = "#957fb8" }
 

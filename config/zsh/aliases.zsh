@@ -22,9 +22,9 @@ alias inv='nvim $(fzf -m --preview="bat {}")'
 alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 alias python="python3"
 alias py="python3"
-alias ex="yazi"
 
 # Tmux
+alias tas="tmux attach -d"
 alias trs="tmux rename-session"
 alias trw="tmux rename-window"
 

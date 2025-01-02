@@ -20,7 +20,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Hide borders
-default_border pixel 2
+default_border pixel 0
 
 # reload config
 bindsym $mod+Shift+r reload
@@ -112,7 +112,7 @@ bindsym $mod+Shift+space floating toggle
 
 # default gaps 
 gaps outer 12
-gaps inner 6
+gaps inner 8
 
 # gaps
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft

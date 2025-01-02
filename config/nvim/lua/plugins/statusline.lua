@@ -8,9 +8,9 @@ return {
     local colors = {
       blue = palette.crystalBlue,
       green = palette.springGreen,
-      violet = palette.sakuraPink,
+      violet = palette.oniViolet,
       yellow = palette.autumnYellow,
-      red = palette.samuraiRed,
+      red = palette.autumnRed,
       grey = palette.sumiInk6,
       fg = palette.springViolet2,
       bg = palette.sumiInk4,
