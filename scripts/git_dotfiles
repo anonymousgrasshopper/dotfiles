@@ -29,8 +29,8 @@ done
 sudo git add ~/.config/dotfiles
 
 # commit if args are passed to the scripts
-if [[ -z "$1" && -z "$2" ]]; then
-  git commit -m"$1" -m"$2"
-elif [[ -z "$1" ]]; then
-  git commit -m"$1"
+if [[ $# == 2 ]]; then
+  sudo git commit -m"$1" -m"$2"
+elif [[ $# == 1 ]]; then
+  sudo git commit -m"$1"
 fi
