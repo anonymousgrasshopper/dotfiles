@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# list of configs to copy
+configs=("bat" "git" "i3" "kitty" "ncdu" "npm" "nvim" "rofi" "tmux" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "ripgrep.conf" "shellcheckrc")
+
+# clone the repo if it is not in ~/.config
+[[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles:~/.config
+
+cd "$HOME/.config/dotfiles"
+
+# move .zsh_sysinit to save it for later
+[[ ! -f "config/zsh/.zsh_sysinit" ]] || mv "config/zsh/.zsh_sysinit" .
+
+# overwrite configs in the dotfiles repo
+for config in ${configs[@]}; do
+  if [[ -d "config/$config" || -f "config/$config" ]]; then
+    rm -rf "config/$config"
+    if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
+      cp -r "$HOME/.config/$config" "config"
+    fi
+  fi
+done
+
+# modify files in the dotfiles repo
+[[ ! -f "config/zsh/.zcompdump" ]] || rm "config/zsh/.zcompdump"
+[[ ! -f .zsh_sysinit ]] || mv .zsh_sysinit config/zsh/
+
+# git add
+sudo git add ~/.config/dotfiles
+
+# commit if args are passed to the scripts
+if [[ -z "$1" && -z "$2" ]]; then
+  git commit -m"$1" -m"$2"
+elif [[ -z "$1" ]]; then
+  git commit -m"$1"
+fi

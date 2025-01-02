@@ -6,8 +6,10 @@ export SUDO_EDITOR=$EDITOR
 export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # programs-specific variables
+export MANPAGER="less"
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 export PYTHON_HISTORY=$HOME/.local/state/python/history
+
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export WGETRC=$HOME/.config/wget/wgetrc
@@ -15,9 +17,6 @@ export WGETRC=$HOME/.config/wget/wgetrc
 # XDG environment variables
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DOWNLOAD_DIR="$HOME/Téléchargements"
-
-# using bat as man's pager
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # setting up graphics in WSL
 export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0

@@ -1,25 +1,8 @@
-## Color palette
-# sumiInk0      "#16161d"
-# sumiInk3      "#1f1f28" bg
-# sumiInk4      "#2a2a37"
-# sumiInk6      "#54546d"
-# fujiWhite     "#dcd7ba" fg
-# fujiGray      "#727169"
-# peachRed      "#ff5d62"
-# crystalBlue   "#7e9cd8"
-# waveRed       "#e46876"
-# carpYellow    "#e6c384"
-# springGreen   "#98bb6c"
-# oniViolet     "#957fb8"
-# waveAqua1     "#6a9589"
-# surimiOrange  "#ffa066"
-# waveAqua2     "#7aa89f"
-
 [manager]
-marker_copied = { fg = "#98bb6c", bg = "#98bb6c" }
-marker_cut = { fg = "#e46876", bg = "#e46876" }
-marker_marked = { fg = "#957fb8", bg = "#957fb8" }
-marker_selected = { fg = "#ffa066", bg = "#ffa066" }
+marker_copied = { fg = "#98bb6c" }
+marker_cut = { fg = "#e46876" }
+marker_marked = { fg = "#957fb8" }
+marker_selected = { fg = "#ffa066" }
 
 cwd = { fg = "#e6c384" }
 hovered = { reversed = true }
@@ -37,7 +20,7 @@ count_cut = { fg = "#1f1f28", bg = "#e46876" }
 count_selected = { fg = "#1f1f28", bg = "#e6c384" }
 
 border_symbol = "│"
-border_style = { fg = "#2a2a37" }
+border_style = { fg = "#54546D" }
 
 
 [mode]
@@ -103,9 +86,9 @@ hovered = { reversed = true, bold = true }
 footer = { fg = "#1f1f28", bg = "#dcd7ba" }
 
 [notify]
-title_info = { fg = "#98bb6c" }
-title_warn = { fg = "#e6c384" }
-title_error = { fg = "#ff5d62" }
+title_info = { fg = "#6A9598" }
+title_warn = { fg = "#FF9E3B" }
+title_error = { fg = "#E82424" }
 
 # files
 [filetype]
