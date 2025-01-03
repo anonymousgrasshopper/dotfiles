@@ -18,7 +18,7 @@ if [[ "$SHELL" != "/bin/zsh" && "$SHELL" != "/usr/bin/zsh" ]]; then # since the 
   echo -e "${WHITE}> ${BLUE}chsh \$USER"
   echo -e "${WHITE}> ${BLUE}/bin/zsh"
   echo ""
-fi
+  fi
 
 # configure /etc/zsh files for dotfiles-free home directory
 if [[ -f "/etc/zsh/zshrc" ]]; then
@@ -55,6 +55,20 @@ else
   echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
 fi
 
+# configure Pulseaudio to avoid having its cookies in ~/.config
+if [[ -f "/etc/pulse/client.conf" ]]; then
+  cookie_file=false
+  while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
+    if [[ "${LINE}" == "cookie-file = /home/Antoine/.cache/pulse/cookie" ]]; then
+      cookie_file=true
+      break
+    fi
+  done < /etc/pulse/client.conf
+  if [[ $cookie_file == false ]]; then
+    printf "\ncookie-file = /home/Antoine/.cache/pulse/cookie" >> /etc/pulse/client.conf
+  fi
+fi
+
 # Install required packages
 if [[ -f "/etc/arch-release" ]]; then
   echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
@@ -74,7 +88,7 @@ if [[ -f "/etc/arch-release" ]]; then
     [yY][eE][sS]|[yY]) 
       pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
       ;;
-    esac
+  esac
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
   echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
@@ -88,28 +102,29 @@ for file in *; do
     cp "$file" "/usr/local/bin/"
     chmod +x "/usr/local/bin/$file"
   else
-    echo -en "${BLUE}Would you like to delete your current $file script to replace it with the one in this repo ? (y/n) ${WHITE}"
-    read answer
-    case "$answer" in 
-      [yY][eE][sS]|[yY])
-        cp "$file" "/usr/local/bin/"
-        chmod +x "/usr/local/bin/$file"
-        ;;
-    esac
+    if ! cmp --silent "$file" "/usr/local/bin/$file"; then
+      echo -en "${BLUE}Would you like to delete your current $file script to replace it with the one in this repo ? (y/n) ${WHITE}"
+      read answer
+      case "$answer" in 
+        [yY][eE][sS]|[yY])
+          cp "$file" "/usr/local/bin/"
+          chmod +x "/usr/local/bin/$file"
+          ;;
+      esac
+    fi
   fi
 done
 cd ..
 
-# copy .config folders
-if [[ ! -d $HOME/.config ]]; then
-  mkdir $HOME/.config
-fi
-
+# copy config folders
 WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 if [[ "$WORKING_DIR" =~ (/home/[^/]+) ]]; then
   HOME_DIR=${BASH_REMATCH[1]}
 else
   HOME_DIR="/root"
+fi
+if [[ ! -d "$HOME_DIR/.config" ]]; then
+  mkdir "$HOME_DIR/.config"
 fi
 cd "$WORKING_DIR/config" || { echo -e "Error : config folder is not present in the script's directory"; exit; }
 printf '\n'
