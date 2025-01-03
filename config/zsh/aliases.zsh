@@ -1,6 +1,6 @@
 # For a full list of active aliases, run `alias`.
 
-# Commands
+# Programs
 alias :q="exit"
 alias :qa="exit"
 alias rm="rm -i"
@@ -18,8 +18,6 @@ alias tree="exa --group-directories-first --tree"
 alias fzf='fzf --preview="bat {}"'
 alias inv='nvim $(fzf -m --preview="bat {}")'
 
-# Programs
-alias firefox="/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe"
 alias python="python3"
 alias py="python3"
 

@@ -59,13 +59,13 @@ fi
 if [[ -f "/etc/pulse/client.conf" ]]; then
   cookie_file=false
   while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
-    if [[ "${LINE}" == "cookie-file = /home/Antoine/.cache/pulse/cookie" ]]; then
+    if [[ "${LINE}" == "cookie-file = /home/$USER/.cache/pulse/cookie" ]]; then
       cookie_file=true
       break
     fi
   done < /etc/pulse/client.conf
   if [[ $cookie_file == false ]]; then
-    printf "\ncookie-file = /home/Antoine/.cache/pulse/cookie" >> /etc/pulse/client.conf
+    printf "\ncookie-file = /home/%s/.cache/pulse/cookie" "$USER" >> /etc/pulse/client.conf
   fi
 fi
 
