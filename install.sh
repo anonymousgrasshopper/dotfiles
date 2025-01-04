@@ -21,38 +21,38 @@ if [[ "$SHELL" != "/bin/zsh" && "$SHELL" != "/usr/bin/zsh" ]]; then # since the 
   fi
 
 # configure /etc/zsh files for dotfiles-free home directory
-if [[ -f "/etc/zsh/zshrc" ]]; then
+if [[ -f "/etc/zsh/zshenv" ]]; then
   zdotdir=false
   while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
     if [[ "${LINE}" == "export ZDOTDIR=\$HOME/.config/zsh" ]]; then
       zdotdir=true
       break
     fi
-  done < /etc/zsh/zshrc
+  done < /etc/zsh/zshenv
   if [[ $zdotdir == false ]]; then
-    echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
+    echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshenv
   fi
 else
   if [[ ! -d /etc/zsh ]]; then
     mkdir /etc/zsh
   fi
-  touch /etc/zsh/zshrc
-  echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshrc
+  touch /etc/zsh/zshenv
+  echo "export ZDOTDIR=\$HOME/.config/zsh" >> /etc/zsh/zshenv
 fi
-if [[ -f "/etc/zsh/zshenv" ]]; then
+if [[ -f "/etc/zsh/zshrc" ]]; then
   zsh_newuser_install=false
   while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
     if [[ "${LINE}" == "zsh-newuser-install() { :; }" ]]; then
       zsh_newuser_install=true
       break
     fi
-  done < /etc/zsh/zshenv
+  done < /etc/zsh/zshrc
   if [[ $zsh_newuser_install == false ]]; then
-    echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
+    echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshrc
   fi
 else
   touch /etc/zsh/zshrc
-  echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshenv
+  echo "zsh-newuser-install() { :; }" >> /etc/zsh/zshrc
 fi
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
@@ -82,13 +82,31 @@ if [[ -f "/etc/arch-release" ]]; then
       echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
       ;;
   esac
-  echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) ${WHITE}"
-  read answer
-  case "$answer" in
-    [yY][eE][sS]|[yY]) 
-      pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
-      ;;
-  esac
+  if [[ ! -f /usr/share/fonts/TTF/FiraCode/FiraCodeNerdFont-Regular.ttf ]]; then
+    if [[ ! -f /usr/share/fonts/TTF/FiraCodeNerdFont-Regular.ttf ]]; then
+      echo -en "${BLUE}Would you like to install the FiraCode Nerd Font ? (y/n) ${WHITE}"
+      read answer
+      case "$answer" in
+        [yY][eE][sS]|[yY]) 
+          pacman -S ttf-firacode-nerd
+          [[ -d /usr/share/fonts/TTF/FiraCode ]] || mkdir -p /usr/share/fonts/TTF/FiraCode
+          mv /usr/share/fonts/TTF/FiraCode-NerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
+          ;;
+      esac
+    else
+      [[ -d /usr/share/fonts/TTF/FiraCode ]] || mkdir -p /usr/share/fonts/TTF/FiraCode
+      mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
+    fi
+  fi
+  if [[ ! -d /usr/share/fonts/noto ]]; then
+    echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) ${WHITE}"
+    read answer
+    case "$answer" in
+      [yY][eE][sS]|[yY]) 
+        pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
+        ;;
+    esac
+  fi
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
   echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"

@@ -2,7 +2,6 @@ return {
   {
     "rebelot/kanagawa.nvim",
     -- the README is not up to date, see https://github.com/rebelot/kanagawa.nvim/blob/master/lua/kanagawa/colors.lua
-    event = "UiEnter",
     priority = 1000,
     config = function()
       require("kanagawa").setup({

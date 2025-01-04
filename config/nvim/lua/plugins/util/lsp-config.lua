@@ -28,12 +28,6 @@ vim.api.nvim_create_autocmd( "CursorHold", {
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
-  callback = function()
-    require("lint").try_lint()
-  end,
-})
-
 return {
   {
     "williamboman/mason.nvim",
@@ -43,13 +37,11 @@ return {
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "mfussenegger/nvim-lint",
     },
     config = function()
       local mason           = require("mason")
       local mason_installer = require("mason-tool-installer")
       local mason_lspconfig = require("mason-lspconfig")
-      local nvim_lint       = require("lint")
 
       mason.setup({
         ui = {
@@ -73,11 +65,6 @@ return {
           "pylsp",
         },
       })
-
-      nvim_lint.linters_by_ft = {
-        shell = { "shellcheck" },
-        zsh = { "shellcheck" },
-      }
     end,
   },
   {
@@ -99,12 +86,11 @@ return {
       local lspconfig = require("lspconfig")
 
       lspconfig.clangd.setup({
+        handlers=handlers,
         capabilities = capabilities,
       })
-      lspconfig.clangd.setup { handlers=handlers }
 
       lspconfig.lua_ls.setup({
-        capabilities = capabilities,
         on_init = function(client)
           local path = client.workspace_folders[1].name
           if vim.loop.fs_stat(path.."/.luarc.json") or vim.loop.fs_stat(path.."/.luarc.jsonc") then
@@ -128,11 +114,13 @@ return {
         settings = {
           Lua = {}
         },
+        capabilities = capabilities,
       })
 
-      lspconfig.bashls.setup {
-        filetypes = { "sh", "bash", "zsh" }
-      }
+      lspconfig.bashls.setup({
+        filetypes = { "sh", "zsh" },
+        capabilities = capabilities,
+      })
 
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})

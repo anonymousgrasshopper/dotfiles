@@ -7,9 +7,10 @@ export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # programs-specific variables
 export MANPAGER="less"
+export FZF_DEFAULT_OPTS="--preview='bat {}'"
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
-export PYTHON_HISTORY=$HOME/.local/state/python/history
 
+export PYTHON_HISTORY=$HOME/.local/state/python/history
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export WGETRC=$HOME/.config/wget/wgetrc
@@ -20,3 +21,6 @@ export XDG_DOWNLOAD_DIR="$HOME/Téléchargements"
 
 # setting up graphics in WSL
 export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0
+
+# Aliases
+source ~/.config/zsh/aliases.zsh

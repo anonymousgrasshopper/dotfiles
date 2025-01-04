@@ -3,6 +3,7 @@ return {
     "ggandor/leap.nvim",
     dependencies = {
       "tpope/vim-repeat",
+      "ggandor/flit.nvim",
     },
     config = function()
       vim.keymap.set({"n", "x", "o"}, "s",  "<Plug>(leap-forward)")
@@ -10,10 +11,4 @@ return {
       vim.keymap.set({"n", "x", "o"}, "gs", "<Plug>(leap-from-window)")
     end,
   },
-  {
-    "ggandor/flit.nvim",
-    dependencies = {
-      "ggandor/leap.nvim",
-    },
-  }
 }

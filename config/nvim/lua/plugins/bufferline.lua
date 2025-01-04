@@ -14,19 +14,20 @@ return {
           text = "File Explorer",
           highlight = "PanelHeading",
           text_align = "center",
-          separator = "▌",
+          separator = "▐",
         },
         {
           filetype = "undotree",
           text = "UNDOTREE",
           highlight = "PanelHeading",
-          separator = "▌",
+          separator = "▐",
         },
       },
     },
     highlights = {
       offset_separator = {
-        fg = "#2A2A37",
+        bg = "#2A2A37",
+        fg = "#111116",
       },
     }
   }
