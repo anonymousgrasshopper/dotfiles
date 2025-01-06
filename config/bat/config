@@ -19,3 +19,4 @@
 
 # Syntax mappings: map a certain filename pattern to a language.
 --map-syntax "*.rasi:CSS"
+--map-syntax "*zsh*:Bourne Again Shell (bash)"

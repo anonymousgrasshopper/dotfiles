@@ -16,13 +16,19 @@ image_filter = "nearest"
 
 [opener]
 edit = [
-  { run = '$EDITOR "$@"', block = true, for = "unix" },
+{ run = '$EDITOR "$@"', block = true, for = "unix" },
 ]
 open = [
-  { run = 'xdg-open "$@"', desc = "Open" },
+{ run = 'xdg-open "$@"', desc = "Open" },
 ]
 
 [plugin]
 prepend_previewers = [
-  { name = "*.md", run = "glow" },
+{ name = "*.md", run = "glow" },
+{ name = "*/", run = "folder", sync = true },
+{ mime = "text/*",                 run = "bat" },
+{ mime = "*/xml",                  run = "bat" },
+{ mime = "*/cs",                   run = "bat" },
+{ mime = "*/javascript",           run = "bat" },
+{ mime = "*/x-wine-extension-ini", run = "bat" },
 ]

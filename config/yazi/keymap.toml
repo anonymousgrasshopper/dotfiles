@@ -31,8 +31,21 @@ run = "plugin arrow --args=-1"
 on  = "j"
 run = "plugin arrow --args=1"
 
+[[manager.prepend_keymap]]
+on  = "J"
+run = "arrow 5"
+
+[[manager.prepend_keymap]]
+on  = "K"
+run = "arrow -5"
+
 prepend_keymap = [
 # glow.yazi
 { on = ["<C-e>"], run = "seek 5" },
 { on = ["<C-y>"], run = "seek -5" },
 ]
+
+[[manager.prepend_keymap]]
+on   = "f"
+run  = "plugin jump-to-char"
+desc = "Jump to char"

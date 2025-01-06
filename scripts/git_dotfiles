@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # list of configs to copy
-configs=("bat" "git" "i3" "kitty" "ncdu" "npm" "nvim" "rofi" "tmux" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "eza" "git" "i3" "kitty" "ncdu" "npm" "nvim" "rofi" "tmux" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "fzf.conf" "ripgrep.conf" "shellcheckrc")
 
 # clone the repo if it is not in ~/.config
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles:~/.config

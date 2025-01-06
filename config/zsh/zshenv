@@ -7,12 +7,12 @@ export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # programs-specific variables
 export MANPAGER="less"
-export FZF_DEFAULT_OPTS="--preview='bat {}'"
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 
 export PYTHON_HISTORY=$HOME/.local/state/python/history
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
+export FZF_DEFAULT_OPTS_FILE=~/.config/fzf.conf
 export WGETRC=$HOME/.config/wget/wgetrc
 
 # XDG environment variables

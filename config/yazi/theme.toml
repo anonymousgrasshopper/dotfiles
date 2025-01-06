@@ -1,7 +1,7 @@
 [manager]
 cwd = { fg = "#e6c384" }
-hovered = { reversed = true }
-preview_hovered = { }
+hovered = { bg = "#363646" }
+preview_hovered = {}
 
 find_keyword = { fg = "#DCA561", bg = "#1f1f28" }
 find_position = {}
@@ -15,20 +15,20 @@ marker_cut = { fg = "#e46876" }
 marker_selected = { fg = "#ffa066" }
 marker_marked = { fg = "#957fb8" }
 
-count_copied = { fg = "#1f1f28", bg = "#98bb6c" }
-count_cut = { fg = "#1f1f28", bg = "#e46876" }
-count_selected = { fg = "#1f1f28", bg = "#ffa066" }
+count_copied = { fg = "#1F1F28" }
+count_cut = { fg = "#1f1f28" }
+count_selected = { fg = "#1F1F28" }
 
 border_symbol = "│"
 border_style = { fg = "#54546D" }
 
 
 [mode]
-normal_main = { fg = "#1f1f28", bg = "#7E9CD8" }
+normal_main = { fg = "#1F1F28", bg = "#7E9CD8" }
 normal_alt = { fg = "#9CABCA", bg = "#54546D" }
-select_main = { fg = "#1f1f28", bg = "#957fb8" }
+select_main = { fg = "#1F1F28", bg = "#957fb8" }
 select_alt = { fg = "#9CABCA", bg = "#54546D" }
-unset_main = { fg = "#1f1f28", bg = "#DCA561" }
+unset_main = { fg = "#1F1F28", bg = "#DCA561" }
 unset_alt = { fg = "#9CABCA", bg = "#54546D" }
 
 
@@ -37,15 +37,15 @@ separator_open = ""
 separator_close = ""
 separator_style = { fg = "reset", bg = "#2a2a37" }
 
-progress_label = { fg = "#7e9cd8", bg = "#2a2a37", bold = true }
-progress_normal = { fg = "#2a2a37", bg = "#1f1f28" }
-progress_error = { fg = "#2a2a37", bg = "#1f1f28" }
+progress_label = { fg = "#7e9cd8", bg = "#2A2A37", bold = true }
+progress_normal = { fg = "#2A2A37", bg = "#1F1F28" }
+progress_error = { fg = "#2A2A37", bg = "#1F1F28" }
 
-perm_type = { fg = "#98bb6c" }
-perm_read = { fg = "#e6c384" }
-perm_write = { fg = "#ff5d62" }
-perm_exec = { fg = "#7aa89f" }
-perm_sep = { fg = "#957fb8" }
+perm_type = { fg = "#98BB6C" }
+perm_read = { fg = "#E6C384" }
+perm_write = { fg = "#FF5D62" }
+perm_exec = { fg = "#7AA89F" }
+perm_sep = { fg = "#957FB8" }
 
 
 [pick]
@@ -90,15 +90,8 @@ title_info = { fg = "#6A9598" }
 title_warn = { fg = "#FF9E3B" }
 title_error = { fg = "#E82424" }
 
-# files
 [filetype]
 rules = [
-    { mime = "image/*", fg = "#e6c384" },
-    { mime = "{audio,video}/*", fg = "#957fb8" },
-    { mime = "application/{,g}zip", fg = "#e46876" },
-    { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#e46876" },
-    { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#6a9589" },
-    { name = "*", is = "orphan", fg = "#e46876" },
-    { name = "*", is = "exec", fg = "#957fb8" },
-    { name = "*/", fg = "#7e9cd8" },
+  # { name = "*", fg = "#DCD7BA" },
+  { name = "*/", fg = "#7E9CD8" },
 ]

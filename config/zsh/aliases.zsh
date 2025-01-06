@@ -17,9 +17,9 @@ alias   cd="z"
 alias  cat="bat"
 alias find="fd"
 
-alias   ls="exa --icons --group-directories-first"
-alias   ll="exa --icons --group-directories-first -alh"
-alias tree="exa --icons --group-directories-first --tree"
+alias   ls="eza --icons --group-directories-first"
+alias   ll="eza --icons --group-directories-first -alh"
+alias tree="eza --icons --group-directories-first --tree"
 
 # Tmux
 alias  tas="tmux attach -d"

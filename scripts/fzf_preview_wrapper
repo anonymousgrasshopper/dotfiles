@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ -d $1 ]]; then
+  eza -1 --color=always --icons "$1"
+elif [[ -f $1 ]]; then
+  if [[ $1 =~ .md ]]; then
+    glow -s dark "$1"
+  else
+    bat --color=always "$1"
+  fi
+fi
