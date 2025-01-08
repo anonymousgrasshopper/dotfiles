@@ -54,8 +54,12 @@ zinit light Aloxaf/fzf-tab
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
 zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"
 zstyle ":completion:*" menu no
+
 zstyle ':fzf-tab:*' fzf-flags --separator="" --info=inline
-zstyle ':fzf-tab:*' fzf-preview '/usr/local/bin/fzf_preview_wrapper $realpath'
+zstyle ':fzf-tab:complete:*' fzf-preview '/usr/local/bin/fzf_preview_wrapper $realpath'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':fzf-tab:complete:*:options' fzf-preview '' # disable preview for command options
+zstyle ':fzf-tab:complete:*:argument-1' fzf-preview '' # disable preview for subcommands
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -110,5 +114,5 @@ function ex() {
 }
 
 # source scripts
-[[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
-[[ ! -f $ZDOTDIR/.zsh_sysinit ]] || source $ZDOTDIR/.zsh_sysinit
+[[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh
+[[ -f $ZDOTDIR/.zsh_sysinit ]] && source $ZDOTDIR/.zsh_sysinit

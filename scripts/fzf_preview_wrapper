@@ -6,6 +6,6 @@ elif [[ -f $1 ]]; then
   if [[ $1 =~ .md ]]; then
     glow -s dark "$1"
   else
-    bat --color=always "$1"
+    bat --number --color=always "$1"
   fi
 fi

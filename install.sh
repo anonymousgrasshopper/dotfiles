@@ -66,14 +66,14 @@ if [[ -f "/etc/arch-release" ]]; then
       read answer
       case "$answer" in
         [yY][eE][sS]|[yY]) 
-          pacman -S ttf-firacode-nerd
-          [[ -d /usr/share/fonts/TTF/FiraCode ]] || mkdir -p /usr/share/fonts/TTF/FiraCode
-          mv /usr/share/fonts/TTF/FiraCode-NerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
+          sudo pacman -S ttf-firacode-nerd
+          [[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
+          sudo mv /usr/share/fonts/TTF/FiraCode-NerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
           ;;
       esac
     else
-      [[ -d /usr/share/fonts/TTF/FiraCode ]] || mkdir -p /usr/share/fonts/TTF/FiraCode
-      mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
+      [[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
+      sudo mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
     fi
   fi
   if [[ ! -d /usr/share/fonts/noto ]]; then
@@ -81,7 +81,7 @@ if [[ -f "/etc/arch-release" ]]; then
     read answer
     case "$answer" in
       [yY][eE][sS]|[yY]) 
-        pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
+        sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra 
         ;;
     esac
   fi
@@ -95,16 +95,16 @@ cd scripts || { echo -e "Error : scripts folder is not present in the script's d
 printf '\n'
 for file in *; do
   if [[ ! -f "/usr/local/bin/$file" ]]; then
-    cp "$file" "/usr/local/bin/"
-    chmod +x "/usr/local/bin/$file"
+    sudo cp "$file" "/usr/local/bin/"
+    sudo chmod +x "/usr/local/bin/$file"
   else
     if ! cmp --silent "$file" "/usr/local/bin/$file"; then
       echo -en "${BLUE}Would you like to delete your current $file script to replace it with the one in this repo ? (y/n) ${WHITE}"
       read answer
       case "$answer" in 
         [yY][eE][sS]|[yY])
-          cp "$file" "/usr/local/bin/"
-          chmod +x "/usr/local/bin/$file"
+          sudo cp "$file" "/usr/local/bin/"
+          sudo chmod +x "/usr/local/bin/$file"
           ;;
       esac
     fi

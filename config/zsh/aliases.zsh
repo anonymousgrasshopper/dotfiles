@@ -21,10 +21,22 @@ alias   ls="eza --icons --group-directories-first"
 alias   ll="eza --icons --group-directories-first -alh"
 alias tree="eza --icons --group-directories-first --tree"
 
+alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # don't put this in fzf.conf as it will also apply to fzf-tab and always enable the preview
+
 # Tmux
-alias  tas="tmux attach -d"
+alias  tls="tmux list-session"
 alias  trs="tmux rename-session"
 alias  trw="tmux rename-window"
+tns() {
+  if [[ $# == 0 ]]; then
+    tmux new-session
+  else
+    tmux new-session -s"$1"
+  fi
+}
+tas() {
+  tmux attach-session -d -t"$1"
+}
 
 # Neovim
 alias  inv='nvim $(fzf -m)'
