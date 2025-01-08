@@ -2,3 +2,4 @@ config
 tmux
 tpm
 ctrl
+zsh

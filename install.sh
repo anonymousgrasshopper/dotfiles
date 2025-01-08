@@ -8,7 +8,10 @@ WHITE='\033[0;37m'
 
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 ]]; then
-  echo -e "${RED}WARNING: running this script as root might cause pemissions issues."
+  WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+  if [[ $WORKING_DIR =~ ^/root ]]; then
+    echo -e "${RED}WARNING: running this script as root might cause permission issues."
+  fi
 fi
 
 # check wether the default shell is zsh or not
@@ -22,28 +25,28 @@ if [[ "$SHELL" != "/bin/zsh" && "$SHELL" != "/usr/bin/zsh" ]]; then
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
 if [[ -f "/etc/zsh/zshenv" ]]; then
   if ! grep "export ZDOTDIR=\$HOME/.config/zsh" < /etc/zsh/zshenv >/dev/null; then
-    echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv
+    echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv > /dev/null
   fi
 else
   if [[ ! -d /etc/zsh ]]; then
     sudo mkdir /etc/zsh
   fi
   sudo touch /etc/zsh/zshenv
-  echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv
+  echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv > /dev/null
 fi
 if [[ -f "/etc/zsh/zshrc" ]]; then
   if ! grep "zsh-newuser-install() { :; }" < /etc/zsh/zshrc > /dev/null; then
-    echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc
+    echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc > /dev/null
   fi
 else
   sudo touch /etc/zsh/zshrc
-  echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc
+  echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc > /dev/null
 fi
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
 if [[ -f "/etc/pulse/client.conf" ]]; then
   if ! grep "cookie-file = /home/$USER/.cache/pulse/cookie" < /etc/pulse/client.conf > /dev/null; then
-    printf "\ncookie-file = /home/%s/.cache/pulse/cookie" "$USER" | sudo tee -a /etc/pulse/client.conf
+    printf "\ncookie-file = /home/%s/.cache/pulse/cookie" "$USER" | sudo tee -a /etc/pulse/client.conf > /dev/null
   fi
 fi
 
