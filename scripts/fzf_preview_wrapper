@@ -1,9 +1,11 @@
 #!/bin/bash
 
 if [[ -d $1 ]]; then
-  eza -1 --color=always --icons "$1"
+  eza -1alh --group-directories-first --color=always --icons "$1"
 elif [[ -f $1 ]]; then
-  if [[ $1 =~ .md ]]; then
+  if [[ "$1" =~ .png || "$1" =~ .jpg || "$1" =~ .gif ]]; then
+    kitten icat "$1" 2>/dev/null
+  elif [[ "$1" =~ .md ]]; then
     glow -s dark "$1"
   else
     bat --number --color=always "$1"
