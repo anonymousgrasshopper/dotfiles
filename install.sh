@@ -20,7 +20,7 @@ if [[ "$SHELL" != "/bin/zsh" && "$SHELL" != "/usr/bin/zsh" ]]; then
   echo -e "${WHITE}> ${BLUE}chsh \$USER"
   echo -e "${WHITE}> ${BLUE}/bin/zsh"
   echo ""
-  fi
+fi
 
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
 if [[ -f "/etc/zsh/zshenv" ]]; then
@@ -52,15 +52,16 @@ fi
 
 # Install required packages
 if [[ -f "/etc/arch-release" ]]; then
+  packages="bat eza fd fzf gcc git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
   echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
   read answer
   case "$answer" in
     [yY][eE][sS]|[yY]) 
-      sudo pacman -S bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh
+      sudo pacman -S $packages
       ;;
     *)
       echo -e "${GREEN}Make sure the following packages are installed :"
-      echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
+      echo -e "${WHITE}$packages"
       ;;
   esac
   if [[ ! -f /usr/share/fonts/TTF/FiraCode/FiraCodeNerdFont-Regular.ttf ]]; then
@@ -90,7 +91,7 @@ if [[ -f "/etc/arch-release" ]]; then
   fi
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
-  echo -e "${WHITE}bat eza fd fzf git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
+  echo -e "${WHITE}$packages"
 fi
 
 # copy scripts to /usr/local/bin
