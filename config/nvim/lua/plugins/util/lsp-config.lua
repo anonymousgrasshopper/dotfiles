@@ -36,11 +36,9 @@ return {
     cmd = { "Mason" },
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
       local mason           = require("mason")
-      local mason_installer = require("mason-tool-installer")
       local mason_lspconfig = require("mason-lspconfig")
 
       mason.setup({
@@ -54,18 +52,27 @@ return {
       })
 
       mason_lspconfig.setup()
-
-      mason_installer.setup({
-        ensure_installed = {
-          "clangd",
-          "codelldb",
-          "lua_ls",
-          "bashls",
-          "shellcheck",
-          "pylsp",
-        },
-      })
     end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    cmd = {
+      "MasonToolsInstall",
+      "MasonToolsInstallSync",
+      "MasonToolsUpdate",
+      "MasonToolsUpdateSync",
+      "MasonToolsClean",
+    },
+    opts = {
+      ensure_installed = {
+        "clangd",
+        "codelldb",
+        "lua_ls",
+        "bashls",
+        "shellcheck",
+        "pylsp",
+      },
+    }
   },
   {
     "neovim/nvim-lspconfig",
