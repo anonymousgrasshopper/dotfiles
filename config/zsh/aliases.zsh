@@ -7,6 +7,7 @@ alias    c="clear"
 alias   py="python3"
 
 # Programs
+alias    q="exit"
 alias   :q="exit"
 alias  :qa="exit"
 alias   rm="rm -i"
@@ -21,7 +22,7 @@ alias   ls="eza --icons --group-directories-first"
 alias   ll="eza --icons --group-directories-first -alh"
 alias tree="eza --icons --group-directories-first --tree"
 
-alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # don't put this in fzf.conf as it will also apply to fzf-tab and always enable the preview
+alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # don't put this in fzf.conf as it will also apply to fzf-tab and always enable its preview
 
 # Tmux
 alias  tls="tmux list-session"
@@ -35,10 +36,19 @@ tns() {
   fi
 }
 tas() {
-  tmux attach-session -d -t"$1"
+  if [[ $# == 0 ]]; then
+    tmux attach-session -d -t$(tmux list-session | fzf --preview='' | sed 's/:.*//')
+  else
+    tmux attach-session -d -t"$1"
+  fi
 }
 
 # Neovim
+nvim_cursor_reset() {
+  /bin/nvim $@
+  printf $'\e[%d q' 6
+}
+alias nvim=nvim_cursor_reset
 alias  inv='nvim $(fzf -m)'
 alias  vim="nvim"
 alias   nv="nvim"

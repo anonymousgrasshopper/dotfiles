@@ -13,7 +13,7 @@ return {
       visual          = "gz",
       visual_line     = "gZ",
       delete          = "gd",
-      change          = "gr",
+      change          = "gc",
     }
   }
 }

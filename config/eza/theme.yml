@@ -1,14 +1,14 @@
 filekinds:
 normal: {foreground: Default}
 directory: {foreground: "#7E9CD8", is_bold: true}
-symlink: {foreground: Cyan}
-pipe: {foreground: Yellow}
-block_device: {foreground: Yellow, is_bold: true}
-char_device: {foreground: Yellow, is_bold: true}
-socket: {foreground: Red, is_bold: true}
-special: {foreground: Yellow}
-executable: {foreground: Green, is_bold: true}
-mount_point: {foreground: Blue, is_bold: true, is_underlined: true}
+symlink: {foreground: "#6A9589"}
+pipe: {foreground: "#C0A36E"}
+block_device: {foreground: "#E6C384", is_bold: true}
+char_device: {foreground: "#E6C384", is_bold: true}
+socket: {foreground: "#957FB8", is_bold: true}
+special: {foreground: "#E6C384"}
+executable: {foreground: "#DCD7BA", is_bold: true}
+mount_point: {foreground: "#7FB4CA", is_bold: true, is_underlined: true}
 
 perms:
 user_read: {foreground: "#E6C384", is_bold: true}

@@ -4,27 +4,22 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Vi mode
-bindkey -v # use vim-like keybindings
+bindkey -v # enable vi mode
 export KEYTIMEOUT=1
 
-function _vi-mode-set-cursor-shape() {
+function zle-keymap-select() {
 local _shape=0
-case "${1:-${VI_KEYMAP:-main}}" in
-  main)    _shape=6 ;; # vi insert: line
+case "${KEYMAP}" in
+  main)    _shape=6 ;; # vi insert/replace: line
   viins)   _shape=6 ;; # vi insert: line
   isearch) _shape=6 ;; # inc search: line
   command) _shape=6 ;; # read a command name
   vicmd)   _shape=2 ;; # vi cmd: block
   visual)  _shape=2 ;; # vi visual mode: block
   viopp)   _shape=0 ;; # vi operation pending: blinking block
-  *)       _shape=0 ;;
+  *)       _shape=6 ;;
 esac
-printf $'\e[%d q' "${_shape}"
-}
-
-function zle-keymap-select() {
-typeset -g VI_KEYMAP=$KEYMAP
-_vi-mode-set-cursor-shape "${VI_KEYMAP}"
+printf $'\e[%d q' ${_shape}
 }
 
 zle -N zle-keymap-select
@@ -52,36 +47,32 @@ zinit light Aloxaf/fzf-tab
 
 # Completion styling
 zstyle ':completion:*'                    matcher-list "m:{a-z}={A-Za-z}"
-zstyle ':completion:*:default'            list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*'                    complete-options true
 zstyle ':completion:*'                    menu no
 zstyle ':completion:*:*:*:*:processes'    command "ps -u $USER -o pid,user,comm -w -w"
 
 zstyle ':fzf-tab:*'                       fzf-flags --separator="" --info=inline
 zstyle ':fzf-tab:complete:*'              fzf-preview '/usr/local/bin/fzf_preview_wrapper $realpath'
-zstyle ':fzf-tab:complete:-command-:*'    fzf-preview ' [[ -v "$word" ]] && echo "${(P)word}" || man "$word" 2>/dev/null' fzf-flags --preview-window=:warp
+zstyle ':fzf-tab:complete:-command-:*'    fzf-preview '[[ -v "$word" ]] && echo "${(P)word}" || man "$word" 2>/dev/null'
 zstyle ':fzf-tab:complete:*:options'      fzf-preview '' # disable preview for command options
 zstyle ':fzf-tab:complete:*:argument-1'   fzf-preview '' # disable preview for subcommands
 zstyle ':fzf-tab:complete:tmux:*'         fzf-preview '' # disable preview for tmux commands
 zstyle ':fzf-tab:complete:kill:*'         fzf-preview '' # disable preview for kill
-zstyle ':fzf-tab:complete:(\\|*/|)man:*'  fzf-preview 'man $word'
+zstyle ':fzf-tab:gomplete:(\\|*/|)man:*'  fzf-preview 'man $word'
 
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
-'git diff $word | delta'
-zstyle ':fzf-tab:complete:git-log:*' fzf-preview \
-'git log --color=always $word'
-zstyle ':fzf-tab:complete:git-help:*' fzf-preview \
-'git help $word | bat -plman --color=always'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
+zstyle ':fzf-tab:complete:git-help:*' fzf-preview 'git help $word | bat -plman --color=always'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
 'case "$group" in
-"commit tag") git show --color=always $word ;;
-*) git show --color=always $word | delta ;;
+  "commit tag") git show --color=always $word ;;
+  *) git show --color=always $word | delta ;;
 esac'
 zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
 'case "$group" in
-"modified file") git diff $word | delta ;;
-"recent commit object name") git show --color=always $word | delta ;;
-*) git log --color=always $word ;;
+  "modified file") git diff $word | delta ;;
+  "recent commit object name") git show --color=always $word | delta ;;
+  *) git log --color=always $word ;;
 esac'
 
 # Load completions
@@ -118,17 +109,13 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# environment variables and aliases
-source $ZDOTDIR/zshenv
-
 # setup CLI tools
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 # create a help command using bat
-alias bathelp='bat --plain --language=help'
 help() {
-  "$@" --help 2>&1 | bathelp
+  "$@" --help 2>&1 | bat --plain --language=help
 }
 
 # wrapper around yazi to change cwd when exiting it

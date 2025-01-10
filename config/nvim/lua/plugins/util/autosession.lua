@@ -21,6 +21,9 @@ return {
       "Neotree close",
       "AerialCloseAll",
     },
+    pre_restore_cmds = {
+      "Neotree close",
+    },
     session_lens = {
       load_on_setup = false,
       preview = true,

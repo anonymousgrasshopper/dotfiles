@@ -114,6 +114,8 @@ bindsym $mod+Shift+space floating toggle
 gaps outer 12
 gaps inner 8
 
+bindsym $mod+Shift+f gaps outer 0
+
 # gaps
 set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)

@@ -5,8 +5,7 @@ return {
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
-        -- follow latest release.
-        version = "v2.*",   -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        version = "v2.*",
         -- install jsregexp (optional).
         build = "make install_jsregexp",
         config = function ()
@@ -96,10 +95,10 @@ return {
         mapping = cmp.mapping.preset.insert({
           ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
           ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),    -- scroll documentation backwards
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation forward
-          ["<C-u>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation up
-          ["<C-d>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation down
+          ["<C-b>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation backwards
+          ["<C-f>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation forward
+          ["<C-u>"] = cmp.mapping.scroll_docs(-4),    -- scroll documentation up
+          ["<C-d>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation down
           ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
           ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
           ["<CR>"] = cmp.mapping(function(fallback)

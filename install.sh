@@ -141,16 +141,10 @@ for item in *; do
         fi
         mv "$HOME_DIR/.config/$item" "$HOME_DIR/.config/$item.bak"
         cp -r "$item" "$HOME_DIR/.config/"
-        find "$HOME_DIR/.config/$item" -type d -exec chmod u=rwx g=rx o=rx {} +
-        find "$HOME_DIR/.config/$item" -type f -exec chmod u=rwx g=r o=r {} +
-        find "$HOME_DIR/.config/$item.bak" -type d -exec chmod u=rwx g=rx o=rx {} +
-        find "$HOME_DIR/.config/$item.bak" -type f -exec chmod u=rwx g=r o=r {} +
         ;;
       2)
         rm -rf "$HOME_DIR/.config/$item"
         cp -r "$item" "$HOME_DIR/.config/"
-        find "$HOME_DIR/.config/$item" -type d -exec chmod u=rwx g=rx o=rx {} +
-        find "$HOME_DIR/.config/$item" -type f -exec chmod u=rwx g=r o=r {} +
         ;;
       *)
         echo -e "${WHITE}Skipping..."
