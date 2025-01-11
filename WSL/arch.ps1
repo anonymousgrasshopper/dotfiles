@@ -1,2 +1,2 @@
-&"C:\Program Files\Vcxsrv\config.xlaunch"
+&"C:\Program Files\Vcxsrv\fullscreen.xlaunch"
 arch -c "~/.scripts/startup.sh"

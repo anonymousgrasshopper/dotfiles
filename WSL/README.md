@@ -1,12 +1,12 @@
 -  install WSL and install Arch WSL through the Microsoft Store
 https://learn.microsoft.com/fr-fr/windows/wsl/install 
-- in Arch WSL, create a sudo password and a user, sudo pacman -S git and git clone https://github.com/anonymousgrasshopper/dotfiles, then run install.sh (as root user)
+- in Arch WSL, create a root password and a user, sudo pacman -S git and git clone https://github.com/anonymousgrasshopper/dotfiles (in ~/.config), then run install.sh
 Note : yazi caches stuff in /home/Antoine/.cache/yazi. Replace the user name if necessary.
 
 - install Vcxsrv 
 https://vcxsrv.com/ 
 
-- copy config.xlaunch into C:\Program Files\Vcxsrv
+- copy fullscreen.xlaunch into C:\Program Files\Vcxsrv (config.xlaunch can be used as well but i have a bug in Windows 10 with the taskbar not going out completely so i use fullscreen to get rid of it)
 - place arch.ps1 on the Windows desktop
 - place startup.sh in ~/.scripts
 
