@@ -9,7 +9,7 @@ WHITE='\033[0;37m'
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 ]]; then
   WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-  if [[ $WORKING_DIR =~ ^/root ]]; then
+  if [[ ! $WORKING_DIR =~ ^/root ]]; then
     echo -e "${RED}WARNING: running this script as root might cause permission issues."
   fi
 fi
