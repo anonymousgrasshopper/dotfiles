@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/bin/firefox --profile "${HOME}/.local/share/firefox/.mozilla/firefox/zucn0zak.default-release" "$@"

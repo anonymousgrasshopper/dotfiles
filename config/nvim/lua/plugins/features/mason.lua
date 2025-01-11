@@ -29,6 +29,8 @@ return {
           "pylsp",
         },
       })
+
+      vim.cmd[[autocmd Filetype mason setlocal cursorline!]]
     end,
   },
   {

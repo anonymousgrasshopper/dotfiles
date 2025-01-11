@@ -6,24 +6,31 @@ end
 
 -- disble virtual text for diagnostics
 vim.diagnostic.config({
-  virtual_text = false
+  virtual_text = true
 })
 
 -- Show line diagnostics automatically in hover window
-vim.api.nvim_create_autocmd( "CursorHold", {
-  buffer = bufnr,
-  callback = function ()
-    local opts = {
-      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-      focusable = false,
-      border = "rounded",
-      source = false,
-      prefix = " ",
-      scope = "line",
-    }
-    vim.diagnostic.open_float(nil, opts )
-  end
-})
+-- vim.api.nvim_create_autocmd( "CursorHold", {
+--   buffer = bufnr,
+--   callback = function ()
+--     local excluded_filetypes = { "mason" }
+--     for _, filetype in pairs(excluded_filetypes) do
+--       if vim.bo.filetype == filetype then
+--         return
+--       end
+--     end
+
+--     local opts = {
+--       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+--       focusable = false,
+--       border = "rounded",
+--       source = false,
+--       prefix = " ",
+--       scope = "line",
+--     }
+--     vim.diagnostic.open_float(nil, opts )
+--   end
+-- })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })

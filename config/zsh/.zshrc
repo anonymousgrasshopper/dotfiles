@@ -126,8 +126,8 @@ function ex() {
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
+  printf $'\e[%d q' 6
 }
 
-# source scripts
+# source powerlevel10k
 [[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh
-[[ -f $ZDOTDIR/.zsh_sysinit ]] && source $ZDOTDIR/.zsh_sysinit
