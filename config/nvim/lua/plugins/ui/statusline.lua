@@ -93,9 +93,14 @@ return {
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,
-            color = { fg = "#ff9e64" },
+            color = { fg = "#FF9E3B" },
           },
           { "diagnostics" },
+          {
+            require("noice").api.statusline.mode.get,
+            cond = require("noice").api.statusline.mode.has,
+            color = { fg = "#FF9E3B" },
+          },
         },
         lualine_y = {
           { "progress", separator = " ", padding = { left = 1, right = 0 } },

@@ -169,13 +169,13 @@ vim.api.nvim_create_user_command("Zen",
   function ()
     if vim.api.nvim_get_option_value("laststatus", {}) ~= 0  then
       vim.cmd[[
-        set cmdheight=0
         set laststatus=0
+        set showtabline=0
       ]]
     else
       vim.cmd[[
-        set cmdheight=1
         set laststatus=3
+        set showtabline=2
       ]]
     end
   end,

@@ -25,8 +25,8 @@ vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchar
 vim.opt.statuscolumn   = "%s%C%l"
 vim.opt.number         = true   -- shows absolute line number on cursor line
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
-vim.opt.scrolloff      = 2      -- have >= 4 lines above and below your cursor when possible
-vim.opt.sidescrolloff  = 4      -- have >= 4 columns around your cursor when possible
+vim.opt.scrolloff      = 4      -- have at least this number of lines above and below your cursor when possible
+vim.opt.sidescrolloff  = 6      -- have at least this number of columns around your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current cursor line
 

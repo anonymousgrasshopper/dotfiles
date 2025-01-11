@@ -16,6 +16,7 @@ return {
 				"cpp",
 				"lua",
 				"bash",
+        "regex",
         "vimdoc",
 			},
 			incremental_selection = {
