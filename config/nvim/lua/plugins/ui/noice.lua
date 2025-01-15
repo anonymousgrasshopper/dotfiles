@@ -1,6 +1,7 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
+  vim.keymap.set("n", "<leader>L", "<cmd>Noice dismiss<CR>", { desc = "Dismiss all notifications" }),
   opts = {
     lsp = {
       -- override markdown rendering so that cmp and other plugins use Treesitter
@@ -62,6 +63,11 @@ return {
   },
   dependencies = {
     "MunifTanjim/nui.nvim",
-    "rcarriga/nvim-notify",
+    {
+      "rcarriga/nvim-notify",
+      opts = {
+        timeout = 100,
+      },
+    },
   }
 }

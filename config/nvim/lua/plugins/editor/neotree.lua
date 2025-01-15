@@ -230,7 +230,7 @@ return {
             "*.pre",
             "*.toc",
             "*.fdb_latexmk",
-            "*.synctex.gz",
+            "*.synctex*",
           },
         },
         follow_current_file = {

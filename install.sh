@@ -6,10 +6,13 @@ BLUE="\e[0;94m"
 GREEN='\033[0;32m'
 WHITE='\033[0;37m'
 
+# change dir in script's directory
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd "$SCRIPT_DIR"
+
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 ]]; then
-  WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-  if [[ ! $WORKING_DIR =~ ^/root ]]; then
+  if [[ ! $SCRIPT_DIR =~ ^/root ]]; then
     echo -e "${RED}WARNING: running this script as root might cause permission issues."
   fi
 fi
@@ -117,8 +120,7 @@ done
 cd ..
 
 # copy config folders
-WORKING_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-if [[ "$WORKING_DIR" =~ (/home/[^/]+) ]]; then
+if [[ "$SCRIPT_DIR" =~ (/home/[^/]+) ]]; then
   HOME_DIR=${BASH_REMATCH[1]}
 else
   HOME_DIR="/root"
@@ -126,7 +128,7 @@ fi
 if [[ ! -d "$HOME_DIR/.config" ]]; then
   mkdir "$HOME_DIR/.config"
 fi
-cd "$WORKING_DIR/config" || { echo -e "Error : config folder is not present in the script's directory"; exit; }
+cd "$SCRIPT_DIR/config" || { echo -e "Error : config folder is not present in the script's directory"; exit; }
 printf '\n'
 for item in *; do
   if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item"  ]]; then

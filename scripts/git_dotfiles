@@ -8,9 +8,6 @@ configs=("bat" "eza" "git" "i3" "kitty" "ncdu" "npm" "nvim" "rofi" "tmux" "wget"
 
 cd "$HOME/.config/dotfiles"
 
-# move .zsh_sysinit to save it for later
-[[ ! -f "config/zsh/.zsh_sysinit" ]] || mv "config/zsh/.zsh_sysinit" .
-
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
   if [[ -d "config/$config" || -f "config/$config" ]]; then
@@ -21,9 +18,8 @@ for config in ${configs[@]}; do
   fi
 done
 
-# modify files in the dotfiles repo
+# remove zcompdump
 [[ ! -f "config/zsh/.zcompdump" ]] || rm "config/zsh/.zcompdump"
-[[ ! -f .zsh_sysinit ]] || mv .zsh_sysinit config/zsh/
 
 # git add
 sudo git add ~/.config/dotfiles
