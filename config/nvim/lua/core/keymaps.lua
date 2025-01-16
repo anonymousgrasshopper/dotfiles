@@ -158,7 +158,7 @@ vim.api.nvim_create_autocmd("Filetype", {
     vim.schedule(function ()
       vim.keymap.set("n", "<leader>sf", function()
         return "<cmd>!compile_sfml " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r") .. " &<CR><CR>"
-      end, { expr = true })
+      end, { expr = true, buffer = true })
     end)
   end
 })
