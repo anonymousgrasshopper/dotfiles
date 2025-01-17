@@ -33,7 +33,15 @@ return {
     { condition = tex.in_text * line_begin }
   ),
   s({ trig = "toc", descr = "Table of contents", snippetType = "autosnippet" },
-    t("\\tableofcontents"),
+    fmta(
+      [[
+        \tablofcontents
+        <>
+      ]],
+      {
+        i(0),
+      }
+    ),
     { condition = line_begin }
   ),
   s({ trig = "pck", descr = "include package", snippetType = "autosnippet"},

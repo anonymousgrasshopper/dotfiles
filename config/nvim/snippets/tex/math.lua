@@ -19,22 +19,6 @@ local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
 
 return {
-  -- s({ trig = "[", descr = "display math",  wordTrig = "false", snippetType = "autosnippet" },
-  --   fmta(
-  --     "\\[<>\\",
-  --     {
-  --       d(1, get_visual),
-  --     }
-  --   )
-  -- ),
-  -- s({ trig = "$", descr = "inline math",  wordTrig = "false", snippetType = "autosnippet" },
-  --   fmta(
-  --     "$<>$",
-  --     {
-  --       d(1, get_visual),
-  --     }
-  --   )
-  -- ),
   s({ trig = "sm", descr = "sum", wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       [[

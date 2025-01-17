@@ -38,7 +38,7 @@ return {
       {
         i(0),
       }),
-    { conditions = line_begin }
+    { condition = line_begin }
   ),
   s({ trig = "cf", descr = "Codeforces template", snippetType = "autosnippet" },
     fmta(
@@ -78,7 +78,7 @@ return {
         i(0),
       }
     ),
-    { conditions = line_begin }
+    { condition = line_begin }
   ),
   s({ trig = "setio", descr = "Set io for USACO", snippetType = "autosnippet" },
     fmta(
@@ -94,6 +94,6 @@ return {
         i(1),
       }
     ),
-    { conditions = line_begin }
+    { condition = line_begin }
   )
 }
