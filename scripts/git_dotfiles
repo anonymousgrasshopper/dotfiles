@@ -26,9 +26,9 @@ sudo git add ~/.config/dotfiles
 
 # commit if args are passed to the scripts
 if [[ $# == 2 ]]; then
-  sudo git commit -m"$1" -m"$2"
+  sudo -E git commit -m"$1" -m"$2"
   git push
 elif [[ $# == 1 ]]; then
-  sudo git commit -m"$1"
+  sudo -E git commit -m"$1"
   git push
 fi
