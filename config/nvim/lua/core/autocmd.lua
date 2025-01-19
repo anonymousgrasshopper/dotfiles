@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
 vim.api.nvim_create_autocmd({ "WinEnter", "Filetype" }, {
   pattern = { "neo-tree-popup", "alpha" },
   callback = function ()
-    if vim.api.nvim_get_mode() == "normal" then
+    if vim.api.nvim_get_mode() ~= "insert" then
       vim.cmd[[
       hi Cursor blend=100
       set guicursor+=a:Cursor/lCursor
