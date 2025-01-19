@@ -1,3 +1,7 @@
+##################################################################
+############################# ZSHENV #############################
+##################################################################
+
 # general environment variables
 export LANG=en_US.UTF-8
 export EDITOR="nvim"
@@ -13,6 +17,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep.conf
 export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/npmrc
 export FZF_DEFAULT_OPTS_FILE=~/.config/fzf.conf
 export WGETRC=$HOME/.config/wget/wgetrc
+export GOPATH=$HOME/.local/share/go
 
 # Path
 export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$PATH

@@ -1,23 +1,39 @@
 [credential "https://github.com"]
   helper = 
   helper = !/usr/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
   helper = 
   helper = !/usr/bin/gh auth git-credential
+
 [user]
-  email = antoine.s.27182@gmail.com
-  name = anonymousgrasshopper
+	email = antoine.s.27182@gmail.com
+	name = anonymousgrasshopper
+
 [http]
   postBuffer = 157286400
+
 [core]
   pager = delta
+
 [interactive]
   diffFilter = delta --color-only
+
 [delta]
+  features = decorations
   syntax-theme = Kanagawa
   side-by-side = true
   line-numbers = true
+  line-numbers-left-format = ""
+  line-numbers-right-format = "│ "
   navigate = true  # use n and N to move between diff sections
   dark = true      # or light = true, or omit for auto-detection
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = yellow
+  file-decoration-style = bold yellow ul
+  hunk-header-decoration-style = yellow box
+
 [merge]
   conflictstyle = zdiff3

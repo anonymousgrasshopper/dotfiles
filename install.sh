@@ -48,14 +48,14 @@ fi
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
 if [[ -f "/etc/pulse/client.conf" ]]; then
-  if ! grep "cookie-file = /home/$USER/.cache/pulse/cookie" < /etc/pulse/client.conf > /dev/null; then
+  if ! grep -E "cookie-file = /home/.+/.cache/pulse/cookie" < /etc/pulse/client.conf > /dev/null; then
     printf "\ncookie-file = /home/%s/.cache/pulse/cookie" "$USER" | sudo tee -a /etc/pulse/client.conf > /dev/null
   fi
 fi
 
 # Install required packages
 if [[ -f "/etc/arch-release" ]]; then
-  packages="bat eza fd fzf gcc git github-cli i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
+  packages="bat eza fd fzf gcc git github-cli glow i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
   echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
   read answer
   case "$answer" in
@@ -155,7 +155,7 @@ for item in *; do
   fi
 done
 
-# Install yay (AUR helper)
+# Install yay (AUR helper) and Oh My Posh (Zsh theme)
 if [[ -f /etc/arch-release ]]; then
   if [[ ! -f /usr/bin/yay ]]; then
     echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper ? "
@@ -176,6 +176,19 @@ if [[ -f /etc/arch-release ]]; then
         makepkg -si
         ;;
     esac
+  fi
+  if [[ -f /usr/bin/yay && ! -f /usr/bin/oh-my-posh ]]; then
+    echo -en "${BLUE}Do you want to install the Oh My Posh Zsh theme ? "
+    [[ -d "$HOME/go" ]] || no_go_folder_in_home=true
+    read answer
+    case "$answer" in
+      [yY][eE][sS]|[yY])
+        yay -S oh-my-posh
+        ;;
+    esac
+    if [[ -d "$HOME/go" && $no_go_folder_in_home == true ]]; then
+      rm -rf "$HOME/go"
+    fi
   fi
 fi
 

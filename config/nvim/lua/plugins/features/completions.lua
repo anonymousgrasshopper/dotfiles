@@ -60,6 +60,11 @@ return {
           vim.fn.stdpath("config") .. "/snippets",
         },
       })
+      require("luasnip.loaders.from_snipmate").lazy_load({
+        paths = {
+          vim.fn.stdpath("config") .. "/snippets",
+        },
+      })
 
       cmp.setup({
         completion = {

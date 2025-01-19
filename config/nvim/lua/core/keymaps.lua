@@ -127,8 +127,8 @@ vim.keymap.set("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Open Lazy.nvim ui" }
 vim.keymap.set("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New File" })
 
 ------ toggle options ------
-vim.keymap.set("n", "<leader>wrap", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
-vim.keymap.set("n", "<leader>chdir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
+vim.keymap.set("n", "<leader>wp", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
+vim.keymap.set("n", "<leader>dir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
 
 ------ inspect ------
 vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })

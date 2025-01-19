@@ -1,28 +1,7 @@
-# source Powerlevel10k's instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#################################################################
+############################# ZSHRC #############################
+#################################################################
 
-# Vi mode
-bindkey -v # enable vi mode
-export KEYTIMEOUT=1
-
-function zle-keymap-select() {
-local _shape=0
-case "${KEYMAP}" in
-  main)    _shape=6 ;; # vi insert/replace: line
-  viins)   _shape=6 ;; # vi insert: line
-  isearch) _shape=6 ;; # inc search: line
-  command) _shape=6 ;; # read a command name
-  vicmd)   _shape=2 ;; # vi cmd: block
-  visual)  _shape=2 ;; # vi visual mode: block
-  viopp)   _shape=0 ;; # vi operation pending: blinking block
-  *)       _shape=6 ;;
-esac
-printf $'\e[%d q' ${_shape}
-}
-
-zle -N zle-keymap-select
 
 # Set the directory where zinit and the plugins are stored
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/zinit.git"
@@ -36,13 +15,14 @@ fi
 # Source zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in Powerlevel10k
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
 # Plugins
+zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
+zinit ice wait lucid
 zinit light zsh-users/zsh-completions
+zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
+zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
 
 # Completion styling
@@ -109,7 +89,36 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# Vi mode and cursor style
+bindkey -v # enable vi keybindings
+export KEYTIMEOUT=1
+
+function zle-keymap-select() {
+local _shape=0
+case "${KEYMAP}" in
+  viowr=)  _shape=4 ;;
+  main)    _shape=6 ;; # vi insert/replace: line
+  viins)   _shape=6 ;; # vi insert: line
+  isearch) _shape=6 ;; # inc search: line
+  command) _shape=6 ;; # read a command name
+  vicmd)   _shape=2 ;; # vi cmd: block
+  visual)  _shape=2 ;; # vi visual mode: block
+  viopp)   _shape=0 ;; # vi operation pending: blinking block
+  *)       _shape=6 ;;
+esac
+printf $'\e[%d q' ${_shape}
+}
+
+zle -N zle-keymap-select
+
+_set_cursor_beam() {
+  echo -ne '\e[5 q'
+}
+
+precmd_functions+=(_set_cursor_beam)
+
 # setup CLI tools
+eval "$(oh-my-posh init zsh --config $ZDOTDIR/oh_my_posh.toml)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
@@ -128,6 +137,3 @@ function ex() {
   rm -f -- "$tmp"
   printf $'\e[%d q' 6
 }
-
-# source powerlevel10k
-[[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh

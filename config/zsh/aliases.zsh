@@ -1,33 +1,40 @@
-# For a full list of active aliases, run `alias`.
+#################################################################
+############################ Aliases ############################
+#################################################################
 
 # shortcuts
-alias   ..="cd .."
-alias  ...="cd ../.."
-alias    c="clear"
-alias   py="python3"
+alias    ..="cd .."
+alias   ...="cd ../.."
+alias  ....="cd ../../.."
+alias .....="cd ../../../.."
+alias   cfd='cd $(fd . -td | fzf)'
+alias     q="exit"
+alias    :q="exit"
+alias   :qa="exit"
+alias     c="clear"
+alias -- +x="chmod +x"
+alias    py="python3"
 
-# Programs
-alias    q="exit"
-alias   :q="exit"
-alias  :qa="exit"
-alias   rm="rm -i"
-alias grep="grep --color=auto"
-alias diff="diff --color=auto"
+# CLI tools default options
+alias    rm="rm -i"
+alias  grep="grep --color=auto"
+alias  diff="diff --color=auto"
 
-alias   cd="z"
-alias  cat="bat"
-alias find="fd"
+# CLI tools replacements
+alias    cd="z"
+alias   cat="bat"
+alias   top="btop"
 
-alias   ls="eza --icons --group-directories-first"
-alias   ll="eza --icons --group-directories-first -alh"
-alias tree="eza --icons --group-directories-first --tree"
+alias    ls="eza --icons --group-directories-first"
+alias    ll="eza --icons --group-directories-first -alh"
+alias  tree="eza --icons --group-directories-first --tree"
 
-alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # don't put this in fzf.conf as it will also apply to fzf-tab and always enable its preview
+alias   fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # not in fzf.conf because it would also apply to fzf-tab and always enable its preview
 
 # Tmux
-alias  tls="tmux list-session"
-alias  trs="tmux rename-session"
-alias  trw="tmux rename-window"
+alias   tls="tmux list-session"
+alias   trs="tmux rename-session"
+alias   trw="tmux rename-window"
 tns() {
   if [[ $# == 0 ]]; then
     tmux new-session
@@ -44,12 +51,13 @@ tas() {
 }
 
 # Neovim
-nvim_cursor_reset() {
-  /bin/nvim $@
-  printf $'\e[%d q' 6
-}
-alias nvim=nvim_cursor_reset
-alias  inv='nvim $(fzf -m)'
-alias  vim="nvim"
-alias   nv="nvim"
-alias    v="nvim"
+alias   inv='nvim $(fzf -m)'
+alias   vim="nvim"
+alias    nv="nvim"
+alias     v="nvim"
+
+# enable aliases in sudo
+alias  sudo="sudo "
+
+# human-readable path
+alias  path='echo -e ${PATH//:/\\n}'

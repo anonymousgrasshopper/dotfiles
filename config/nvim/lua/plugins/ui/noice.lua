@@ -43,6 +43,16 @@ return {
     routes = {
       {
         filter = {
+          event = "notify",
+          kind = "info",
+          any = {
+            { find = "[Neo-tree INFO]" },
+          },
+        },
+        opts = { skip = true },
+      },
+      {
+        filter = {
           event = "msg_show",
           kind = "search_count",
         },

@@ -1,3 +1,7 @@
+------------------------------------------------------------------
+-------------------------- AUTOCOMMANDS --------------------------
+------------------------------------------------------------------
+
 -- show the cursorline in the active buffer only, excepted in excluded filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
   callback = function ()
@@ -24,13 +28,15 @@ vim.api.nvim_create_autocmd("WinEnter", {
 vim.api.nvim_create_autocmd({ "WinEnter", "Filetype" }, {
   pattern = { "neo-tree-popup", "alpha" },
   callback = function ()
-    vim.cmd[[
+    if vim.api.nvim_get_mode() == "normal" then
+      vim.cmd[[
       hi Cursor blend=100
       set guicursor+=a:Cursor/lCursor
       ]]
+    end
   end
 })
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd("BufEnter" , {
   callback = function ()
     local excluded_filetypes = { "alpha", "neo-tree-popup" }
     for _, filetype in pairs(excluded_filetypes) do
@@ -44,9 +50,17 @@ vim.api.nvim_create_autocmd("BufEnter", {
       ]]
   end
 })
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  callback = function ()
+    vim.cmd[[
+      hi Cursor blend=0
+      set guicursor-=a:Cursor/lCursor
+      ]]
+  end
+})
 
 -- Auto create dir when saving a file if some of the intermediate directories do not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function(event)
     if event.match:match("^%w%w+:[\\/][\\/]") then
       return
