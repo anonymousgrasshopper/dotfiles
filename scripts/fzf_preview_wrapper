@@ -10,4 +10,10 @@ elif [[ -f $1 ]]; then
   else
     bat --number --color=always "$1"
   fi
+elif [[ -n "$1" ]]; then
+  if [[ "$1" == PATH ]]; then
+    echo -e ${PATH//:/\\n}
+  else
+    printenv "$1"
+  fi
 fi

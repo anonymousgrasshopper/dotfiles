@@ -3,6 +3,11 @@
 #################################################################
 
 
+# source powerlevel10k's instant prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Set the directory where zinit and the plugins are stored
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/zinit.git"
 
@@ -16,6 +21,7 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Plugins
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice wait lucid
@@ -32,13 +38,13 @@ zstyle ':completion:*'                    menu no
 zstyle ':completion:*:*:*:*:processes'    command "ps -u $USER -o pid,user,comm -w -w"
 
 zstyle ':fzf-tab:*'                       fzf-flags --separator="" --info=inline
-zstyle ':fzf-tab:complete:*'              fzf-preview '/usr/local/bin/fzf_preview_wrapper $realpath'
+zstyle ':fzf-tab:complete:*'              fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:-command-:*'    fzf-preview '[[ -v "$word" ]] && echo "${(P)word}" || man "$word" 2>/dev/null'
 zstyle ':fzf-tab:complete:*:options'      fzf-preview '' # disable preview for command options
 zstyle ':fzf-tab:complete:*:argument-1'   fzf-preview '' # disable preview for subcommands
 zstyle ':fzf-tab:complete:tmux:*'         fzf-preview '' # disable preview for tmux commands
 zstyle ':fzf-tab:complete:kill:*'         fzf-preview '' # disable preview for kill
-zstyle ':fzf-tab:gomplete:(\\|*/|)man:*'  fzf-preview 'man $word'
+zstyle ':fzf-tab:complete:(\\|*/|)man:*'  fzf-preview 'man $word'
 
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
@@ -118,22 +124,8 @@ _set_cursor_beam() {
 precmd_functions+=(_set_cursor_beam)
 
 # setup CLI tools
-eval "$(oh-my-posh init zsh --config $ZDOTDIR/oh_my_posh.toml)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
-# create a help command using bat
-help() {
-  "$@" --help 2>&1 | bat --plain --language=help
-}
-
-# wrapper around yazi to change cwd when exiting it
-function ex() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    builtin cd -- "$cwd"
-  fi
-  rm -f -- "$tmp"
-  printf $'\e[%d q' 6
-}
+# source powerlevel10k
+[[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh

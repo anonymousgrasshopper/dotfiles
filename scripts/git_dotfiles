@@ -1,20 +1,37 @@
 #!/bin/bash
 
-# list of configs to copy
+RED='\033[0;31m'
+
+# list of configs and scripts to copy
 configs=("bat" "btop" "eza" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+scripts=("codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
-# clone the repo if it is not in ~/.config
-[[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles:~/.config
-
-cd "$HOME/.config/dotfiles"
+# clone the repo if it is not in ~/.config ans cd into it
+[[ -d ~/.config ]] || mkdir ~/.config
+cd ~/.config
+[[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles
+cd ~/.config/dotfiles
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
   if [[ -d "config/$config" || -f "config/$config" ]]; then
     rm -rf "config/$config"
-    if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
-      cp -r "$HOME/.config/$config" "config"
-    fi
+  fi
+  if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
+    cp -r "$HOME/.config/$config" "config"
+  else
+    echo "${RED}/usr/local/bin/$script not found."
+  fi
+done
+# overwrite scripts in the dotfiles repo
+for script in ${scripts[@]}; do
+  if [[ -f "scripts/$script" ]]; then
+    rm -rf "scripts/$script"
+  fi
+  if [[ -f "/usr/local/bin/$script" ]]; then
+    cp "/usr/local/bin/$script" "scripts"
+  else
+    echo "${RED}/usr/local/bin/$script not found."
   fi
 done
 
@@ -22,7 +39,7 @@ done
 [[ ! -f "config/zsh/.zcompdump" ]] || rm "config/zsh/.zcompdump"
 
 # git add
-sudo git add ~/.config/dotfiles
+sudo git add .
 
 # commit if args are passed to the scripts
 if [[ $# == 2 ]]; then
