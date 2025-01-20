@@ -155,7 +155,7 @@ for item in *; do
   fi
 done
 
-# Install yay (AUR helper) and Oh My Posh (Zsh theme)
+# Install yay (AUR helper)
 if [[ -f /etc/arch-release ]]; then
   if [[ ! -f /usr/bin/yay ]]; then
     echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper ? "
@@ -176,19 +176,6 @@ if [[ -f /etc/arch-release ]]; then
         makepkg -si
         ;;
     esac
-  fi
-  if [[ -f /usr/bin/yay && ! -f /usr/bin/oh-my-posh ]]; then
-    echo -en "${BLUE}Do you want to install the Oh My Posh Zsh theme ? "
-    [[ -d "$HOME/go" ]] || no_go_folder_in_home=true
-    read answer
-    case "$answer" in
-      [yY][eE][sS]|[yY])
-        yay -S oh-my-posh
-        ;;
-    esac
-    if [[ -d "$HOME/go" && $no_go_folder_in_home == true ]]; then
-      rm -rf "$HOME/go"
-    fi
   fi
 fi
 
