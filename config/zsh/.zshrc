@@ -30,6 +30,8 @@ zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
+zinit ice wait lucid
+zinit light hlissner/zsh-autopair
 
 # Completion styling
 zstyle ':completion:*'                    matcher-list "m:{a-z}={A-Za-z}"

@@ -144,11 +144,11 @@ return {
     t("^2"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "all ", descr = "universal quantifier", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "all ", descr = "universal quantifier", snippetType = "autosnippet" },
     t("\\forall "),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ex ", descr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "ex ", descr = "existensial quantifier", snippetType = "autosnippet" },
     t("\\exists "),
     { condition = tex.in_mathzone }
   )
