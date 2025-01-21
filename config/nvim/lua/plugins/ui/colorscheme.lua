@@ -24,10 +24,10 @@ return {
             LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
             MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 
-            NeoTreeWinSeparator = { fg = palette.sumiInk4 },
+            NeoTreeWinSeparator = { fg = palette.sumiInk6 },
             NeoTreeFileIcon = { fg = palette.oldWhite },
 
-            WinSeparator = { fg = palette.sumiInk4 },
+            WinSeparator = { fg = palette.sumiInk6 },
           }
         end,
         colors = {

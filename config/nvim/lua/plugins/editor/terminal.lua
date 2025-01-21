@@ -4,16 +4,13 @@ return {
   keys = {
     { "<leader>ter", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
   },
-  config = function()
-    require("toggleterm").setup{
-      float_opts = {
-        highlights = {
-          FloatBorder = {
-            guifg = require("kanagawa.colors").setup().palette.sumiInk0,
-          },
-        },
-        border = "single",
+  opts = {
+    highlights = {
+      Normal = {
+        guibg = "#16161D",
       },
-    }
-  end
+    },
+    border = "single",
+    shade_terminals = false,
+  }
 }

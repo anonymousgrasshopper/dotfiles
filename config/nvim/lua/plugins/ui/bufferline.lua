@@ -7,7 +7,11 @@ return {
     options = {
       sort_by = "insert_after_current",
       right_mouse_command = "vert sbuffer %d",
+      middle_mouse_command = "horiz sbuffer %d",
+      show_close_icon = true,
+      move_wraps_at_ends = true,
       always_show_bufferline = false,
+      separator_style = "thin",
       offsets = {
         {
           filetype = "neo-tree",

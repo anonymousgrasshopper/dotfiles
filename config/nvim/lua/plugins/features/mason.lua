@@ -44,8 +44,9 @@ return {
     },
     opts = {
       ensure_installed = {
-        "clangd",
         "codelldb",
+        "clangd",
+        "clang-format",
         "lua_ls",
         "bashls",
         "shellcheck",

@@ -5,7 +5,7 @@ return {
     current_only = false,
     winblend = 0,
     zindex = 40,
-    excluded_filetypes = { "neo-tree", "CompetiTest", "undotree" },
+    excluded_filetypes = { "neo-tree", "CompetiTest", "undotree", "dapui_scopes", "dapui_breakpoints", "dapui_watches", "dap_stacks", "dapui_console", "dap-repl" },
     width = 2,
     handlers = {
       cursor = {
@@ -18,7 +18,7 @@ return {
       },
       diagnostic = {
         enable = true,
-        signs = {"-", "=", "≡"},
+        signs = { "-", "=", "≡" },
         min_severity = vim.diagnostic.severity.HINT,
       },
       gitsigns = {

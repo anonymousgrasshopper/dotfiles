@@ -14,7 +14,7 @@
   "cout": {
     "prefix": "cout",
     "body": [
-      "cout << "
+      "cout <<"
     ],
     "luasnip": {
       "autotrigger": true,
@@ -24,7 +24,7 @@
   "cin": {
     "prefix": "cin",
     "body": [
-      "cin >> "
+      "cin >>"
     ],
     "luasnip": {
       "autotrigger": true,
