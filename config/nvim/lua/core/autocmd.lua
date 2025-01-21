@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("WinLeave", {
 vim.api.nvim_create_autocmd("WinEnter", {
   callback = function ()
     local excluded_filetypes = { "alpha", "neo-tree-popup", "mason", "notify" }
-    for _, filetype in pairs(excluded_filetypes) do
+    for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
         vim.cmd[[
           hi Cursor blend=100
@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "Filetype" }, {
 vim.api.nvim_create_autocmd("BufEnter" , {
   callback = function ()
     local excluded_filetypes = { "alpha", "neo-tree-popup" }
-    for _, filetype in pairs(excluded_filetypes) do
+    for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
         return
       end

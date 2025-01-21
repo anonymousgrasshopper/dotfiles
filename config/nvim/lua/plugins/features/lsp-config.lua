@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd( "CursorHold", {
   buffer = bufnr,
   callback = function ()
     local excluded_filetypes = { "mason" }
-    for _, filetype in pairs(excluded_filetypes) do
+    for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
         return
       end

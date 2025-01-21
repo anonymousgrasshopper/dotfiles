@@ -19,6 +19,14 @@ local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
 
 return {
+  s({ trig = "[", descr = "math mode", wordTrig = false, snippetType ="autosnippet" },
+    {
+      t("\\["),
+      i(1),
+      t("\\"),
+    },
+    { condition = not tex.in_mathzone }
+  ),
   s({ trig = "sm", descr = "sum", wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       [[
@@ -132,8 +140,16 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "²", descr = "sqare", wordTrig = false, snippetType = "autosnippet"},
+  s({ trig = "²", descr = "square", wordTrig = false, snippetType = "autosnippet" },
     t("^2"),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "all ", descr = "universal quantifier", wordTrig = false, snippetType = "autosnippet" },
+    t("\\forall "),
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "ex ", descr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
+    t("\\exists "),
     { condition = tex.in_mathzone }
   )
 }

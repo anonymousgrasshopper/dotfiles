@@ -4,5 +4,10 @@ return {
   main = "ibl",
   opts = {
     indent = { char = "┊" },
-  },
+    exclude = {
+      filetypes = {
+        "undotree"
+      }
+    },
+  }
 }
