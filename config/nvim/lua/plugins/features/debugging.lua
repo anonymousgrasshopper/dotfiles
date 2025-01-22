@@ -1,4 +1,4 @@
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ","
 
 local escape_spaces = function(path)
   local skip_next = false
@@ -24,7 +24,20 @@ return {
   dependencies = {
     "rcarriga/nvim-dap-ui",
     "nvim-neotest/nvim-nio",
-    "theHamsta/nvim-dap-virtual-text",
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      opts = {
+        enabled = true,                        -- enable this plugin (the default)
+        enabled_commands = true,               -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+        highlight_changed_variables = true,    -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+        highlight_new_as_changed = false,      -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+        show_stop_reason = true,               -- show stop reason when stopped for exceptions
+        commented = false,                     -- prefix virtual text with comment string
+        only_first_definition = true,          -- only show virtual text at first definition (if there are multiple)
+        all_references = false,                -- show virtual text on all all references of the variable (not only definitions)
+        clear_on_continue = false,             -- clear virtual text on "continue" (might cause flickering when stepping)
+      }
+    }
   },
   cmd = { "DapContinue", "DapToggleBreakpoint" },
   keys = {
@@ -93,9 +106,9 @@ return {
         type = "codelldb",
         request = "launch",
         program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. '.exe', 'file')
+          return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file")
         end,
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         stopOnEntry = false,
         stdio = { path .. ".input", path .. ".output", path .. ".errors"},
       },
@@ -116,13 +129,13 @@ return {
       )
     end
 
-    vim.keymap.set('n', '<leader>df',
-      function() local widgets = require('dap.ui.widgets')
+    vim.keymap.set("n", "<leader>df",
+      function() local widgets = require("dap.ui.widgets")
         widgets.centered_float(widgets.frames)
       end )
-    vim.keymap.set('n', '<leader>ds',
+    vim.keymap.set("n", "<leader>ds",
       function()
-        local widgets = require('dap.ui.widgets')
+        local widgets = require("dap.ui.widgets")
         widgets.centered_float(widgets.scopes)
       end )
   end,
