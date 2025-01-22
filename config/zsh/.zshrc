@@ -73,12 +73,12 @@ bindkey "^[[B" history-search-forward
 bindkey "^p"   history-search-backward
 bindkey "^n"   history-search-forward
 
-bindkey "\ee"  autosuggest-accept
-
 bindkey "\ei"  .beginning-of-line
 bindkey "\ea"  .end-of-line
 bindkey "\ef"  .forward-word
 bindkey "\eb"  .backward-word
+
+bindkey "\ee"  autosuggest-accept
 
 bindkey -a -r ':' # disable vicmd mode
 bindkey "^?"   backward-delete-char # fix backspace in insert mode
