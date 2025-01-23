@@ -25,20 +25,19 @@ vim.api.nvim_create_autocmd("WinEnter", {
 })
 
 -- hide cursor in chosen filetypes
-vim.api.nvim_create_autocmd({ "WinEnter", "Filetype" }, {
-  pattern = { "neo-tree-popup", "alpha" },
+vim.api.nvim_create_autocmd({ "WinEnter", "FileType" }, {
+  pattern = { "alpha", "neo-tree", "neo-tree-popup" },
   callback = function ()
     if vim.bo.filetype ~= "neo-tree-popup" or vim.api.nvim_get_mode() == "normal" then
       vim.cmd[[
       hi Cursor blend=100
-      set guicursor+=a:Cursor/lCursor
       ]]
     end
   end
 })
 vim.api.nvim_create_autocmd("BufEnter" , {
   callback = function ()
-    local excluded_filetypes = { "alpha", "neo-tree-popup" }
+    local excluded_filetypes = { "alpha", "neo-tree", "neo-tree-popup" }
     for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
         return
@@ -46,7 +45,6 @@ vim.api.nvim_create_autocmd("BufEnter" , {
     end
     vim.cmd[[
       hi Cursor blend=0
-      set guicursor-=a:Cursor/lCursor
       ]]
   end
 })

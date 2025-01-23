@@ -67,21 +67,9 @@ esac'
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
-# Keybindings
-bindkey "^[[A" history-search-backward
-bindkey "^[[B" history-search-forward
-bindkey "^p"   history-search-backward
-bindkey "^n"   history-search-forward
-
-bindkey "\ei"  .beginning-of-line
-bindkey "\ea"  .end-of-line
-bindkey "\ef"  .forward-word
-bindkey "\eb"  .backward-word
-
-bindkey "\ee"  autosuggest-accept
-
-bindkey -a -r ':' # disable vicmd mode
-bindkey "^?"   backward-delete-char # fix backspace in insert mode
+# autocorrection
+setopt correct
+setopt correct_all 
 
 # History
 HISTSIZE=10000
@@ -124,6 +112,22 @@ _set_cursor_beam() {
 }
 
 precmd_functions+=(_set_cursor_beam)
+
+# Keybindings
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+bindkey "^p"   history-search-backward
+bindkey "^n"   history-search-forward
+
+bindkey "\ei"  .beginning-of-line
+bindkey "\ea"  .end-of-line
+bindkey "\ef"  .forward-word
+bindkey "\eb"  .backward-word
+
+bindkey "\ee"  autosuggest-accept
+
+bindkey -a -r ':' # disable vicmd mode
+bindkey "^?"   backward-delete-char # fix backspace in insert mode
 
 # setup CLI tools
 eval "$(zoxide init zsh)"

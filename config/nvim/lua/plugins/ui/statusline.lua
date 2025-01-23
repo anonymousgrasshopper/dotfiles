@@ -78,7 +78,10 @@ return {
       ignore_focus = { "CompetiTest" },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch" },
+        lualine_b = {
+          { "branch" },
+          { "diff" },
+        },
         lualine_c = {
           {
             "filename",
@@ -91,16 +94,16 @@ return {
         },
         lualine_x = {
           {
+            require("noice").api.statusline.mode.get,
+            cond = require("noice").api.statusline.mode.has,
+            color = { fg = "#FF9E3B" },
+          },
+          {
             lazy_status.updates,
             cond = lazy_status.has_updates,
             color = { fg = "#FF9E3B" },
           },
           { "diagnostics" },
-          {
-            require("noice").api.statusline.mode.get,
-            cond = require("noice").api.statusline.mode.has,
-            color = { fg = "#FF9E3B" },
-          },
         },
         lualine_y = {
           { "progress", separator = " ", padding = { left = 1, right = 0 } },

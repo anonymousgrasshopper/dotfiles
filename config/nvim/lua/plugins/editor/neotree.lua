@@ -67,7 +67,7 @@ return {
       open_files_do_not_replace_types = { "CompetiTest", "terminal", "dap" }, -- when opening files, do not use windows containing these filetypes or buftypes
       bind_to_cwd = true,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
-      sort_function = nil , -- use a custom function for sorting files and directories in the tree 
+      sort_function = nil , -- use a custom function for sorting files and directories in the tree
       -- sort_function = function (a,b)
       --       if a.type == b.type then
       --           return a.path > b.path
@@ -255,6 +255,7 @@ return {
             ["<c-x>"] = "clear_filter",
             ["[g"] = "prev_git_modified",
             ["]g"] = "next_git_modified",
+            ["O"] = "system_open",
             ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" }},
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
@@ -263,7 +264,24 @@ return {
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-            -- ['<key>'] = function(state) ... end,
+            ["h"] = function(state)
+              local node = state.tree:get_node()
+              if node.type == 'directory' and node:is_expanded() then
+                require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+              else
+                require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+              end
+            end,
+            ["l"] = function(state)
+              local node = state.tree:get_node()
+              if node.type == 'directory' then
+                if not node:is_expanded() then
+                  require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+                elseif node:has_children() then
+                  require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+                end
+              end
+            end,
           },
           fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
             ["<down>"] = "move_cursor_down",
@@ -273,7 +291,46 @@ return {
             -- ['<key>'] = function(state, scroll_padding) ... end,
           },
         },
-        commands = {} -- Add a custom command or override a global one using the same function name
+        commands = {
+          system_open = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            -- Linux: open file in default application
+            vim.fn.jobstart({ "xdg-open", path }, { detach = true })
+          end,
+        },
+        components = {
+          harpoon_index = function(config, node, _)
+            local harpoon_list = require("harpoon"):list()
+            local path = node:get_id()
+            local harpoon_key = vim.uv.cwd()
+
+            for i, item in ipairs(harpoon_list.items) do
+              local value = item.value
+              if string.sub(item.value, 1, 1) ~= "/" then
+                value = harpoon_key .. "/" .. item.value
+              end
+
+              if value == path then
+                vim.print(path)
+                return {
+                  text = string.format(" ⥤ %d", i), -- <-- Add your favorite harpoon like arrow here
+                  highlight = config.highlight or "NeoTreeDirectoryIcon",
+                }
+              end
+            end
+            return {}
+          end,
+        },
+        renderers = {
+          file = {
+            { "icon" },
+            { "name", use_git_status_colors = true },
+            { "harpoon_index" }, --> This is what actually adds the component in where you want it
+            { "diagnostics" },
+            { "git_status", highlight = "NeoTreeDimText" },
+          },
+        },
       },
       buffers = {
         group_empty_dirs = false, -- when true, empty folders will be grouped together
@@ -313,23 +370,37 @@ return {
             ["ot"] = { "order_by_type", nowait = false },
           }
         }
-      }
-    })
-
-    event_handlers = {
-      {
-        event = "after_render",
-        handler = function(state)
-          if state.current_position == "left" or state.current_position == "right" then
-            vim.api.nvim_win_call(state.winid, function()
-              local str = require("neo-tree.ui.selector").get()
-              if str then
-                _G.__cached_neo_tree_selector = str
-              end
-            end)
-          end
-        end,
       },
-    }
+      event_handlers = {
+        {
+          event = "file_open_requested",
+          handler = function()
+            require("neo-tree.command").execute({ action = "close" })
+          end
+        },
+        {
+          event = "neo_tree_window_after_open",
+          handler = function(args)
+            if args.position == "left" or args.position == "right" then
+              vim.cmd("wincmd =")
+            end
+          end
+        },
+        {
+          event = "neo_tree_window_after_close",
+          handler = function(args)
+            if args.position == "left" or args.position == "right" then
+              vim.cmd("wincmd =")
+            end
+          end
+        },
+      },
+    })
+    vim.api.nvim_create_user_command("Nn",
+      function ()
+        vim.cmd[[setlocal winhighlight=Normal:PmenuSel]]
+      end,
+      {}
+    )
   end
 }
