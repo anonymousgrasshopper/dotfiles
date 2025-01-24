@@ -105,7 +105,7 @@ return {
         ["<C-d>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation down
         ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
         ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
-        ["<CR>"] = cmp.mapping(function(fallback)
+        ["<C-CR>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             if luasnip.expandable() then
               luasnip.expand()

@@ -19,7 +19,7 @@ local tex = {}
 tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
 
 return {
-  s({ trig = "[", descr = "math mode", wordTrig = false, snippetType ="autosnippet" },
+  s({ trig = "[", dscr = "math mode", wordTrig = false, snippetType ="autosnippet" },
     {
       t("\\["),
       i(1),
@@ -27,7 +27,7 @@ return {
     },
     { condition = not tex.in_mathzone }
   ),
-  s({ trig = "sm", descr = "sum", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "sm", dscr = "sum", wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       [[
         \sum_{<>=<>}^{<>}<>
@@ -41,7 +41,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "pd", descr = "product", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "pd", dscr = "product", wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       [[
         \prod_{<>=<>}^{<>}<>
@@ -55,7 +55,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ff", descr = "fraction", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "ff", dscr = "fraction", wordTrig = "false", snippetType = "autosnippet" },
     fmta(
       "\\frac{<>}{<>}",
       {
@@ -65,7 +65,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\floor", descr = "floor", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "\\floor", dscr = "floor", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\left\\lfoor <> \\right\\rfloor",
       {
@@ -74,7 +74,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\ceil", descr = "ceil", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "\\ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\left\\lceil <> \\right\\rceil",
       {
@@ -83,7 +83,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "sq", descr = "square root", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "sq", dscr = "square root", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\sqrt{<>}",
       {
@@ -92,7 +92,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\cbrt", descr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "\\cbrt", dscr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\sqrt[3]{<>}",
       {
@@ -101,15 +101,15 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "cd", descr = "cdot", wordTrig = false, snippetType = "autosnippet"},
+  s({ trig = "cd", dscr = "cdot", wordTrig = false, snippetType = "autosnippet"},
     t("\\cdot"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ty", descr = "lemniscate", snippetType = "autosnippet" },
+  s({ trig = "ty", dscr = "lemniscate", snippetType = "autosnippet" },
     t("\\infty"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}])'", descr = "superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>^{<>}",
       {
@@ -119,7 +119,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}]);", descr = "subscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>_{<>}",
       {
@@ -129,7 +129,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}])__", descr = "subscript and superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}])__", dscr = "subscript and superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>^{<>}_{<>}",
       {
@@ -140,15 +140,15 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "²", descr = "square", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "²", dscr = "square", wordTrig = false, snippetType = "autosnippet" },
     t("^2"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "all ", descr = "universal quantifier", snippetType = "autosnippet" },
+  s({ trig = "all ", dscr = "universal quantifier", snippetType = "autosnippet" },
     t("\\forall "),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ex ", descr = "existensial quantifier", snippetType = "autosnippet" },
+  s({ trig = "ex ", dscr = "existensial quantifier", snippetType = "autosnippet" },
     t("\\exists "),
     { condition = tex.in_mathzone }
   )

@@ -373,12 +373,6 @@ return {
       },
       event_handlers = {
         {
-          event = "file_open_requested",
-          handler = function()
-            require("neo-tree.command").execute({ action = "close" })
-          end
-        },
-        {
           event = "neo_tree_window_after_open",
           handler = function(args)
             if args.position == "left" or args.position == "right" then
@@ -393,14 +387,14 @@ return {
               vim.cmd("wincmd =")
             end
           end
-        },
+        }
+        -- {
+        --   event = "file_open_requested",
+        --   handler = function()
+        --     require("neo-tree.command").execute({ action = "close" })
+        --   end
+        -- },,
       },
     })
-    vim.api.nvim_create_user_command("Nn",
-      function ()
-        vim.cmd[[setlocal winhighlight=Normal:PmenuSel]]
-      end,
-      {}
-    )
   end
 }

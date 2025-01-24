@@ -2,7 +2,6 @@
   "LuaSnip": {
     "prefix": "snp",
     "body": [
-      ",",
       "\"${1}\": {",
         "\t\"prefix\": \"$2\",",
         "\t\"body\": [",
@@ -11,7 +10,7 @@
         "\t\"luasnip\": {",
           "\t\t\"autotrigger\": ${4:true}${5:,\n\t\t\"wordTrig\": false}",
         "\t}",
-      "}"
+      "}${6:,}"
     ],
     "luasnip": {
       "autotrigger": true

@@ -10,7 +10,7 @@ tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-  s({ trig = "env", descr = "Environment", snippetType = "autosnippet" },
+  s({ trig = "env", dscr = "Environment", snippetType = "autosnippet" },
     fmta(
       [[
         \begin{<>}
@@ -25,7 +25,7 @@ return {
     ),
     { condition = tex.in_text * line_begin }
   ),
-  s({ trig = "se", descr = "section", snippetType = "autosnippet" },
+  s({ trig = "se", dscr = "section", snippetType = "autosnippet" },
     fmta(
       [[
         \section<>{<>}
@@ -37,7 +37,7 @@ return {
     ),
     { condition = tex.in_text * line_begin }
   ),
-  s({ trig = "sb", descr = "section", snippetType = "autosnippet" },
+  s({ trig = "sb", dscr = "section", snippetType = "autosnippet" },
     fmta(
       [[
         \subsection<>{<>}

@@ -61,6 +61,16 @@
       "wordTrig": false
     }
   },
+  "push_front": {
+    "prefix": ".pf(",
+    "body": [
+      ".push_front($1"
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
   "long long": {
     "prefix": "ll ",
     "body": [

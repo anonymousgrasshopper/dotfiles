@@ -1,23 +1,32 @@
-[credential "https://github.com"]
-  helper = 
-  helper = !/usr/bin/gh auth git-credential
-
-[credential "https://gist.github.com"]
-  helper = 
-  helper = !/usr/bin/gh auth git-credential
-
 [user]
 	email = antoine.s.27182@gmail.com
 	name = anonymousgrasshopper
 
+[credential "https://github.com"]
+  helper =
+  helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper =
+  helper = !/usr/bin/gh auth git-credential
+
 [http]
   postBuffer = 157286400
+
+[init]
+	defaultBranch = main
+
+[merge]
+  conflictstyle = zdiff3
 
 [core]
   pager = delta
 
 [interactive]
   diffFilter = delta --color-only
+
+[color]
+	ui = auto
 
 [delta]
   features = decorations
@@ -34,6 +43,3 @@
   file-style = yellow
   file-decoration-style = bold yellow ul
   hunk-header-decoration-style = yellow box
-
-[merge]
-  conflictstyle = zdiff3
