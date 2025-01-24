@@ -6,7 +6,7 @@ local rep = require("luasnip.extras").rep
 local fmta = require("luasnip.extras.fmt").fmta
 
 return {
-  s({ trig = "class%s+([%w_]+)[%s]", regTrig = true, dscr = "class template", snippetType = "autosnippet" },
+  s({ trig = "class%s+([%w_]+)%s", regTrig = true, dscr = "class template", snippetType = "autosnippet" },
     fmta(
       [[
         class <> {
@@ -20,7 +20,7 @@ return {
       }
     )
   ),
-  s({ trig = "struct%s+([%w_]+)[%s]", regTrig = true, dscr = "struct template", snippetType = "autosnippet" },
+  s({ trig = "struct%s+([%w_]+)%s", regTrig = true, dscr = "struct template", snippetType = "autosnippet" },
     fmta(
       [[
         class <> {
