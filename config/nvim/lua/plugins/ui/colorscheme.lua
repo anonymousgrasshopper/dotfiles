@@ -10,6 +10,8 @@ return {
           local theme = colors.theme
           local palette = colors.palette
           return {
+            WinSeparator = { fg = palette.sumiInk6 },
+
             NormalFloat = { bg = "none" },
             FloatBorder = { bg = "none" },
             FloatTitle = { bg = "none" },
@@ -24,10 +26,9 @@ return {
             LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
             MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 
-            NeoTreeWinSeparator = { fg = palette.sumiInk6 },
+            NeoTreeBackground = { bg = palette.sumiInk2 },
+            NeoTreeWinSeparator = {fg = "none" },
             NeoTreeFileIcon = { fg = palette.oldWhite },
-
-            WinSeparator = { fg = palette.sumiInk6 },
           }
         end,
         colors = {

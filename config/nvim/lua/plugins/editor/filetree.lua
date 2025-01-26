@@ -1,3 +1,11 @@
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = "neo-tree",
+  callback = function ()
+    vim.keymap.set("n", "J", "5j", { desc = "scroll 5 lines down", buffer = true })
+    vim.keymap.set("n", "K", "5k", { desc = "scroll 5 lines down", buffer = true })
+  end
+})
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
@@ -387,13 +395,26 @@ return {
               vim.cmd("wincmd =")
             end
           end
-        }
+        },
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function()
+            vim.cmd("highlight! Cursor blend=100")
+            vim.cmd("setlocal winhighlight=Normal:NeoTreeBackground")
+          end,
+        },
+        {
+          event = "neo_tree_buffer_leave",
+          handler = function()
+            vim.cmd("highlight! Cursor blend=0")
+          end,
+        },
         -- {
         --   event = "file_open_requested",
         --   handler = function()
         --     require("neo-tree.command").execute({ action = "close" })
         --   end
-        -- },,
+        -- },
       },
     })
   end

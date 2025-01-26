@@ -69,7 +69,6 @@ zinit cdreplay -q
 
 # autocorrection
 setopt correct
-setopt correct_all 
 
 # History
 HISTSIZE=10000

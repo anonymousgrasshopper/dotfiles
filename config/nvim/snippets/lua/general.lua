@@ -15,19 +15,9 @@ end
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-  s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
-    fmta([[
-        #!/bin/<>
-      ]],
-      {
-        i(1, "bash")
-      }
-    ),
-    { condition = line_begin }
-  ),
   s({ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
     fmta(
-      "if <>; then\n\t<>\nfi<>",
+      "if <> then\n\t<>\nend<>",
       {
         i(1),
         d(2, get_visual),
@@ -36,21 +26,42 @@ return {
     ),
     { condition = line_begin }
   ),
-  s({ trig = "if [", dscr = "test condition", snippetType = "autosnippet" },
+  s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
-      "if [[ <> ]",
+      [[
+        for <> do
+          <>
+        end<>
+      ]],
       {
-        i(1)
+        i(1),
+        d(2, get_visual),
+        i(0)
       }
     ),
     { condition = line_begin }
   ),
-  s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
+  s({ trig = "function ", dscr = "function", snippetType = "autosnippet" },
     fmta(
       [[
-        for <>; do
+        function(<>)
           <>
-        done<>
+        end<>
+      ]],
+      {
+        i(1),
+        d(2, get_visual),
+        i(0)
+      }
+    ),
+    { condition = line_begin }
+  ),
+  s({ trig = "func ", dscr = "function", snippetType = "autosnippet" },
+    fmta(
+      [[
+        function(<>)
+          <>
+        end<>
       ]],
       {
         i(1),

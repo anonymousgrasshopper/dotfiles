@@ -31,7 +31,10 @@ require("lazy").setup({
   },
   performance = {
     rtp = {
-      disabled_plugins = { "netrw", "netrwPlugin" },
+      disabled_plugins = {
+        "netrw",
+        "netrwPlugin"
+      },
     },
   },
 })

@@ -10,8 +10,8 @@ return {
       normal_cur      = "ga",
       normal_line     = "gz",
       normal_cur_line = "gZ",
-      visual          = "gz",
-      visual_line     = "gZ",
+      visual          = "ga",
+      visual_line     = "gA",
       delete          = "gd",
       change          = "gc",
     }

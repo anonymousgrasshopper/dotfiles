@@ -1,5 +1,6 @@
 return {
-  "hrsh7th/nvim-cmp",
+  "saghen/blink.cmp",
+  version = "*",
   event = { "ModeChanged" }, -- instead of InsertEnter to be able to use LuaSnip visual snippets before inserting text
   dependencies = {
     {
@@ -24,147 +25,129 @@ return {
           ft_func = require("luasnip.extras.filetype_functions").from_cursor,
         })
 
+        -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+        require("luasnip.loaders.from_vscode").lazy_load()
+
+        require("luasnip.loaders.from_vscode").lazy_load({
+          paths = {
+            vim.fn.stdpath("config") .. "/snippets",
+          },
+        })
+        require("luasnip.loaders.from_lua").lazy_load({
+          paths = {
+            vim.fn.stdpath("config") .. "/snippets",
+          },
+        })
+        require("luasnip.loaders.from_snipmate").lazy_load({
+          paths = {
+            vim.fn.stdpath("config") .. "/snippets",
+          },
+        })
+
         vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
         vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
 
         vim.keymap.set("n", "<Leader>snp", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
       end
     },
-    "hrsh7th/cmp-path",             -- source for file system paths
-    "hrsh7th/cmp-nvim-lsp",         -- source for LSPs
-    "hrsh7th/cmp-buffer",           -- source for text in buffer
-    "saadparwaiz1/cmp_luasnip",     -- for autocompletion
-    "rafamadriz/friendly-snippets", -- useful snippets
-    "onsails/lspkind.nvim",         -- pictograms
-    "micangl/cmp-vimtex",           -- LaTeX
-    "chrisgrieser/cmp_yanky",       -- yank history
+    "rafamadriz/friendly-snippets",
   },
-  config = function()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
-    local lspkind = require("lspkind")
+  opts = {
+    keymap = {
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+      ["<C-e>"] = { "hide", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
 
-    local WIDE_HEIGHT = 40
+      ["<Tab>"] = { "snippet_forward", "fallback" },
+      ["<S-Tab>"] = { "snippet_backward", "fallback" },
 
-    -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-    require("luasnip.loaders.from_vscode").lazy_load()
+      ["<Up>"] = { "select_prev", "fallback" },
+      ["<Down>"] = { "select_next", "fallback" },
+      ["<C-p>"] = { "select_prev", "fallback" },
+      ["<C-n>"] = { "select_next", "fallback" },
 
-    require("luasnip.loaders.from_vscode").lazy_load({
-      paths = {
-        vim.fn.stdpath("config") .. "/snippets",
+      ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+      ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+    },
+
+    appearance = {
+      nerd_font_variant = "normal",
+    },
+
+    snippets = { preset = "luasnip" },
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
+      cmdline = function()
+        local type = vim.fn.getcmdtype()
+        if type == "/" or type == "?" then
+          return { "buffer" }
+        end
+        if type == ":" or type == "@" then
+          return { "cmdline" }
+        end
+        return {}
+      end
+    },
+
+    completion = {
+      keyword = {
+        -- "prefix" will fuzzy match on the text before the cursor
+        -- "full" will fuzzy match on the text before *and* after the cursor
+        range = "full",
       },
-    })
-    require("luasnip.loaders.from_lua").lazy_load({
-      paths = {
-        vim.fn.stdpath("config") .. "/snippets",
-      },
-    })
-    require("luasnip.loaders.from_snipmate").lazy_load({
-      paths = {
-        vim.fn.stdpath("config") .. "/snippets",
-      },
-    })
-
-    cmp.setup({
-      completion = {
-        completeopt = "menu,menuone,preview,noselect",
-      },
-
-      snippet = { -- configure how nvim-cmp interacts with snippet engine
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
-      },
-
-      window = {
-        completion = {
-          border       = "rounded",
-          winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-          winblend     = vim.o.pumblend,
-          max_width    = 38,
-          scrolloff    = 0,
-          col_offset   = 0,
-          side_padding = 1,
-          scrollbar    = false,
-        },
-        documentation = {
-          max_height   = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
-          max_width    = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
-          border       = "rounded",
-          winhighlight = "Normal:CmpPmenu",
-          winblend     = vim.o.pumblend,
+      list = {
+        selection = {
+          preselect = false,
         },
       },
+      menu = {
+        enabled = true,
+        min_width = 15,
+        max_height = 10,
+        border = "rounded",
+        winblend = vim.o.pumblend,
+        winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+        scrolloff = 2,
+        scrollbar = false,
+        direction_priority = { "s", "n" },
+        auto_show = true,
 
-      mapping = cmp.mapping.preset.insert({
-        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-        ["<C-b>"] = cmp.mapping.scroll_docs(-8),    -- scroll documentation backwards
-        ["<C-f>"] = cmp.mapping.scroll_docs(8),     -- scroll documentation forward
-        ["<C-u>"] = cmp.mapping.scroll_docs(-4),    -- scroll documentation up
-        ["<C-d>"] = cmp.mapping.scroll_docs(4),     -- scroll documentation down
-        ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
-        ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
-        ["<C-CR>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            if luasnip.expandable() then
-              luasnip.expand()
-            else
-              cmp.confirm({
-                select = true,
-              })
+        -- Screen coordinates of the command line
+        cmdline_position = function()
+          if vim.g.ui_cmdline_pos ~= nil then
+            local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
+            local type = vim.fn.getcmdtype()
+            if type == "/" or type == "?" then
+              return { pos[1] - 1, pos[2] }
             end
-          else
-            fallback()
+            if type == ":" then
+              return { pos[1], pos[2] }
+            end
           end
-        end),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if luasnip.locally_jumpable(1) then
-            luasnip.jump(1)
-          elseif cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          elseif cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      }),
+          local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+          return { vim.o.lines - height, 0 }
+        end,
 
-      -- sources for autocompletion
-      sources = cmp.config.sources({
-        { name = "cmp_yanky" }, -- yank history
-        { name = "nvim_lsp" }, -- get completions from attached LSPs
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "vimtex" }, -- LaTeX
-        { name = "path" }, -- filesystem path
-      }),
-
-      -- configure lspkind for pictograms in completion menu
-      formatting = {
-        fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind },
-        format = lspkind.cmp_format({
-          maxwidth = 20,
-          ellipsis_char = "...",
-        }),
+        draw = {
+          columns = {
+            { "label", "label_description", gap = 1 },
+            { "kind_icon", "kind" }
+          }
+        },
       },
-    })
-
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    cmp.event:on(
-      "confirm_done",
-      cmp_autopairs.on_confirm_done()
-    )
-
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-  end,
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 0,
+        window = {
+          border = "rounded",
+          winblend = vim.o.pumblend,
+          winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+          scrollbar = false,
+        }
+      },
+    }
+  },
+  opts_extend = { "sources.default" },
 }
