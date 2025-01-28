@@ -3,5 +3,5 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     ignore = "^$",
-  }
+  },
 }

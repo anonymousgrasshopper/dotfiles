@@ -23,8 +23,8 @@ return {
       ripgrep = {
         placeholders = {
           enabled = false,
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 }

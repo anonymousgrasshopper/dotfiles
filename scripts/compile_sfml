@@ -2,4 +2,4 @@
 g++ -c "$1.cpp" -o "$1.o"
 g++ "$1.o" -o "$1.exe" -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 rm "$1.o"
-nohup "$1.exe" > sfml_output.txt 2>&1
+nohup "$1.exe" >sfml_output.txt 2>&1

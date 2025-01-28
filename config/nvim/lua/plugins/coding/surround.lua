@@ -14,6 +14,6 @@ return {
       visual_line     = "gA",
       delete          = "gd",
       change          = "gc",
-    }
-  }
+    },
+  },
 }

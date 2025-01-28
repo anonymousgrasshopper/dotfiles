@@ -3,7 +3,7 @@
 RED='\033[0;31m'
 
 # list of configs and scripts to copy
-configs=("bat" "btop" "eza" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "btop" "clang-format" "eza" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "archey3.cfg" "fzf.conf" "ripgrep.conf" "shellcheckrc")
 scripts=("codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # clone the repo if it is not in ~/.config ans cd into it

@@ -5,5 +5,5 @@ return {
   },
   opts = {
     cmd_name = "Rename",
-  }
+  },
 }

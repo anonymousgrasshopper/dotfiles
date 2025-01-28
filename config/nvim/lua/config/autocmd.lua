@@ -4,12 +4,10 @@
 
 -- show the cursorline in the active buffer only, excepted in excluded filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
-  callback = function ()
-    vim.opt_local.cursorline = false
-  end
+  callback = function() vim.opt_local.cursorline = false end,
 })
 vim.api.nvim_create_autocmd("WinEnter", {
-  callback = function ()
+  callback = function()
     local excluded_filetypes = { "alpha", "neo-tree-popup", "mason" }
     for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
@@ -17,44 +15,44 @@ vim.api.nvim_create_autocmd("WinEnter", {
       end
     end
     vim.opt_local.cursorline = true
-  end
+  end,
 })
 
 -- hide cursor in chosen filetypes
 vim.api.nvim_create_autocmd("BufEnter", {
-  callback = function ()
-    local enabled_filetypes = { "alpha", "neo-tree", "neo-tree-popup", "undotree" }
+  callback = function()
+    local enabled_filetypes = { "alpha", "neo-tree", "neo-tree-popup", "undotree", "diff" }
     for _, filetype in ipairs(enabled_filetypes) do
       if vim.bo.filetype == filetype then
-        vim.cmd[[
+        vim.cmd([[
           hi Cursor blend=100
           set guicursor+=a:Cursor/lCursor
-          ]]
+          ]])
         return
       end
     end
-    vim.cmd[[
+    vim.cmd([[
       hi Cursor blend=0
       set guicursor+=a:Cursor/lCursor
-      ]]
-  end
+      ]])
+  end,
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "alpha",
-  callback = function ()
-    vim.cmd[[
+  callback = function()
+    vim.cmd([[
       hi Cursor blend=100
       set guicursor+=a:Cursor/lCursor
-      ]]
-  end
+      ]])
+  end,
 })
-vim.api.nvim_create_autocmd("InsertEnter", {
-  callback = function ()
-    vim.cmd[[
+vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
+  callback = function()
+    vim.cmd([[
       hi Cursor blend=100
       set guicursor-=a:Cursor/lCursor
-      ]]
-  end
+      ]])
+  end,
 })
 
 -- Auto create dir when saving a file if some of the intermediate directories do not exist
@@ -77,6 +75,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "lspinfo",
     "spectre_panel",
     "CompetiTest",
+    "diff",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -87,9 +86,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Fix conceallevel for json files
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "json", "jsonc", "json5" },
-  callback = function()
-    vim.opt_local.conceallevel = 0
-  end,
+  callback = function() vim.opt_local.conceallevel = 0 end,
 })
 
 -- resize splits if window got resized
@@ -125,7 +122,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
 
-    vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc  = "Correct last spelling mistake", buffer = true })
-    vim.keymap.set("i", "<C-m>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc  = "Add last word marked as misspelled to dictionnary", buffer = true })
+    vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
+    vim.keymap.set("i", "<C-m>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
   end,
 })

@@ -1,8 +1,9 @@
 local ls = require("luasnip")
 local s = ls.snippet
-local sn = ls.snippet_node
 local i = ls.insert_node
 local d = ls.dynamic_node
+local f = ls.function_node
+local sn = ls.snippet_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(args, parent)
@@ -41,29 +42,30 @@ return {
     ),
     { condition = line_begin }
   ),
-  s({ trig = "function ", dscr = "function", snippetType = "autosnippet" },
+  s({ trig = "([^%w_])function ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
       [[
-        function(<>)
+        <>function(<>)
           <>
         end<>
       ]],
       {
+        f( function(_, snip) return snip.captures[1] end ),
         i(1),
         d(2, get_visual),
         i(0)
       }
-    ),
-    { condition = line_begin }
+    )
   ),
-  s({ trig = "func ", dscr = "function", snippetType = "autosnippet" },
+  s({ trig = "([%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
       [[
-        function(<>)
+        <>function(<>)
           <>
         end<>
       ]],
       {
+        f( function(_, snip) return snip.captures[1] end ),
         i(1),
         d(2, get_visual),
         i(0)

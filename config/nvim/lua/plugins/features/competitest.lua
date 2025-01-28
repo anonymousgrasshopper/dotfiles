@@ -1,4 +1,4 @@
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ","
 
 return {
   "xeluxee/competitest.nvim",
@@ -104,7 +104,35 @@ return {
     compile_directory = ".",
     compile_command = {
       c = { exec = "gcc", args = { "-g", "-Wall", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
-      cpp = { exec = "g++", args = { "-Wall", "-Wextra", "-pedantic", "-std=c++11", "-O2", "-Wshadow", "-Wformat=2", "-Wfloat-equal", "-Wlogical-op", "-Wshift-overflow=2", "-Wduplicated-cond", "-Wcast-qual", "-Wcast-align", "-Wno-sign-compare", "-D_GLIBCXX_DEBUG", "-D_GLIBCXX_DEBUG_PEDANTIC", "-D_FORTIFY_SOURCE=2", "-DLOCAL", "-fsanitize=address", "-fno-sanitize-recover", "-fstack-protector", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
+      cpp = {
+        exec = "g++",
+        args = {
+          "-Wall",
+          "-Wextra",
+          "-pedantic",
+          "-std=c++11",
+          "-O2",
+          "-Wshadow",
+          "-Wformat=2",
+          "-Wfloat-equal",
+          "-Wlogical-op",
+          "-Wshift-overflow=2",
+          "-Wduplicated-cond",
+          "-Wcast-qual",
+          "-Wcast-align",
+          "-Wno-sign-compare",
+          "-D_GLIBCXX_DEBUG",
+          "-D_GLIBCXX_DEBUG_PEDANTIC",
+          "-D_FORTIFY_SOURCE=2",
+          "-DLOCAL",
+          "-fsanitize=address",
+          "-fno-sanitize-recover",
+          "-fstack-protector",
+          "$(FNAME)",
+          "-o",
+          "$(FNOEXT).exe",
+        },
+      },
       -- Remove -fsanitize=address to disable LeakSanitizer and AdressSanitizer :
       -- cpp = { exec = "g++", args = { "-Wall", "-Wextra", "-pedantic", "-std=c++11", "-O2", "-Wshadow", "-Wformat=2", "-Wfloat-equal", "-Wlogical-op", "-Wshift-overflow=2", "-Wduplicated-cond", "-Wcast-qual", "-Wcast-align", "-Wno-sign-compare", "-D_GLIBCXX_DEBUG", "-D_GLIBCXX_DEBUG_PEDANTIC", "-D_FORTIFY_SOURCE=2", "-DLOCAL", "-fno-sanitize-recover", "-fstack-protector", "$(FNAME)", "-o", "$(FNOEXT).exe" } },
       rust = { exec = "rustc", args = { "$(FNAME)" } },
@@ -145,5 +173,5 @@ return {
     open_received_problems = true,
     open_received_contests = true,
     replace_received_testcases = false,
-  }
+  },
 }

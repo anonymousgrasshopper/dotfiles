@@ -6,8 +6,8 @@ return {
     indent = { char = "┊" },
     exclude = {
       filetypes = {
-        "undotree"
-      }
+        "undotree",
+      },
     },
-  }
+  },
 }

@@ -1,9 +1,9 @@
 vim.api.nvim_create_autocmd("Filetype", {
   pattern = "neo-tree",
-  callback = function ()
+  callback = function()
     vim.keymap.set("n", "J", "5j", { desc = "scroll 5 lines down", buffer = true })
     vim.keymap.set("n", "K", "5k", { desc = "scroll 5 lines down", buffer = true })
-  end
+  end,
 })
 
 return {
@@ -24,7 +24,7 @@ return {
       "s1n7ax/nvim-window-picker",
       version = "2.*",
       config = function()
-        require "window-picker".setup({
+        require("window-picker").setup({
           filter_rules = {
             include_current_win = false,
             autoselect_one = true,
@@ -57,15 +57,11 @@ return {
       end,
     })
   end,
-  config = function ()
-    vim.fn.sign_define("DiagnosticSignError",
-      {text = " ", texthl = "DiagnosticSignError"})
-    vim.fn.sign_define("DiagnosticSignWarn",
-      {text = " ", texthl = "DiagnosticSignWarn"})
-    vim.fn.sign_define("DiagnosticSignInfo",
-      {text = " ", texthl = "DiagnosticSignInfo"})
-    vim.fn.sign_define("DiagnosticSignHint",
-      {text = "󰌵", texthl = "DiagnosticSignHint"})
+  config = function()
+    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+    vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
     require("neo-tree").setup({
       close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
@@ -75,7 +71,7 @@ return {
       open_files_do_not_replace_types = { "CompetiTest", "terminal", "dap" }, -- when opening files, do not use windows containing these filetypes or buftypes
       bind_to_cwd = true,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
-      sort_function = nil , -- use a custom function for sorting files and directories in the tree
+      sort_function = nil, -- use a custom function for sorting files and directories in the tree
       -- sort_function = function (a,b)
       --       if a.type == b.type then
       --           return a.path > b.path
@@ -85,7 +81,7 @@ return {
       --   end , -- this sorts files and directories descendantly
       default_component_configs = {
         container = {
-          enable_character_fade = true
+          enable_character_fade = true,
         },
         indent = {
           indent_size = 2,
@@ -106,7 +102,7 @@ return {
           folder_open = "",
           folder_empty = "󰷏",
           default = "",
-          highlight = "NeoTreeFileIcon"
+          highlight = "NeoTreeFileIcon",
         },
         modified = {
           symbol = "[+]",
@@ -120,18 +116,18 @@ return {
         git_status = {
           symbols = {
             -- Change type
-            added     = " ",
-            modified  = " ",
-            deleted   = "✖",
-            renamed   = "󰁕",
-            removed  = " ",
+            added = " ",
+            modified = " ",
+            deleted = "✖",
+            renamed = "󰁕",
+            removed = " ",
             -- Status type
             untracked = "",
-            ignored   = "",
-            unstaged  = "󰄱",
-            staged    = "",
-            conflict  = "",
-          }
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
+          },
         },
         file_size = {
           enabled = true,
@@ -173,22 +169,22 @@ return {
           ["-"] = "open_split",
           ["|"] = "open_vsplit",
           ["S"] = "", -- "split_with_window_picker",
-          ["s"] = "",  -- "vsplit_with_window_picker",
+          ["s"] = "", -- "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
           ["T"] = "open_tab_drop",
           ["O"] = "open_drop",
           ["w"] = "open_with_window_picker",
           ["z"] = "close_node",
           ["Z"] = "close_all_nodes",
-          ['C'] = 'close_all_subnodes',
+          ["C"] = "close_all_subnodes",
           ["E"] = "expand_all_nodes",
           ["a"] = {
             "add",
             -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
             -- some commands may take optional config options, see `:h neo-tree-mappings` for details
             config = {
-              show_path = "none" -- "none", "relative", "absolute"
-            }
+              show_path = "none", -- "none", "relative", "absolute"
+            },
           },
           ["A"] = "add_directory", -- also accepts config.show_path option and supports BASH style brace expansion.
           ["d"] = "delete",
@@ -199,14 +195,14 @@ return {
           ["c"] = {
             "copy",
             config = {
-              show_path = "relative" -- "none", "relative", "absolute"
-            }
+              show_path = "relative", -- "none", "relative", "absolute"
+            },
           },
           ["m"] = {
             "move",
             config = {
-              show_path = "relative" -- "none", "relative", "absolute"
-            }
+              show_path = "relative", -- "none", "relative", "absolute"
+            },
           },
           ["q"] = "close_window",
           ["R"] = "refresh",
@@ -214,7 +210,7 @@ return {
           ["<"] = "prev_source",
           [">"] = "next_source",
           ["i"] = "show_file_details",
-        }
+        },
       },
       nesting_rules = {},
       filesystem = {
@@ -257,14 +253,14 @@ return {
             ["h"] = "toggle_hidden",
             ["/"] = "fuzzy_finder",
             ["D"] = "fuzzy_finder_directory",
-            ["#"] = "fuzzy_sorter", -- fuzzy sorting using the fzy algorithm
+            ["#"] = "fuzzy_sorter",
             ["<C-D>"] = "fuzzy_sorter_directory",
             ["f"] = "filter_on_submit",
             ["<c-x>"] = "clear_filter",
             ["[g"] = "prev_git_modified",
             ["]g"] = "next_git_modified",
             ["O"] = "system_open",
-            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["og"] = { "order_by_git_status", nowait = false },
@@ -272,21 +268,21 @@ return {
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-            ["h"] = function(state)
+            ["H"] = function(state)
               local node = state.tree:get_node()
-              if node.type == 'directory' and node:is_expanded() then
-                require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+              if node.type == "directory" and node:is_expanded() then
+                require("neo-tree.sources.filesystem").toggle_directory(state, node)
               else
-                require'neo-tree.ui.renderer'.focus_node(state, node:get_parent_id())
+                require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
               end
             end,
-            ["l"] = function(state)
+            ["L"] = function(state)
               local node = state.tree:get_node()
-              if node.type == 'directory' then
+              if node.type == "directory" then
                 if not node:is_expanded() then
-                  require'neo-tree.sources.filesystem'.toggle_directory(state, node)
+                  require("neo-tree.sources.filesystem").toggle_directory(state, node)
                 elseif node:has_children() then
-                  require'neo-tree.ui.renderer'.focus_node(state, node:get_child_ids()[1])
+                  require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
                 end
               end
             end,
@@ -322,7 +318,7 @@ return {
               if value == path then
                 vim.print(path)
                 return {
-                  text = string.format(" ⥤ %d", i), -- <-- Add your favorite harpoon like arrow here
+                  text = string.format(" ⥤ %d", i),
                   highlight = config.highlight or "NeoTreeDirectoryIcon",
                 }
               end
@@ -334,50 +330,50 @@ return {
           file = {
             { "icon" },
             { "name", use_git_status_colors = true },
-            { "harpoon_index" }, --> This is what actually adds the component in where you want it
+            { "harpoon_index" },
             { "diagnostics" },
             { "git_status", highlight = "NeoTreeDimText" },
           },
         },
       },
       buffers = {
-        group_empty_dirs = false, -- when true, empty folders will be grouped together
+        group_empty_dirs = false,
         show_unloaded = true,
         window = {
           mappings = {
             ["bd"] = "buffer_delete",
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
-            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["om"] = { "order_by_modified", nowait = false },
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-          }
+          },
         },
       },
       git_status = {
         window = {
           position = "float",
           mappings = {
-            ["A"]  = "git_add_all",
+            ["A"] = "git_add_all",
             ["gu"] = "git_unstage_file",
             ["ga"] = "git_add_file",
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
             ["gg"] = "git_commit_and_push",
-            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["om"] = { "order_by_modified", nowait = false },
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-          }
-        }
+          },
+        },
       },
       event_handlers = {
         {
@@ -386,7 +382,7 @@ return {
             if args.position == "left" or args.position == "right" then
               vim.cmd("wincmd =")
             end
-          end
+          end,
         },
         {
           event = "neo_tree_window_after_close",
@@ -394,7 +390,7 @@ return {
             if args.position == "left" or args.position == "right" then
               vim.cmd("wincmd =")
             end
-          end
+          end,
         },
         {
           event = "neo_tree_buffer_enter",
@@ -405,9 +401,7 @@ return {
         },
         {
           event = "neo_tree_buffer_leave",
-          handler = function()
-            vim.cmd("highlight! Cursor blend=0")
-          end,
+          handler = function() vim.cmd("highlight! Cursor blend=0") end,
         },
         -- {
         --   event = "file_open_requested",
@@ -417,5 +411,5 @@ return {
         -- },
       },
     })
-  end
+  end,
 }

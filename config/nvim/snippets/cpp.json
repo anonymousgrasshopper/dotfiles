@@ -14,7 +14,17 @@
   "cout": {
     "prefix": "cout",
     "body": [
-      "cout <<"
+      "cout << "
+    ],
+    "luasnip": {
+      "autotrigger": true,
+      "wordTrig": false
+    }
+  },
+  "cerr": {
+    "prefix": "cerr",
+    "body": [
+      "cerr << "
     ],
     "luasnip": {
       "autotrigger": true,
@@ -24,7 +34,7 @@
   "cin": {
     "prefix": "cin",
     "body": [
-      "cin >>"
+      "cin >> "
     ],
     "luasnip": {
       "autotrigger": true,
@@ -62,9 +72,9 @@
     }
   },
   "push_front": {
-    "prefix": ".pf(",
+    "prefix": ".pb(",
     "body": [
-      ".push_front($1"
+      ".push_back($1"
     ],
     "luasnip": {
       "autotrigger": true,

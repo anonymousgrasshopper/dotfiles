@@ -34,9 +34,7 @@ vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap 
 local diagnostic_goto = function(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
   severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity })
-  end
+  return function() go({ severity = severity }) end
 end
 vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 vim.keymap.set("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
@@ -88,7 +86,7 @@ vim.keymap.set("n", "<leader>tp", "<cmd>tp<CR>", { desc = "Go to previous tab" }
 vim.keymap.set("n", "<leader>tb", "<cmd>tb<CR>", { desc = "Open current buffer in new tab" })
 
 ------ indenting ------
-vim.keymap.set({"n", "v"}, "<leader>i", "gg=G<C-o>", { desc = "Indent file" })
+vim.keymap.set({ "n", "v" }, "<leader>i", "gg=G<C-o>", { desc = "Indent file" })
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 
@@ -98,9 +96,9 @@ vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<CR>fxa<bs>", { desc = 
 
 ------ yanking and pasting ------
 vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from + register before cursor" })
-vim.keymap.set( {"n", "v"}, "<C-a>", 'ggVG"+y<C-o>', { desc = "Yank file text into + register" })
-vim.keymap.set( "v", "<C-z>", '"+y', { desc = "Yank selected text into \"+" })
-vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register"})
+vim.keymap.set({ "n", "v" }, "<C-a>", 'ggVG"+y<C-o>', { desc = "Yank file text into + register" })
+vim.keymap.set("v", "<C-z>", '"+y', { desc = 'Yank selected text into "+' })
+vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register" })
 
 ------ improved up and downn motions ------
 vim.keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -152,31 +150,31 @@ vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\
 ------ Compile and run SFML programs ------
 vim.api.nvim_create_autocmd("Filetype", {
   pattern = {
-    "cpp"
+    "cpp",
   },
-  callback = function ()
-    vim.schedule(function ()
-      vim.keymap.set("n", "<leader>sf", function()
-        return "<cmd>!compile_sfml " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r") .. " &<CR><CR>"
-      end, { expr = true, buffer = true })
+  callback = function()
+    vim.schedule(function()
+      vim.keymap.set(
+        "n",
+        "<leader>sf",
+        function() return "<cmd>!compile_sfml " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r") .. " &<CR><CR>" end,
+        { expr = true, buffer = true }
+      )
     end)
-  end
+  end,
 })
 
 ------ Zen mode ------
-vim.api.nvim_create_user_command("Zen",
-  function ()
-    if vim.api.nvim_get_option_value("laststatus", {}) ~= 0  then
-      vim.cmd[[
+vim.api.nvim_create_user_command("Zen", function()
+  if vim.api.nvim_get_option_value("laststatus", {}) ~= 0 then
+    vim.cmd([[
         set laststatus=0
         set showtabline=0
-      ]]
-    else
-      vim.cmd[[
+      ]])
+  else
+    vim.cmd([[
         set laststatus=3
         set showtabline=2
-      ]]
-    end
-  end,
-  {}
-)
+      ]])
+  end
+end, {})

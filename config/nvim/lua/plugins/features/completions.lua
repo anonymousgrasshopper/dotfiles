@@ -8,12 +8,12 @@ return {
       version = "v2.*",
       -- install jsregexp (optional).
       build = "make install_jsregexp",
-      config = function ()
+      config = function()
         require("luasnip").config.set_config({
-          history              = true,
-          updateevents         = "TextChanged,TextChangedI",
-          enable_autosnippets  = true,
-          delete_check_events  = "TextChanged",
+          history = true,
+          updateevents = "TextChanged,TextChangedI",
+          enable_autosnippets = true,
+          delete_check_events = "TextChanged",
           store_selection_keys = "<Tab>",
           ext_opts = {
             [require("luasnip.util.types").choiceNode] = {
@@ -47,8 +47,13 @@ return {
         vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
         vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
 
-        vim.keymap.set("n", "<Leader>snp", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
-      end
+        vim.api.nvim_set_keymap("i", "<C-n>", "<Plug>luasnip-next-choice", {})
+        vim.api.nvim_set_keymap("s", "<C-n>", "<Plug>luasnip-next-choice", {})
+        vim.api.nvim_set_keymap("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
+        vim.api.nvim_set_keymap("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
+
+        vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
+      end,
     },
     "rafamadriz/friendly-snippets",
   },
@@ -70,6 +75,17 @@ return {
       ["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
       ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
+
+      cmdline = {
+        ["<C-e>"] = { "hide", "fallback" },
+
+        ["<CR>"] = { "accept", "fallback" },
+        ["<Tab>"] = { "accept", "fallback" },
+        ["<S-Tab>"] = { "accept", "fallback" },
+
+        ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-n>"] = { "select_next", "fallback" },
+      },
     },
 
     appearance = {
@@ -88,7 +104,7 @@ return {
           return { "cmdline" }
         end
         return {}
-      end
+      end,
     },
 
     completion = {
@@ -133,8 +149,8 @@ return {
         draw = {
           columns = {
             { "label", "label_description", gap = 1 },
-            { "kind_icon", "kind" }
-          }
+            { "kind_icon", "kind" },
+          },
         },
       },
       documentation = {
@@ -145,9 +161,9 @@ return {
           winblend = vim.o.pumblend,
           winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
           scrollbar = false,
-        }
+        },
       },
-    }
+    },
   },
   opts_extend = { "sources.default" },
 }

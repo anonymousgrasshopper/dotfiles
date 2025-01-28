@@ -1,9 +1,6 @@
 return {
   "windwp/nvim-autopairs",
   event = "InsertEnter",
-  dependencies = {
-    "hrsh7th/nvim-cmp",
-  },
   config = function()
     local Rule = require("nvim-autopairs.rule")
     local pairs = require("nvim-autopairs")
@@ -14,5 +11,5 @@ return {
       Rule("$", "$", "tex"),
       Rule("\\[", "\\]", "tex"),
     })
-  end
+  end,
 }

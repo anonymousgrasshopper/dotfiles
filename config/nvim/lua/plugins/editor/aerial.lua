@@ -72,14 +72,14 @@ return {
       link_folds_to_tree = true,
       link_tree_to_folds = true,
       guides = {
-        mid_item   = "├╴",
-        last_item  = "└╴",
+        mid_item = "├╴",
+        last_item = "└╴",
         nested_top = "│ ",
         whitespace = "  ",
       },
       ignore = {
         filetypes = { "alpha", "neo-tree", "CompetiTest", "toggleterm", "undotree" },
-      }
+      },
     }
     return opts
   end,

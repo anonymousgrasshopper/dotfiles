@@ -1,11 +1,11 @@
 return {
   "nvim-telescope/telescope.nvim",
-  cmd =  {
+  cmd = {
     "Telescope",
   },
   keys = {
-    { "<leader>ff", function() require("telescope.builtin").find_files({ hidden=true }) end, desc = "Fuzzy find files in cwd" },
-    { "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden=true }) end, desc = "Fuzzy find recent files" },
+    { "<leader>ff", function() require("telescope.builtin").find_files({ hidden = true }) end, desc = "Fuzzy find files in cwd" },
+    { "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden = true }) end, desc = "Fuzzy find recent files" },
     { "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
 
     { "<leader>sj", function() require("telescope.builtin").jumplist() end, desc = "Jumplist" },
@@ -16,7 +16,7 @@ return {
     { "<leader>sb", function() require("telsecope.builtin").buffers() end, desc = "Search open Buffers" },
     { "<leader>sg", function() require("telescope.builtin").live_grep() end, desc = "Search with Grep in cwd" },
     { "<leader>sw", function() require("telescope.builtin").grep_string() end, desc = "Search Word under cursor in cwd" },
-    { "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr=0 }) end, desc = "Search Document's Diagnostics" },
+    { "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search Document's Diagnostics" },
   },
   branch = "0.1.x",
   dependencies = {

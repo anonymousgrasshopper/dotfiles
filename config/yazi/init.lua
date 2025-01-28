@@ -1,7 +1,7 @@
-require("full-border"):setup {
+require("full-border"):setup({
   -- Available values: ui.Border.PLAIN, ui.Border.ROUNDED
   type = ui.Border.ROUNDED,
-}
+})
 
 require("yatline"):setup({
   section_separator = { open = "", close = "" },
@@ -13,8 +13,8 @@ require("yatline"):setup({
     bg_mode = {
       normal = "#7E9CD8",
       select = "957FB8",
-      un_set = "#DCA561"
-    }
+      un_set = "#DCA561",
+    },
   },
   style_b = { bg = "#54546D", fg = "#9CABCA" },
   style_c = { bg = "#1F1F28", fg = "#9CABCA" },
@@ -48,28 +48,28 @@ require("yatline"):setup({
   status_line = {
     left = {
       section_a = {
-        {type = "string", custom = false, name = "tab_mode"},
+        { type = "string", custom = false, name = "tab_mode" },
       },
       section_b = {
-        {type = "string", custom = false, name = "hovered_size"},
+        { type = "string", custom = false, name = "hovered_size" },
       },
       section_c = {
         -- {type = "string", custom = false, name = "hovered_path"},
-        {type = "coloreds", custom = false, name = "count"},
-      }
+        { type = "coloreds", custom = false, name = "count" },
+      },
     },
     right = {
       section_a = {
-        {type = "string", custom = false, name = "cursor_position"},
+        { type = "string", custom = false, name = "cursor_position" },
       },
       section_b = {
-        {type = "string", custom = false, name = "cursor_percentage"},
+        { type = "string", custom = false, name = "cursor_percentage" },
       },
       section_c = {
         -- {type = "string", custom = false, name = "hovered_file_extension", params = {true}},
-        {type = "coloreds", custom = false, name = "permissions"},
-      }
-    }
+        { type = "coloreds", custom = false, name = "permissions" },
+      },
+    },
   },
 
   -- header_line = {

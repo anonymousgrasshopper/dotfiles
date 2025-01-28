@@ -6,7 +6,7 @@ local fmta = require("luasnip.extras.fmt").fmta
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-  s({ trig = "tmp", dscr = "template", snippetType = "autosnippet"},
+  s({ trig = "tmp ", dscr = "CP template", snippetType = "autosnippet"},
     fmta(
       [[
         #pragma GCC optimize("O3,unroll-loops")
@@ -40,7 +40,7 @@ return {
       }),
     { condition = line_begin }
   ),
-  s({ trig = "cf", dscr = "Codeforces template", snippetType = "autosnippet" },
+  s({ trig = "cf ", dscr = "Codeforces template", snippetType = "autosnippet" },
     fmta(
       [[
         #pragma GCC optimize("O3,unroll-loops")
@@ -80,7 +80,7 @@ return {
     ),
     { condition = line_begin }
   ),
-  s({ trig = "setio", dscr = "Set io for USACO", snippetType = "autosnippet" },
+  s({ trig = "io ", dscr = "Set io for USACO", snippetType = "autosnippet" },
     fmta(
       [[
         void setIO(string name = "<>") {

@@ -1,8 +1,9 @@
 return {
-  "akinsho/toggleterm.nvim", version = "*",
+  "akinsho/toggleterm.nvim",
+  version = "*",
   cmd = { "ToggleTerm" },
   keys = {
-    { "<leader>ter", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal" }
+    { "<leader>ter", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
   },
   opts = {
     highlights = {
@@ -12,5 +13,5 @@ return {
     },
     border = "single",
     shade_terminals = false,
-  }
+  },
 }

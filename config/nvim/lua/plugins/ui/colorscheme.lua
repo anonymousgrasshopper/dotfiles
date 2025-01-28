@@ -27,7 +27,7 @@ return {
             MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 
             NeoTreeBackground = { bg = palette.sumiInk2 },
-            NeoTreeWinSeparator = {fg = "none" },
+            NeoTreeWinSeparator = { fg = "none" },
             NeoTreeFileIcon = { fg = palette.oldWhite },
           }
         end,
@@ -82,5 +82,5 @@ return {
   --   config = function()
   --     -- vim.cmd("colorscheme tokyonight")
   --   end,
-  -- }
+  -- },
 }

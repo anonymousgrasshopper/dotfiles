@@ -7,5 +7,5 @@ return {
     "Zi",
     "Tzi",
     "Lzi",
-  }
+  },
 }

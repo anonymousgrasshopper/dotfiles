@@ -3,12 +3,12 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   cmd = { "Browse" },
   keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
-  init = function ()
+  init = function()
     vim.g.netrw_nogx = 1 -- disable netrw gx
   end,
   opts = {
     open_browser_app = "/mnt/c/Program Files/Mozilla Firefox/firefox.exe",
-    open_browser_args = { }, -- specify any arguments for the browser executable
+    open_browser_args = {}, -- specify any arguments for the browser executable
     handlers = {
       plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
       github = true, -- open github issues
@@ -31,7 +31,6 @@ return {
         filename = "Cargo.toml", -- or the necessary filename
         handle = function(mode, line, _)
           local crate = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
-
           if crate then
             return "https://crates.io/crates/" .. crate
           end
@@ -56,5 +55,5 @@ return {
       --   return fname:match("myproject")
       -- end,
     },
-  }
+  },
 }

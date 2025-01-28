@@ -2,13 +2,13 @@ return {
   {
     "williamboman/mason.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    priority = 90,  -- We need to setup LSPs before calling lspconfig
+    priority = 90, -- We need to setup LSPs before calling lspconfig
     cmd = { "Mason" },
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      local mason           = require("mason")
+      local mason = require("mason")
       local mason_lspconfig = require("mason-lspconfig")
 
       mason.setup({
@@ -30,7 +30,7 @@ return {
         },
       })
 
-      vim.cmd[[autocmd Filetype mason setlocal cursorline!]]
+      vim.cmd([[autocmd Filetype mason setlocal cursorline!]])
     end,
   },
   {
@@ -48,10 +48,12 @@ return {
         "clangd",
         "clang-format",
         "lua_ls",
+        "stylua",
         "bashls",
         "shellcheck",
+        "shfmt",
         "pylsp",
       },
-    }
+    },
   },
 }

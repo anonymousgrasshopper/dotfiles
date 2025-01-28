@@ -1,6 +1,6 @@
-require("core.autocmd")
-require("core.keymaps")
-require("core.options")
+require("config.autocmd")
+require("config.keymaps")
+require("config.options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -27,13 +27,13 @@ require("lazy").setup({
     notify = false,
   },
   install = {
-    colorscheme = { "kanagawa-wave" }
+    colorscheme = { "kanagawa-wave" },
   },
   performance = {
     rtp = {
       disabled_plugins = {
         "netrw",
-        "netrwPlugin"
+        "netrwPlugin",
       },
     },
   },

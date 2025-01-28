@@ -2,9 +2,9 @@ return {
   "rmagatti/auto-session",
   event = { "BufReadPre", "BufNewFile" },
   keys = {
-    {"<leader>rs", "<cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
-    {"<leader>ss", "<cmd>SessionSearch<CR>", desc = "Search sessions" },
-    {"<leader>sa", "<cmd>SessionToggleAutoSave<CR>", desc = "Toggle session autosave" },
+    { "<leader>rs", "<cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
+    { "<leader>ss", "<cmd>SessionSearch<CR>", desc = "Search sessions" },
+    { "<leader>sa", "<cmd>SessionToggleAutoSave<CR>", desc = "Toggle session autosave" },
   },
   cmd = {
     "SessionRestore",
@@ -27,6 +27,6 @@ return {
     session_lens = {
       load_on_setup = false,
       preview = true,
-    }
-  }
+    },
+  },
 }
