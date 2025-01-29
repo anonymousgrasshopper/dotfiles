@@ -1,5 +1,5 @@
 ### Installation instruction for Windows
--  [install WSL](https://www.reddit.com/r/bashonubuntuonwindows/comments/hrn1lz/wsl_sound_through_pulseaudio_solved/) and install Arch WSL through the Microsoft Store
+-  [install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install Arch WSL through the Microsoft Store
 - Inside of the Arch WSL, create a root password and a user, `sudo pacman -S git` and `git clone https://github.com/anonymousgrasshopper/dotfiles` (in `~/.config` for example), then run `install.sh`.
 
 - Install [Vcxsrv](https://vcxsrv.com/) ([download link](https://vcxsrv.com/wp-content/uploads/2024/09/vcxsrv-64.1.17.2.0.installer.zip)).
@@ -8,9 +8,9 @@
 - Place `arch.ps1` on the Windows desktop.
 - Place `startup.sh` in `~/.scripts`.
 
-- If you want audio support inside of WSL, [this link](https://vcxsrv.com/wp-content/uploads/2024/09/vcxsrv-64.1.17.2.0.installer.zip) explains how to setup PulseAudio in WSL.
+- If you want audio support inside of WSL, [this link](https://www.reddit.com/r/bashonubuntuonwindows/comments/hrn1lz/wsl_sound_through_pulseaudio_solved/) explains how to setup PulseAudio in WSL.
 
-- Disable the [windows keybindings](https://www.top-password.com/blog/disable-windows-key-shortcuts-hotkeys-in-windows-10/), the [Win+g](https://stackoverflow.com/questions/51502871/how-to-block-wing-keyboard-event) and [Win+L](https://vcxsrv.com/wp-content/uploads/2024/09/vcxsrv-64.1.17.2.0.installer.zip) keybindings to avoid conflicts with i3wm.
+- Disable the [windows keybindings](https://www.top-password.com/blog/disable-windows-key-shortcuts-hotkeys-in-windows-10/), the [Win+g](https://stackoverflow.com/questions/51502871/how-to-block-wing-keyboard-event) and [Win+L](https://superuser.com/questions/1059511/how-to-disable-winl-in-windows-10) keybindings to avoid conflicts with i3wm.
 ##### Limitations :
 - Expect the window manager to disconnect when changing network connections.
 
