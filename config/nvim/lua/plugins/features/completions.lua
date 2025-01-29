@@ -47,10 +47,10 @@ return {
         vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
         vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
 
-        vim.api.nvim_set_keymap("i", "<C-n>", "<Plug>luasnip-next-choice", {})
-        vim.api.nvim_set_keymap("s", "<C-n>", "<Plug>luasnip-next-choice", {})
-        vim.api.nvim_set_keymap("i", "<C-p>", "<Plug>luasnip-prev-choice", {})
-        vim.api.nvim_set_keymap("s", "<C-p>", "<Plug>luasnip-prev-choice", {})
+        vim.api.nvim_set_keymap("i", "<A-n>", "<Plug>luasnip-next-choice", {})
+        vim.api.nvim_set_keymap("s", "<A-n>", "<Plug>luasnip-next-choice", {})
+        vim.api.nvim_set_keymap("i", "<A-p>", "<Plug>luasnip-prev-choice", {})
+        vim.api.nvim_set_keymap("s", "<A-p>", "<Plug>luasnip-prev-choice", {})
 
         vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
       end,
@@ -61,9 +61,8 @@ return {
     keymap = {
       ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-e>"] = { "hide", "fallback" },
-      ["<CR>"] = { "accept", "fallback" },
 
-      ["<Tab>"] = { "snippet_forward", "fallback" },
+      ["<Tab>"] = { "snippet_forward", "accept", "fallback" },
       ["<S-Tab>"] = { "snippet_backward", "fallback" },
 
       ["<Up>"] = { "select_prev", "fallback" },
@@ -79,9 +78,7 @@ return {
       cmdline = {
         ["<C-e>"] = { "hide", "fallback" },
 
-        ["<CR>"] = { "accept", "fallback" },
         ["<Tab>"] = { "accept", "fallback" },
-        ["<S-Tab>"] = { "accept", "fallback" },
 
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
@@ -115,7 +112,7 @@ return {
       },
       list = {
         selection = {
-          preselect = false,
+          preselect = true,
         },
       },
       menu = {
