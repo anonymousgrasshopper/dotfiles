@@ -18,7 +18,7 @@ return {
           ext_opts = {
             [require("luasnip.util.types").choiceNode] = {
               active = {
-                virt_text = { { "choiceNode", "Comment" } },
+                virt_text = { { "  ", "Comment" } },
               },
             },
           },
@@ -38,19 +38,20 @@ return {
             vim.fn.stdpath("config") .. "/snippets",
           },
         })
-        require("luasnip.loaders.from_snipmate").lazy_load({
-          paths = {
-            vim.fn.stdpath("config") .. "/snippets",
-          },
-        })
 
-        vim.keymap.set({ "i", "s" }, "<A-j>", "<cmd>lua require'luasnip'.jump(1)<CR>", { noremap = true, silent = true })
-        vim.keymap.set({ "i", "s" }, "<A-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>", { noremap = true, silent = true })
+        vim.keymap.set({ "i", "s" }, "<A-j>", function()
+          if require("luasnip").expand_or_jumpable() then
+            require("luasnip").expand_or_jump()
+          end
+        end, { noremap = true, silent = true })
+        vim.keymap.set({ "i", "s" }, "<A-k>", function()
+          if require("luasnip").jumpable(-1) then
+            require("luasnip").jump(-1)
+          end
+        end, { noremap = true, silent = true })
 
-        vim.api.nvim_set_keymap("i", "<A-n>", "<Plug>luasnip-next-choice", {})
-        vim.api.nvim_set_keymap("s", "<A-n>", "<Plug>luasnip-next-choice", {})
-        vim.api.nvim_set_keymap("i", "<A-p>", "<Plug>luasnip-prev-choice", {})
-        vim.api.nvim_set_keymap("s", "<A-p>", "<Plug>luasnip-prev-choice", {})
+        vim.keymap.set({ "i", "s" }, "<A-n>", "<Plug>luasnip-next-choice")
+        vim.keymap.set({ "i", "s" }, "<A-p>", "<Plug>luasnip-prev-choice")
 
         vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
       end,

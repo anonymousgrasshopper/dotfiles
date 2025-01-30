@@ -83,10 +83,22 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Fix conceallevel for json files
+-- Fix conceallevel for json files and add a comma at the end of lines automatically
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "json", "jsonc", "json5" },
-  callback = function() vim.opt_local.conceallevel = 0 end,
+  callback = function()
+    vim.opt_local.conceallevel = 0
+    vim.keymap.set("n", "o", function()
+      local line = vim.api.nvim_get_current_line()
+
+      local should_add_comma = string.find(line, "[^,{[]$")
+      if should_add_comma then
+        return "A,<cr>"
+      else
+        return "o"
+      end
+    end, { buffer = true, expr = true })
+  end,
 })
 
 -- resize splits if window got resized

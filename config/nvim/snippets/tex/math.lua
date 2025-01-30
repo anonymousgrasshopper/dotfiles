@@ -27,7 +27,7 @@ return {
     },
     { condition = not tex.in_mathzone }
   ),
-  s({ trig = "sm", dscr = "sum", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       [[
         \sum_{<>=<>}^{<>}<>
@@ -41,7 +41,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "pd", dscr = "product", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "pd", dscr = "product", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       [[
         \prod_{<>=<>}^{<>}<>
@@ -55,7 +55,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ff", dscr = "fraction", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "ff", dscr = "fraction", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\frac{<>}{<>}",
       {
@@ -109,7 +109,7 @@ return {
     t("\\infty"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig = false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>^{<>}",
       {
@@ -119,7 +119,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig = false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>_{<>}",
       {
@@ -129,7 +129,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "([%w%)%]%}])__", dscr = "subscript and superscript", wordTrig=false, regTrig = true, snippetType="autosnippet" },
+  s({ trig = "([%w%)%]%}])__", dscr = "subscript and superscript", wordTrig = false, regTrig = true, snippetType="autosnippet" },
     fmta(
       "<>^{<>}_{<>}",
       {
@@ -144,11 +144,11 @@ return {
     t("^2"),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "all ", dscr = "universal quantifier", snippetType = "autosnippet" },
+  s({ trig = "all ", dscr = "universal quantifier", wordTrig = false, snippetType = "autosnippet" },
     t("\\forall "),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ex ", dscr = "existensial quantifier", snippetType = "autosnippet" },
+  s({ trig = "ex ", dscr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
     t("\\exists "),
     { condition = tex.in_mathzone }
   )

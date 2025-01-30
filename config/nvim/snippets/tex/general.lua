@@ -9,7 +9,7 @@ tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-  s({ trig = "tmp", dscr = "template", wordTrig = "false", snippetType = "autosnippet" },
+  s({ trig = "tmp", dscr = "template", snippetType = "autosnippet" },
     fmta(
       [[
         \documentclass{<>}

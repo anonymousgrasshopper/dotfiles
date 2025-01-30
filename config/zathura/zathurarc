@@ -3,7 +3,15 @@ include kanagawa_theme
 set selection-clipboard clipboard
 set guioptions none
 
+# mappings
+map <C-h> nohlsearch
+
 map D set "first-page-column 1:1"
 map <C-d> set "first-page-column 1:2"
 
-map <C-h> nohlsearch
+map [fullscreen] a adjust_window best-fit
+map [fullscreen] s adjust_window width
+map [fullscreen] f follow
+map [fullscreen] d toggle_page_mode 2
+map [fullscreen] <Tab> toggle_index
+
