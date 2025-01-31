@@ -82,6 +82,20 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
+  s({ trig = "do ", dscr = "do while loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        do {
+          <>
+        } while (<>)
+      ]],
+      {
+        d(1, get_visual),
+        i(2),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
   s({ trig = "template", dscr = "template", snippetType = "autosnippet" },
     {
       t("template <typename "),
