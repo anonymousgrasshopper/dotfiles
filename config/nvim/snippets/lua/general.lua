@@ -14,8 +14,6 @@ local get_visual = function(args, parent)
   end
 end
 
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
@@ -30,12 +28,11 @@ local check_not_in_node = function(ignored_nodes)
 end
 
 local out_of_string_comment = function()
-  return check_not_in_node({ "string", "comment" })
+  return check_not_in_node({ "string_content", "comment_content" })
 end
 
 return {
-  s(
-    { trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
+  s({ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
     fmta("if <> then\n\t<>\nend<>", {
       i(1),
       d(2, get_visual),
@@ -43,8 +40,7 @@ return {
     }),
     { condition = out_of_string_comment }
   ),
-  s(
-    { trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
+  s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
       [[
         for <> do
@@ -59,8 +55,7 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
-  s(
-    { trig = "([^%w_])function", dscr = "function", regTrig = true, snippetType = "autosnippet" },
+  s({ trig = "([^%w_])function", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
       [[
         <>function(<>)
@@ -76,8 +71,7 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
-  s(
-    { trig = "([%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
+  s({ trig = "([%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
       [[
         <>function(<>)

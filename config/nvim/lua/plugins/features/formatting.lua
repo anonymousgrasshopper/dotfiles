@@ -53,6 +53,14 @@ return {
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
         return
       end
+
+      local disabled_paths = { "nvim/snippets", "nvim/lua/config/options.lua" }
+      for _, disabled_path in ipairs(disabled_paths) do
+        if string.match(vim.api.nvim_buf_get_name(0), disabled_path) then
+          return
+        end
+      end
+
       return { timeout_ms = 500, lsp_format = "fallback" }
     end,
   },

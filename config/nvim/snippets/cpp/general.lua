@@ -5,6 +5,7 @@ local i = ls.insert_node
 local c = ls.choice_node
 local d = ls.dynamic_node
 local f = ls.function_node
+local rep = require("luasnip.extras").rep
 local sn = ls.snippet_node
 local fmta = require("luasnip.extras.fmt").fmta
 
@@ -35,6 +36,9 @@ local out_of_string_comment = function()
   return check_not_in_node({ "string", "comment" })
 end
 
+-- contains snippets capture groups. Useful if snippet nodes need to access it.
+local SNIP_CAPTURES_1
+
 return {
   s({ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
     fmta("if (<>) {\n\t<>\n}<>", {
@@ -42,7 +46,7 @@ return {
       d(2, get_visual),
       i(0),
     }),
-    { condition = line_begin, out_of_string_comment }
+    { condition = out_of_string_comment }
   ),
   s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
@@ -52,7 +56,11 @@ return {
         }<>
       ]],
       {
-        i(1),
+        c(1, {
+          { t("int "), i(1, "i"), t(" = 0; "), rep(1), t(" != "), i(2, "N"), t("; "), t("++"), rep(1) },
+          { i(3, "auto"), t(" "), i(1, "x"), t(" : "), i(2, "array") },
+          { i(1), t("; "), i(2), t("; "), i(3) },
+        }),
         d(2, get_visual),
         i(0),
       }
@@ -85,7 +93,10 @@ return {
   ),
   s({ trig = "inc ", dscr = "include preprocessor directive", snippetType = "autosnippet" },
     {
-      c(1, { sn(nil, { t("#include <"), i(1), t(">"), i(0) }), sn(nil, { t('#include "'), i(1), t('"'), i(0) }) }),
+      c(1, {
+        { t("#include <"), i(1), t({ ">", "" }), i(0) },
+        { t('#include "'), i(1), t({ '"', ""}), i(0) },
+      }),
     },
     { condition = line_begin, out_of_string_comment }
   ),
@@ -96,6 +107,27 @@ return {
       t({ " {", "\t" }),
       i(0),
       t({ "", "}" })
+    },
+    { condition = out_of_string_comment }
+  ),
+  s({ trig = "([%w_<>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)", dscr = "allocate memory using new", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
+    {
+      f( function(_, snip) return snip.captures[1] end ),
+      f( function(_, snip) return snip.captures[2] end ),
+      f( function (_, snip)
+        SNIP_CAPTURES_1 = snip.captures[1]
+        return ""
+      end ),
+      c(1, {
+        {
+          f( function() return SNIP_CAPTURES_1 end ),
+          t(" "),
+          i(1),
+        },
+        {
+          i(1),
+        }
+      })
     },
     { condition = out_of_string_comment }
   )

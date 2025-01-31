@@ -19,7 +19,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
 })
 
 -- hide cursor in chosen filetypes
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
     local enabled_filetypes = { "alpha", "neo-tree", "neo-tree-popup", "undotree", "diff" }
     for _, filetype in ipairs(enabled_filetypes) do
@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   callback = function()
     vim.cmd([[
-      hi Cursor blend=100
+      hi Cursor blend=0
       set guicursor-=a:Cursor/lCursor
       ]])
   end,
@@ -70,12 +70,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "help",
-    "tutor",
-    "checkhealth",
-    "lspinfo",
-    "spectre_panel",
-    "CompetiTest",
     "diff",
+    "tutor",
+    "lspinfo",
+    "grug-far",
+    "CompetiTest",
+    "checkhealth",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false

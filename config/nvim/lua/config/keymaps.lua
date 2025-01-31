@@ -128,9 +128,13 @@ vim.keymap.set("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New File" })
 vim.keymap.set("n", "<leader>wp", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
 vim.keymap.set("n", "<leader>dir", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
 
------- inspect ------
-vim.keymap.set("n", "<leader>ui", vim.show_pos, { desc = "Inspect Position" })
+------ Treesitter ------
 vim.keymap.set("n", "<leader>uI", "<cmd>InspectTree<CR>", { desc = "Inspect Tree" })
+vim.api.nvim_create_user_command(
+  "GetNode",
+  "lua print(vim.treesitter.get_node({ pos = { vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2] - 1 }}):type())",
+  {}
+)
 
 ------ quickfix and location lists ------
 vim.keymap.set("n", "<leader>xl", "<cmd>lopen<CR>", { desc = "Location List" })

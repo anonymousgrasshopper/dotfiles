@@ -32,7 +32,6 @@ local out_of_string_comment = function()
   return check_not_in_node({ "string", "comment" })
 end
 
-
 return {
   s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
     fmta([[

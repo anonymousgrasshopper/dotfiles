@@ -40,12 +40,12 @@ return {
         })
 
         vim.keymap.set({ "i", "s" }, "<A-j>", function()
-          if require("luasnip").expand_or_jumpable() then
+          if require("luasnip").expand_or_locally_jumpable() then
             require("luasnip").expand_or_jump()
           end
         end, { noremap = true, silent = true })
         vim.keymap.set({ "i", "s" }, "<A-k>", function()
-          if require("luasnip").jumpable(-1) then
+          if require("luasnip").locally_jumpable(-1) then
             require("luasnip").jump(-1)
           end
         end, { noremap = true, silent = true })
@@ -53,7 +53,11 @@ return {
         vim.keymap.set({ "i", "s" }, "<A-n>", "<Plug>luasnip-next-choice")
         vim.keymap.set({ "i", "s" }, "<A-p>", "<Plug>luasnip-prev-choice")
 
-        vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
+        vim.keymap.set(
+          "n",
+          "<Leader><leader>s",
+          "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>"
+        )
       end,
     },
     "rafamadriz/friendly-snippets",
@@ -63,8 +67,7 @@ return {
       ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
       ["<C-e>"] = { "hide", "fallback" },
 
-      ["<Tab>"] = { "snippet_forward", "accept", "fallback" },
-      ["<S-Tab>"] = { "snippet_backward", "fallback" },
+      ["<Tab>"] = { "accept", "fallback" },
 
       ["<Up>"] = { "select_prev", "fallback" },
       ["<Down>"] = { "select_next", "fallback" },

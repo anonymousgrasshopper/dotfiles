@@ -7,8 +7,6 @@ local f = ls.function_node
 local sn = ls.snippet_node
 local fmta = require("luasnip.extras.fmt").fmta
 
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
@@ -36,10 +34,10 @@ return {
       {
         f(function(_, snip) return snip.captures[1] end),
         c(1, {
-          sn(nil, { t({ "{", "\t" }), i(1), i(0) }),
-          sn(nil, { t(": public "), i(1), t({ " {", "\t" }), i(0)}),
-          sn(nil, { t(": protected "), i(1), t({" {", "\t" }), i(0)}),
-          sn(nil, { t(": private "), i(1), t({ " {", "\t" }), i(0)}),
+          { t({ "{", "\t" }), i(1), i(0) },
+          { t(": public "), i(1), t({ " {", "\t" }), i(0)},
+          { t(": protected "), i(1), t({" {", "\t" }), i(0)},
+          { t(": private "), i(1), t({ " {", "\t" }), i(0)},
         }),
         i(0),
       }
@@ -55,10 +53,10 @@ return {
       {
         f(function(_, snip) return snip.captures[1] end),
         c(1, {
-          sn(nil, { t({ "{", "\t" }), i(1), i(0) }),
-          sn(nil, { t(": public "), i(1), t({ " {", "\t" }), i(0)}),
-          sn(nil, { t(": protected "), i(1), t({" {", "\t" }), i(0)}),
-          sn(nil, { t(": private "), i(1), t({ " {", "\t" }), i(0)}),
+          { t({ "{", "\t" }), i(1), i(0) },
+          { t(": public "), i(1), t({ " {", "\t" }), i(0)},
+          { t(": protected "), i(1), t({" {", "\t" }), i(0)},
+          { t(": private "), i(1), t({ " {", "\t" }), i(0)},
         }),
         i(0),
       }
@@ -69,18 +67,18 @@ return {
     {
       t({ "public:", "" })
     },
-    { condition = line_begin * out_of_string_comment }
+    { condition = out_of_string_comment }
   ),
   s({ trig = "o:", dscr = "protected access specifier", snippetType = "autosnippet" },
     {
       t({ "protected:", "" })
     },
-    { condition = line_begin * out_of_string_comment }
+    { condition = out_of_string_comment }
   ),
   s({ trig = "i:", dscr = "private access specifier", snippetType = "autosnippet" },
     {
       t({ "private:", "" })
     },
-    { condition = line_begin * out_of_string_comment }
+    { condition = out_of_string_comment }
   ),
 }
