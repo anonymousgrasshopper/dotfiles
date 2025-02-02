@@ -36,7 +36,10 @@ for script in ${scripts[@]}; do
 done
 
 # remove zcompdump
-[[ ! -f "config/zsh/.zcompdump" ]] || rm "config/zsh/.zcompdump"
+[[ -f "config/zsh/.zcompdump" ]] && rm "config/zsh/.zcompdump"
+
+# remove tmux plugins directory
+[[ -d "config/tmux/plugins" ]] && rm -rf "config/tmux/plugins"
 
 # git add
 sudo git add .

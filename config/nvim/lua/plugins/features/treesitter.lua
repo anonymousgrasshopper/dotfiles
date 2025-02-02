@@ -80,7 +80,7 @@ return {
               ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
             },
           },
-          selection_modes = { -- "v" : charwise, "V" : linewise, "<c-v>" :blockwise
+          selection_modes = { -- "v" : charwise, "V" : linewise, "<C-v>" :blockwise
             ["@parameter.outer"] = "v",
             ["@function.outer"] = "V",
             ["@class.outer"] = "V",
