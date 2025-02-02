@@ -97,6 +97,35 @@ else
   echo -e "${WHITE}$packages"
 fi
 
+# Install yay (AUR helper)
+if [[ -f /etc/arch-release ]]; then
+  if [[ ! -f /usr/bin/yay ]]; then
+    echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper ? "
+    read answer
+    case "$answer" in
+    [yY][eE][sS] | [yY])
+      if [[ ! -f /usr/bin/git ]]; then
+        echo "${RED}Having git installed is necessary to install yay."
+        sudo pacman -S git
+      fi
+      if [[ ! -f /usr/bin/makepkg ]]; then
+        echo "${RED}The base-devel package is necessary to install yay."
+        sudo pacman -S base-devel
+      fi
+
+      git clone https://aur.archlinux.org/yay.git
+      cd yay
+      makepkg -si
+      ;;
+    esac
+  fi
+fi
+
+# TexLive
+if [[ ! -d "/usr/local/texlive" ]]; then
+  echo -e "${GREEN}Follow instructions at https://www.tug.org/texlive/quickinstall.html to install TexLive."
+fi
+
 # copy scripts to /usr/local/bin
 cd scripts || {
   echo -e "Error : scripts folder is not present in the script's directory"
@@ -163,32 +192,3 @@ done
 
 # modify yazi cache directory
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
-
-# Install yay (AUR helper)
-if [[ -f /etc/arch-release ]]; then
-  if [[ ! -f /usr/bin/yay ]]; then
-    echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper ? "
-    read answer
-    case "$answer" in
-    [yY][eE][sS] | [yY])
-      if [[ ! -f /usr/bin/git ]]; then
-        echo "${RED}Having git installed is necessary to install yay."
-        sudo pacman -S git
-      fi
-      if [[ ! -f /usr/bin/makepkg ]]; then
-        echo "${RED}The base-devel package is necessary to install yay."
-        sudo pacman -S base-devel
-      fi
-
-      git clone https://aur.archlinux.org/yay.git
-      cd yay
-      makepkg -si
-      ;;
-    esac
-  fi
-fi
-
-# TexLive
-if [[ ! -d "/usr/local/texlive" ]]; then
-  echo -e "${GREEN}Follow instructions at https://www.tug.org/texlive/quickinstall.html to install TexLive."
-fi

@@ -53,7 +53,7 @@ tns() {
   fi
 }
 tas() {
-  [[ -n TMUX ]] && cmd="switch-session" || command="attach-session"
+  [[ -z TMUX ]] && command="switch-client" || command="attach-session"
   tmux $command -t$(tmux list-session | fzf --preview='' --query="$1" --select-1 --exit-0 | sed 's/:.*//')
 }
 tmux_choose_pane() {
