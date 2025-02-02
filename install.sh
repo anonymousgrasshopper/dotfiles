@@ -161,6 +161,9 @@ for item in *; do
   fi
 done
 
+# modify yazi cache directory
+[[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
+
 # Install yay (AUR helper)
 if [[ -f /etc/arch-release ]]; then
   if [[ ! -f /usr/bin/yay ]]; then

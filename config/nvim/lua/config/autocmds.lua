@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd("WinLeave", {
 })
 vim.api.nvim_create_autocmd("WinEnter", {
   callback = function()
-    local excluded_filetypes = { "alpha", "neo-tree-popup", "mason" }
+    local excluded_filetypes = { "alpha", "neo-tree-popup" }
     for _, filetype in ipairs(excluded_filetypes) do
       if vim.bo.filetype == filetype then
         return
@@ -24,35 +24,19 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
     local enabled_filetypes = { "alpha", "neo-tree", "neo-tree-popup", "undotree", "diff" }
     for _, filetype in ipairs(enabled_filetypes) do
       if vim.bo.filetype == filetype then
-        vim.cmd([[
-          hi Cursor blend=100
-          set guicursor+=a:Cursor/lCursor
-          ]])
+        vim.cmd("hi Cursor blend=100")
         return
       end
     end
-    vim.cmd([[
-      hi Cursor blend=0
-      set guicursor+=a:Cursor/lCursor
-      ]])
+    vim.cmd("hi Cursor blend=0")
   end,
 })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "alpha",
-  callback = function()
-    vim.cmd([[
-      hi Cursor blend=100
-      set guicursor+=a:Cursor/lCursor
-      ]])
-  end,
+  callback = function() vim.cmd("hi Cursor blend=100") end,
 })
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
-  callback = function()
-    vim.cmd([[
-      hi Cursor blend=0
-      set guicursor-=a:Cursor/lCursor
-      ]])
-  end,
+  callback = function() vim.cmd("hi Cursor blend=0") end,
 })
 
 -- Auto create dir when saving a file if some of the intermediate directories do not exist
@@ -131,10 +115,28 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "text", "plaintex", "typst", "gitcommit", "markdown", "tex" },
   callback = function()
-    vim.opt_local.wrap = true
+    if vim.bo.filetype ~= "markdown" then
+      vim.opt_local.wrap = true
+    end
     vim.opt_local.spell = true
 
     vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
     vim.keymap.set("i", "<C-m>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
   end,
+})
+
+-- type ':s ' to subsitute globally in the whole file with very magic mode
+local function s_abbreviation()
+  local cmd_type = vim.fn.getcmdtype()
+  local cmd_line = vim.fn.getcmdline()
+
+  if cmd_type == ":" and cmd_line == "s " then
+    -- Clear the current command line with <C-u> and replace it
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+  end
+end
+
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+  pattern = "*",
+  callback = s_abbreviation,
 })

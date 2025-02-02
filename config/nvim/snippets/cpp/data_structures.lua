@@ -4,7 +4,6 @@ local t = ls.text_node
 local i = ls.insert_node
 local c = ls.choice_node
 local f = ls.function_node
-local sn = ls.snippet_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local check_not_in_node = function(ignored_nodes)

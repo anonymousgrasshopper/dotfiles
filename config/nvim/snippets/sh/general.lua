@@ -77,5 +77,34 @@ return {
       }
     ),
     { condition = out_of_string_comment }
-  )
+  ),
+  s({ trig = "case", name = "cases", dscr = "cases" },
+    fmta(
+      [[ 
+        case <> in 
+            <>
+            *) <> ;; 
+        esac
+      ]],
+      {
+        i(1, "expr"),
+        i(2),
+        i(3, "exit 1") }
+    ),
+    { condition = out_of_string_comment }
+  ),
+  s({ trig="func", name="function", dscr="define a function"},
+    fmta(
+      [[
+        <>() {
+            <>
+        }
+      ]],
+      {
+        i(1),
+        i(0)
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
 }

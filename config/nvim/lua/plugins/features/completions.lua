@@ -39,19 +39,23 @@ return {
           },
         })
 
-        vim.keymap.set({ "i", "s" }, "<A-j>", function()
+        vim.keymap.set({ "i", "s" }, "<M-j>", function()
           if require("luasnip").expand_or_locally_jumpable() then
             require("luasnip").expand_or_jump()
           end
         end, { noremap = true, silent = true })
-        vim.keymap.set({ "i", "s" }, "<A-k>", function()
+        vim.keymap.set({ "i", "s" }, "<M-k>", function()
           if require("luasnip").locally_jumpable(-1) then
             require("luasnip").jump(-1)
           end
         end, { noremap = true, silent = true })
 
-        vim.keymap.set({ "i", "s" }, "<A-n>", "<Plug>luasnip-next-choice")
-        vim.keymap.set({ "i", "s" }, "<A-p>", "<Plug>luasnip-prev-choice")
+        vim.keymap.set({ "i", "s" }, "<M-n>", function()
+          if require("luasnip").choice_active() then
+            return "<Plug>luasnip-next-choice"
+          end
+        end)
+        vim.keymap.set({ "i", "s" }, "<M-p>", "<Plug>luasnip-prev-choice")
 
         vim.keymap.set(
           "n",

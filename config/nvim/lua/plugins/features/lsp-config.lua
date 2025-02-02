@@ -95,9 +95,22 @@ return {
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 
       vim.keymap.set("n", "<leader>vtxt", "<cmd>lua vim.diagnostic.config({virtual_text=(not virtual_text)})<CR>", { silent = true })
     end,
+  },
+  {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    keys = {
+      { "<leader>ca", function() require("tiny-code-action").code_action() end, noremap = true, silent = true },
+    },
+    opts = {
+      backend = "delta",
+    },
   },
 }

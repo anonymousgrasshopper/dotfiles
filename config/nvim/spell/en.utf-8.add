@@ -24,5 +24,7 @@ neovim
 improve
 LSP
 frecency
-AYAA
-UwU
+stdout
+stdin
+stderr
+nvim

@@ -37,7 +37,6 @@ return {
       cpp = { "clang_format_config" },
       lua = { "stylua" },
       bash = { "shfmt" },
-      zsh = { "shfmt" },
       sh = { "shfmt" },
       -- python = { "isort", "black" },
       ["_"] = { "trim_whitespace" },

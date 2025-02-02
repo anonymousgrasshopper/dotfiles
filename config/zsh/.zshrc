@@ -22,15 +22,10 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 # Plugins
 zinit ice depth=1; zinit light romkatv/powerlevel10k
-zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
-zinit ice wait lucid
 zinit light zsh-users/zsh-completions
-zinit ice wait lucid
 zinit light zsh-users/zsh-autosuggestions
-zinit ice wait lucid
 zinit light Aloxaf/fzf-tab
-zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
 # Completion styling
@@ -107,7 +102,7 @@ printf $'\e[%d q' ${_shape}
 zle -N zle-keymap-select
 
 _set_cursor_beam() {
-  echo -ne '\e[5 q'
+  echo -ne '\e[6 q'
 }
 
 precmd_functions+=(_set_cursor_beam)

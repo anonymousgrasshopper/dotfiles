@@ -24,6 +24,9 @@ return {
     pre_restore_cmds = {
       "Neotree close",
     },
+    post_restore_cmds = {
+      "lua vim.opt_local.cursorline=true",
+    },
     session_lens = {
       load_on_setup = false,
       preview = true,

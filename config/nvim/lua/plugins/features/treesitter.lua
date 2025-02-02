@@ -15,10 +15,13 @@ return {
         autotag = { enable = true },
         ensure_installed = {
           "cpp",
+          "vim",
           "lua",
           "bash",
           "regex",
           "vimdoc",
+          "markdown",
+          "markdown_inline",
         },
         incremental_selection = {
           enable = true,

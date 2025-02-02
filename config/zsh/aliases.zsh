@@ -13,9 +13,10 @@ alias :q="exit"
 alias :qa="exit"
 alias c="clear"
 alias -- +x="chmod +x"
-alias py="python3"
 alias rmpck="sudo pacman -Rns"
 alias psync="sudo pacman -S"
+alias fetch="fastfetch"
+alias py="python3"
 
 # CLI tools default options
 alias rm="rm -i"
@@ -28,9 +29,9 @@ alias cd="z"
 alias cat="bat"
 alias top="btop"
 
-alias ls="eza --icons --group-directories-first"
-alias ll="eza --icons --group-directories-first -alh"
-alias tree="eza --icons --group-directories-first --tree"
+alias ls="eza --icons --group-directories-first --no-quotes"
+alias ll="eza --icons --group-directories-first --no-quotes -alh"
+alias tree="eza --icons --group-directories-first --no-quotes --tree"
 
 # Neovim
 inv() {

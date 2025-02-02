@@ -13,7 +13,7 @@ return {
     { "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Search Keymaps" },
     { "<leader>sc", function() require("telescope.builtin").commands() end, desc = "Search Commands" },
     { "<leader>sr", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
-    { "<leader>sb", function() require("telsecope.builtin").buffers() end, desc = "Search open Buffers" },
+    { "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Search open Buffers" },
     { "<leader>sg", function() require("telescope.builtin").live_grep() end, desc = "Search with Grep in cwd" },
     { "<leader>sw", function() require("telescope.builtin").grep_string() end, desc = "Search Word under cursor in cwd" },
     { "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search Document's Diagnostics" },

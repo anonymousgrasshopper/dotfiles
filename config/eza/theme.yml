@@ -1,6 +1,6 @@
 filekinds:
 normal: {foreground: Default}
-directory: {foreground: "#7E9CD8", is_bold: true}
+directory: {foreground: "#7E9CD8"}
 symlink: {foreground: "#6A9589"}
 pipe: {foreground: "#C0A36E"}
 block_device: {foreground: "#E6C384", is_bold: true}

@@ -116,10 +116,10 @@ return {
         git_status = {
           symbols = {
             -- Change type
-            added = " ",
-            modified = " ",
-            deleted = "✖",
-            renamed = "󰁕",
+            added = "",
+            modified = "",
+            deleted = "󱟃",
+            renamed = "",
             removed = " ",
             -- Status type
             untracked = "",
@@ -162,8 +162,8 @@ return {
         },
         mappings = {
           ["<2-LeftMouse>"] = "open",
-          ["<cr>"] = "open",
-          ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+          ["<CR>"] = "open",
+          ["<ESC>"] = "cancel", -- close preview or floating neo-tree window
           ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           ["l"] = "focus_preview",
           ["-"] = "open_split",
@@ -398,10 +398,6 @@ return {
             vim.cmd("highlight! Cursor blend=100")
             vim.cmd("setlocal winhighlight=Normal:NeoTreeBackground")
           end,
-        },
-        {
-          event = "neo_tree_buffer_leave",
-          handler = function() vim.cmd("highlight! Cursor blend=0") end,
         },
         -- {
         --   event = "file_open_requested",

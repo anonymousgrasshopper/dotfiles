@@ -55,6 +55,20 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
+  s({ trig = "repeat ", dscr = "repeat until loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        repeat
+          <>
+        until <>
+      ]],
+      {
+        d(1, get_visual),
+        i(2),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
   s({ trig = "([^%w_])function", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
       [[

@@ -134,7 +134,7 @@ tiling_drag modifier titlebar
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# default gaps 
+# default gaps
 gaps outer 0
 gaps inner 0
 

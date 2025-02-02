@@ -1,7 +1,7 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
-  vim.keymap.set("n", "<leader>L", "<cmd>Noice dismiss<CR>", { desc = "Dismiss all notifications" }),
+  vim.keymap.set("n", "<leader>l", "<cmd>Noice dismiss<CR>", { desc = "Dismiss all notifications" }),
   opts = {
     lsp = {
       -- override markdown rendering so that cmp and other plugins use Treesitter
@@ -20,13 +20,22 @@ return {
     },
     cmdline = {
       format = {
-        cmdline = { pattern = "^:", icon = "", lang = "vim" },
+        cmdline = {
+          pattern = "^:",
+          icon = "",
+          title = "",
+          lang = "vim",
+        },
         search_down = {
           view = "cmdline",
         },
         search_up = {
           view = "cmdline",
         },
+        filter = { title = "" },
+        lua = { title = "" },
+        help = { title = "" },
+        input = { title = "" },
       },
     },
     views = {
@@ -79,5 +88,5 @@ return {
         timeout = 100,
       },
     },
-  }
+  },
 }

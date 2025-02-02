@@ -17,8 +17,6 @@ local get_visual = function(args, parent)
   end
 end
 
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
@@ -96,24 +94,6 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
-  s({ trig = "template", dscr = "template", snippetType = "autosnippet" },
-    {
-      t("template <typename "),
-      i(1, "T"),
-      t({ ">", "" }),
-      i(0),
-    },
-    { condition = out_of_string_comment }
-  ),
-  s({ trig = "inc ", dscr = "include preprocessor directive", snippetType = "autosnippet" },
-    {
-      c(1, {
-        { t("#include <"), i(1), t({ ">", "" }), i(0) },
-        { t('#include "'), i(1), t({ '"', ""}), i(0) },
-      }),
-    },
-    { condition = line_begin, out_of_string_comment }
-  ),
   s({ trig = "namespace%s+([%w_]+)%s", regTrig = true, dscr = "namespace template", snippetType = "autosnippet" },
     {
       t("namespace "),
@@ -130,7 +110,7 @@ return {
       f( function(_, snip) return snip.captures[2] end ),
       f( function (_, snip)
         SNIP_CAPTURES_1 = snip.captures[1]
-        return ""
+        return " "
       end ),
       c(1, {
         {
@@ -144,5 +124,5 @@ return {
       })
     },
     { condition = out_of_string_comment }
-  )
+  ),
 }

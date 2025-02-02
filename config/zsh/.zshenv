@@ -9,7 +9,7 @@ export SUDO_EDITOR=$EDITOR
 export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # programs-specific variables
-export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lhelp'"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
 export CPLUS_INCLUDE_PATH=$HOME/Informatique/Library
 
 export PYTHON_HISTORY=$HOME/.local/state/python/history

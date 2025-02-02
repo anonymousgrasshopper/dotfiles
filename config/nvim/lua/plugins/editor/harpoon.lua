@@ -25,13 +25,13 @@ return {
     "nvim-telescope/telescope.nvim",
   },
   keys = {
-    { "<A-a>", function() require("harpoon"):list():add() end, desc = "Add file to Harpoon" },
-    { "<A-h>", function() toggle_telescope(require("harpoon"):list()) end, desc = "Toggle Harpoon ui" },
+    { "<M-a>", function() require("harpoon"):list():add() end, desc = "Add file to Harpoon" },
+    { "<M-h>", function() toggle_telescope(require("harpoon"):list()) end, desc = "Toggle Harpoon ui" },
 
-    { "<A-p>", function() require("harpoon"):list():select(1) end },
-    { "<A-m>", function() require("harpoon"):list():select(2) end },
-    { "<A-l>", function() require("harpoon"):list():select(3) end },
-    { "<A-o>", function() require("harpoon"):list():select(4) end },
+    { "<M-p>", function() require("harpoon"):list():select(1) end },
+    { "<M-m>", function() require("harpoon"):list():select(2) end },
+    { "<M-l>", function() require("harpoon"):list():select(3) end },
+    { "<M-o>", function() require("harpoon"):list():select(4) end },
   },
   opts = {
     settings = {
