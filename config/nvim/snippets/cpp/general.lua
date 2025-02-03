@@ -115,7 +115,6 @@ return {
       c(1, {
         {
           f( function() return SNIP_CAPTURES_1 end ),
-          t(" "),
           i(1),
         },
         {

@@ -52,10 +52,14 @@ return {
 
         vim.keymap.set({ "i", "s" }, "<M-n>", function()
           if require("luasnip").choice_active() then
-            return "<Plug>luasnip-next-choice"
+            require("luasnip").change_choice(1)
           end
-        end)
-        vim.keymap.set({ "i", "s" }, "<M-p>", "<Plug>luasnip-prev-choice")
+        end, { noremap = true })
+        vim.keymap.set({ "i", "s" }, "<M-N>", function()
+          if require("luasnip").choice_active() then
+            require("luasnip").change_choice(-1)
+          end
+        end, { noremap = true })
 
         vim.keymap.set(
           "n",

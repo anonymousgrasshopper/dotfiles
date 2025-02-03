@@ -97,23 +97,19 @@ vim.keymap.set("i", ";", ";<c-g>u")
 
 ------ yanking and pasting ------
 vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = "Paste text from + register before cursor" })
-vim.keymap.set({ "n", "v" }, "<C-a>", 'ggVG"+y<C-o>', { desc = "Yank file text into + register" })
+vim.keymap.set({ "n", "v" }, "<C-a>", 'ggVG"+y<C-o>', { desc = "Yank file text into the + register" })
 vim.keymap.set("v", "<C-z>", '"+y', { desc = 'Yank selected text into "+' })
-vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to + register" })
+vim.keymap.set("n", "<leader>cwd", '<cmd>let @+=expand("%")<CR>', { desc = "Copy absolute path to the + register" })
 
 ----- indenting ------
 vim.keymap.set({ "n", "v" }, "<leader>i", "gg=G<C-o>", { desc = "Indent file" })
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 
------- commenting ------
-vim.keymap.set("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<CR>fxa<bs>", { desc = "Add Comment Below" })
-vim.keymap.set("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<CR>fxa<bs>", { desc = "Add Comment Above" })
-
 ------ toggle options ------
-vim.keymap.set("n", "<leader>os", "<cmd>set spell!<CR>", { desc = "Toggle line wrapping" })
-vim.keymap.set("n", "<leader>op", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
-vim.keymap.set("n", "<leader>or", "<cmd>set relativenumber!<CR>", { desc = "Toggle line wrapping" })
+vim.keymap.set("n", "<leader>os", "<cmd>set spell!<CR>", { desc = "Toggle spell checking" })
+vim.keymap.set("n", "<leader>ow", "<cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
+vim.keymap.set("n", "<leader>or", "<cmd>set relativenumber!<CR>", { desc = "Toggle relative numbers" })
 vim.keymap.set("n", "<leader>od", "<cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
 
 ------ clear search highlights ------

@@ -23,8 +23,8 @@ vim.opt.foldlevelstart = 99
 vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
 
 ------ lines & statuscolumn ------
-vim.opt.statuscolumn   = "%s%C%l"
-vim.opt.number         = true   -- shows absolute line number on cursor line
+vim.opt.number         = true   -- shows absolute line number in the cursorcolumn
+vim.opt.relativenumber = true   -- shows relative line number in the cursorcolumn
 vim.opt.signcolumn     = "yes"  -- show sign column so that text doesn't shift
 vim.opt.scrolloff      = 4      -- have at least this number of lines above and below your cursor when possible
 vim.opt.sidescrolloff  = 6      -- have at least this number of columns around your cursor when possible
