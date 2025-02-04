@@ -120,7 +120,7 @@ return {
       keyword = {
         -- "prefix" will fuzzy match on the text before the cursor
         -- "full" will fuzzy match on the text before *and* after the cursor
-        range = "full",
+        range = "prefix",
       },
       list = {
         selection = {

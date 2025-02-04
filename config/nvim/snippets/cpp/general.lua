@@ -110,7 +110,7 @@ return {
       f( function(_, snip) return snip.captures[2] end ),
       f( function (_, snip)
         SNIP_CAPTURES_1 = snip.captures[1]
-        return " "
+        return nil
       end ),
       c(1, {
         {

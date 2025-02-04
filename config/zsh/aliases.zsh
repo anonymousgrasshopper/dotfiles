@@ -22,7 +22,8 @@ alias py="python3"
 alias rm="rm -i"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
-alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'" # not in fzf.conf because it would also apply to fzf-tab and always enable its preview
+alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
+# 󱞽 not in fzf.conf because it would also apply to fzf-tab and always enable its preview
 
 # CLI tools replacements
 alias cd="z"
@@ -94,4 +95,9 @@ function ex() {
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
+}
+
+# colored man pages
+function man {
+  [[ -f $ZDOTDIR/man-colors.zsh ]] && (source $ZDOTDIR/man-colors.zsh && colored $0 "$@") || /usr/bin/man "$@"
 }

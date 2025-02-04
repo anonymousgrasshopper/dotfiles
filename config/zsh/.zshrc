@@ -85,18 +85,18 @@ export KEYTIMEOUT=1
 
 function zle-keymap-select() {
 local _shape=0
-case "${KEYMAP}" in
-  viowr=)  _shape=4 ;;
-  main)    _shape=6 ;; # vi insert/replace: line
-  viins)   _shape=6 ;; # vi insert: line
-  isearch) _shape=6 ;; # inc search: line
-  command) _shape=6 ;; # read a command name
-  vicmd)   _shape=2 ;; # vi cmd: block
-  visual)  _shape=2 ;; # vi visual mode: block
-  viopp)   _shape=0 ;; # vi operation pending: blinking block
-  *)       _shape=6 ;;
-esac
-printf $'\e[%d q' ${_shape}
+  case "${KEYMAP}" in
+    viowr=)  _shape=4 ;;
+    main)    _shape=6 ;; # vi insert/replace: line
+    viins)   _shape=6 ;; # vi insert: line
+    isearch) _shape=6 ;; # inc search: line
+    command) _shape=6 ;; # read a command name
+    vicmd)   _shape=2 ;; # vi cmd: block
+    visual)  _shape=2 ;; # vi visual mode: block
+    viopp)   _shape=0 ;; # vi operation pending: blinking block
+    *)       _shape=6 ;;
+  esac
+  printf $'\e[%d q' ${_shape}
 }
 
 zle -N zle-keymap-select
@@ -128,4 +128,4 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 # source powerlevel10k
-[[ -f $ZDOTDIR/p10k.zsh ]] && source $ZDOTDIR/p10k.zsh
+[[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
