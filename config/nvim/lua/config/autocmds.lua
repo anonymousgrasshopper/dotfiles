@@ -121,7 +121,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = true
 
     vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
-    vim.keymap.set("i", "<C-m>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
+    vim.keymap.set("i", "<C-k>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
   end,
 })
 
