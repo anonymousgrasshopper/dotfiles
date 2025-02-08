@@ -9,6 +9,7 @@ export SUDO_EDITOR="$EDITOR"
 export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # program-specific variables
+export MANPAGER="nvim +Man!"
 export PYTHON_HISTORY="$HOME/.local/state/python/history"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"
 export CPLUS_INCLUDE_PATH="$HOME/Informatique/Library"

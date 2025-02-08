@@ -7,9 +7,7 @@ return {
       "windwp/nvim-ts-autotag",
     },
     config = function()
-      local treesitter = require("nvim-treesitter.configs")
-
-      treesitter.setup({
+      require("nvim-treesitter.configs").setup({
         highlight = { enable = true },
         indent = { enable = true },
         autotag = { enable = true },
@@ -27,7 +25,7 @@ return {
           enable = true,
           keymaps = {
             init_selection = "<C-CR>",
-            node_incremental = "CR",
+            node_incremental = "<C-CR>",
             scope_incremental = false,
             node_decremental = "<bs>",
           },
@@ -46,7 +44,7 @@ return {
         textobjects = {
           select = {
             enable = true,
-
+            include_surrounding_whitespace = true,
             -- Automatically jump forward to textobject
             lookahead = true,
 
@@ -87,44 +85,58 @@ return {
               ["@class.inner"] = "v",
               ["@local.scope"] = "V",
             },
+          },
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
 
-            include_surrounding_whitespace = true,
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = { query = "@class.outer", desc = "Next class start" },
-            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
-            ["]l"] = "@loop.*",
-            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-            ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
-            ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-          -- Below will go to either the start or the end, whichever is closer.
-          goto_next = {
-            ["]c"] = "@conditional.outer",
-          },
-          goto_previous = {
-            ["[c"] = "@conditional.outer",
+            goto_next_start = {
+              ["]f"] = { query = "@call.outer", desc = "Next function call start" },
+              ["]m"] = { query = "@function.outer", desc = "Next method/function def start" },
+              ["]c"] = { query = "@class.outer", desc = "Next class start" },
+              ["]i"] = { query = "@conditional.outer", desc = "Next conditional start" },
+              ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
+              -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+              -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+              ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+              ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+            },
+            goto_next_end = {
+              ["]F"] = { query = "@call.outer", desc = "Next function call end" },
+              ["]M"] = { query = "@function.outer", desc = "Next method/function def end" },
+              ["]C"] = { query = "@class.outer", desc = "Next class end" },
+              ["]I"] = { query = "@conditional.outer", desc = "Next conditional end" },
+              ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
+            },
+            goto_previous_start = {
+              ["[f"] = { query = "@call.outer", desc = "Prev function call start" },
+              ["[m"] = { query = "@function.outer", desc = "Prev method/function def start" },
+              ["[c"] = { query = "@class.outer", desc = "Prev class start" },
+              ["[i"] = { query = "@conditional.outer", desc = "Prev conditional start" },
+              ["[l"] = { query = "@loop.outer", desc = "Prev loop start" },
+            },
+            goto_previous_end = {
+              ["[F"] = { query = "@call.outer", desc = "Prev function call end" },
+              ["[M"] = { query = "@function.outer", desc = "Prev method/function def end" },
+              ["[C"] = { query = "@class.outer", desc = "Prev class end" },
+              ["[I"] = { query = "@conditional.outer", desc = "Prev conditional end" },
+              ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
+            },
           },
         },
       })
+
+      local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+
+      -- make motions repeatable
+      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
+      -- make builtin f, F, t, T also repeatable with ; and ,
+      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
     end,
   },
 }

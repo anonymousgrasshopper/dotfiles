@@ -76,12 +76,6 @@ tmux_choose_pane() {
   fi
 }
 
-# enable aliases in sudo
-alias sudo="sudo "
-
-# human-readable path
-alias path='echo -e ${PATH//:/\\n}'
-
 # help command using bat
 help() {
   "$@" --help 2>&1 | bat --plain --language=help
@@ -97,7 +91,8 @@ function ex() {
   rm -f -- "$tmp"
 }
 
-# colored man pages
-function man {
-  [[ -f $ZDOTDIR/man-colors.zsh ]] && (source $ZDOTDIR/man-colors.zsh && colored $0 "$@") || /usr/bin/man "$@"
-}
+# enable aliases in sudo
+alias sudo="sudo "
+
+# human-readable path
+alias path='echo -e ${PATH//:/\\n}'

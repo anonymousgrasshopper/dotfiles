@@ -11,8 +11,7 @@ return {
   keys = {
     { "<M-Left>", function() require("foldnav").goto_start() end },
     { "<M-Down>", function() require("foldnav").goto_next() end },
-    { "<M-Up>", function() require("foldnav").goto_prev_end() end },
-    -- { "<M-Up>", function() require("foldnav").goto_prev_start() end },
+    { "<M-Up>", function() require("foldnav").goto_prev_start() end },
     { "<M-Right>", function() require("foldnav").goto_end() end },
   },
 }
