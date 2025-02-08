@@ -1,0 +1,83 @@
+# Main text color
+theme[main_fg]="#DCD7BA"
+
+# Title color for boxes
+theme[title]="#DCD7BA"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#7E9CD8"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#363646"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#C8C093"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#727169"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="#727169"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#7E9CD8"
+
+# Cpu box outline color
+theme[cpu_box]="#54546D"
+
+# Memory/disks box outline color
+theme[mem_box]="#54546D"
+
+# Net up/down box outline color
+theme[net_box]="#54546D"
+
+# Processes box outline color
+theme[proc_box]="#54546D"
+
+# Box divider line and small boxes line color
+theme[div_line]="#54546D"
+
+# Temperature graph colors
+theme[temp_start]="#76956A"
+theme[temp_mid]="#DCA561"
+theme[temp_end]="#C34043"
+
+# CPU graph colors
+theme[cpu_start]="#76956A"
+theme[cpu_mid]="#DCA561"
+theme[cpu_end]="#C34043"
+
+# Mem/Disk free meter
+theme[free_start]="#76956A"
+theme[free_mid]="#DCA561"
+theme[free_end]="#C34043"
+
+# Mem/Disk cached meter
+theme[cached_start]="#76956A"
+theme[cached_mid]="#DCA561"
+theme[cached_end]="#C34043"
+
+# Mem/Disk available meter
+theme[available_start]="#76956A"
+theme[available_mid]="#DCA561"
+theme[available_end]="#C34043"
+
+# Mem/Disk used meter
+theme[used_start]="#76956A"
+theme[used_mid]="#DCA561"
+theme[used_end]="#C34043"
+
+# Download graph colors
+theme[download_start]="#76956A"
+theme[download_mid]="#DCA561"
+theme[download_end]="#C34043"
+
+# Upload graph colors
+theme[upload_start]="#76956A"
+theme[upload_mid]="#DCA561"
+theme[upload_end]="#C34043"
+
+# Process box color gradient for threads, mem and cpu usage
+theme[process_start]="#76956A"
+theme[process_mid]="#DCA561"
+theme[process_end]="#C34043"
