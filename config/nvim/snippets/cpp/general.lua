@@ -17,6 +17,22 @@ local get_visual = function(args, parent)
   end
 end
 
+local rec_switch
+rec_switch = function()
+  return sn(
+    nil,
+    c(1, {
+      t(""),
+      sn(nil, {
+        t({ "", "\tcase " }), i(1), t({ ":", "" }),
+        t("\t\t"), i(2),
+        t({ "", "\t\tbreak;" }),
+        d(3, rec_switch, {}),
+      })
+    })
+  )
+end
+
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
@@ -90,6 +106,19 @@ return {
       {
         d(1, get_visual),
         i(2),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
+  s({ trig = "switch ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
+    fmta(
+      [[
+        switch (<>) {<>
+        }
+      ]],
+      {
+        i(1),
+        d(2, rec_switch, {}),
       }
     ),
     { condition = out_of_string_comment }

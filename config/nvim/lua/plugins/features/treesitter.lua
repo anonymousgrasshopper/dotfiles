@@ -79,15 +79,17 @@ return {
 
               ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
             },
+
+            selection_modes = { -- "v" : charwise, "V" : linewise, "<C-v>" :blockwise
+              ["@function.outer"] = "V",
+              ["@function.inner"] = "v",
+              ["@class.outer"] = "v",
+              ["@class.inner"] = "v",
+              ["@local.scope"] = "V",
+            },
+
+            include_surrounding_whitespace = true,
           },
-          selection_modes = { -- "v" : charwise, "V" : linewise, "<C-v>" :blockwise
-            ["@parameter.outer"] = "v",
-            ["@function.outer"] = "V",
-            ["@class.outer"] = "V",
-            ["@class.inner"] = "v",
-            ["@local.scope"] = "V",
-          },
-          include_surrounding_whitespace = false, -- else @class.outer breaks
         },
         move = {
           enable = true,

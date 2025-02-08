@@ -1,8 +1,23 @@
 local ls = require("luasnip")
 local s = ls.snippet
+local t = ls.text_node
 local i = ls.insert_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local sn = ls.snippet_node
 local rep = require("luasnip.extras").rep
 local fmta = require("luasnip.extras.fmt").fmta
+
+local rec_item
+rec_item = function()
+  return sn(
+    nil,
+    c(1, {
+      t(""),
+      sn(nil, { t({ "", "\t\\item " }), i(1), d(2, rec_item, {}) }),
+    })
+  )
+end
 
 local tex = {}
 tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
@@ -49,4 +64,10 @@ return {
     ),
     { condition = tex.in_text * line_begin }
   ),
+  s("ls", {
+    t({ "\\begin{itemize}", "\t\\item " }),
+    i(1),
+    d(2, rec_item, {}),
+    t({ "", "\\end{itemize}" }),
+  }),
 }
