@@ -16,6 +16,7 @@ alias -- +x="chmod +x"
 alias rmpck="sudo pacman -Rns"
 alias psync="sudo pacman -S"
 alias fetch="fastfetch"
+alias lg="lazygit"
 alias py="python3"
 
 # CLI tools default options

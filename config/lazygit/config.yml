@@ -103,6 +103,7 @@ gui:
     # Foreground color of marked base commit (for rebase)
     markedBaseCommitFgColor:
       - "#658594"
+
     # Background color of marked base commit (for rebase)
     markedBaseCommitBgColor:
       - "#DCA561"
