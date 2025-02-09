@@ -7,9 +7,7 @@ configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazyg
 scripts=("codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # clone the repo if it is not in ~/.config ans cd into it
-[[ -d ~/.config ]] || mkdir ~/.config
-cd ~/.config
-[[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles
+[[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
 cd ~/.config/dotfiles
 
 # overwrite configs in the dotfiles repo
