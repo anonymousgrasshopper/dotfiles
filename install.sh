@@ -48,8 +48,8 @@ fi
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
 if [[ -f "/etc/pulse/client.conf" ]]; then
-  if ! grep -E "cookie-file = ~/.cache/pulse/cookie" </etc/pulse/client.conf >/dev/null; then
-    printf "\ncookie-file = ~/.cache/pulse/cookie" | sudo tee -a /etc/pulse/client.conf >/dev/null
+  if ! grep -E "cookie-file = /.+/.cache/pulse/cookie" </etc/pulse/client.conf >/dev/null; then
+    printf "\ncookie-file = %s/.cache/pulse/cookie" "$HOME" | sudo tee -a /etc/pulse/client.conf >/dev/null
   fi
 fi
 

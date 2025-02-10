@@ -26,7 +26,7 @@
   diffFilter = delta --color-only
 
 [color]
-  ui = always
+  ui = auto
 
 [delta]
   features = theme

@@ -42,21 +42,6 @@ return {
   cmd = { "DapContinue", "DapToggleBreakpoint" },
   keys = {
     {
-      "<leader>dbg",
-      function()
-        return "<cmd>!codelldb_stdio_redirection "
-          .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r"))
-          .. "<CR>"
-          .. "<cmd>!nohup clang++ -fstandalone-debug --debug "
-          .. escape_spaces(vim.fn.expand("%"))
-          .. " -o "
-          .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r"))
-          .. ".exe &<CR><CR>"
-      end,
-      expr = true,
-      ft = "cpp",
-    },
-    {
       "<localleader>dbg",
       function()
         return "<cmd>!codelldb_stdio_redirection "
@@ -68,20 +53,18 @@ return {
           .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r"))
           .. ".exe &<CR><CR>"
       end,
-      expr = true,
       ft = "cpp",
-    },
-    {
-      "<leader>rm",
-      function() return "<cmd>!remove_codelldb_stdio_redirection " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>" end,
       expr = true,
-      ft = "cpp",
+      silent = true,
     },
     {
       "<localleader>rm",
-      function() return "<cmd>!remove_codelldb_stdio_redirection " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>" end,
-      expr = true,
+      function()
+        return "<cmd>!remove_codelldb_stdio_redirection " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>"
+      end,
       ft = "cpp",
+      expr = true,
+      silent = true,
     },
 
     { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
@@ -99,6 +82,12 @@ return {
     { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
     { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle repl" },
     { "<leader>ds", function() require("dap").session() end, desc = "Session" },
+    { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+    { "<leader>dw", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
+    { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
+    { "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
+    { "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
+    { "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
     {
       "<leader>dT",
       function()
@@ -107,12 +96,6 @@ return {
       end,
       desc = "Terminate",
     },
-    { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-    { "<leader>dw", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
-    { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
-    { "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
-    { "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
-    { "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
   },
 
   config = function()

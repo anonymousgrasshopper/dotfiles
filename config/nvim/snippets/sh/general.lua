@@ -36,9 +36,11 @@ return {
   s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
     fmta([[
         #!/bin/<>
+        <>
       ]],
       {
-        i(1, "bash")
+        i(1, "bash"),
+        i(0),
       }
     ),
     { condition = line_begin }
@@ -54,6 +56,68 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
+  s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        for <> in <>; do
+          <>
+        done<>
+      ]],
+      {
+        i(1),
+        i(2),
+        d(3, get_visual),
+        i(0)
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
+  s({ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        while <>; do
+          <>
+        done <>
+      ]],
+      {
+        i(1),
+        d(2, get_visual),
+        i(0),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
+  s({ trig = "until ", dscr = "until loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        until <>; do
+          <>
+        done <>
+      ]],
+      {
+        i(1),
+        d(2, get_visual),
+        i(0),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
+  s({ trig = "select ", dscr = "select loop", snippetType = "autosnippet" },
+    fmta(
+      [[
+        select <> in <>; do
+          <>
+        done <>
+      ]],
+      {
+        i(1),
+        i(2),
+        d(3, get_visual),
+        i(0),
+      }
+    ),
+    { condition = out_of_string_comment }
+  ),
   s({ trig = "if [", dscr = "test condition", snippetType = "autosnippet" },
     fmta(
       "if [[ <> ]",
@@ -63,17 +127,11 @@ return {
     ),
     { condition = out_of_string_comment }
   ),
-  s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
+  s({ trig = "while [", dscr = "test condition", snippetType = "autosnippet" },
     fmta(
-      [[
-        for <>; do
-          <>
-        done<>
-      ]],
+      "while [[ <> ]",
       {
-        i(1),
-        d(2, get_visual),
-        i(0)
+        i(1)
       }
     ),
     { condition = out_of_string_comment }
