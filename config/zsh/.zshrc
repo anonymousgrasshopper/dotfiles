@@ -23,36 +23,36 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Plugins
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-completions
 zinit light hlissner/zsh-autopair
+zinit light Aloxaf/fzf-tab
 
 # Completion styling
-zstyle ':completion:*'                    matcher-list "m:{a-z}={A-Za-z}"
-zstyle ':completion:*'                    complete-options true
-zstyle ':completion:*'                    menu no
-zstyle ':completion:*:*:*:*:processes'    command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':completion:*'                   matcher-list "m:{a-z}={A-Za-z}"
+zstyle ':completion:*'                   complete-options true
+zstyle ':completion:*'                   menu no
+zstyle ':completion:*:*:*:*:processes'   command "ps -u $USER -o pid,user,comm -w -w"
 
-zstyle ':fzf-tab:*'                       fzf-flags --separator="" --info=inline
-zstyle ':fzf-tab:complete:*'              fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
-zstyle ':fzf-tab:complete:-command-:*'    fzf-preview '[[ -v "$word" ]] && echo "${(P)word}" || man "$word" 2>/dev/null'
-zstyle ':fzf-tab:complete:*:options'      fzf-preview '' # disable preview for command options
-zstyle ':fzf-tab:complete:*:argument-1'   fzf-preview '' # disable preview for subcommands
-zstyle ':fzf-tab:complete:tmux:*'         fzf-preview '' # disable preview for tmux commands
-zstyle ':fzf-tab:complete:kill:*'         fzf-preview '' # disable preview for kill
-zstyle ':fzf-tab:complete:(\\|*/|)man:*'  fzf-preview 'man $word'
+zstyle ':fzf-tab:*'                      fzf-flags --separator="" --info=inline
+zstyle ':fzf-tab:complete:*'             fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
+zstyle ':fzf-tab:complete:-command-:*'   fzf-preview '[[ -v "$word" ]] && echo "${(P)word}" || man "$word" 2>/dev/null'
+zstyle ':fzf-tab:complete:*:options'     fzf-preview '' # disable preview for command options
+zstyle ':fzf-tab:complete:*:argument-1'  fzf-preview '' # disable preview for subcommands
+zstyle ':fzf-tab:complete:tmux:*'        fzf-preview '' # disable preview for tmux commands
+zstyle ':fzf-tab:complete:kill:*'        fzf-preview '' # disable preview for kill
+zstyle ':fzf-tab:complete:(\\|*/|)man:*' fzf-preview 'man $word'
 
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
-zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
-zstyle ':fzf-tab:complete:git-help:*' fzf-preview 'git help $word | bat -plman --color=always'
-zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
-'case "$group" in
+zstyle ':fzf-tab:complete:git-log:*'     fzf-preview 'git log --color=always $word'
+zstyle ':fzf-tab:complete:git-help:*'    fzf-preview 'git help $word | bat -plman --color=always'
+zstyle ':fzf-tab:complete:git-show:*'    fzf-preview \
+  'case "$group" in
   "commit tag") git show --color=always $word ;;
   *) git show --color=always $word | delta ;;
 esac'
 zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
-'case "$group" in
+  'case "$group" in
   "modified file") git diff $word | delta ;;
   "recent commit object name") git show --color=always $word | delta ;;
   *) git log --color=always $word ;;
@@ -84,17 +84,24 @@ bindkey -v # enable vi keybindings
 export KEYTIMEOUT=1
 
 function zle-keymap-select() {
-local _shape=0
+  local _shape=6
   case "${KEYMAP}" in
-    viowr=)  _shape=4 ;;
-    main)    _shape=6 ;; # vi insert/replace: line
-    viins)   _shape=6 ;; # vi insert: line
-    isearch) _shape=6 ;; # inc search: line
-    command) _shape=6 ;; # read a command name
-    vicmd)   _shape=2 ;; # vi cmd: block
-    visual)  _shape=2 ;; # vi visual mode: block
-    viopp)   _shape=0 ;; # vi operation pending: blinking block
-    *)       _shape=6 ;;
+    vicmd)
+      case "${REGION_ACTIVE}" in
+        1) _shape=2 ;; # visual mode: block
+        2) _shape=2 ;; # V-line mode: block
+        *) _shape=2 ;; # normal mode: block
+      esac
+      ;;
+    viins|main)
+      if [[ "${ZLE_STATE}" == *overwrite* ]]; then
+        _shape=4 # replace mode: underline
+      else
+        _shape=6 # insert mode: beam
+      fi
+      ;;
+    viopp) _shape=0 ;; # operaor pending mode: blinking block
+    visual) _shape=2 ;; # visual mode: block
   esac
   printf $'\e[%d q' ${_shape}
 }

@@ -38,6 +38,7 @@ return {
       lua = { "stylua" },
       bash = { "shfmt" },
       sh = { "shfmt" },
+      -- tex = { "tex-fmt" },
       -- python = { "isort", "black" },
       ["_"] = { "trim_whitespace" },
     },

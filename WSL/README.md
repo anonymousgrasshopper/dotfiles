@@ -4,7 +4,7 @@
 
 - Install [Vcxsrv](https://vcxsrv.com/) ([download link](https://vcxsrv.com/wp-content/uploads/2024/09/vcxsrv-64.1.17.2.0.installer.zip)).
 
-- Copy `fullscreen.xlaunch` into `C:\Program Files\Vcxsrv` (`window.xlaunch` can be also be used for a large window without titlebar; in this case, you may want to hide the taskbar in windows. On my machine it doesn't disappear completely though, causing display issues.).
+- Copy `fullscreen.xlaunch` into `C:\Program Files\Vcxsrv` (`window.xlaunch` can be also be used for a large window without titlebar; in this case, you may want to hide the taskbar in windows. On my machine it doesn't disappear completely though, causing display issues. `dvorak.xlaunch` maps your keyboard to the Programmer Dvorak keyboard layout. Modify `arch.ps1` according to your preference.).
 - Place `arch.ps1` on the Windows desktop.
 - Place `startup.sh` in `~/.scripts`.
 

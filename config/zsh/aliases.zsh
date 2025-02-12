@@ -7,7 +7,6 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias cfd='cd $(fd . -td | fzf)'
 alias q="exit"
 alias :q="exit"
 alias :qa="exit"
@@ -18,6 +17,13 @@ alias psync="sudo pacman -S"
 alias fetch="fastfetch"
 alias lg="lazygit"
 alias py="python3"
+
+# miscellaneous
+cfd() {
+  cd $(fd . -td | fzf -m --query="$1")
+}
+alias sudo="sudo "                  # enable aliases in sudo
+alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # CLI tools default options
 alias rm="rm -i"
@@ -36,7 +42,7 @@ alias ll="eza --icons --group-directories-first --no-quotes -alh"
 alias tree="eza --icons --group-directories-first --no-quotes --tree"
 
 # Neovim
-inv() {
+nfd() {
   nvim $(fzf -m --query="$1")
 }
 alias vim="nvim"
@@ -91,9 +97,3 @@ function ex() {
   fi
   rm -f -- "$tmp"
 }
-
-# enable aliases in sudo
-alias sudo="sudo "
-
-# human-readable path
-alias path='echo -e ${PATH//:/\\n}'
