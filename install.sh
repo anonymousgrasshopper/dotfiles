@@ -55,7 +55,7 @@ fi
 
 # Install required packages
 if [[ -f "/etc/arch-release" ]]; then
-  packages="bat eza fd fzf gcc git github-cli glow i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
+  packages="bat eza fd fzf gcc git github-cli glow i3-wm kitty man-db ncdu neovim npm picom poppler python ripgrep rofi tmux tree-sitter-cli unzip wget xdotool yazi zathura zathura-pdf-mupdf zoxide zsh"
   echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
   read answer
   case "$answer" in
