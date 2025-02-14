@@ -83,6 +83,8 @@ setopt hist_find_no_dups
 bindkey -v # enable vi keybindings
 export KEYTIMEOUT=1
 
+zle_highlight=( region:bg="#223249",fg=15 )
+
 function zle-keymap-select() {
   local _shape=6
   case "${KEYMAP}" in
@@ -105,13 +107,11 @@ function zle-keymap-select() {
   esac
   printf $'\e[%d q' ${_shape}
 }
-
 zle -N zle-keymap-select
 
 _set_cursor_beam() {
   echo -ne '\e[6 q'
 }
-
 precmd_functions+=(_set_cursor_beam)
 
 # Keybindings

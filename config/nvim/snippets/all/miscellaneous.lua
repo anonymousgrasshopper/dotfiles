@@ -14,14 +14,6 @@ local next_char_brace = function()
   return compare_next_char("}")
 end
 
-local next_char_bracket = function()
-  return compare_next_char("]")
-end
-
-local next_char_parenthesis = function()
-  return compare_next_char(")")
-end
-
 return {
   s({ trig = "{ ", dscr = "braces padding", wordTrig = false, snippetType = "autosnippet" },
     {
@@ -30,20 +22,5 @@ return {
       t(" "),
     },
     { condition = next_char_brace }
-  ),
-  s({ trig = "[ ", dscr = "brackets padding", wordTrig = false, snippetType = "autosnippet" },
-    {
-      t("[ "),
-      i(0),
-      t(" "),
-    },
-    { condition = next_char_bracket }
-  ),  s({ trig = "( ", dscr = "brackets padding", wordTrig = false, snippetType = "autosnippet" },
-    {
-      t("( "),
-      i(0),
-      t(" "),
-    },
-    { condition = next_char_parenthesis }
   ),
 }

@@ -5,7 +5,10 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
+        highlight = {
+          enable = true,
+          disable = { "latex" },
+        },
         indent = { enable = true },
         ensure_installed = {
           "c",
@@ -15,6 +18,7 @@ return {
           "bash",
           "latex",
           "regex",
+          "python",
           "vimdoc",
           "markdown",
           "markdown_inline",
@@ -139,6 +143,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       vim.cmd([[
         hi TreesitterContext guibg=bg

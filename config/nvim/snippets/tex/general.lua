@@ -43,7 +43,7 @@ return {
     ),
     { condition = line_begin }
   ),
-  s({ trig = "pck", dscr = "include package", snippetType = "autosnippet"},
+  s({ trig = "pkg", dscr = "include package", snippetType = "autosnippet"},
     fmta(
       "\\usepackage[<>]{<>}",
       {

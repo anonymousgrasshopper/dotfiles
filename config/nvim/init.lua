@@ -20,6 +20,7 @@ require("lazy").setup({
     { import = "plugins.coding" },
     { import = "plugins.editor" },
     { import = "plugins.features" },
+    { import = "plugins.lang" },
     { import = "plugins.ui" },
     { import = "plugins.util" },
   },
@@ -32,8 +33,14 @@ require("lazy").setup({
   performance = {
     rtp = {
       disabled_plugins = {
-        "netrw",
+        "gzip",
+        "matchit",
+        "matchparen",
         "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   },

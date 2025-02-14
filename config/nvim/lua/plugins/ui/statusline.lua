@@ -57,16 +57,12 @@ return {
     local competitest = {
       filetypes = { "CompetiTest" },
       sections = {
-        lualine_b = { function()
-          return vim.b.competitest_title or "CompetiTest"
-        end },
+        lualine_b = { function() return vim.b.competitest_title or "CompetiTest" end },
         lualine_y = { "searchcount" },
         lualine_z = { lineinfo },
       },
       inactive_sections = {
-        lualine_b = { function()
-          return vim.b.competitest_title or "CompetiTest"
-        end },
+        lualine_b = { function() return vim.b.competitest_title or "CompetiTest" end },
       },
     }
 
@@ -88,7 +84,7 @@ return {
             file_status = true, -- displays file status (readonly status, modified status)
             path = 3, -- 0 = just filename, 1 = relative path, 2 = absolute path, 3 = use ~ as home directory
             separator = " ",
-            padding = { left = 1, right = 0 }
+            padding = { left = 1, right = 0 },
           },
           { "filetype", icon_only = true, padding = { left = 0, right = 1 } },
         },
@@ -110,9 +106,7 @@ return {
           { "location", padding = { left = 0, right = 1 } },
         },
         lualine_z = {
-          function()
-            return " " .. os.date("%R")
-          end,
+          function() return " " .. os.date("%R") end,
         },
       },
       extensions = {
@@ -123,7 +117,7 @@ return {
         "neo-tree",
         "toggleterm",
         competitest,
-      }
+      },
     })
   end,
 }

@@ -9,8 +9,9 @@ return {
       require("nvim-autopairs").setup()
 
       pairs.add_rules({
-        Rule("$", "$", "tex"),
+        Rule("$", "$", { "tex", "markdown" }),
         Rule("\\[", "\\]", "tex"),
+        Rule("$$", "$", "markdown"),
       })
     end,
   },

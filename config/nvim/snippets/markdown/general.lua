@@ -21,5 +21,14 @@ return {
       i(1, "https://"),
       t(")"),
     }
-  )
+  ),
+  s({ trig = "cbl", dscr = "Code block", snippetType = "autosnippet" },
+    {
+      t("```"),
+      i(1),
+      t({ "", "" }),
+      d(2, get_visual),
+      t({ "", "```", "" }),
+    }
+  ),
 }
