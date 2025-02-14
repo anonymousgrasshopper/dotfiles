@@ -62,5 +62,5 @@ return {
       {}
     ),
     { condition = tex.in_text * line_begin }
-  )
+  ),
 }

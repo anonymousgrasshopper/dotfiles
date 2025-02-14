@@ -142,5 +142,10 @@ return {
   s({ trig = "ex ", dscr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
     t("\\exists "),
     { condition = tex.in_mathzone }
-  )
+  ),
+  s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" },
+    {
+      t("\\displaystyle"),
+    }
+  ),
 }
