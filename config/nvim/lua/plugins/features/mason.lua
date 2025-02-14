@@ -26,7 +26,7 @@ return {
           "clangd",
           "lua_ls",
           "bashls",
-          "pylsp",
+          "texlab",
         },
       })
 

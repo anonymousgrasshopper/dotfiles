@@ -92,6 +92,8 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.texlab.setup({})
+
       vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, {})
