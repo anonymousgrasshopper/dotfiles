@@ -4,8 +4,8 @@
 
 - Install [Vcxsrv](https://vcxsrv.com/) ([download link](https://vcxsrv.com/wp-content/uploads/2024/09/vcxsrv-64.1.17.2.0.installer.zip)).
 
-- Copy `fullscreen.xlaunch` into `C:\Program Files\Vcxsrv` (`window.xlaunch` can be also be used for a large window without titlebar; in this case, you may want to hide the taskbar in windows. On my machine it doesn't disappear completely though, causing display issues. `dvorak.xlaunch` maps your keyboard to the Programmer Dvorak keyboard layout. Modify `arch.ps1` according to your preference.).
-- Place `arch.ps1` on the Windows desktop.
+- Copy `fullscreen.xlaunch` into `C:\Program Files\Vcxsrv` (`window.xlaunch` can be also be used for a large window without titlebar; in this case, you may want to hide the taskbar in windows. On my machine it doesn't disappear completely though, causing display issues. `dvorak.xlaunch` maps your keyboard to the Programmer Dvorak keyboard layout.).
+- Place `arch.vbs` or `dvorak.vbs` on the Windows desktop.
 - Place `startup.sh` in `~/.scripts`.
 
 - If you want audio support in WSL, [this link](https://www.reddit.com/r/bashonubuntuonwindows/comments/hrn1lz/wsl_sound_through_pulseaudio_solved/) explains how to setup PulseAudio for this purpose.
@@ -14,8 +14,7 @@
 
 - Installing the Bibata cursor theme : `yay -S bibata-cursor-theme-bin` and `sudo mv /usr/share/icons/Bibata-Modern-Classic /usr/share/icons/default` is the quickest way to do so.
 
-#### Caveats :
-- Expect the window manager to disconnect from the X server when changing network connections.
-
-### Notes :
-- The path to a Firefox executable is hardcoded in `nvim/lua/plugins/util/browsing.lua`
+### Keyboard configuration
+- Home mod keys: [Install kanata.exe](https://github.com/jtroo/kanata/releases/) in `C:\Program Files\Kanata\kanata.exe`, copy `kanata.vbs` in `shell:startup` and copy `kanata.kbd` in `%APPDATA%/kanata/`
+- Bind Caps lock to Esc/Ctrl: [Install AutoHotkey](https:/autohotkey.com) and copy `capslock.ahk` in `shell:startup`
+- Programmer Dvorak: [Installation instructions](https://www.kaufmann.no/roland/dvorak/winxp.html)
