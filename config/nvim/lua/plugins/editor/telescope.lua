@@ -19,6 +19,7 @@ return {
     { "<leader>sl", function() require("telescope.builtin").lsp_references() end, desc = "Search LSP references" },
 
     { "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
+    { "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
   },
   branch = "0.1.x",
   dependencies = {
@@ -66,6 +67,9 @@ return {
         find_files = {
           hidden = true,
         },
+      },
+      extensions = {
+        fzf = {},
       },
     })
 

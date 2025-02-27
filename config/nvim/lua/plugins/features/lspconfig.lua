@@ -103,7 +103,10 @@ return {
     keys = {
       {
         "<leader>ca",
-        function() require("tiny-code-action").code_action() end,
+        function()
+          vim.g.code_action_preview = true
+          require("tiny-code-action").code_action()
+        end,
         desc = "Code actions",
         silent = true,
       },

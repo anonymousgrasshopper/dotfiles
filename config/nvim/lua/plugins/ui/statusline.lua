@@ -60,10 +60,8 @@ return {
       filetypes = { "CompetiTest" },
       sections = {
         lualine_a = { function() return vim.b.competitest_title or "CompetiTest" end },
-        lualine_y = { "searchcount" },
-      },
-      inactive_sections = {
-        lualine_a = { function() return vim.b.competitest_title or "CompetiTest" end },
+        lualine_y = { function() return " " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
       },
     }
 
@@ -104,10 +102,17 @@ return {
     }
 
     local nvim_dap_ui = {
-      filetypes = { "dap-repl", "dapui-console", "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes" },
+      filetypes = {
+        "dap-repl",
+        "dapui_scopes",
+        "dapui_stacks",
+        "dapui_watches",
+        "dapui_console",
+        "dapui_breakpoints",
+      },
       sections = {
-        lualine_a = { function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end },
-        lualine_y = { function() return "󰙅 " end },
+        lualine_a = { function() return string.match(vim.bo.filetype, "[-_](%w+)$") end },
+        lualine_y = { function() return " " end },
         lualine_z = { function() return " " .. os.date("%R") end },
       },
     }
