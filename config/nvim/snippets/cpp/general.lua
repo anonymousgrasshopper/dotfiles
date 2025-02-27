@@ -127,7 +127,7 @@ return {
     },
     { condition = not_in_string_comment }
   ),
-  s({ trig = "([%w_<>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)", dscr = "allocate memory using new", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "([%a_][%w_ <>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)", dscr = "allocate memory using new", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
     {
       f( function(_, snip) return snip.captures[1] end ),
       f( function(_, snip) return snip.captures[2] end ),
