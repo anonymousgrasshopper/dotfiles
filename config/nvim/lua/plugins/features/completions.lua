@@ -5,26 +5,37 @@ return {
     event = "InsertEnter",
     dependencies = {
       "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
     },
     opts = {
       keymap = {
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide", "fallback" },
 
-        ["<Tab>"] = { "accept", "fallback" },
+        ["<Tab>"] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_and_accept()
+            end
+          end,
+          "accept",
+          "fallback",
+        },
 
         ["<Up>"] = { "select_prev", "fallback" },
         ["<Down>"] = { "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
 
+        ["<M-j>"] = { "snippet_forward", "fallback" },
+        ["<M-k>"] = { "snippet_backward", "fallback" },
+
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-
-        ["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-
-        cmdline = {
+      },
+      cmdline = {
+        keymap = {
           ["<C-e>"] = { "hide", "fallback" },
 
           ["<Tab>"] = { "accept", "fallback" },
@@ -32,16 +43,7 @@ return {
           ["<C-p>"] = { "select_prev", "fallback" },
           ["<C-n>"] = { "select_next", "fallback" },
         },
-      },
-
-      appearance = {
-        nerd_font_variant = "normal",
-      },
-
-      snippets = { preset = "luasnip" },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-        cmdline = function()
+        sources = function()
           local type = vim.fn.getcmdtype()
           if type == "/" or type == "?" then
             return { "buffer" }
@@ -51,6 +53,15 @@ return {
           end
           return {}
         end,
+      },
+
+      appearance = {
+        nerd_font_variant = "normal",
+      },
+
+      snippets = { preset = "luasnip" },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
       },
 
       completion = {
@@ -115,8 +126,11 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
-    event = "ModeChanged", -- instead of InsertEnter to be able to use visual snippets before having inserted text
+    event = "ModeChanged", -- instead of InsertEnter to be able to use visual snippets before having enterd insert mode
     version = "v2.*",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
     -- install jsregexp (optional).
     build = "make install_jsregexp",
     config = function()
@@ -154,25 +168,30 @@ return {
         if require("luasnip").expand_or_locally_jumpable() then
           require("luasnip").expand_or_jump()
         end
-      end, { noremap = true, silent = true })
+      end, { silent = true })
       vim.keymap.set({ "i", "s" }, "<M-k>", function()
         if require("luasnip").locally_jumpable(-1) then
           require("luasnip").jump(-1)
         end
-      end, { noremap = true, silent = true })
+      end, { silent = true })
 
       vim.keymap.set({ "i", "s" }, "<M-n>", function()
         if require("luasnip").choice_active() then
           require("luasnip").change_choice(1)
         end
-      end, { noremap = true })
+      end, { silent = true })
       vim.keymap.set({ "i", "s" }, "<M-N>", function()
         if require("luasnip").choice_active() then
           require("luasnip").change_choice(-1)
         end
-      end, { noremap = true })
+      end, { silent = true })
 
-      vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>")
+      vim.keymap.set(
+        "n",
+        "<Leader><leader>s",
+        "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<cr>",
+        { desc = "Reload snippets" }
+      )
     end,
   },
 }

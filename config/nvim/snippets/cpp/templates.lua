@@ -8,18 +8,12 @@ local line_begin = require("luasnip.extras.expand_conditions").line_begin
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
-
-  local node_type = vim.treesitter
-    .get_node({
-      pos = { row, col },
-    })
-    :type()
-
+  local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
   return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local out_of_string_comment = function()
-  return check_not_in_node({ "string", "comment" })
+local not_in_string_comment = function()
+  return check_not_in_node({ "string_content", "comment" })
 end
 
 return {
@@ -56,7 +50,7 @@ return {
         i(0),
       }
     ),
-    { condition = line_begin, out_of_string_comment }
+    { condition = line_begin, not_in_string_comment }
   ),
   s({ trig = "cf ", dscr = "Codeforces template", snippetType = "autosnippet" },
     fmta(
@@ -96,7 +90,7 @@ return {
         i(0),
       }
     ),
-    { condition = line_begin, out_of_string_comment }
+    { condition = line_begin, not_in_string_comment }
   ),
   s({ trig = "io ", dscr = "Set io for USACO", snippetType = "autosnippet" },
     fmta(
@@ -112,6 +106,6 @@ return {
         i(1),
       }
     ),
-    { condition = line_begin, out_of_string_comment }
+    { condition = line_begin, not_in_string_comment }
   )
 }

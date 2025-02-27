@@ -15,7 +15,8 @@ local get_visual = function(args, parent)
   end
 end
 
-local tex = dofile(vim.fn.stdpath("config") .. "/snippets/markdown/utils.lua")
+local tex = {}
+tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 
 return {
   s({ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },

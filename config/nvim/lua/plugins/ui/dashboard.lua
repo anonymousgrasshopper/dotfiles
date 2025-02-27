@@ -20,6 +20,14 @@ return {
       [[                                                                       ]],
       [[                                                                       ]],
 
+      -- "                                                     ",
+      -- "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
+      -- "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
+      -- "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+      -- "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
+      -- "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
+      -- "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
+
       -- [[   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ]],
       -- [[    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ]],
       -- [[          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ]],
@@ -31,25 +39,17 @@ return {
       -- [[ ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄ ]],
       -- [[      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ]],
       -- [[       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ]],
-
-      -- "                                                     ",
-      -- "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-      -- "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-      -- "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-      -- "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-      -- "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-      -- "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
       -- "                                                     ",
     }
 
     -- Set menu
     dashboard.section.buttons.val = {
-      dashboard.button("e", "  > New File", "<cmd>ene<CR>"),
-      dashboard.button("\\", "  > Toggle file explorer", "<cmd>Neotree toggle<CR>"),
-      dashboard.button("󱁐 ff", "󰱼  > Find File", "<cmd>Telescope find_files<CR>"),
-      dashboard.button("󱁐 fs", "  > Find Word", "<cmd>Telescope live_grep<CR>"),
-      dashboard.button("󱁐 rs", "󰁯  > Restore Session For Current Directory", 'function() require("persistence").load({ last = true }) end'),
-      dashboard.button("q", "  > Quit Neovim", "<cmd>qa<CR>"),
+      dashboard.button("n", "   New File", "<cmd>ene<cr>"),
+      dashboard.button("e", "   Toggle file explorer", "<cmd>Neotree toggle<cr>"),
+      dashboard.button("f", "󰱼   Find File", "<cmd>Telescope find_files<cr>"),
+      dashboard.button("g", "   Find Word", "<cmd>Telescope live_grep<cr>"),
+      dashboard.button("r", "󰁯   Restore Session For Current Directory", "<cmd>SessionRestore<cr>"),
+      dashboard.button("q", "   Quit Neovim", "<cmd>qa<cr>"),
     }
 
     alpha.setup(dashboard.opts)

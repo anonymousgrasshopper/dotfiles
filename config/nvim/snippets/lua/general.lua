@@ -17,18 +17,12 @@ end
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
-
-  local node_type = vim.treesitter
-    .get_node({
-      pos = { row, col },
-    })
-    :type()
-
+  local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
   return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local out_of_string_comment = function()
-  return check_not_in_node({ "string_content", "comment_content" })
+local not_in_string_comment = function()
+  return check_not_in_node({ "string_content", "comment_content", "comment", "chunk" })
 end
 
 return {
@@ -38,7 +32,7 @@ return {
       d(2, get_visual),
       i(0),
     }),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
@@ -53,7 +47,7 @@ return {
         i(0),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "repeat ", dscr = "repeat until loop", snippetType = "autosnippet" },
     fmta(
@@ -67,7 +61,7 @@ return {
         i(2),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "([^%w_])function", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
@@ -83,15 +77,11 @@ return {
         i(0),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
-  s({ trig = "([%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
+  s({ trig = "([^%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
     fmta(
-      [[
-        <>function(<>)
-          <>
-        end<>
-      ]],
+      "<>function(<>) <> end<>",
       {
         f(function(_, snip) return snip.captures[1] end),
         i(1),
@@ -99,6 +89,6 @@ return {
         i(0),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
 }

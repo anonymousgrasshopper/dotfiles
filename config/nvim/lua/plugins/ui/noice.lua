@@ -1,7 +1,19 @@
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
-  vim.keymap.set("n", "<leader>l", "<cmd>Noice dismiss<CR>", { desc = "Dismiss all notifications" }),
+  keys = { { "<A-x>", "<cmd>Noice dismiss<cr>", desc = "Dismiss all notifications" } },
+  dependencies = {
+    "MunifTanjim/nui.nvim",
+    {
+      "rcarriga/nvim-notify",
+      opts = function()
+        vim.notify = require("notify")
+        return {
+          timeout = 3000,
+        }
+      end,
+    },
+  },
   opts = {
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
@@ -29,7 +41,7 @@ return {
       format = {
         cmdline = {
           pattern = "^:",
-          icon = "",
+          icon = " ",
           title = "",
           lang = "vim",
         },
@@ -46,7 +58,7 @@ return {
       },
     },
     messages = {
-      view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+      view_search = false, -- view for search count messages. "virtualtext" or 'false' to disable
     },
     views = {
       cmdline_popup = {
@@ -72,8 +84,11 @@ return {
       },
       {
         filter = {
-          event = "msg_show",
-          kind = "search_count",
+          event = "notify",
+          kind = "warn",
+          any = {
+            { find = "[Neo-tree WARN]" },
+          },
         },
         opts = { skip = true },
       },
@@ -87,15 +102,6 @@ return {
           end,
         },
         opts = { skip = true },
-      },
-    },
-  },
-  dependencies = {
-    "MunifTanjim/nui.nvim",
-    {
-      "rcarriga/nvim-notify",
-      opts = {
-        timeout = 3000,
       },
     },
   },

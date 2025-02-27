@@ -1,24 +1,3 @@
-vim.g.maplocalleader = ","
-
-local escape_spaces = function(path)
-  local skip_next = false
-  local nb_added_chars = 0
-  for i = 1, 2 * path:len() + 1 do
-    if i > path:len() then
-      return path
-    end
-    if not skip_next then
-      if path:sub(i, i) == " " then
-        path = path:sub(1, i - 1) .. "\\" .. path:sub(i, path:len() + nb_added_chars)
-        skip_next = true
-        nb_added_chars = nb_added_chars + 1
-      end
-    else
-      skip_next = false
-    end
-  end
-end
-
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
@@ -28,7 +7,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       opts = {
         enabled = true, -- enable this plugin (the default)
-        enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+        enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
         highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
         highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
         show_stop_reason = true, -- show stop reason when stopped for exceptions
@@ -44,14 +23,14 @@ return {
     {
       "<localleader>dbg",
       function()
-        return "<cmd>!codelldb_stdio_redirection "
-          .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r"))
-          .. "<CR>"
-          .. "<cmd>!nohup clang++ -fstandalone-debug --debug "
-          .. escape_spaces(vim.fn.expand("%"))
+        return "<cmd>silent !codelldb_stdio_redirection "
+          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
+          .. "<cr>"
+          .. "<cmd>silent !nohup clang++ -fstandalone-debug --debug "
+          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":S")
           .. " -o "
-          .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":r"))
-          .. ".exe &<CR><CR>"
+          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
+          .. ".exe &<cr><cr>"
       end,
       ft = "cpp",
       expr = true,
@@ -60,7 +39,7 @@ return {
     {
       "<localleader>rm",
       function()
-        return "<cmd>!remove_codelldb_stdio_redirection " .. escape_spaces(vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")) .. "<CR><CR>"
+        return "<cmd>silent !remove_codelldb_stdio_redirection " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S") .. "<cr><cr>"
       end,
       ft = "cpp",
       expr = true,
@@ -70,7 +49,11 @@ return {
     { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
     { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
     { "<leader>dt", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-    { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
+    {
+      "<leader>dB",
+      function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+      desc = "Breakpoint Condition",
+    },
     { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
     { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
     { "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
@@ -79,9 +62,8 @@ return {
     { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
     { "<leader>dj", function() require("dap").down() end, desc = "Down" },
     { "<leader>dk", function() require("dap").up() end, desc = "Up" },
-    { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
     { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle repl" },
-    { "<leader>ds", function() require("dap").session() end, desc = "Session" },
+    { "<leader>ds", function() require("dap").session() end, desc = "Debugging session" },
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
     { "<leader>dw", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
     { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
@@ -125,7 +107,9 @@ return {
         name = "Launch file",
         type = "codelldb",
         request = "launch",
-        program = function() return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file") end,
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file")
+        end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
         stdio = { path .. ".input", path .. ".output", path .. ".errors" },
@@ -141,7 +125,12 @@ return {
     }
     for name, sign in pairs(signs) do
       sign = type(sign) == "table" and sign or { sign }
-      vim.fn.sign_define("Dap" .. name, { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] })
+      vim.fn.sign_define("Dap" .. name, {
+        text = sign[1],
+        texthl = sign[2] or "DiagnosticInfo",
+        linehl = sign[3],
+        numhl = sign[3],
+      })
     end
 
     vim.keymap.set("n", "<leader>df", function()

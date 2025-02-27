@@ -1,6 +1,6 @@
-#################################################################
-############################ Aliases ############################
-#################################################################
+###################################################################################################
+############################################# Aliases #############################################
+###################################################################################################
 
 # shortcuts
 alias ..="cd .."
@@ -8,8 +8,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias q="exit"
-alias :q="exit"
-alias :qa="exit"
 alias c="clear"
 alias -- +x="chmod +x"
 alias rmpkg="sudo pacman -Rns"
@@ -33,17 +31,19 @@ alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
 # 󱞽 not in fzf.conf because it would also apply to fzf-tab and always enable its preview
 
 # CLI tools replacements
-alias cd="z"
 alias cat="bat"
 alias top="btop"
 
-alias ls="eza --icons --group-directories-first --no-quotes"
-alias ll="eza --icons --group-directories-first --no-quotes -alh"
-alias tree="eza --icons --group-directories-first --no-quotes --tree"
+alias ls="eza --icons=always --group-directories-first --no-quotes"
+alias ll="eza --icons=always --group-directories-first --no-quotes -lh"
+alias llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
+alias lla="eza --icons=always --group-directories-first --no-quotes -alh"
+alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
+alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # Neovim
 nfd() {
-  nvim $(fzf -m --query="$1")
+  nvim $(fzf -m --select-1 --exit-0 --query="$1")
 }
 alias vim="nvim"
 alias nv="nvim"
@@ -62,7 +62,7 @@ tns() {
 }
 tas() {
   [[ -z TMUX ]] && command="switch-client" || command="attach-session"
-  tmux $command -t$(tmux list-session | fzf --preview='' --query="$1" --select-1 --exit-0 | sed 's/:.*//')
+  tmux $command -t$(tmux list-session | fzf --preview='' --select-1 --exit-0 --query="$1" | sed 's/:.*//')
 }
 tmux_choose_pane() {
   local panes current_window current_pane target target_window target_pane
@@ -89,7 +89,7 @@ help() {
 }
 
 # wrapper around yazi to change cwd when exiting it
-function ex() {
+function x() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
   if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then

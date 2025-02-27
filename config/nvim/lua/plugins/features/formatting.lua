@@ -22,7 +22,7 @@ return {
   cmd = "ConformInfo",
   keys = {
     {
-      "<leader>format",
+      "<leader>fmt",
       function()
         require("conform").format({
           async = true,
@@ -54,7 +54,7 @@ return {
         return
       end
 
-      local disabled_paths = { "nvim/snippets", "nvim/lua/config/options.lua" }
+      local disabled_paths = { "nvim/snippets", "nvim/lua/config/options.lua", ".zshrc" }
       for _, disabled_path in ipairs(disabled_paths) do
         if string.match(vim.api.nvim_buf_get_name(0), disabled_path) then
           return

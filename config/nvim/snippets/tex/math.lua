@@ -16,7 +16,7 @@ local get_visual = function(args, parent)
 end
 
 local tex = {}
-tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
+tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 
 return {
   s({ trig = "[", dscr = "math mode", wordTrig = false, snippetType ="autosnippet" },
@@ -25,7 +25,19 @@ return {
       i(1),
       t("\\"),
     },
-    { condition = not tex.in_mathzone }
+    {
+      condition = function()
+        if vim.fn["vimtex#syntax#in_mathzone"]() == 1 then
+          return false
+        end
+        local col = vim.api.nvim_win_get_cursor(0)[2]
+        local line = vim.api.nvim_get_current_line()
+        if col == 0 then
+          return true
+        end
+        return line:sub(col, col) ~= "\\"
+      end
+    }
   ),
   s({ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
     fmta(
@@ -155,6 +167,31 @@ return {
   s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" },
     {
       t("\\displaystyle"),
-    }
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\N", dscr = "Natural numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{N}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\Q", dscr = "Rational numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{Q}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\R", dscr = "Real numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{R}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\C", dscr = "Complex numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{C}")
+    },
+    { condition = tex.in_mathzone }
   ),
 }

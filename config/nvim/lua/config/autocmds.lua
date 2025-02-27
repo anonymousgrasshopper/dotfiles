@@ -1,34 +1,30 @@
-------------------------------------------------------------------
--------------------------- AUTOCOMMANDS --------------------------
-------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+--------------------------------------------- AUTOCMDS  -------------------------------------------
+---------------------------------------------------------------------------------------------------
 
--- show the cursorline in the active buffer only, excepted in excluded filetypes
+-- show the cursorline in the active buffer only, and hide it in chosen filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
   callback = function() vim.opt_local.cursorline = false end,
 })
 vim.api.nvim_create_autocmd("WinEnter", {
   callback = function()
     local excluded_filetypes = { "alpha", "neo-tree-popup" }
-    for _, filetype in ipairs(excluded_filetypes) do
-      if vim.bo.filetype == filetype then
-        return
-      end
+    if not vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
+      vim.opt_local.cursorline = true
     end
-    vim.opt_local.cursorline = true
   end,
 })
 
 -- hide cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
-    local enabled_filetypes = { "alpha", "neo-tree", "neo-tree-popup", "undotree", "diff" }
-    for _, filetype in ipairs(enabled_filetypes) do
-      if vim.bo.filetype == filetype then
-        vim.cmd("hi Cursor blend=100")
-        return
-      end
+    local enabled_filetypes =
+      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi" }
+    if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
+      vim.cmd("hi Cursor blend=100")
+    else
+      vim.cmd("hi Cursor blend=0")
     end
-    vim.cmd("hi Cursor blend=0")
   end,
 })
 vim.api.nvim_create_autocmd("FileType", {
@@ -52,15 +48,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = {
-    "help",
-    "diff",
-    "tutor",
-    "lspinfo",
-    "grug-far",
-    "CompetiTest",
-    "checkhealth",
-  },
+  pattern = { "help", "diff", "tutor", "lspinfo", "grug-far", "CompetiTest", "checkhealth" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
@@ -74,7 +62,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.opt_local.conceallevel = 0
     vim.keymap.set("n", "o", function()
       local line = vim.api.nvim_get_current_line()
-
       local should_add_comma = string.find(line, "[^,{[]$")
       if should_add_comma then
         return "A,<cr>"
@@ -99,10 +86,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].last_loc then
       return
     end
-    vim.b[buf].lazyvim_last_loc = true
+    vim.b[buf].last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
     if mark[1] > 0 and mark[1] <= lcount then
@@ -119,18 +106,35 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = true
 
     vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
-    vim.keymap.set("i", "<C-h>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
+    vim.keymap.set(
+      "i",
+      "<C-r>",
+      "<c-g>u<Esc>[szg`]a<c-g>u",
+      { desc = "Add last word marked as misspelled to dictionnary", buffer = true }
+    )
   end,
 })
 
--- type ':s ' to subsitute globally in the whole file with very magic mode
+-- type 's ' in the command line to subsitute globally with very magic mode
 local function s_abbreviation()
   local cmd_type = vim.fn.getcmdtype()
   local cmd_line = vim.fn.getcmdline()
 
-  if cmd_type == ":" and cmd_line == "s " then
-    -- Clear the current command line with <C-u> and replace it
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+  if cmd_type == ":" then
+    if cmd_line == "s " then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+    elseif cmd_line == "'<,'>s " then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+    else
+      local match = string.match(cmd_line, "(%d+,%s*%d+%s*s) ")
+      if match then
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true),
+          "n",
+          false
+        )
+      end
+    end
   end
 end
 

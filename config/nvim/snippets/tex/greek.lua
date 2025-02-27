@@ -3,7 +3,7 @@ local s = ls.snippet
 local t = ls.text_node
 
 local tex = {}
-tex.in_mathzone = function() return vim.fn['vimtex#syntax#in_mathzone']() == 1 end
+tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 
 return
 {

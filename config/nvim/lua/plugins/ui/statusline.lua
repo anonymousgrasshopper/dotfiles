@@ -1,7 +1,9 @@
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
   event = "UiEnter",
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+  },
   config = function()
     local palette = require("kanagawa.colors").setup().palette
 
@@ -57,12 +59,137 @@ return {
     local competitest = {
       filetypes = { "CompetiTest" },
       sections = {
-        lualine_b = { function() return vim.b.competitest_title or "CompetiTest" end },
+        lualine_a = { function() return vim.b.competitest_title or "CompetiTest" end },
         lualine_y = { "searchcount" },
-        lualine_z = { lineinfo },
       },
       inactive_sections = {
-        lualine_b = { function() return vim.b.competitest_title or "CompetiTest" end },
+        lualine_a = { function() return vim.b.competitest_title or "CompetiTest" end },
+      },
+    }
+
+    local telescope = {
+      filetypes = { "TelescopePrompt" },
+      sections = {
+        lualine_a = { function() return "Telescope" end },
+        lualine_y = { function() return "󰭎 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local yazi = {
+      filetypes = { "yazi" },
+      sections = {
+        lualine_a = { function() return "Yazi" end },
+        lualine_y = { function() return "󰇥 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local toggleterm = {
+      filetypes = { "toggleterm" },
+      sections = {
+        lualine_a = { function() return "Terminal #" .. vim.b.toggle_number end },
+        lualine_y = { function() return " " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local neo_tree = {
+      filetypes = { "neo-tree" },
+      sections = {
+        lualine_a = { function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end },
+        lualine_y = { function() return "󰙅 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local nvim_dap_ui = {
+      filetypes = { "dap-repl", "dapui-console", "dapui_watches", "dapui_stacks", "dapui_breakpoints", "dapui_scopes" },
+      sections = {
+        lualine_a = { function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end },
+        lualine_y = { function() return "󰙅 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local aerial = {
+      filetypes = { "aerial" },
+      sections = {
+        lualine_a = { function() return "Aerial" end },
+        lualine_y = { function() return "󱏒 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local lazy = {
+      filetypes = { "lazy" },
+      sections = {
+        lualine_a = { function() return "Lazy" end },
+        lualine_b = {
+          function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
+        },
+        lualine_c = {
+          require("lazy.status").updates,
+          cond = require("lazy.status").has_updates,
+        },
+        lualine_y = { function() return "󰒲 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local mason = {
+      filetypes = { "mason" },
+      sections = {
+        lualine_a = { function() return "Mason" end },
+        lualine_b = {
+          function()
+            return "Installed: "
+              .. #require("mason-registry").get_installed_packages()
+              .. "/"
+              .. #require("mason-registry").get_all_package_specs()
+          end,
+        },
+        lualine_y = { function() return " " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+    local git_root = function()
+      if vim.b.lualine_git_dir then
+        return vim.b.lualine_git_dir
+      end
+      local gitdir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.getcwd()))
+      local isgitdir = vim.fn.matchstr(gitdir, "^fatal:.*") == ""
+      if not isgitdir then
+        vim.b.lualine_git_dir = "git"
+      else
+        vim.b.lualine_git_dir = vim.trim(vim.fn.fnamemodify(gitdir, ":t"))
+      end
+      return vim.b.lualine_git_dir
+    end
+
+    local git = {
+      filetypes = { "git", "fugitive" },
+      sections = {
+        lualine_a = { function() return " " .. vim.fn.FugitiveHead() end },
+        lualine_b = {
+          { git_root },
+          { "filetype", icon_only = true, padding = { left = 1, right = 1 } },
+        },
+        lualine_y = {
+          { "progress", separator = " ", padding = { left = 1, right = 0 } },
+          { "location", padding = { left = 0, right = 1 } },
+        },
+        lualine_z = { function() return " " .. os.date("%R") end },
+      },
+    }
+
+    local diffview = {
+      filetypes = { "DiffviewFiles" },
+      sections = {
+        lualine_a = { function() return " " .. vim.fn.FugitiveHead() end },
+        lualine_b = { { git_root } },
+        lualine_y = { function() return "󰊢 " end },
+        lualine_z = { function() return " " .. os.date("%R") end },
       },
     }
 
@@ -76,7 +203,24 @@ return {
         lualine_a = { "mode" },
         lualine_b = {
           { "branch" },
-          { "diff" },
+          {
+            "diff",
+            symbols = {
+              added = " ",
+              modified = " ",
+              removed = " ",
+            },
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              if gitsigns then
+                return {
+                  added = gitsigns.added,
+                  modified = gitsigns.changed,
+                  removed = gitsigns.removed,
+                }
+              end
+            end,
+          },
         },
         lualine_c = {
           {
@@ -94,11 +238,6 @@ return {
             cond = require("noice").api.statusline.mode.has,
             color = { fg = "#FF9E3B" },
           },
-          {
-            lazy_status.updates,
-            cond = lazy_status.has_updates,
-            color = { fg = "#FF9E3B" },
-          },
           { "diagnostics" },
         },
         lualine_y = {
@@ -110,13 +249,20 @@ return {
         },
       },
       extensions = {
-        "lazy",
+        help,
+        git,
+        aerial,
+        "man",
+        lazy,
         "fugitive",
-        "mason",
-        "nvim-dap-ui",
-        "neo-tree",
-        "toggleterm",
+        mason,
+        nvim_dap_ui,
+        neo_tree,
+        toggleterm,
         competitest,
+        telescope,
+        diffview,
+        yazi,
       },
     })
   end,

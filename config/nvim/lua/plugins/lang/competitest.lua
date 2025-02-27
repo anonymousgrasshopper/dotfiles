@@ -1,5 +1,3 @@
-vim.g.maplocalleader = ","
-
 return {
   "xeluxee/competitest.nvim",
   dependencies = "MunifTanjim/nui.nvim",
@@ -7,13 +5,13 @@ return {
     "CompetiTest",
   },
   keys = {
-    { "<localleader>ctst", "<cmd>CompetiTest receive contest<CR>", ft = "cpp", desc = "Receive contest" },
-    { "<localleader>pb", "<cmd>CompetiTest receive problem<CR>", ft = "cpp", desc = "Receive problem" },
-    { "<localleader>add", "<cmd>CompetiTest add_testcase<CR>", ft = "cpp", desc = "Add testcase" },
-    { "<localleader>dlt", "<cmd>CompetiTest delete_testcase<CR>", ft = "cpp", desc = "Delete testcase" },
-    { "<localleader>run", "<cmd>CompetiTest run<CR>", ft = "cpp", desc = "Run code on tests" },
-    { "<localleader>show", "<cmd>CompetiTest show_ui<CR>", ft = "cpp", desc = "Show ui" },
-    { "<localleader>tst", "<cmd>CompetiTest run_no_compile<CR>", ft = "cpp", desc = "Run the code on tests without recompiling" },
+    { "<localleader>ctst", "<cmd>CompetiTest receive contest<cr>", ft = "cpp", desc = "Receive contest" },
+    { "<localleader>pb", "<cmd>CompetiTest receive problem<cr>", ft = "cpp", desc = "Receive problem" },
+    { "<localleader>add", "<cmd>CompetiTest add_testcase<cr>", ft = "cpp", desc = "Add testcase" },
+    { "<localleader>dlt", "<cmd>CompetiTest delete_testcase<cr>", ft = "cpp", desc = "Delete testcase" },
+    { "<localleader>run", "<cmd>CompetiTest run<cr>", ft = "cpp", desc = "Run code on tests" },
+    { "<localleader>show", "<cmd>CompetiTest show_ui<cr>", ft = "cpp", desc = "Show ui" },
+    { "<localleader>tst", "<cmd>CompetiTest run_no_compile<cr>", ft = "cpp", desc = "Run the code on tests without recompiling" },
     { "<localleader>edit", ":CompetiTest edit_testcase ", ft = "cpp", desc = "Edit testcase" },
   },
   opts = {
@@ -125,7 +123,7 @@ return {
           "-D_GLIBCXX_DEBUG_PEDANTIC",
           "-D_FORTIFY_SOURCE=2",
           "-DLOCAL",
-          "-fsanitize=address", -- comment this line out to disable the LeakSanitazer and the AddressSanitazer
+          "-fsanitize=address", -- comment this line out to disable the LeakSanitizer and the AddressSanitizer
           "-fno-sanitize-recover",
           "-fstack-protector",
           "$(FNAME)",

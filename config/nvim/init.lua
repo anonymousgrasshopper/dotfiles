@@ -1,21 +1,26 @@
 require("config.autocmds")
+require("config.filetypes")
 require("config.keymaps")
 require("config.options")
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+-- download lazy.nvim if it isn't here yet
+local lazypath = vim.fn.stdpath("data") .. "/packages/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
+    "--branch=stable",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  root = vim.fn.stdpath("data") .. "/packages",
+  lockfile = vim.fn.stdpath("config") .. "/lockfile.json",
+  readme = { root = vim.fn.stdpath("state") .. "docs/readme" },
   spec = {
     { import = "plugins.coding" },
     { import = "plugins.editor" },
@@ -24,11 +29,19 @@ require("lazy").setup({
     { import = "plugins.ui" },
     { import = "plugins.util" },
   },
-  change_detection = {
+  install = {
+    missing = true,
+    colorscheme = { "kanagawa-wave" },
+  },
+  diff = {
+    cmd = "diffview.nvim",
+  },
+  checker = {
+    enabled = true,
     notify = false,
   },
-  install = {
-    colorscheme = { "kanagawa-wave" },
+  change_detection = {
+    notify = false,
   },
   performance = {
     rtp = {

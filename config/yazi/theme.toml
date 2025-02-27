@@ -1,5 +1,5 @@
 [manager]
-cwd = { fg = "#e6c384" }
+cwd = { fg = "#e6c384", bold = true }
 hovered = { bg = "#363646" }
 preview_hovered = {}
 

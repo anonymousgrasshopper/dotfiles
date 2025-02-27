@@ -1,32 +1,32 @@
-#################################################################
-############################# ZSHRC #############################
-#################################################################
+###################################################################################################
+############################################## ZSHRC ##############################################
+###################################################################################################
 
+# terminal emulator specific settings
+[[ "$TERM" == "xterm-kitty" && -f "$ZDOTDIR/kitty.zsh" ]] && source "$ZDOTDIR/kitty.zsh"
 
-# source powerlevel10k's instant prompt
+# source Powerlevel10k's instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Set the directory where zinit and the plugins are stored
+# set the directory where Zinit and plugins are stored
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
+# download Zinit if it's not here yet and source it
 if [ ! -d "$ZINIT_HOME" ]; then
   mkdir -p "$(dirname $ZINIT_HOME)"
   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
-
-# Source zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Plugins
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
+# plugins
+zinit light Aloxaf/fzf-tab # needs to load before fast-syntax-highlighting
 zinit light hlissner/zsh-autopair
-zinit light Aloxaf/fzf-tab
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # Completion styling
 zstyle ':completion:*'                   matcher-list "m:{a-z}={A-Za-z}"
@@ -58,14 +58,14 @@ zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
   *) git log --color=always $word ;;
 esac'
 
-# Load completions
+# load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
 # autocorrection
 setopt correct
 
-# History
+# history
 HISTSIZE=10000
 HISTFILE=$HOME/.local/state/zsh/zsh_history
 SAVEHIST=$HISTSIZE
@@ -114,13 +114,15 @@ _set_cursor_beam() {
 }
 precmd_functions+=(_set_cursor_beam)
 
-# Keybindings
+# keybindings
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 bindkey "^p"   history-search-backward
 bindkey "^n"   history-search-forward
 
+bindkey "\cb"  .beginning-of-line
 bindkey "\ei"  .beginning-of-line
+bindkey "\ce"  .end-of-line
 bindkey "\ea"  .end-of-line
 bindkey "\ef"  .forward-word
 bindkey "\eb"  .backward-word
@@ -131,7 +133,7 @@ bindkey -a -r ':' # disable vicmd mode
 bindkey "^?"   backward-delete-char # fix backspace in insert mode
 
 # setup CLI tools
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
 
 # source powerlevel10k

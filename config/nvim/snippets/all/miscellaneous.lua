@@ -3,24 +3,16 @@ local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 
-local compare_next_char = function(arg)
-  local col = vim.api.nvim_win_get_cursor(0)[2]
-  local line = vim.api.nvim_get_current_line()
-
-  return line:sub(col + 1, col + 1) == arg
-end
-
-local next_char_brace = function()
-  return compare_next_char("}")
-end
+local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
 return {
-  s({ trig = "{ ", dscr = "braces padding", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
     {
-      t("{ "),
+      t("#!/bin/"),
+      i(1, "bash"),
+      t({ "", "" }),
       i(0),
-      t(" "),
     },
-    { condition = next_char_brace }
+    { condition = line_begin }
   ),
 }

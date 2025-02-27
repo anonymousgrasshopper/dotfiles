@@ -20,7 +20,7 @@ rec_item = function()
 end
 
 local tex = {}
-tex.in_text = function() return vim.fn['vimtex#syntax#in_mathzone']() ~= 1 end
+tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
@@ -64,10 +64,28 @@ return {
     ),
     { condition = tex.in_text * line_begin }
   ),
-  s("ls", {
-    t({ "\\begin{itemize}", "\t\\item " }),
-    i(1),
-    d(2, rec_item, {}),
-    t({ "", "\\end{itemize}" }),
-  }),
+  s({ "ls", dscr = "unordered list", snippetType = "autosnippet" },
+    {
+      t({ "\\begin{itemize}", "\t\\item " }),
+      i(1),
+      d(2, rec_item, {}),
+      t({ "", "\\end{itemize}" }),
+    },
+    { condition = tex.in_text * line_begin }
+  ),
+  s({trig="enn", dscr = "orderdered list", snippetType="autosnippet"},
+    fmta(
+      [[
+      \begin{enumerate}
+
+          \item <>
+
+      \end{enumerate}
+    ]],
+    {
+      i(0),
+    }
+    ),
+    { condition = tex.in_text * line_begin }
+  ),
 }

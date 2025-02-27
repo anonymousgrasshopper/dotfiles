@@ -5,7 +5,7 @@
       "cout << "
     ],
     "luasnip": {
-      "autotrigger": true,
+      "autotrigger": false,
       "wordTrig": false
     }
   },
@@ -15,7 +15,7 @@
       "cerr << "
     ],
     "luasnip": {
-      "autotrigger": true,
+      "autotrigger": false,
       "wordTrig": false
     }
   },
@@ -25,7 +25,7 @@
       "cin >> "
     ],
     "luasnip": {
-      "autotrigger": true,
+      "autotrigger": false,
       "wordTrig": false
     }
   },

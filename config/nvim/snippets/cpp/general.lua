@@ -36,21 +36,15 @@ end
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
-
-  local node_type = vim.treesitter
-    .get_node({
-      pos = { row, col },
-    })
-    :type()
-
+  local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
   return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local out_of_string_comment = function()
-  return check_not_in_node({ "string", "comment" })
+local not_in_string_comment = function()
+  return check_not_in_node({ "string_content", "comment" })
 end
 
--- contains snippets capture groups. Useful if snippet nodes need to access it.
+-- contains the snippet's regex first capture group. Useful if snippet nodes need to access it.
 local SNIP_CAPTURES_1
 
 return {
@@ -60,7 +54,7 @@ return {
       d(2, get_visual),
       i(0),
     }),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
@@ -79,7 +73,7 @@ return {
         i(0),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
     fmta(
@@ -94,7 +88,7 @@ return {
         i(0),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "do ", dscr = "do while loop", snippetType = "autosnippet" },
     fmta(
@@ -108,7 +102,7 @@ return {
         i(2),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "switch ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
     fmta(
@@ -121,7 +115,7 @@ return {
         d(2, rec_switch, {}),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "namespace%s+([%w_]+)%s", regTrig = true, dscr = "namespace template", snippetType = "autosnippet" },
     {
@@ -131,7 +125,7 @@ return {
       i(0),
       t({ "", "}" })
     },
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "([%w_<>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)", dscr = "allocate memory using new", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
     {
@@ -151,6 +145,6 @@ return {
         }
       })
     },
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
 }

@@ -8,18 +8,12 @@ local fmta = require("luasnip.extras.fmt").fmta
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
-
-  local node_type = vim.treesitter
-    .get_node({
-      pos = { row, col },
-    })
-    :type()
-
+  local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
   return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local out_of_string_comment = function()
-  return check_not_in_node({ "string", "comment" })
+local not_in_string_comment = function()
+  return check_not_in_node({ "string_content", "comment" })
 end
 
 return {
@@ -32,7 +26,7 @@ return {
         rep(1),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
   s({ trig = "([^%w_])rall%(", regTrig = true, wordTrig = false, dscr = "reverse iterator range", snippetType = "autosnippet" },
     fmta(
@@ -43,6 +37,6 @@ return {
         rep(1),
       }
     ),
-    { condition = out_of_string_comment }
+    { condition = not_in_string_comment }
   ),
 }

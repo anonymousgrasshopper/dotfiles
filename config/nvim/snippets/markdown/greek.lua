@@ -2,7 +2,8 @@ local ls = require("luasnip")
 local s = ls.snippet
 local t = ls.text_node
 
-local tex = dofile(vim.fn.stdpath("config") .. "/snippets/markdown/utils.lua")
+local tex = {}
+tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 
 return
 {

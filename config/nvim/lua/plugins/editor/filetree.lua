@@ -1,16 +1,8 @@
-vim.api.nvim_create_autocmd("Filetype", {
-  pattern = "neo-tree",
-  callback = function()
-    vim.keymap.set("n", "J", "5j", { desc = "scroll 5 lines down", buffer = true })
-    vim.keymap.set("n", "K", "5k", { desc = "scroll 5 lines down", buffer = true })
-  end,
-})
-
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   keys = {
-    { "\\", "<cmd>Neotree toggle<CR>", desc = "Toggle file explorer" },
+    { "\\", "<cmd>Neotree toggle<cr>", desc = "Toggle file explorer" },
   },
   cmd = {
     "Neotree",
@@ -19,26 +11,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
-    -- "3rd/image.nvim",
-    {
-      "s1n7ax/nvim-window-picker",
-      version = "2.*",
-      config = function()
-        require("window-picker").setup({
-          filter_rules = {
-            include_current_win = false,
-            autoselect_one = true,
-            -- filter using buffer options
-            bo = {
-              -- if the file type is one of following, the window will be ignored
-              filetype = { "neo-tree", "neo-tree-popup", "notify" },
-              -- if the buffer type is one of following, the window will be ignored
-              buftype = { "terminal", "quickfix" },
-            },
-          },
-        })
-      end,
-    },
+    { "3rd/image.nvim", lazy = true }, -- requires imagemagick to be installed
   },
   init = function()
     vim.api.nvim_create_autocmd("BufEnter", {
@@ -57,13 +30,16 @@ return {
       end,
     })
   end,
-  config = function()
-    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-    vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+  opts = function()
+    vim.api.nvim_create_autocmd("Filetype", {
+      pattern = "neo-tree",
+      callback = function()
+        vim.keymap.set("n", "J", "5j", { desc = "scroll 5 lines down", buffer = true })
+        vim.keymap.set("n", "K", "5k", { desc = "scroll 5 lines down", buffer = true })
+      end,
+    })
 
-    require("neo-tree").setup({
+    return {
       close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = "rounded",
       enable_git_status = true,
@@ -155,14 +131,13 @@ return {
       commands = {},
       window = {
         position = "left",
-        width = 26,
+        width = 28,
         mapping_options = {
-          noremap = true,
           nowait = true,
         },
         mappings = {
           ["<2-LeftMouse>"] = "open",
-          ["<CR>"] = "open",
+          ["<cr>"] = "open",
           ["<ESC>"] = "cancel", -- close preview or floating neo-tree window
           ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           ["l"] = "focus_preview",
@@ -316,7 +291,6 @@ return {
               end
 
               if value == path then
-                vim.print(path)
                 return {
                   text = string.format(" ⥤ %d", i),
                   highlight = config.highlight or "NeoTreeDirectoryIcon",
@@ -395,17 +369,30 @@ return {
         {
           event = "neo_tree_buffer_enter",
           handler = function()
-            vim.cmd("highlight! Cursor blend=100")
-            vim.cmd("setlocal winhighlight=Normal:NeoTreeBackground")
+            vim.cmd([[
+                highlight! Cursor blend=100
+                setlocal winhighlight=Normal:NormalDark,WinSeparator:NeoTreeWinSeparator
+                setlocal sidescrolloff=0
+              ]])
           end,
+        },
+        {
+          event = "file_moved",
+          handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
+        },
+        {
+          event = "file_deleted",
+          handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
+        },
+        {
+          event = "file_renamed",
+          handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
         },
         -- {
         --   event = "file_open_requested",
-        --   handler = function()
-        --     require("neo-tree.command").execute({ action = "close" })
-        --   end
+        --   handler = function() require("neo-tree.command").execute({ action = "close" }) end,
         -- },
       },
-    })
+    }
   end,
 }
