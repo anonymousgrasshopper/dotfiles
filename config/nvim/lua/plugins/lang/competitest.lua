@@ -1,18 +1,18 @@
 return {
   "xeluxee/competitest.nvim",
-  dependencies = "MunifTanjim/nui.nvim",
-  cmd = {
-    "CompetiTest",
+  dependencies = {
+    "MunifTanjim/nui.nvim",
   },
+  cmd = { "CompetiTest" },
   keys = {
-    { "<localleader>ctst", "<cmd>CompetiTest receive contest<cr>", ft = "cpp", desc = "Receive contest" },
-    { "<localleader>pb", "<cmd>CompetiTest receive problem<cr>", ft = "cpp", desc = "Receive problem" },
-    { "<localleader>add", "<cmd>CompetiTest add_testcase<cr>", ft = "cpp", desc = "Add testcase" },
-    { "<localleader>dlt", "<cmd>CompetiTest delete_testcase<cr>", ft = "cpp", desc = "Delete testcase" },
-    { "<localleader>run", "<cmd>CompetiTest run<cr>", ft = "cpp", desc = "Run code on tests" },
-    { "<localleader>show", "<cmd>CompetiTest show_ui<cr>", ft = "cpp", desc = "Show ui" },
-    { "<localleader>tst", "<cmd>CompetiTest run_no_compile<cr>", ft = "cpp", desc = "Run the code on tests without recompiling" },
-    { "<localleader>edit", ":CompetiTest edit_testcase ", ft = "cpp", desc = "Edit testcase" },
+    { "<localleader>ctst", "<Cmd>CompetiTest receive contest<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive contest" },
+    { "<localleader>pb", "<Cmd>CompetiTest receive problem<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive problem" },
+    { "<localleader>add", "<Cmd>CompetiTest add_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Add testcase" },
+    { "<localleader>dlt", "<Cmd>CompetiTest delete_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Delete testcase" },
+    { "<localleader>run", "<Cmd>CompetiTest run<CR>", ft = { "c", "cpp", "asm" }, desc = "Run the code on tests" },
+    { "<localleader>shw", "<Cmd>CompetiTest show_ui<CR>", ft = { "c", "cpp", "asm" }, desc = "Show ui" },
+    { "<localleader>tst", "<Cmd>CompetiTest run_no_compile<CR>", ft = { "c", "cpp", "asm" }, desc = "Test without recompiling" },
+    { "<localleader>edt", ":CompetiTest edit_testcase ", ft = { "c", "cpp", "asm" }, desc = "Edit testcase" },
   },
   opts = {
     local_config_file_name = "competitest.lua",
@@ -26,7 +26,7 @@ return {
         focus_next = { "j", "<down>", "<Tab>" },
         focus_prev = { "k", "<up>", "<S-Tab>" },
         close = { "<esc>", "<C-c>", "q", "Q" },
-        submit = { "<cr>" },
+        submit = { "<CR>" },
       },
     },
     editor_ui = {
@@ -131,6 +131,7 @@ return {
           "$(FNOEXT).exe",
         },
       },
+      asm = { exec = "/usr/local/bin/assemble", args = { "$(FNOEXT)" } },
       rust = { exec = "rustc", args = { "$(FNAME)" } },
       java = { exec = "javac", args = { "$(FNAME)" } },
     },
@@ -138,6 +139,7 @@ return {
     run_command = {
       c = { exec = "./$(FNOEXT).exe" },
       cpp = { exec = "./$(FNOEXT).exe" },
+      asm = { exec = "./$(FNOEXT).exe" },
       rust = { exec = "./$(FNOEXT)" },
       python = { exec = "python", args = { "$(FNAME)" } },
       java = { exec = "java", args = { "$(FNOEXT)" } },

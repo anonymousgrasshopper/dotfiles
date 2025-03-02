@@ -4,17 +4,17 @@ return {
     {
       "<leader>ya",
       mode = { "n", "v" },
-      "<cmd>Yazi<cr>",
+      "<Cmd>Yazi<CR>",
       desc = "Open Yazi at the current file",
     },
     {
       "<leader>yd",
-      "<cmd>Yazi cwd<cr>",
+      "<Cmd>Yazi cwd<CR>",
       desc = "Open Yazi in cwd",
     },
     {
       "<leader>yt",
-      "<cmd>Yazi toggle<cr>",
+      "<Cmd>Yazi toggle<CR>",
       desc = "Resume the last Yazi session",
     },
   },

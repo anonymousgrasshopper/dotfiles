@@ -5,7 +5,7 @@ return {
     opts = {
       auto_resize_height = true,
       preview = {
-        win_height = 10,
+        win_height = 9,
       },
       filter = {
         fzf = {
@@ -64,7 +64,7 @@ return {
           W = "󰀪 ",
           I = " ",
           N = " ",
-          H = "󰌶 ",
+          H = " ",
         },
       }
     end,

@@ -81,7 +81,7 @@ return {
         vim.keymap.set("n", "<leader>tw", gitsigns.toggle_word_diff, { desc = "Toggle word diff" })
 
         -- Text object
-        vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<cr>", { desc = "inner hunk" })
+        vim.keymap.set({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "inner hunk" })
       end,
     },
   },
@@ -94,7 +94,7 @@ return {
       "DiffviewRefresh",
     },
     keys = {
-      { "<leader>gv", "<cmd>DiffviewOpen<cr>", desc = "Open diff view" },
+      { "<leader>gv", "<Cmd>DiffviewOpen<CR>", desc = "Open diff view" },
     },
     opts = {
       signs = {

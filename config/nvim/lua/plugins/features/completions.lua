@@ -189,7 +189,7 @@ return {
       vim.keymap.set(
         "n",
         "<Leader><leader>s",
-        "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<cr>",
+        "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>",
         { desc = "Reload snippets" }
       )
     end,

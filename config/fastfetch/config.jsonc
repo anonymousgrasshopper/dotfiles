@@ -78,18 +78,18 @@
       "keyColor": "green"
     },
     {
+      "type": "wm",
+      "key": " WM",
+      "keyColor": "blue"
+    },
+    {
       "type": "shell",
       "key": "│ ├ ",
-      "keyColor": "green"
+      "keyColor": "blue"
     },
     {
       "type": "editor",
       "key": "└ └ ",
-      "keyColor": "green"
-    },
-    {
-      "type": "wm",
-      "key": " WM",
       "keyColor": "blue"
     },
     {

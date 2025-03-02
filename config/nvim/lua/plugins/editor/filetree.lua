@@ -2,7 +2,7 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
   keys = {
-    { "\\", "<cmd>Neotree toggle<cr>", desc = "Toggle file explorer" },
+    { "\\", "<Cmd>Neotree toggle<CR>", desc = "Toggle file explorer" },
   },
   cmd = {
     "Neotree",
@@ -137,7 +137,7 @@ return {
         },
         mappings = {
           ["<2-LeftMouse>"] = "open",
-          ["<cr>"] = "open",
+          ["<CR>"] = "open",
           ["<ESC>"] = "cancel", -- close preview or floating neo-tree window
           ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
           ["l"] = "focus_preview",
@@ -370,10 +370,21 @@ return {
           event = "neo_tree_buffer_enter",
           handler = function()
             vim.cmd([[
-                highlight! Cursor blend=100
-                setlocal winhighlight=Normal:NormalDark,WinSeparator:NeoTreeWinSeparator
-                setlocal sidescrolloff=0
-              ]])
+              highlight! cursor blend=100
+              setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
+              setlocal sidescrolloff=0
+            ]])
+          end,
+        },
+        {
+          event = "neo_tree_popup_buffer_enter",
+          handler = function()
+            vim.opt_local.winhighlight = "normal:NormalDark"
+            vim.cmd([[
+              highlight! cursor blend=100
+              setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
+              setlocal sidescrolloff=0
+            ]])
           end,
         },
         {

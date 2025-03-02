@@ -9,17 +9,15 @@ vim.api.nvim_create_autocmd("WinLeave", {
 vim.api.nvim_create_autocmd("WinEnter", {
   callback = function()
     local excluded_filetypes = { "alpha", "neo-tree-popup" }
-    if not vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
-      vim.opt_local.cursorline = true
-    end
+    if not vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then vim.opt_local.cursorline = true end
   end,
 })
 
--- hide cursor in chosen filetypes
+-- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
     local enabled_filetypes =
-      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi" }
+      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
     if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
       vim.cmd("hi Cursor blend=100")
     else
@@ -35,12 +33,25 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   callback = function() vim.cmd("hi Cursor blend=0") end,
 })
 
+-- toggle some options in terminals and darken their background
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    if vim.g.code_action_preview then
+      vim.g.code_action_preview = nil
+      return
+    end
+    if vim.bo.filetype == "yazi" then return end
+
+    vim.opt_local.cursorline = false
+    vim.opt_local.winhighlight = "Normal:TerminalBackground"
+    vim.cmd("startinsert")
+  end,
+})
+
 -- Auto create dir when saving a file if some of the intermediate directories do not exist
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function(event)
-    if event.match:match("^%w%w+:[\\/][\\/]") then
-      return
-    end
+    if event.match:match("^%w%w+:[\\/][\\/]") then return end
     local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
@@ -51,24 +62,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "diff", "tutor", "lspinfo", "grug-far", "CompetiTest", "checkhealth" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-  end,
-})
-
--- Fix conceallevel for json files and add a comma at the end of lines automatically
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "json", "jsonc", "json5" },
-  callback = function()
-    vim.opt_local.conceallevel = 0
-    vim.keymap.set("n", "o", function()
-      local line = vim.api.nvim_get_current_line()
-      local should_add_comma = string.find(line, "[^,{[]$")
-      if should_add_comma then
-        return "A,<cr>"
-      else
-        return "o"
-      end
-    end, { buffer = true, expr = true })
+    vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
   end,
 })
 
@@ -86,15 +80,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].last_loc then
-      return
-    end
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].last_loc then return end
     vim.b[buf].last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
+    if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
   end,
 })
 

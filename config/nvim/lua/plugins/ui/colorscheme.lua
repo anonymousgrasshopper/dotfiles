@@ -21,12 +21,14 @@ return {
           PmenuSbar = { bg = theme.ui.bg_m1 },
           PmenuThumb = { bg = theme.ui.bg_p2 },
 
+          Search = { fg = palette.oldWhite, bg = palette.waveBlue2 },
+
           WinSeparator = { fg = palette.sumiInk6 },
+
+          PanelHeading = { fg = palette.autumnYellow, bg = palette.sumiInk4 },
 
           NormalDark = { bg = palette.sumiInk1 },
           TerminalBackground = { bg = palette.sumiInk0 },
-
-          PanelHeading = { fg = palette.autumnYellow, bg = palette.sumiInk4 },
 
           -- plugins
           MarkviewHeading1 = { fg = "#FF5D62" },
@@ -46,18 +48,23 @@ return {
           MarkviewCheckboxChecked = { fg = "#98BB6C" },
           MarkviewCheckboxUnchecked = { fg = "#727169" },
 
-          LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-          MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-
           IlluminatedWordText = { bold = true },
           IlluminatedWordRead = { bold = true },
           IlluminatedWordWrite = { bold = true },
 
           NeoTreeWinSeparator = { fg = palette.sumiInk3 },
+          NeoTreePopupWinSeparator = { fg = palette.sumiInk6, bg = palette.sumiInk3 },
           NeoTreeFileIcon = { fg = palette.oldWhite },
+
+          HlSearchLens = { fg = palette.fujiGray, bg = "none" },
+          HlSearchLensNear = { fg = palette.oldWhite, bg = palette.waveBlue2 },
+          HlSearchLensNearReverted = { fg = palette.waveBlue2, bg = "none" },
 
           GitConflictIncoming = { bg = palette.waveBlue2 },
           GitConflictCurrent = { bg = palette.sumiInk6 },
+
+          LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
+          MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 
           TelescopePromptPrefix = { fg = palette.autumnYellow, bg = palette.sumiInk3 },
 

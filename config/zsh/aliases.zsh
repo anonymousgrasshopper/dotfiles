@@ -3,18 +3,18 @@
 ###################################################################################################
 
 # shortcuts
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
+alias    ..="cd .."
+alias   ...="cd ../.."
+alias  ....="cd ../../.."
 alias .....="cd ../../../.."
-alias q="exit"
-alias c="clear"
-alias -- +x="chmod +x"
-alias rmpkg="sudo pacman -Rns"
-alias sypkg="sudo pacman -S"
-alias fetch="fastfetch"
-alias lg="lazygit"
-alias py="python3"
+alias     q="exit"
+alias     c="clear"
+alias  -- +x="chmod u+x"
+alias  rmpkg="sudo pacman -Rns"
+alias  sypkg="sudo pacman -S"
+alias  fetch="fastfetch"
+alias     lg="lazygit"
+alias    py="python3"
 
 # miscellaneous
 cfd() {
@@ -23,21 +23,20 @@ cfd() {
 alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
+
 # CLI tools default options
-alias rm="rm -i"
+alias  rm="rm -i"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
-alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
-# 󱞽 not in fzf.conf because it would also apply to fzf-tab and always enable its preview
 
 # CLI tools replacements
 alias cat="bat"
 alias top="btop"
 
-alias ls="eza --icons=always --group-directories-first --no-quotes"
-alias ll="eza --icons=always --group-directories-first --no-quotes -lh"
-alias llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
-alias lla="eza --icons=always --group-directories-first --no-quotes -alh"
+alias   ls="eza --icons=always --group-directories-first --no-quotes"
+alias    l="eza --icons=always --group-directories-first --no-quotes -a"
+alias   ll="eza --icons=always --group-directories-first --no-quotes -alh"
+alias  llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
 alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
@@ -46,8 +45,9 @@ nfd() {
   nvim $(fzf -m --select-1 --exit-0 --query="$1")
 }
 alias vim="nvim"
-alias nv="nvim"
-alias v="nvim"
+alias  nv="nvim"
+alias   v="nvim"
+
 
 # Tmux
 alias tls="tmux list-session"
@@ -61,7 +61,7 @@ tns() {
   fi
 }
 tas() {
-  [[ -z TMUX ]] && command="switch-client" || command="attach-session"
+  [[ -n "$TMUX" ]] && command="switch-client" || command="attach-session"
   tmux $command -t$(tmux list-session | fzf --preview='' --select-1 --exit-0 --query="$1" | sed 's/:.*//')
 }
 tmux_choose_pane() {
@@ -82,6 +82,7 @@ tmux_choose_pane() {
       tmux select-window -t $target_window
   fi
 }
+
 
 # help command using bat
 help() {

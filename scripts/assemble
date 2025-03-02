@@ -1,0 +1,6 @@
+#!/bin/bash
+nasm -f elf64 -o "${1}.o" "${1}.asm"
+if [[ -f "${1}.o" ]]; then
+  ld -o "${1}.exe" "${1}.o"
+  rm "${1}.o"
+fi

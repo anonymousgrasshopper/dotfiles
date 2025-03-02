@@ -2,7 +2,7 @@ return {
   "RRethy/vim-illuminate",
   event = { "BufReadPre", "BufNewFile" },
   keys = {
-    { "<leader>oi", "<cmd>IlluminateToggle<cr>", "Toggle Illuminate" },
+    { "<leader>oi", "<Cmd>IlluminateToggle<CR>", "Toggle Illuminate" },
   },
   config = function()
     require("illuminate").configure({

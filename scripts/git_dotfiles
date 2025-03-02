@@ -4,11 +4,14 @@ RED='\033[0;31m'
 
 # list of configs and scripts to copy
 configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
-scripts=("codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
+scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
-cd ~/.config/dotfiles
+cd ~/.config/dotfiles || {
+  echo "${RED}Cloning the github repository failed. Check you internet connection and try again"
+  exit
+}
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do

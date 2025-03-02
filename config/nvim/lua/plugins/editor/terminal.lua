@@ -1,19 +1,3 @@
-vim.api.nvim_create_autocmd("TermOpen", {
-  callback = function()
-    if vim.g.code_action_preview then
-      vim.g.code_action_preview = false
-      return
-    end
-    if vim.bo.filetype ~= "yazi" then
-      vim.opt_local.number = false
-      vim.opt_local.cursorline = false
-      vim.opt_local.relativenumber = false
-      vim.opt_local.winhighlight = "Normal:TerminalBackground"
-      vim.cmd("startinsert")
-    end
-  end,
-})
-
 return {
   "akinsho/toggleterm.nvim",
   version = "*",

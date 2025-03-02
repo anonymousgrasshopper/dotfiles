@@ -1,7 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
-    cmd = { "Mason" },
+    cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonLog", "MasonUninstallAl" },
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
     },
@@ -25,6 +25,7 @@ return {
           "lua_ls",
           "bashls",
           "texlab",
+          "asm_lsp",
         },
       })
 
@@ -51,6 +52,7 @@ return {
         "shellcheck",
         "shfmt",
         "texlab",
+        "asm_lsp",
       },
     },
   },

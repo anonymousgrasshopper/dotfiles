@@ -15,8 +15,8 @@ vim.opt.fillchars = {
 -- folding
 vim.opt.foldlevel      = 99     -- only close folds with at least 100 lines
 vim.opt.foldlevelstart = 99     -- no folds closed upon entering buffer
-vim.opt.foldmethod     = "expr" -- use treesitter to determine the level of each line
-vim.opt.foldexpr       = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod     = "manual" -- use treesitter to determine the level of each line
+-- vim.opt.foldexpr       = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldcolumn     = "0"    --size of column for folding indications
 vim.opt.foldlevelstart = 99
 vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
@@ -29,6 +29,7 @@ vim.opt.scrolloff      = 5      -- have at least this number of lines above and 
 vim.opt.sidescrolloff  = 10     -- have at least this number of columns around your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current line
+-- vim.opt.statuscolumn   = "%@SignCb@%s%=%T%@NumCb@%l│%T"
 
 -- line wrapping and auto-commenting
 vim.opt.wrap           = false  -- enable/disable line wrapping
@@ -77,14 +78,13 @@ vim.opt.ruler          = false  -- default one
 -- mouse
 vim.opt.mouse          = "nvi"  -- disable mouse for command mode
 vim.cmd.aunmenu({ "PopUp.How-to\\ disable\\ mouse" })
-vim.cmd.aunmenu({ "PopUp.-1-" })
+vim.cmd.aunmenu({ "PopUp.-2-" })
 
 -- search settings
-vim.opt.ignorecase     = true   -- ignore case when searching
 vim.opt.smartcase      = true   -- if mixed cases are used, then the search is case-sensitive
 
 -- colors
-vim.opt.termguicolors  = true   -- requires a true colors terminal
+vim.opt.termguicolors  = true   -- requires a true colors terminal emulator
 vim.opt.background     = "dark" -- colorschemes that can be light or dark will be made dark
 
 -- cursor

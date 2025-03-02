@@ -64,7 +64,7 @@ return {
     ),
     { condition = tex.in_text * line_begin }
   ),
-  s({ "ls", dscr = "unordered list", snippetType = "autosnippet" },
+  s({ trig = "ls", dscr = "unordered list", snippetType = "autosnippet" },
     {
       t({ "\\begin{itemize}", "\t\\item " }),
       i(1),
@@ -73,7 +73,7 @@ return {
     },
     { condition = tex.in_text * line_begin }
   ),
-  s({trig="enn", dscr = "orderdered list", snippetType="autosnippet"},
+  s({ trig = "enn", dscr = "orderdered list", snippetType="autosnippet" },
     fmta(
       [[
       \begin{enumerate}

@@ -23,14 +23,14 @@ return {
     {
       "<localleader>dbg",
       function()
-        return "<cmd>silent !codelldb_stdio_redirection "
+        return "<Cmd>silent !codelldb_stdio_redirection "
           .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
-          .. "<cr>"
-          .. "<cmd>silent !nohup clang++ -fstandalone-debug --debug "
+          .. "<CR>"
+          .. "<Cmd>silent !nohup clang++ -fstandalone-debug --debug "
           .. vim.fn.fnamemodify(vim.fn.expand("%"), ":S")
           .. " -o "
           .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
-          .. ".exe &<cr><cr>"
+          .. ".exe &<CR><CR>"
       end,
       ft = "cpp",
       expr = true,
@@ -39,7 +39,7 @@ return {
     {
       "<localleader>rm",
       function()
-        return "<cmd>silent !remove_codelldb_stdio_redirection " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S") .. "<cr><cr>"
+        return "<Cmd>silent !remove_codelldb_stdio_redirection " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S") .. "<CR><CR>"
       end,
       ft = "cpp",
       expr = true,
@@ -57,7 +57,6 @@ return {
     { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
     { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
     { "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
-    { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
     { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
     { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
     { "<leader>dj", function() require("dap").down() end, desc = "Down" },

@@ -2,9 +2,9 @@ return {
   "anonymousgrasshopper/auto-session",
   event = { "BufReadPre", "BufNewFile" },
   keys = {
-    { "<leader>rs", "<cmd>SessionRestore<cr>", desc = "Restore session for cwd" },
-    { "<leader>ss", "<cmd>SessionSearch<cr>", desc = "Search sessions" },
-    { "<leader>sa", "<cmd>SessionToggleAutoSave<cr>", desc = "Toggle session autosave" },
+    { "<leader>rs", "<Cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
+    { "<leader>ss", "<Cmd>SessionSearch<CR>", desc = "Search sessions" },
+    { "<leader>sa", "<Cmd>SessionToggleAutoSave<CR>", desc = "Toggle session autosave" },
   },
   cmd = {
     "SessionRestore",

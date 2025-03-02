@@ -1,19 +1,23 @@
 #!/bin/bash
 
 if [[ -d $1 ]]; then
-  eza -1alh --group-directories-first --color=always --icons "$1"
+  eza -1alh --git --group-directories-first --color=always --icons "$1"
 elif [[ -f $1 ]]; then
-  if [[ "$1" =~ \.png$ || "$1" =~ \.jpg$ || "$1" =~ \.gif$ ]]; then
+  if [[ "$1" = *.png || "$1" = *.jpg || $1 = *.gif ]]; then
     kitten icat "$1" 2>/dev/null
-  elif [[ "$1" =~ \.md$ ]]; then
+  elif [[ "$1" = *.md ]]; then
     glow -s dark "$1"
+  elif file "$1" | grep --silent "\-bit"; then
+    hexyl "$1"
   else
     bat --number --color=always "$1"
   fi
-elif [[ -n "$1" ]]; then
+elif [[ -n $(printenv "$1") ]]; then
   if [[ "$1" == PATH ]]; then
     echo -e "${PATH//:/\\n}"
   else
     printenv "$1"
   fi
+else
+  colorscript --exec pacman 2>/dev/null
 fi

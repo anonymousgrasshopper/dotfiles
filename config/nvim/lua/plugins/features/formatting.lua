@@ -50,15 +50,11 @@ return {
     },
     format_on_save = function(bufnr)
       -- Disable with a global or buffer-local variable
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-        return
-      end
+      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
 
-      local disabled_paths = { "nvim/snippets", "nvim/lua/config/options.lua", ".zshrc" }
+      local disabled_paths = { "nvim/snippets", "nvim/lua/config/options.lua", "zsh/.zshrc", "zsh/aliases.zsh" }
       for _, disabled_path in ipairs(disabled_paths) do
-        if string.match(vim.api.nvim_buf_get_name(0), disabled_path) then
-          return
-        end
+        if string.match(vim.api.nvim_buf_get_name(0), disabled_path) then return end
       end
 
       return { timeout_ms = 500, lsp_format = "fallback" }

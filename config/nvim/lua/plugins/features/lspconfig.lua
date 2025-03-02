@@ -1,11 +1,34 @@
-local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl, priority = 15 })
-end
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅚 ",
+      [vim.diagnostic.severity.WARN] = "󰀪 ",
+      [vim.diagnostic.severity.HINT] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+    },
+    texthl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+      [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+    },
+  },
+  virtual_text = false,
+  severity_sort = true,
+})
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or "rounded"
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
 
 return {
   {
@@ -16,15 +39,34 @@ return {
       { "rachartier/tiny-inline-diagnostic.nvim", opts = {} },
     },
     config = function()
-      vim.diagnostic.config({ virtual_text = false })
       local lspconfig = require("lspconfig")
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
+      }
 
-      lspconfig.clangd.setup({})
+      lspconfig.clangd.setup({
+        capabilities = capabilities,
+      })
 
-      lspconfig.texlab.setup({})
+      lspconfig.texlab.setup({
+        capabilities = capabilities,
+      })
 
       lspconfig.bashls.setup({
         filetypes = { "bash", "sh", "zsh" },
+        capabilities = capabilities,
+      })
+
+      lspconfig.asm_lsp.setup({
+        settings = {
+          default_config = {
+            assembler = "nasm",
+            instruction_set = "x86-64",
+          },
+        },
+        capabilities = capabilities,
       })
 
       lspconfig.lua_ls.setup({
@@ -56,14 +98,20 @@ return {
         settings = {
           Lua = {},
         },
+        capabilities = capabilities,
       })
 
-      vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, { desc = "Hover documentation", buffer = bufnr })
-      vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, { desc = "Go to definition", buffer = bufnr })
-      vim.keymap.set("n", "<leader>dec", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = bufnr })
-      vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = bufnr })
-      vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = bufnr })
-      -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = bufnr })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, { desc = "Hover documentation", buffer = bufnr })
+          vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, { desc = "Go to definition", buffer = bufnr })
+          vim.keymap.set("n", "<leader>dec", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = bufnr })
+          vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = bufnr })
+          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = bufnr })
+          -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = bufnr })
+        end,
+      })
     end,
   },
   {
@@ -83,7 +131,7 @@ return {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- Border characters of the floating window
       opacity = 20, -- 0-100 opacity level of the floating window where 100 is fully transparent.
       resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-      post_open_hook = function() vim.keymap.set("n", "<esc>", "<cmd>quit<cr>", { buffer = true }) end,
+      post_open_hook = function() vim.keymap.set("n", "<esc>", "<Cmd>quit<CR>", { buffer = true }) end,
       focus_on_open = true, -- Focus the floating window when opening it.
       dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
       force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
@@ -117,61 +165,29 @@ return {
   },
   {
     "kosayoda/nvim-lightbulb",
+    event = "LspAttach",
     opts = {
-      -- Priority of the lightbulb for all handlers except float.
-      priority = 5,
+      priority = 5, -- Priority of the lightbulb for all handlers except float.
       hide_in_unfocused_buffer = true,
       link_highlights = true,
       validate_config = "never",
       code_lenses = true,
-      sign = {
-        enabled = true,
-        text = " ",
-        lens_text = " ",
-      },
-      virtual_text = {
-        enabled = false,
-        text = " ",
-        lens_text = " ",
-        pos = "eol",
-      },
-      float = {
-        enabled = false,
-        text = " ",
-        lens_text = " ",
-        win_opts = {
-          focusable = false,
-        },
-      },
-      status_text = {
-        enabled = false,
-        text = " ",
-        lens_text = " ",
-        text_unavailable = "",
-      },
-      number = {
-        enabled = false,
-      },
-      line = {
-        enabled = false,
-      },
-      autocmd = {
-        enabled = true,
-        updatetime = 200,
-        events = { "CursorHold", "CursorHoldI" },
-      },
-    },
-    filter = function(client_name, result)
-      if client_name == "lua_ls" then
-        if string.match(result, "change to parameter") then
-          print(result)
+      sign = { enabled = false, text = " ", lens_text = " " },
+      virtual_text = { enabled = false, text = " ", lens_text = " ", pos = "eol" },
+      float = { enabled = false, text = " ", lens_text = " ", win_opts = { focusable = false } },
+      status_text = { enabled = true, text = " ", lens_text = " ", text_unavailable = "" },
+      number = { enabled = false },
+      line = { enabled = false },
+      autocmd = { enabled = true, updatetime = 200, events = { "CursorHold", "CursorHoldI" } },
+      filter = function(client_name, code_action)
+        local ignored_patterns = {
+          ["lua_ls"] = { "change to parameter" },
+        }
+        if ignored_patterns[client_name] ~= nil and vim.tbl_contains(ignored_patterns[client_name], code_action.title) then
           return false
         end
-
-        print(result)
         return true
-      end
-      print(client_name)
-    end,
+      end,
+    },
   },
 }

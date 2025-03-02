@@ -3,7 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   cmd = { "Undotree" },
   keys = {
-    { "<leader>tr", "<cmd>UndotreeToggle<cr>", desc = "Toggle UndoTree" },
+    { "<leader>tr", "<Cmd>UndotreeToggle<CR>", desc = "Toggle UndoTree" },
   },
   config = function()
     vim.g.undotree_HelpLine = 0

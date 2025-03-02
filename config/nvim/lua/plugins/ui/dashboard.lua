@@ -44,12 +44,12 @@ return {
 
     -- Set menu
     dashboard.section.buttons.val = {
-      dashboard.button("n", "   New File", "<cmd>ene<cr>"),
-      dashboard.button("e", "   Toggle file explorer", "<cmd>Neotree toggle<cr>"),
-      dashboard.button("f", "󰱼   Find File", "<cmd>Telescope find_files<cr>"),
-      dashboard.button("g", "   Find Word", "<cmd>Telescope live_grep<cr>"),
-      dashboard.button("r", "󰁯   Restore Session For Current Directory", "<cmd>SessionRestore<cr>"),
-      dashboard.button("q", "   Quit Neovim", "<cmd>qa<cr>"),
+      dashboard.button("n", "   New File", "<Cmd>ene<CR>"),
+      dashboard.button("e", "   Toggle file explorer", "<Cmd>Neotree toggle<CR>"),
+      dashboard.button("f", "󰱼   Find File", "<Cmd>Telescope find_files<CR>"),
+      dashboard.button("g", "   Find Word", "<Cmd>Telescope live_grep<CR>"),
+      dashboard.button("r", "󰁯   Restore Session For Current Directory", "<Cmd>SessionRestore<CR>"),
+      dashboard.button("q", "   Quit Neovim", "<Cmd>qa<CR>"),
     }
 
     alpha.setup(dashboard.opts)

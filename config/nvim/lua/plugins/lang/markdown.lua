@@ -1,15 +1,6 @@
-vim.api.nvim_create_autocmd("InsertEnter", { -- doesn't work on FileType
-  callback = function()
-    if vim.bo.filetype == "markdown" then
-      vim.cmd("source $VIMRUNTIME/syntax/tex.vim")
-    end
-  end,
-})
-
 return {
   {
     "OXY2DEV/markview.nvim",
-    branch = "dev",
     ft = "markdown",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -38,7 +29,7 @@ return {
           },
         },
         latex = {
-          enable = true,
+          enable = true, -- overrides vimtex's conceal, but disabling it results in the latex being hidden
         },
         preview = {
           icon_provider = "devicons",

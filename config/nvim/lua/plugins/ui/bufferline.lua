@@ -5,8 +5,8 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   opts = function()
-    vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-    vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<cr>", { desc = "Next buffer" })
+    vim.keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+    vim.keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Next buffer" })
     return {
       options = {
         sort_by = "insert_after_current",

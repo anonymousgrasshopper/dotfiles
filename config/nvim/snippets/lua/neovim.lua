@@ -33,7 +33,7 @@ return {
     fmta([[
         vim.api.nvim_create_autocmd(<>, {<>
           callback = function()
-            <>
+          <>
           end
         })
       ]],
@@ -47,7 +47,7 @@ return {
           { t({ "", ("\tpattern = \"")}), i(1), t("\",") },
           { t("") },
         }),
-        i(3),
+        d(3, get_visual),
       }
     ),
     { condition = not_in_string_comment * line_begin }
@@ -90,9 +90,15 @@ return {
   ),
   s({ trig = "<cmd>", dscr = "Neovim keymap command", wordTrig = false, snippetType = "autosnippet" },
     {
-      t("<cmd>"),
+      t("<Cmd>"),
       d(1, get_visual),
-      t("<cr>"),
+      t("<CR>"),
     }
+  ),
+  s({ trig = "vks", dscr = "Create a keymap", snippetType = "autosnippet" },
+    {
+      t('vim.keymap.set("'), i(1, "n"), t('", "'), i(2, "LHS"), t('", '), i(3, '"RHS"'), t(', { desc = "'), i(4), t('" })')
+    },
+    { condition = not_in_string_comment * line_begin }
   ),
 }

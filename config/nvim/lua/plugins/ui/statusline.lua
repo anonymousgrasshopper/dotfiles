@@ -159,16 +159,10 @@ return {
       },
     }
     local git_root = function()
-      if vim.b.lualine_git_dir then
-        return vim.b.lualine_git_dir
-      end
+      if vim.b.lualine_git_dir then return vim.b.lualine_git_dir end
       local gitdir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.getcwd()))
       local isgitdir = vim.fn.matchstr(gitdir, "^fatal:.*") == ""
-      if not isgitdir then
-        vim.b.lualine_git_dir = "git"
-      else
-        vim.b.lualine_git_dir = vim.trim(vim.fn.fnamemodify(gitdir, ":t"))
-      end
+      vim.b.lualine_git_dir = isgitdir and vim.trim(vim.fn.fnamemodify(gitdir, ":t")) or "git"
       return vim.b.lualine_git_dir
     end
 
@@ -254,7 +248,6 @@ return {
         },
       },
       extensions = {
-        help,
         git,
         aerial,
         "man",
