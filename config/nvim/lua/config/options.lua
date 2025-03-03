@@ -71,9 +71,10 @@ vim.opt.updatetime     = 250  -- delay for LSP pop-up windows to appear
 vim.opt.completeopt    = "menu,menuone,noselect"
 
 -- statusline
-vim.opt.laststatus     = 3      -- since we have a statusline,
-vim.opt.showmode       = false  -- we want to disable the
-vim.opt.ruler          = false  -- default one
+vim.opt.laststatus     = 3
+vim.opt.showmode       = false
+vim.opt.ruler          = false
+vim.opt.cmdheight      = 0
 
 -- mouse
 vim.opt.mouse          = "nvi"  -- disable mouse for command mode

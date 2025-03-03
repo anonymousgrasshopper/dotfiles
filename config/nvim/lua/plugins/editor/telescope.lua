@@ -4,6 +4,9 @@ return {
     "Telescope",
   },
   keys = {
+    { "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
+    { "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
+
     { "<leader>ff", function() require("telescope.builtin").find_files({ hidden = true }) end, desc = "Find files in cwd" },
     { "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden = true }) end, desc = "Find recent files" },
 
@@ -18,8 +21,13 @@ return {
     { "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search buffer's diagnostics" },
     { "<leader>sl", function() require("telescope.builtin").lsp_references() end, desc = "Search LSP references" },
 
-    { "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
-    { "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
+    { "<localleader>sr", function() require("telescope.builtin").lsp_references() end, desc = "Search references" },
+    { "<localleader>si", function() require("telescope.builtin").lsp_incoming_calls() end, desc = "search incoming_calls" },
+    { "<localleader>so", function() require("telescope.builtin").lsp_outgoing_calls() end, desc = "Search outgoing calls" },
+    { "<localleader>ss", function() require("telescope.builtin").lsp_document_symbols() end, desc = "Search document symbols" },
+    { "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
+    { "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
+    { "<localleader>sd", function() require("telescope.builtin").lsp_diagnostics() end, desc = "Search diagnostics" },
   },
   branch = "0.1.x",
   dependencies = {
@@ -42,9 +50,7 @@ return {
           table.insert(wins, 1, vim.api.nvim_get_current_win())
           for _, win in ipairs(wins) do
             local buf = vim.api.nvim_win_get_buf(win)
-            if vim.bo[buf].buftype == "" then
-              return win
-            end
+            if vim.bo[buf].buftype == "" then return win end
           end
           return 0
         end,

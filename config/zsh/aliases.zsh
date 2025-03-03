@@ -28,6 +28,7 @@ alias path='echo -e ${PATH//:/\\n}' # human-readable path
 alias  rm="rm -i"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
+alias  fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
 
 # CLI tools replacements
 alias cat="bat"

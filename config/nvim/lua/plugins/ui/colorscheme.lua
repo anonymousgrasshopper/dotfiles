@@ -1,3 +1,26 @@
+local vim_enter_early_redraw = function()
+  -- Skip if we already entered vim
+  if vim.v.vim_did_enter == 1 then return end
+
+  local buf = vim.api.nvim_get_current_buf()
+
+  -- Try to guess the filetype (may change later on during Neovim startup)
+  local ft = vim.filetype.match({ buf = buf })
+  if ft then
+    -- Add treesitter highlights and fallback to syntax
+    local lang = vim.treesitter.language.get_lang(ft)
+
+    -- disable treesitter for some langs
+    if vim.tbl_contains({ "tex" }, lang) then return end
+
+    if not (lang and pcall(vim.treesitter.start, buf, lang)) then vim.bo[buf].syntax = ft end
+
+    -- Trigger early redraw
+    vim.opt.statusline = '%#StatusLineBlue# NORMAL %* %F%=%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%l:%M")} '
+    vim.cmd([[redraw]])
+  end
+end
+
 return {
   "rebelot/kanagawa.nvim",
   priority = 1000,
@@ -26,6 +49,12 @@ return {
           WinSeparator = { fg = palette.sumiInk6 },
 
           PanelHeading = { fg = palette.autumnYellow, bg = palette.sumiInk4 },
+
+          StatusLine = { fg = palette.springViolet2, bg = palette.sumiInk4 },
+          StatusLineBlue = { fg = palette.sumiInk4, bg = palette.crystalBlue },
+          StatusLineGray = { fg = palette.springViolet2, bg = palette.sumiInk6 },
+          StatusLineSeparatorBlue = { fg = palette.crystalBlue, bg = palette.sumiInk6 },
+          StatusLineSeparatorGray = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
 
           NormalDark = { bg = palette.sumiInk1 },
           TerminalBackground = { bg = palette.sumiInk0 },
@@ -83,5 +112,7 @@ return {
       },
     })
     vim.cmd("colorscheme kanagawa-wave")
+
+    vim_enter_early_redraw()
   end,
 }
