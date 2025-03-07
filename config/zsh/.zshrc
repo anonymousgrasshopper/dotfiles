@@ -30,7 +30,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 
-# Completions
+# completions
 zstyle ':completion:*'                 matcher-list "m:{a-z}={A-Za-z}"
 zstyle ':completion:*'                 complete-options true
 zstyle ':completion:*'                 menu no
@@ -111,7 +111,7 @@ function zle-keymap-select() {
         _shape=6 # insert mode: beam
       fi
       ;;
-    viopp) _shape=0 ;; # operaor pending mode: blinking block
+    viopp) _shape=0 ;; # operator pending mode: blinking block
     visual) _shape=2 ;; # visual mode: block
   esac
   printf $'\e[%d q' ${_shape}
