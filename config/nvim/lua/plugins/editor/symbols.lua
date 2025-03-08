@@ -85,7 +85,17 @@ return {
       { "<leader>a", "<Cmd>AerialToggle!<CR>", desc = "Toggle code outline window" },
     },
     cmd = {
+      "AerialToggle",
+      "AerialOpen",
+      "AerialOpenAll",
+      "AerialClose",
       "AerialCloseAll",
+      "AerialNext",
+      "AerialPrev",
+      "AerialGo",
+      "AerialNavToggle",
+      "AerialNavOpen",
+      "AerialNavClose",
     },
     opts = function()
       icons.lua = { Package = icons.Control }
@@ -124,7 +134,7 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    lazy = false, -- this plugin lazy loads itself
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
     },

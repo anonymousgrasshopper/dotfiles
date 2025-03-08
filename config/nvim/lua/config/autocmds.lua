@@ -2,7 +2,7 @@
 --------------------------------------------- AUTOCMDS  -------------------------------------------
 ---------------------------------------------------------------------------------------------------
 
--- show the cursorline in the active buffer only, and hide it in chosen filetypes
+-- show the cursorline in the active buffer only, and hide for some filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
   callback = function() vim.opt_local.cursorline = false end,
 })
@@ -16,8 +16,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
-    local enabled_filetypes =
-      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
+    local enabled_filetypes = { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
     if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
       vim.cmd("hi Cursor blend=100")
     else
@@ -96,39 +95,26 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = true
 
     vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
-    vim.keymap.set(
-      "i",
-      "<C-r>",
-      "<c-g>u<Esc>[szg`]a<c-g>u",
-      { desc = "Add last word marked as misspelled to dictionnary", buffer = true }
-    )
+    vim.keymap.set("i", "<C-r>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
   end,
 })
 
 -- type 's ' in the command line to subsitute globally with very magic mode
-local function s_abbreviation()
-  local cmd_type = vim.fn.getcmdtype()
-  local cmd_line = vim.fn.getcmdline()
-
-  if cmd_type == ":" then
-    if cmd_line == "s " then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
-    elseif cmd_line == "'<,'>s " then
-      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
-    else
-      local match = string.match(cmd_line, "(%d+,%s*%d+%s*s) ")
-      if match then
-        vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true),
-          "n",
-          false
-        )
-      end
-    end
-  end
-end
-
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   pattern = "*",
-  callback = s_abbreviation,
+  callback = function()
+    local cmd_type = vim.fn.getcmdtype()
+    local cmd_line = vim.fn.getcmdline()
+
+    if cmd_type == ":" then
+      if cmd_line == "s " then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+      elseif cmd_line == "'<,'>s " then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+      else
+        local match = string.match(cmd_line, "(%d+,%s*%d+%s*s) ")
+        if match then vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true), "n", false) end
+      end
+    end
+  end,
 })

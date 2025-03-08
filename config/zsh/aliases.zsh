@@ -90,6 +90,11 @@ help() {
   "$@" --help 2>&1 | bat --plain --language=help
 }
 
+# far /path/to/directory/ "regexp" "replacement"
+far() {
+  sed -i -e "s@$2@$3@g" $(rg "$2" "$1" -l --fixed-strings)
+}
+
 # wrapper around yazi to change cwd when exiting it
 function x() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd

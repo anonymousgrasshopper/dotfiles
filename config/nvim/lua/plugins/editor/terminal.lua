@@ -1,20 +1,34 @@
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
+  cmd = {
+    "ToggleTerm",
+    "Btop",
+  },
+  keys = {
+    { "<c-_>", "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
+    {
+      "<leader>lg",
+      function()
+        require("toggleterm.terminal").Terminal
+          :new({
+            cmd = "lazygit",
+            dir = "git_dir",
+            hidden = true,
+            direction = "float",
+            display_name = "LazyGit",
+            close_on_exit = true,
+            float_opts = {
+              border = "rounded",
+            },
+          })
+          :toggle()
+      end,
+      desc = "Open LazyGit",
+    },
+  },
   opts = function()
     local Terminal = require("toggleterm.terminal").Terminal
-
-    local lazygit = Terminal:new({
-      cmd = "lazygit",
-      dir = "git_dir",
-      hidden = true,
-      direction = "float",
-      display_name = "LazyGit",
-      close_on_exit = true,
-      float_opts = {
-        border = "rounded",
-      },
-    })
 
     local btop = Terminal:new({
       cmd = "btop",
@@ -31,14 +45,9 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>lg", function() lazygit:toggle() end, {
-      desc = "Toggle LazyGit",
-      silent = true,
-    })
     vim.api.nvim_create_user_command("Btop", function() btop:toggle() end, {})
 
     return {
-      open_mapping = [[<c-\>]],
       shade_terminals = false,
       start_in_insert = true,
       autochdir = true,

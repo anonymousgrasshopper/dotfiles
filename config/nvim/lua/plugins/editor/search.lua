@@ -3,13 +3,24 @@ return {
     "kevinhwang91/nvim-hlslens",
     lazy = true,
     init = function()
+      local group = vim.api.nvim_create_augroup("hlslens lazy loading", { clear = true })
       vim.api.nvim_create_autocmd("CmdlineEnter", {
-        group = vim.api.nvim_create_augroup("hlslens loading", { clear = true }),
+        group = group,
         callback = function()
           local cmd_type = vim.fn.getcmdtype()
           if cmd_type == "/" or cmd_type == "?" then
             require("hlslens")
-            vim.api.nvim_del_augroup_by_name("hlslens loading")
+            vim.api.nvim_del_augroup_by_name("hlslens lazy loading")
+          end
+        end,
+      })
+      vim.api.nvim_create_autocmd("CmdlineChanged", {
+        group = group,
+        callback = function()
+          local cmd_text = vim.fn.getcmdline()
+          if string.match(cmd_text, "^[<>,%d%s%%']*s") then
+            require("hlslens")
+            vim.api.nvim_del_augroup_by_name("hlslens lazy loading")
           end
         end,
       })

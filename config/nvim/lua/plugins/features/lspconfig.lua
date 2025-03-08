@@ -41,10 +41,6 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-      }
 
       lspconfig.clangd.setup({
         capabilities = capabilities,
@@ -72,12 +68,7 @@ return {
       lspconfig.lua_ls.setup({
         on_init = function(client)
           local path = client.workspace_folders[1].name
-          if
-            not (string.match(vim.fn.getcwd(), "nvim"))
-            and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-          then
-            return
-          end
+          if not (string.match(vim.fn.getcwd(), "nvim")) and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")) then return end
 
           client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
             runtime = {
@@ -183,9 +174,7 @@ return {
         local ignored_patterns = {
           ["lua_ls"] = { "change to parameter" },
         }
-        if ignored_patterns[client_name] ~= nil and vim.tbl_contains(ignored_patterns[client_name], code_action.title) then
-          return false
-        end
+        if ignored_patterns[client_name] ~= nil and vim.tbl_contains(ignored_patterns[client_name], code_action.title) then return false end
         return true
       end,
     },

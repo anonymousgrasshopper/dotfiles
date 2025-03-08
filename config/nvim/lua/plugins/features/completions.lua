@@ -45,12 +45,8 @@ return {
         },
         sources = function()
           local type = vim.fn.getcmdtype()
-          if type == "/" or type == "?" then
-            return { "buffer" }
-          end
-          if type == ":" or type == "@" then
-            return { "cmdline" }
-          end
+          if type == "/" or type == "?" then return { "buffer" } end
+          if type == ":" or type == "@" then return { "cmdline" } end
           return {}
         end,
       },
@@ -92,12 +88,8 @@ return {
             if vim.g.ui_cmdline_pos ~= nil then
               local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
               local type = vim.fn.getcmdtype()
-              if type == "/" or type == "?" then
-                return { pos[1] - 1, pos[2] }
-              end
-              if type == ":" then
-                return { pos[1], pos[2] }
-              end
+              if type == "/" or type == "?" then return { pos[1] - 1, pos[2] } end
+              if type == ":" then return { pos[1], pos[2] } end
             end
             local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
             return { vim.o.lines - height, 0 }
@@ -126,7 +118,7 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
-    event = "ModeChanged", -- instead of InsertEnter to be able to use visual snippets before having enterd insert mode
+    event = "ModeChanged", -- instead of InsertEnter to be able to use visual snippets before having entered insert mode
     version = "v2.*",
     dependencies = {
       "rafamadriz/friendly-snippets",
@@ -165,33 +157,20 @@ return {
       })
 
       vim.keymap.set({ "i", "s" }, "<M-j>", function()
-        if require("luasnip").expand_or_locally_jumpable() then
-          require("luasnip").expand_or_jump()
-        end
+        if require("luasnip").expand_or_locally_jumpable() then require("luasnip").expand_or_jump() end
       end, { silent = true })
       vim.keymap.set({ "i", "s" }, "<M-k>", function()
-        if require("luasnip").locally_jumpable(-1) then
-          require("luasnip").jump(-1)
-        end
+        if require("luasnip").locally_jumpable(-1) then require("luasnip").jump(-1) end
       end, { silent = true })
 
       vim.keymap.set({ "i", "s" }, "<M-n>", function()
-        if require("luasnip").choice_active() then
-          require("luasnip").change_choice(1)
-        end
+        if require("luasnip").choice_active() then require("luasnip").change_choice(1) end
       end, { silent = true })
       vim.keymap.set({ "i", "s" }, "<M-N>", function()
-        if require("luasnip").choice_active() then
-          require("luasnip").change_choice(-1)
-        end
+        if require("luasnip").choice_active() then require("luasnip").change_choice(-1) end
       end, { silent = true })
 
-      vim.keymap.set(
-        "n",
-        "<Leader><leader>s",
-        "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>",
-        { desc = "Reload snippets" }
-      )
+      vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>", { desc = "Reload snippets" })
     end,
   },
 }

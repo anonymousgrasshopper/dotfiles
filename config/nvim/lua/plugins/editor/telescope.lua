@@ -28,6 +28,12 @@ return {
     { "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
     { "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
     { "<localleader>sd", function() require("telescope.builtin").lsp_diagnostics() end, desc = "Search diagnostics" },
+
+    { "<leader>gfc", function() require("telescope").builtin.git_commits() end, desc = "Search git commits" },
+    { "<leader>gfB", function() require("telescope").builtin.git_bcommits() end, desc = "Search git bcommits" },
+    { "<leader>gfb", function() require("telescope").builtin.git_branches() end, desc = "Search git branches" },
+    { "<leader>gfs", function() require("telescope").builtin.git_status() end, desc = "Search git status" },
+    { "<leader>gfS", function() require("telescope").builtin.git_stash() end, desc = "Search git stash items" },
   },
   branch = "0.1.x",
   dependencies = {
