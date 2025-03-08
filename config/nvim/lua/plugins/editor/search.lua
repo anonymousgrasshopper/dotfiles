@@ -2,6 +2,10 @@ return {
   {
     "kevinhwang91/nvim-hlslens",
     lazy = true,
+    keys = {
+      { "n", "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>", desc = "Previous" },
+      { "N", "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>", desc = "Next" },
+    },
     init = function()
       local group = vim.api.nvim_create_augroup("hlslens lazy loading", { clear = true })
       vim.api.nvim_create_autocmd("CmdlineEnter", {

@@ -24,7 +24,7 @@ local vim_enter_early_redraw = function()
 
     -- setup mock statusline
     vim.opt.statusline = "%#StatusLineBlue# NORMAL %* %F %#StatusLineIconColor#%{g:statusline_filetype_icon}%="
-      .. '%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%l:%M")} '
+      .. '%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
     if not (lang and pcall(vim.treesitter.start, buf, lang)) then vim.bo[buf].syntax = ft end
 
