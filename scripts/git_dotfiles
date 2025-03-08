@@ -21,7 +21,7 @@ for config in ${configs[@]}; do
   if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
     cp -r "$HOME/.config/$config" "config"
   else
-    echo "${RED}/usr/local/bin/$script not found."
+    echo "${RED}/usr/local/bin/$config not found."
   fi
 done
 # overwrite scripts in the dotfiles repo
