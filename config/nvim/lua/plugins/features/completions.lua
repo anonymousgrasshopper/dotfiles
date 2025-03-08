@@ -43,6 +43,10 @@ return {
           ["<C-p>"] = { "select_prev", "fallback" },
           ["<C-n>"] = { "select_next", "fallback" },
         },
+        completion = {
+          menu = { auto_show = true },
+          ghost_text = { enabled = false },
+        },
         sources = function()
           local type = vim.fn.getcmdtype()
           if type == "/" or type == "?" then return { "buffer" } end
@@ -170,7 +174,12 @@ return {
         if require("luasnip").choice_active() then require("luasnip").change_choice(-1) end
       end, { silent = true })
 
-      vim.keymap.set("n", "<Leader><leader>s", "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>", { desc = "Reload snippets" })
+      vim.keymap.set(
+        "n",
+        "<Leader><leader>s",
+        "<Cmd>lua require('luasnip.loaders.from_lua').load({paths = '~/.config/nvim/snippets'})<CR>",
+        { desc = "Reload snippets" }
+      )
     end,
   },
 }

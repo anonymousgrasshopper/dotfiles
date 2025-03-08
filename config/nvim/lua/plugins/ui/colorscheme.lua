@@ -6,17 +6,29 @@ local vim_enter_early_redraw = function()
 
   -- Try to guess the filetype (may change later on during Neovim startup)
   local ft = vim.filetype.match({ buf = buf })
+
   if ft then
     -- Add treesitter highlights and fallback to syntax
     local lang = vim.treesitter.language.get_lang(ft)
 
-    -- disable treesitter for some langs
-    if vim.tbl_contains({ "tex" }, lang) then return end
+    -- language-specific plugins to load
+    if lang == "tex" then vim.cmd("source $VIMRUNTIME/syntax/tex.vim") end
+    -- other plugins to load
+    require("dropbar")
+
+    -- find filetype icon and color
+    require("nvim-web-devicons").setup()
+    local icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.fnamemodify(vim.fn.expand("%"), ":e"))
+    vim.g.statusline_filetype_icon = icon
+    vim.cmd("hi StatusLineIconColor guifg=" .. color)
+
+    -- setup mock statusline
+    vim.opt.statusline = "%#StatusLineBlue# NORMAL %* %F %#StatusLineIconColor#%{g:statusline_filetype_icon}%="
+      .. '%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%l:%M")} '
 
     if not (lang and pcall(vim.treesitter.start, buf, lang)) then vim.bo[buf].syntax = ft end
 
     -- Trigger early redraw
-    vim.opt.statusline = '%#StatusLineBlue# NORMAL %* %F%=%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%l:%M")} '
     vim.cmd([[redraw]])
   end
 end
@@ -56,16 +68,23 @@ return {
           StatusLineSeparatorBlue = { fg = palette.crystalBlue, bg = palette.sumiInk6 },
           StatusLineSeparatorGray = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
 
+          markdownH1 = { fg = "#FF5D62" },
+          markdownH2 = { fg = "#FFA066" },
+          markdownH3 = { fg = "#E6C384" },
+          markdownH4 = { fg = "#98BB6C" },
+          markdownH5 = { fg = "#7FB4CA" },
+          markdownH6 = { fg = "#957FB8" },
+
           NormalDark = { bg = palette.sumiInk1 },
           TerminalBackground = { bg = palette.sumiInk0 },
 
           -- plugins
-          MarkviewHeading1 = { fg = "#FF5D62" },
-          MarkviewHeading2 = { fg = "#FFA066" },
-          MarkviewHeading3 = { fg = "#E6C384" },
-          MarkviewHeading4 = { fg = "#98BB6C" },
-          MarkviewHeading5 = { fg = "#7FB4CA" },
-          MarkviewHeading6 = { fg = "#957FB8" },
+          MarkviewHeading1 = { link = "markdownH1" },
+          MarkviewHeading2 = { link = "markdownH2" },
+          MarkviewHeading3 = { link = "markdownH3" },
+          MarkviewHeading4 = { link = "markdownH4" },
+          MarkviewHeading5 = { link = "markdownH5" },
+          MarkviewHeading6 = { link = "markdownH6" },
 
           MarkviewBlockQuoteDefault = { fg = "#7E9CD8" },
           MarkviewBlockQuoteError = { fg = "#E82424" },

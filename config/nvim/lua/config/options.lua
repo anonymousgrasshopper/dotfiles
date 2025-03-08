@@ -15,8 +15,8 @@ vim.opt.fillchars = {
 -- folding
 vim.opt.foldlevel      = 99     -- only close folds with at least 100 lines
 vim.opt.foldlevelstart = 99     -- no folds closed upon entering buffer
-vim.opt.foldmethod     = "manual" -- use treesitter to determine the level of each line
--- vim.opt.foldexpr       = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod     = "expr" -- use treesitter to determine the level of each line
+vim.opt.foldexpr       = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldcolumn     = "0"    --size of column for folding indications
 vim.opt.foldlevelstart = 99
 vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
@@ -77,11 +77,12 @@ vim.opt.ruler          = false
 vim.opt.cmdheight      = 0
 
 -- mouse
-vim.opt.mouse          = "nvi"  -- disable mouse for command mode
+vim.opt.mouse          = "nvi"  -- disable the mouse in command mode
 vim.cmd.aunmenu({ "PopUp.How-to\\ disable\\ mouse" })
 vim.cmd.aunmenu({ "PopUp.-2-" })
 
 -- search settings
+vim.opt.ignorecase     = true
 vim.opt.smartcase      = true   -- if mixed cases are used, then the search is case-sensitive
 
 -- colors

@@ -5,6 +5,7 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
+    local lualine = require("lualine")
     local palette = require("kanagawa.colors").setup().palette
 
     local colors = {
@@ -19,9 +20,6 @@ return {
       inactive_bg = palette.sumiInk0,
       semilightgray = palette.springViolet2,
     }
-
-    local lualine = require("lualine")
-    local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
     local lualine_theme = {
       normal = {
@@ -158,6 +156,7 @@ return {
         lualine_z = { function() return " " .. os.date("%R") end },
       },
     }
+
     local git_root = function()
       if vim.b.lualine_git_dir then return vim.b.lualine_git_dir end
       local gitdir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.getcwd()))
