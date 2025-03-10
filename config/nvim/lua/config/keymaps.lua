@@ -105,7 +105,8 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("n", "<leader>os", "<Cmd>set spell!<CR>", { desc = "Toggle spell checking" })
 vim.keymap.set("n", "<leader>ow", "<Cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
 vim.keymap.set("n", "<leader>or", "<Cmd>set relativenumber!<CR>", { desc = "Toggle relative numbers" })
-vim.keymap.set("n", "<leader>od", "<Cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
+vim.keymap.set("n", "<leader>oa", "<Cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
+vim.keymap.set("n", "<leader>od", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, { desc = "Toggle diagnostics" })
 
 -- search
 vim.keymap.set("n", "n", "nzz")

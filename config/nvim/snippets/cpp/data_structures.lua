@@ -56,6 +56,20 @@ return {
     ),
     { condition = not_in_string_comment }
   ),
+  s({ trig = "union%s+([%w_]+)%s", regTrig = true, dscr = "union template", snippetType = "autosnippet" },
+    fmta(
+      [[
+        union <> {
+          <>
+        };
+      ]],
+      {
+        f(function(_, snip) return snip.captures[1] end),
+        i(1),
+      }
+    ),
+    { condition = not_in_string_comment }
+  ),
   s({ trig = "u:", dscr = "public access specifier", snippetType = "autosnippet" },
     {
       t({ "public:", "" })

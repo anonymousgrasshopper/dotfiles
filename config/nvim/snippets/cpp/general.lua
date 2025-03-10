@@ -56,6 +56,21 @@ return {
     }),
     { condition = not_in_string_comment }
   ),
+  s({ trig = "else ", dscr = "else statement", snippetType = "autosnippet" },
+    fmta("else {\n\t<>\n}<>", {
+      d(1, get_visual),
+      i(0),
+    }),
+    { condition = not_in_string_comment }
+  ),
+  s({ trig = "elif ", dscr = "else if statement", snippetType = "autosnippet" },
+    fmta("elif (<>) {\n\t<>\n}<>", {
+      i(1),
+      d(2, get_visual),
+      i(0),
+    }),
+    { condition = not_in_string_comment }
+  ),
   s({ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
     fmta(
       [[

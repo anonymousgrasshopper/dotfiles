@@ -16,7 +16,8 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
-    local enabled_filetypes = { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
+    local enabled_filetypes =
+      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
     if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
       vim.cmd("hi Cursor blend=100")
     else
@@ -113,8 +114,21 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
       else
         local match = string.match(cmd_line, "(%d+,%s*%d+%s*s) ")
-        if match then vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true), "n", false) end
+        if match then
+          vim.api.nvim_feedkeys(
+            vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true),
+            "n",
+            false
+          )
+        end
       end
     end
   end,
 })
+
+-- restore the padding of the terminal emulator
+if string.match(vim.env.TERM, "kitty") then
+  vim.api.nvim_create_autocmd("VimLeave", {
+    callback = function() vim.cmd("silent !kitty @ set-spacing margin=20") end,
+  })
+end

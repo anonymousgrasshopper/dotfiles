@@ -23,14 +23,15 @@ return {
     {
       "<localleader>dbg",
       function()
-        return "<Cmd>silent !codelldb_stdio_redirection "
-          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
-          .. "<CR>"
-          .. "<Cmd>silent !nohup clang++ -fstandalone-debug --debug "
-          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":S")
-          .. " -o "
-          .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S")
-          .. ".exe &<CR><CR>"
+        vim.system({
+          "clang++",
+          "-fstandalone-debug",
+          "--debug",
+          vim.fn.expand("%"),
+          "-o",
+          vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe",
+        }, {}, function(_) vim.notify("Compilation completed", "Info", { title = "Debugging" }) end)
+        vim.system({ "codelldb_stdio_redirection", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") })
       end,
       ft = "cpp",
       expr = true,
@@ -38,9 +39,7 @@ return {
     },
     {
       "<localleader>rm",
-      function()
-        return "<Cmd>silent !remove_codelldb_stdio_redirection " .. vim.fn.fnamemodify(vim.fn.expand("%"), ":r:S") .. "<CR><CR>"
-      end,
+      function() vim.system({ "remove_codelldb_stdio_redirection", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") }) end,
       ft = "cpp",
       expr = true,
       silent = true,
@@ -106,9 +105,7 @@ return {
         name = "Launch file",
         type = "codelldb",
         request = "launch",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file")
-        end,
+        program = function() return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file") end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
         stdio = { path .. ".input", path .. ".output", path .. ".errors" },
