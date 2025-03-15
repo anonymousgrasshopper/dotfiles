@@ -1,4 +1,9 @@
 [[manager.prepend_keymap]]
+on   = "f"
+run  = "plugin jump-to-char"
+desc = "Jump to char"
+
+[[manager.prepend_keymap]]
 on   = "!"
 run  = 'shell "$SHELL" --block'
 desc = "Open shell here"
@@ -44,8 +49,3 @@ prepend_keymap = [
 { on = ["<C-e>"], run = "seek 5" },
 { on = ["<C-y>"], run = "seek -5" },
 ]
-
-[[manager.prepend_keymap]]
-on   = "f"
-run  = "plugin jump-to-char"
-desc = "Jump to char"

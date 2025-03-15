@@ -122,6 +122,7 @@ return {
           vim.keymap.set("n", "<leader>g0", "<Plug>(git-conflict-none)", { desc = "Choose none", buffer = true })
           vim.keymap.set("n", "[x", "<Plug>(git-conflict-prev-conflict)", { desc = "Previous conflict", buffer = true })
           vim.keymap.set("n", "]x", "<Plug>(git-conflict-next-conflict)", { desc = "Next conflict", buffer = true })
+          ---@diagnostic disable-next-line: unused-local
           vim.notify("Merge conflict detected", "error", { title = "Conflict !", icon = " " })
         end,
       })

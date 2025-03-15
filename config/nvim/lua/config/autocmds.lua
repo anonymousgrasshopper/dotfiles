@@ -37,7 +37,14 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     if vim.g.code_action_preview then
-      vim.g.code_action_preview = nil
+      vim.api.nvim_create_autocmd("BufLeave", {
+        group = vim.api.nvim_create_augroup("Code Action Preview", { clear = true }),
+        callback = function()
+          print(vim.bo.filetype)
+          vim.g.code_action_preview = nil
+          vim.api.nvim_del_augroup_by_name("Code Action Preview")
+        end,
+      })
       return
     end
     if vim.bo.filetype == "yazi" then return end
@@ -113,7 +120,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
       elseif cmd_line == "'<,'>s " then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
       else
-        local match = string.match(cmd_line, "(%d+,%s*%d+%s*s) ")
+        local match = cmd_line:match("(%d+,%s*%d+%s*s) ")
         if match then
           vim.api.nvim_feedkeys(
             vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true),
@@ -127,7 +134,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 })
 
 -- restore the padding of the terminal emulator
-if string.match(vim.env.TERM, "kitty") then
+if vim.env.TERM:match("kitty") then
   vim.api.nvim_create_autocmd("VimLeave", {
     callback = function() vim.cmd("silent !kitty @ set-spacing margin=20") end,
   })

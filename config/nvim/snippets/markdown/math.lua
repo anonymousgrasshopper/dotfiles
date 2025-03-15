@@ -7,7 +7,7 @@ local f = ls.function_node
 local d = ls.dynamic_node
 local fmta = require("luasnip.extras.fmt").fmta
 
-local get_visual = function(args, parent)
+local get_visual = function(_, parent)
   if (#parent.snippet.env.LS_SELECT_RAW > 0) then
     return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
   else  -- If LS_SELECT_RAW is empty, return a blank insert node
@@ -57,7 +57,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\floor", dscr = "floor", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "floor", dscr = "floor", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\left\\lfoor <> \\right\\rfloor",
       {
@@ -66,7 +66,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\left\\lceil <> \\right\\rceil",
       {
@@ -84,7 +84,7 @@ return {
     ),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "\\cbrt", dscr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "cbrt", dscr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       "\\sqrt[3]{<>}",
       {
@@ -137,7 +137,7 @@ return {
     { condition = tex.in_mathzone }
   ),
   s({ trig = "all ", dscr = "universal quantifier", wordTrig = false, snippetType = "autosnippet" },
-    t("\\forall "),
+    t("\forall "),
     { condition = tex.in_mathzone }
   ),
   s({ trig = "ex ", dscr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
@@ -147,6 +147,54 @@ return {
   s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" },
     {
       t("\\displaystyle"),
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\P", dscr = "Prime numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{P}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\N", dscr = "Natural numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{N}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\Q", dscr = "Rational numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{Q}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\R", dscr = "Real numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{R}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\C", dscr = "Complex numbers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{C}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "(\\?left)", dscr = "pairs", regTrig = true, snippetType = "autosnippet" },
+    {
+      t("\\left"), i(1), d(2, get_visual), t("\\right"), f(function(arg)
+        if arg[1][1] == "{" then
+          return "}"
+        elseif arg[1][1] == "(" then
+          return ")"
+        elseif arg[1][1] == "[" then
+          return "]"
+        elseif arg[1][1]:match("\\l") then
+          return "\\r" .. arg[1]:sub("3", "-1")
+        else
+          return arg[1][1]
+        end
+      end, { 1 })
     }
   ),
 }

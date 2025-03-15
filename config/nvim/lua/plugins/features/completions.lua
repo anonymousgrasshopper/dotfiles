@@ -146,9 +146,13 @@ return {
         ft_func = require("luasnip.extras.filetype_functions").from_cursor,
       })
 
+      -- filetypes
+      require("luasnip").filetype_extend("bash", { "sh" })
+
       -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
       require("luasnip.loaders.from_vscode").lazy_load()
 
+      -- load snippets
       require("luasnip.loaders.from_vscode").lazy_load({
         paths = {
           vim.fn.stdpath("config") .. "/snippets",

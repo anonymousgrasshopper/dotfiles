@@ -22,7 +22,7 @@ return {
         group = group,
         callback = function()
           local cmd_text = vim.fn.getcmdline()
-          if string.match(cmd_text, "^[<>,%d%s%%']*s") then
+          if cmd_text:match("^[<>,%d%s%%']*s") then
             require("hlslens")
             vim.api.nvim_del_augroup_by_name("hlslens lazy loading")
           end

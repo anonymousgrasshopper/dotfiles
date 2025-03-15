@@ -15,6 +15,6 @@
 - Installing the Bibata cursor theme : `yay -S bibata-cursor-theme-bin` and `sudo mv /usr/share/icons/Bibata-Modern-Classic /usr/share/icons/default` is the quickest way to do so.
 
 ### Keyboard configuration
-- Home mod keys: [Install kanata.exe](https://github.com/jtroo/kanata/releases/) in `C:\Program Files\Kanata\kanata.exe`, copy `kanata.vbs` in `shell:startup` and copy `kanata.kbd` in `%APPDATA%/kanata/`
+- Home row mods: [Install kanata.exe](https://github.com/jtroo/kanata/releases/) in `C:\Program Files\Kanata\kanata.exe`, copy `kanata.vbs` in `shell:startup` and copy `kanata.kbd` in `%APPDATA%/kanata/`
 - Bind Caps lock to Esc/Ctrl: [Install AutoHotkey](https:/autohotkey.com) and copy `capslock.ahk` in `shell:startup`
 - Programmer Dvorak: [Installation instructions](https://www.kaufmann.no/roland/dvorak/winxp.html)

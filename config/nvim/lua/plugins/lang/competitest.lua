@@ -108,7 +108,7 @@ return {
           "-Wall",
           "-Wextra",
           "-pedantic",
-          "-std=c++17",
+          "-std=c++20",
           "-O2",
           "-Wshadow",
           "-Wformat=2",

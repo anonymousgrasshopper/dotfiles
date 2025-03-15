@@ -25,12 +25,13 @@ return {
               if fn.get_mode == "R" then -- disable in replace mode
                 return false
               end
+              if vim.tbl_contains({ "markdown", "tex" }, vim.bo.filetype) and o.line:sub(o.col - 5, o.col - 1):match("\\left") then
+                return false
+              end
               if o.key ~= vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
                 return true -- return true, unless we've hitten backspace
               else
-                if
-                  vim.tbl_contains({ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~" }, o.line:sub(o.col - 2, o.col - 1))
-                then
+                if vim.tbl_contains({ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~" }, o.line:sub(o.col - 2, o.col - 1)) then
                   return false -- if the two characters before the cursor are paired, don't remove them
                 else
                   return true
@@ -74,69 +75,6 @@ return {
         ft = { "html", "xml", "markdown" },
         newline = true,
         space = true,
-      },
-      {
-        "\\left(",
-        "\\right)",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left[",
-        "\\right]",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left{",
-        "\\right}",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left<",
-        "\\right>",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left\\lfloor",
-        "\\right\\rfloor",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left\\lceil",
-        "\\right\\rceil",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left\\vert",
-        "\\right\\vert",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left\\lVert",
-        "\\right\\rVert",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
-      },
-      {
-        "\\left\\lVert",
-        "\\right\\rVert",
-        newline = true,
-        space = true,
-        ft = { "markdown", "tex" },
       },
       {
         "\\begin{bmatrix}",

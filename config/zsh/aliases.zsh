@@ -43,7 +43,7 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # Neovim
 nfd() {
-  nvim $(fzf -m --select-1 --exit-0 --query="$1")
+  nvim $(fzf -m --select-1 --query="$*")
 }
 alias vim="nvim"
 alias  nv="nvim"
@@ -62,7 +62,14 @@ tns() {
   fi
 }
 tas() {
-  [[ -n "$TMUX" ]] && command="switch-client" || command="attach-session"
+  if [[ -n "$TMUX" ]]; then
+    command="switch-client" 
+  elif ! tmux run 2>/dev/null; then
+    tns "$@"
+    exit
+  else
+    command="attach-session"
+  fi
   tmux $command -t$(tmux list-session | fzf --preview='' --select-1 --exit-0 --query="$1" | sed 's/:.*//')
 }
 tmux_choose_pane() {

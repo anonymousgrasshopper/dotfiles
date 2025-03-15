@@ -26,7 +26,11 @@ return {
     { "<localleader>so", function() require("telescope.builtin").lsp_outgoing_calls() end, desc = "Search outgoing calls" },
     { "<localleader>ss", function() require("telescope.builtin").lsp_document_symbols() end, desc = "Search document symbols" },
     { "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
-    { "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
+    {
+      "<localleader>sW",
+      function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
+      desc = "Search dynamic workspace symbols",
+    },
     { "<localleader>sd", function() require("telescope.builtin").lsp_diagnostics() end, desc = "Search diagnostics" },
 
     { "<leader>gfc", function() require("telescope").builtin.git_commits() end, desc = "Search git commits" },
@@ -72,6 +76,7 @@ return {
           },
           n = {
             ["q"] = actions.close,
+            ["<Esc>"] = actions.close,
           },
         },
       },

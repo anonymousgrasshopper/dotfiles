@@ -109,7 +109,7 @@ return {
         "dapui_breakpoints",
       },
       sections = {
-        lualine_a = { function() return string.match(vim.bo.filetype, "[-_](%w+)$") end },
+        lualine_a = { function() return vim.bo.filetype:match("[-_](%w+)$") end },
         lualine_y = { function() return " " end },
         lualine_z = { function() return " " .. os.date("%R") end },
       },
