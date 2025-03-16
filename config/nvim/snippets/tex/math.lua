@@ -42,12 +42,11 @@ return {
   s({ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       [[
-        \sum_{<>=<>}^{<>}<>
+        \sum_{<>}^{<>}<>
       ]],
       {
-        i(1, "i"),
-        i(2, "0"),
-        i(3, "n"),
+        i(1, "i = 0"),
+        i(2, "n"),
         i(0),
       }
     ),
@@ -59,9 +58,8 @@ return {
         \prod_{<>=<>}^{<>}<>
       ]],
       {
-        i(1, "i"),
-        i(2, "0"),
-        i(3, "n"),
+        i(1, "i = 0"),
+        i(2, "n"),
         i(0),
       }
     ),

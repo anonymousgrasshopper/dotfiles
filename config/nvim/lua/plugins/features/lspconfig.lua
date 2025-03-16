@@ -66,6 +66,16 @@ return {
         capabilities = capabilities,
       })
 
+      -- require("lspconfig").markdown_oxide.setup({
+      --   capabilities = vim.tbl_deep_extend("force", capabilities, {
+      --     workspace = {
+      --       didChangeWatchedFiles = {
+      --         dynamicRegistration = true,
+      --       },
+      --     },
+      --   }),
+      -- })
+
       lspconfig.lua_ls.setup({
         on_init = function(client)
           local path = client.workspace_folders[1].name

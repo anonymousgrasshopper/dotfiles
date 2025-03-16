@@ -1,6 +1,10 @@
 #!/bin/bash
 
-RED='\033[0;31m'
+# colors
+RED='\x1b[38;2;232;36;36m'     # #E82424
+YELLOW='\x1b[38;2;255;158;59m' # #FF9E3B
+GREEN='\x1b[38;2;106;149;137m' # #6A9589
+BLUE='\x1b[38;2;126;156;216m'  # #7E9CD8
 
 # list of configs and scripts to copy
 configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
@@ -21,7 +25,7 @@ for config in ${configs[@]}; do
   if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
     cp -r "$HOME/.config/$config" "config"
   else
-    echo "${RED}/usr/local/bin/$config not found."
+    echo "${RED} /usr/local/bin/$config not found."
   fi
 done
 # overwrite scripts in the dotfiles repo
@@ -32,7 +36,7 @@ for script in ${scripts[@]}; do
   if [[ -f "/usr/local/bin/$script" ]]; then
     cp "/usr/local/bin/$script" "scripts"
   else
-    echo "${RED}/usr/local/bin/$script not found."
+    echo "${YELLOW} /usr/local/bin/$script not found."
   fi
 done
 
@@ -44,9 +48,13 @@ git add .
 
 # commit if args are passed to the scripts
 if [[ $# == 2 ]]; then
+  echo -e "${GREEN}"
   git commit -m"$1" -m"$2"
+  echo -e "${BLUE}"
   git push
 elif [[ $# == 1 ]]; then
+  echo -e "${GREEN}"
   git commit -m"$1"
+  echo -e "${BLUE}"
   git push
 fi

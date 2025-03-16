@@ -47,6 +47,7 @@ return {
 
       { "$", "$", ft = { "tex", "markdown" } },
       { "$$", "$$", ft = { "markdown" } },
+      { "[[", "]]", ft = { "markdown" } },
       { "*", "*", ft = { "markdown" } },
       { "**", "**", ft = { "markdown" } },
       { "~~", "~~", ft = { "markdown" } },
