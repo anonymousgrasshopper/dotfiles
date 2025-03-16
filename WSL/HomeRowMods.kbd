@@ -1,6 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;; HOME ROW MODS ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defcfg
   ;; For Windows
   input  (low-level-hook)
@@ -19,25 +20,23 @@
 )
 
 (defsrc
-  a    s    d    f    g    h    j    k    l    ;
+  q    s    d    f    g    h    j    k    l    m
 )
 
-
 (defalias
-  met_a (tap-hold-next-release 200 a lmet)
+  met_q (tap-hold-next-release 200 q lmet)
   alt_s (tap-hold-next-release 200 s lalt)
-  ctl_d (tap-hold-next-release 200 d lctl)
-  sft_f (tap-hold-next-release 200 f lsft)
+  ctl_d (tap-hold-next-release 200 d lsft)
+  sft_f (tap-hold-next-release 200 f lctl)
 
-  sft_j (tap-hold-next-release 200 j rsft)
-  ctl_k (tap-hold-next-release 200 k rctl)
+  sft_j (tap-hold-next-release 200 j rctl)
+  ctl_k (tap-hold-next-release 200 k rsft)
   alt_l (tap-hold-next-release 200 l lalt)
-  met_; (tap-hold-next-release 200 ; rmet)
+  met_m (tap-hold-next-release 200 m rmet)
 )
 
 (deflayer homerowmods
-  @met_a   @alt_s   @ctl_d   @sft_f   g   h   @sft_j   @ctl_k   @alt_l   @met_;
+  @met_q   @alt_s   @ctl_d   @sft_f   g   h   @sft_j   @ctl_k   @alt_l   @met_m
 )
-
 
 ;; * vim:ft=lisp
