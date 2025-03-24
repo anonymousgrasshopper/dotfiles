@@ -22,7 +22,9 @@ cfd() {
   cd $(fd . -td | fzf -m --query="$1")
 }
 mkcd() {
-  [[ $# == 1 ]] || exit
+  [[ $# == 0 ]] && echo "mkcd: missing operand"
+  [[ $# -ge 2 ]] && echo "mkcd: too many operands"
+  [[ $# == 1 ]] || return
   mkdir -p "$1" && cd "$1"
 }
 alias sudo="sudo "                  # enable aliases in sudo
