@@ -16,7 +16,6 @@ alias fetch="fastfetch"
 alias lg="lazygit"
 alias py="python3"
 alias mutt="neomutt"
-alias zen="zen-browser"
 
 # miscellaneous
 cfd() {
@@ -28,7 +27,6 @@ mkcd() {
 }
 alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
-alias killzen='kill $(ps -e | rg zen\-bin | sed ''s/ ?.\+//g\'')'
 
 # CLI tools default options
 alias rm="rm -i"
@@ -99,6 +97,12 @@ tmux_choose_pane() {
     tmux select-pane -t ${target_window}.${target_pane} &&
       tmux select-window -t $target_window
   fi
+}
+
+# Zen browser
+alias zen="zen-browser"
+killzen() {
+  kill $(ps -e | rg zen\-bin | sed 's/ ?.\+//g')
 }
 
 # help command using bat
