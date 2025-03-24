@@ -11,6 +11,15 @@ WHITE='\x1b[38;2;220;215;186m' # #DCD7BA
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR" || exit
 
+while true; do
+  if [[ "$1" = "--overwrite" || "$1" = "-o" ]]; then
+    OVERWRITE=1
+    shift 1
+  else
+    break
+  fi
+done
+
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 ]]; then
   if [[ ! $SCRIPT_DIR =~ ^/root ]]; then
@@ -165,8 +174,12 @@ fi
       sudo cp "$file" "/usr/local/bin/"
       sudo chmod +x "/usr/local/bin/$file"
     elif ! cmp --silent "$file" "/usr/local/bin/$file"; then
-      echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
-      read -r answer
+      if [[ ! $OVERWRITE ]]; then
+        echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
+        read -r answer
+      else
+        answer=yes
+      fi
       case "$answer" in
       [yY][eE][sS] | [yY])
         sudo cp "$file" "/usr/local/bin/"
@@ -194,8 +207,12 @@ fi
     if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item" ]]; then
       cp -r "$item" "$HOME_DIR/.config/"
     else
-      echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?\n${RED}Enter a number (default 3) : "
-      read -r answer
+      if [[ ! $OVERWRITE ]]; then
+        echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?\n${RED}Enter a number (default 3) : "
+        read -r answer
+      else
+        answer=2
+      fi
       case "$answer" in
       1)
         if [[ -d "$HOME_DIR/.config/$item.bak" || -f "$HOME_DIR/.config/$item.bak" ]]; then
@@ -222,8 +239,12 @@ if [[ -n "$CPLUS_INCLUDE_PATH" ]]; then
   if [[ ! -f "$CPLUS_INCLUDE_PATH/dbg.h" ]]; then
     cp dbg.h "$CPLUS_INCLUDE_PATH"
   elif ! cmp --silent "dbg.h" "$CPLUS_INCLUDE_PATH/dbg.h"; then
-    echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}dbg.h${WHITE} header file before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}dbg.h${WHITE} header file and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}dbg.h${WHITE} header file ?\n${RED}Enter a number (default 3) : "
-    read -r answer
+    if [[ ! $OVERWRITE ]]; then
+      echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}dbg.h${WHITE} header file before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}dbg.h${WHITE} header file and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}dbg.h${WHITE} header file ?\n${RED}Enter a number (default 3) : "
+      read -r answer
+    else
+      answer=2
+    fi
     case "$answer" in
     1)
       [[ -f "$CPLUS_INCLUDE_PATH/dbg.h.bak" ]] && rm -f "$CPLUS_INCLUDE_PATH/dbg.h.bak"
