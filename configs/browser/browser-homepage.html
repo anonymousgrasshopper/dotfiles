@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url("../wallpapers/wallpaper.jpeg")
+          no-repeat center center fixed;
+        background-size: cover;
+        font-family: "Fira Code", monospace;
+      }
+
+      .rounded-box {
+        width: 600px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.16);
+        border-radius: 10px;
+        backdrop-filter: blur(16px);
+        box-shadow:
+          0 0 5px rgba(0, 0, 0, 0.145),
+          0 0 25px rgba(0, 0, 0, 0.145),
+          0 0 50px rgba(0, 0, 0, 0.145),
+          0 0 200px rgba(0, 0, 0, 0.145);
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding-bottom: 60px;
+      }
+
+      .subtext {
+        cursor: pointer;
+        transition:
+          opacity 0.2s,
+          color 0.2s;
+        color: white;
+      }
+
+      .subtext:hover {
+        color: #6a9589;
+        opacity: 1;
+      }
+
+      .subtext.dimmed {
+        opacity: 0.3;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        font-size: 14px;
+        font-family: "Fira Code", monospace;
+        letter-spacing: 2px;
+      }
+
+      .prompt {
+        margin-right: 5px;
+        letter-spacing: 2px;
+      }
+
+      .prompt .user {
+        color: #7E9CD8;
+      }
+
+      .prompt .at {
+        color: #C8C093;
+      }
+
+      .prompt .browser {
+        color: #5FD700;
+      }
+
+      .prompt .arrow {
+        color: #957FB8;
+      }
+
+      .text-area {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        color: #DCD7BA;
+        font-size: 14px;
+        font-family: "Fira Code", monospace;
+        outline: none;
+        caret-color: #DCD7BA;
+        letter-spacing: 2px;
+      }
+
+      .category.general {
+        color: #2ed8a2;
+      }
+
+      .category.math {
+        color: #d1aff8;
+      }
+
+      .category.informatics {
+        color: #62e0e2;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const inputBox = document.querySelector(".text-area");
+        const clickableItems = document.querySelectorAll(".subtext");
+
+        const links = {
+          " club": "https://math.univ-lyon1.fr/~lass/club.html",
+          "󱉟 Bibliothèque": "https://bm.ville-caluire.fr",
+          " lycée": "https://saint-exupery-lyon.ent.auvergnerhonealpes.fr/",
+          " github": "https://github.com/",
+          "󰐱 aops": "https://artofproblemsolving.com/community/c13_contest",
+          "󰍘 animath": "https://maths-olympiques.fr/?page_id=12728",
+          " pofm": "https://coupe.maths-olympiques.fr",
+          " mathraining": "https://mathraining.be",
+          " prologin": "https://prologin.org/",
+          " france ioi": "https://france-ioi.org/algo/chapters.php",
+          " algorithms": "https://cp-algorithms.com",
+          " usaco guide": "https://usaco.guide/",
+
+          imo: "https://artofproblemsolving.com/community/c3222_imo",
+          isl: "https://artofproblemsolving.com/community/c3223_imo_shortlist",
+          evanchen: "https://web.evanchen.cc/",
+
+          gmail: "https://gmail.com/",
+        };
+
+        function filterItems(searchText) {
+          clickableItems.forEach((item) => {
+            const itemText = item.innerText.toLowerCase();
+            if (itemText.includes(searchText.toLowerCase())) {
+              item.classList.remove("dimmed");
+            } else {
+              item.classList.add("dimmed");
+            }
+          });
+        }
+
+        inputBox.addEventListener("input", function () {
+          const inputText = inputBox.value.trim();
+          filterItems(inputText);
+        });
+
+        inputBox.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            const inputText = inputBox.value.trim().toLowerCase();
+            if (links[inputText]) {
+              window.open(links[inputText], "_blank");
+            } else {
+              window.open(
+                `https://search.inetol.net/search?q=${encodeURIComponent(inputText)}`,
+                "_blank",
+              );
+            }
+            inputBox.value = "";
+            filterItems("");
+          }
+        });
+
+        clickableItems.forEach((item) => {
+          item.addEventListener("click", function () {
+            const text = item.innerText.toLowerCase();
+            if (links[text]) {
+              window.open(links[text], "_blank");
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="rounded-box">
+      <div class="content">
+        <div class="column">
+          <div class="category general">General</div>
+          <div class="subtext"> Club</div>
+          <div class="subtext">󱉟 Bibliothèque</div>
+          <div class="subtext"> Lycée</div>
+          <div class="subtext"> GitHub</div>
+        </div>
+        <div class="column">
+          <div class="category math">Mathematics</div>
+          <div class="subtext">󰐱 AoPS</div>
+          <div class="subtext">󰍘 Animath</div>
+          <div class="subtext"> POFM</div>
+          <div class="subtext"> Mathraining</div>
+        </div>
+        <div class="column">
+          <div class="category informatics">Informatics</div>
+          <div class="subtext"> Prologin</div>
+          <div class="subtext"> France IOI</div>
+          <div class="subtext"> Algorithms</div>
+          <div class="subtext"> USACO Guide</div>
+        </div>
+      </div>
+      <div class="input-container">
+        <span class="prompt">
+          <span class="user">antoine</span><span class="at">󰁥</span><span class="browser">browser</span>
+          <span class="arrow">❯</span>
+        </span>
+        <input type="text" class="text-area" placeholder="command..." autofocus>
+      </div>
+    </div>
+  </body>
+</html>

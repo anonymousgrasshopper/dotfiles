@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # colors
-RED='\x1b[38;2;232;36;36m'     # #E82424
-YELLOW='\x1b[38;2;255;158;59m' # #FF9E3B
-GREEN='\x1b[38;2;106;149;137m' # #6A9589
+RED='\x1b[38;2;232;36;36m'     # #e82424
+YELLOW='\x1b[38;2;255;158;59m' # #ff9e3b
+GREEN='\x1b[38;2;106;149;137m' # #6a9589
 BLUE='\x1b[38;2;126;156;216m'  # #7E9CD8
 WHITE='\x1b[38;2;220;215;186m' # #DCD7BA
 
@@ -15,11 +15,12 @@ cd "$SCRIPT_DIR" || exit
 if [[ "$EUID" == 0 ]]; then
   if [[ ! $SCRIPT_DIR =~ ^/root ]]; then
     echo -e "${YELLOW} Running this script as root might cause permission issues"
-    echo -en "${YELLOW}Do you really want to continue (y/n) ? ${WHITE}"
+    echo -en "${YELLOW}  Do you really want to continue (y/n) ? ${WHITE}"
     read -r answer
     case "$answer" in
     [yY][eE][sS] | [yY]) ;;
     *)
+      echo -e "${RED}  Aborting..."
       exit 1
       ;;
     esac
@@ -31,7 +32,7 @@ if [[ "$SHELL" != /bin/zsh && "$SHELL" != /usr/bin/zsh ]]; then
   echo -e "${WHITE}Install zsh if it is not already installed on your system and make it your default shell :"
   echo -e "${GREEN}> ${BLUE}chsh $USER"
   echo -e "${GREEN}> ${BLUE}/bin/zsh"
-  echo ""
+  printf '\n'
 fi
 
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
@@ -40,9 +41,7 @@ if [[ -f /etc/zsh/zshenv ]]; then
     echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
   fi
 else
-  if [[ ! -d /etc/zsh ]]; then
-    sudo mkdir /etc/zsh
-  fi
+  [[ -d /etc/zsh ]] || sudo mkdir /etc/zsh
   sudo touch /etc/zsh/zshenv
   echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
 fi
@@ -109,7 +108,7 @@ if [[ -f /etc/arch-release ]]; then
     fi
   fi
   if [[ ! -d /usr/share/fonts/noto ]]; then
-    echo -en "${BLUE}Would you like to install the Noto font for having a fallback font for unicode symbols ? (y/n) ${WHITE}"
+    echo -en "${BLUE}Would you like to install the Noto font to have a fallback font for unicode symbols ? (y/n) ${WHITE}"
     read -r answer
     case "$answer" in
     [yY][eE][sS] | [yY])
@@ -119,7 +118,7 @@ if [[ -f /etc/arch-release ]]; then
   fi
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
-  echo -e "${WHITE}$packages"
+  echo -e "${WHITE}${packages[*]}"
 fi
 
 # Install yay (AUR helper)
@@ -155,67 +154,69 @@ if [[ ! -d /usr/local/texlive ]]; then
 fi
 
 # copy scripts to /usr/local/bin
-cd scripts || {
-  echo -e "${RED}Error:${WHITE} scripts folder is not present in the script's directory"
-  exit
-}
-printf '\n'
-for file in *; do
-  if [[ ! -f "/usr/local/bin/$file" ]]; then
-    sudo cp "$file" "/usr/local/bin/"
-    sudo chmod +x "/usr/local/bin/$file"
-  elif ! cmp --silent "$file" "/usr/local/bin/$file"; then
-    echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
-    read -r answer
-    case "$answer" in
-    [yY][eE][sS] | [yY])
+(
+  cd scripts || {
+    echo -e "${RED}Error:${WHITE} scripts folder is not present in the script's directory"
+    exit
+  }
+  printf '\n'
+  for file in *; do
+    if [[ ! -f "/usr/local/bin/$file" ]]; then
       sudo cp "$file" "/usr/local/bin/"
       sudo chmod +x "/usr/local/bin/$file"
-      ;;
-    esac
-  fi
-done
-cd .. || exit
+    elif ! cmp --silent "$file" "/usr/local/bin/$file"; then
+      echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
+      read -r answer
+      case "$answer" in
+      [yY][eE][sS] | [yY])
+        sudo cp "$file" "/usr/local/bin/"
+        sudo chmod +x "/usr/local/bin/$file"
+        ;;
+      esac
+    fi
+  done
+)
 
 # copy config folders
-if [[ "$SCRIPT_DIR" =~ (/home/[^/]+) ]]; then
-  HOME_DIR=${BASH_REMATCH[1]}
-else
-  HOME_DIR="/root"
-fi
-[[ -d "$HOME_DIR/.config" ]] || mkdir "$HOME_DIR/.config"
-cd "$SCRIPT_DIR/config" || {
-  echo -e "${RED}Error:${WHITE} config folder is not present in the script's directory"
-  exit
-}
-printf '\n'
-for item in *; do
-  if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item" ]]; then
-    cp -r "$item" "$HOME_DIR/.config/"
+(
+  if [[ "$SCRIPT_DIR" =~ (/home/[^/]+) ]]; then
+    HOME_DIR=${BASH_REMATCH[1]}
   else
-    echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?\n${RED}Enter a number (default 3) : "
-    read -r answer
-    case "$answer" in
-    1)
-      if [[ -d "$HOME_DIR/.config/$item.bak" || -f "$HOME_DIR/.config/$item.bak" ]]; then
-        rm -rf "$HOME_DIR/.config/$item.bak"
-      fi
-      mv "$HOME_DIR/.config/$item" "$HOME_DIR/.config/$item.bak"
-      cp -r "$item" "$HOME_DIR/.config/"
-      ;;
-    2)
-      rm -rf "$HOME_DIR/.config/$item"
-      cp -r "$item" "$HOME_DIR/.config/"
-      ;;
-    *)
-      echo -e "${WHITE}Skipping..."
-      ;;
-    esac
+    HOME_DIR="/root"
   fi
-done
+  [[ -d "$HOME_DIR/.config" ]] || mkdir "$HOME_DIR/.config"
+  cd "$SCRIPT_DIR/configs" || {
+    echo -e "${RED}Error:${WHITE} configs folder is not present in the script's directory"
+    exit
+  }
+  printf '\n'
+  for item in *; do
+    if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item" ]]; then
+      cp -r "$item" "$HOME_DIR/.config/"
+    else
+      echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?\n${RED}Enter a number (default 3) : "
+      read -r answer
+      case "$answer" in
+      1)
+        if [[ -d "$HOME_DIR/.config/$item.bak" || -f "$HOME_DIR/.config/$item.bak" ]]; then
+          rm -rf "$HOME_DIR/.config/$item.bak"
+        fi
+        mv "$HOME_DIR/.config/$item" "$HOME_DIR/.config/$item.bak"
+        cp -r "$item" "$HOME_DIR/.config/"
+        ;;
+      2)
+        rm -rf "$HOME_DIR/.config/$item"
+        cp -r "$item" "$HOME_DIR/.config/"
+        ;;
+      *)
+        echo -e "${WHITE}Skipping..."
+        ;;
+      esac
+    fi
+  done
+)
 
 # copy dbg.h in $CPLUS_INCLUDE_PATH
-cd .. || exit
 if [[ -n "$CPLUS_INCLUDE_PATH" ]]; then
   [[ -d "$CPLUS_INCLUDE_PATH" ]] || mkdir -p "$CPLUS_INCLUDE_PATH"
   if [[ ! -f "$CPLUS_INCLUDE_PATH/dbg.h" ]]; then
@@ -225,9 +226,7 @@ if [[ -n "$CPLUS_INCLUDE_PATH" ]]; then
     read -r answer
     case "$answer" in
     1)
-      if [[ -f "$CPLUS_INCLUDE_PATH/dbg.h.bak" ]]; then
-        rm -f "$CPLUS_INCLUDE_PATH/dbg.h.bak"
-      fi
+      [[ -f "$CPLUS_INCLUDE_PATH/dbg.h.bak" ]] && rm -f "$CPLUS_INCLUDE_PATH/dbg.h.bak"
       mv "$CPLUS_INCLUDE_PATH/dbg.h" "$CPLUS_INCLUDE_PATH/dbg.h.bak"
       cp dbg.h "$CPLUS_INCLUDE_PATH"
       ;;
@@ -246,12 +245,13 @@ fi
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
 
 # run WSL/install.sh
-if [[ -n "$WSLENV" ]]; then
-  echo ""
-  echo -en "${BLUE}Looks like you are using WSL. Do you want to run ${GREEN}WSL/install.sh (y/n)${BLUE} ? ${WHITE}"
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  printf '\n'
+  echo -en "${BLUE}Looks like you are using WSL. Do you want to run ${GREEN}WSL/install.sh${BLUE} ? (y/n) ${WHITE}"
   read -r answer
   case "$answer" in
   [yY][eE][sS] | [yY])
+    printf '\n'
     WSL/install.sh
     ;;
   esac

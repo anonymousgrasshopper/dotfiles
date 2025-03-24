@@ -7,25 +7,25 @@ GREEN='\x1b[38;2;106;149;137m' # #6A9589
 BLUE='\x1b[38;2;126;156;216m'  # #7E9CD8
 
 # list of configs and scripts to copy
-configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "browser" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
 cd ~/.config/dotfiles || {
-  echo "${RED}Cloning the github repository failed. Check you internet connection and try again"
+  echo "${RED}Cloning the GitHub repository failed. Check you internet connection and try again"
   exit
 }
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
-  if [[ -d "config/$config" || -f "config/$config" ]]; then
-    rm -rf "config/$config"
+  if [[ -d "configs/$config" || -f "configs/$config" ]]; then
+    rm -rf "configs/$config"
   fi
-  if [[ -d "$HOME/.config/$config" || -f "$HOME/.config/$config" ]]; then
-    cp -r "$HOME/.config/$config" "config"
+  if [[ -e "$HOME/.config/$config" ]]; then
+    cp -r "$HOME/.config/$config" "configs"
   else
-    echo "${RED} /usr/local/bin/$config not found."
+    echo "${YELLOW} ~/.config/$config not found."
   fi
 done
 # overwrite scripts in the dotfiles repo
@@ -40,10 +40,11 @@ for script in ${scripts[@]}; do
   fi
 done
 
-# remove zcompdump
-[[ -f "config/zsh/.zcompdump" ]] && rm "config/zsh/.zcompdump"
+# remove chosen files and directories
+[[ -f "configs/zsh/.zcompdump" ]] && rm "configs/zsh/.zcompdump"
+[[ -d "configs/browser/profile" ]] && rm -rf "configs/browser/profile"
 
-# git add
+# add everything to the index
 git add .
 
 # commit if args are passed to the scripts
