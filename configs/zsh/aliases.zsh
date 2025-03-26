@@ -48,7 +48,9 @@ alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # git
-alias clone="git clone"
+clone() {
+  git clone "https://github.com/$1"
+}
 alias commit="git commit"
 alias push="git push"
 

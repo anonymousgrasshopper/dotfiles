@@ -23,9 +23,7 @@ return {
           return
         else
           local stats = vim.uv.fs_stat(vim.fn.argv(0))
-          if stats and stats.type == "directory" then
-            require("neo-tree")
-          end
+          if stats and stats.type == "directory" then require("neo-tree") end
         end
       end,
     })
@@ -143,6 +141,7 @@ return {
           ["l"] = "focus_preview",
           ["-"] = "open_split",
           ["|"] = "open_vsplit",
+          ["<RightMouse>"] = "open_vsplit",
           ["S"] = "", -- "split_with_window_picker",
           ["s"] = "", -- "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
@@ -286,9 +285,7 @@ return {
 
             for i, item in ipairs(harpoon_list.items) do
               local value = item.value
-              if string.sub(item.value, 1, 1) ~= "/" then
-                value = harpoon_key .. "/" .. item.value
-              end
+              if string.sub(item.value, 1, 1) ~= "/" then value = harpoon_key .. "/" .. item.value end
 
               if value == path then
                 return {
@@ -353,17 +350,13 @@ return {
         {
           event = "neo_tree_window_after_open",
           handler = function(args)
-            if args.position == "left" or args.position == "right" then
-              vim.cmd("wincmd =")
-            end
+            if args.position == "left" or args.position == "right" then vim.cmd("wincmd =") end
           end,
         },
         {
           event = "neo_tree_window_after_close",
           handler = function(args)
-            if args.position == "left" or args.position == "right" then
-              vim.cmd("wincmd =")
-            end
+            if args.position == "left" or args.position == "right" then vim.cmd("wincmd =") end
           end,
         },
         {
