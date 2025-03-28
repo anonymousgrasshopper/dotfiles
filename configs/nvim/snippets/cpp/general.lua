@@ -64,7 +64,7 @@ return {
     { condition = not_in_string_comment }
   ),
   s({ trig = "elif ", dscr = "else if statement", snippetType = "autosnippet" },
-    fmta("elif (<>) {\n\t<>\n}<>", {
+    fmta("else if (<>) {\n\t<>\n}<>", {
       i(1),
       d(2, get_visual),
       i(0),

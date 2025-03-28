@@ -53,6 +53,11 @@ clone() {
 }
 alias commit="git commit"
 alias push="git push"
+gacp() {
+  git add .
+  git commit -m "$@"
+  git push
+}
 
 # Neovim
 nfd() {
@@ -106,7 +111,7 @@ tmux_choose_pane() {
 # Zen browser
 alias zen="zen-browser"
 killzen() {
-  kill $(ps -e | rg zen\-bin | sed 's/ ?.\+//g')
+  kill $(ps -e | rg zen\-bin | sed 's/ ?.\+//')
 }
 
 # help command using bat
