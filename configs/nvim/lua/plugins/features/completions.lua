@@ -48,6 +48,10 @@ return {
           ghost_text = { enabled = false },
         },
         sources = function()
+          -- avoid cmdline freezing when typing an external command
+          local text = vim.fn.getcmdline()
+          if text:match("!") then return { "path" } end
+
           local type = vim.fn.getcmdtype()
           if type == "/" or type == "?" then return { "buffer" } end
           if type == ":" or type == "@" then return { "cmdline" } end
