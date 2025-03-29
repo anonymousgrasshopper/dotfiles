@@ -5,6 +5,10 @@ local i = ls.insert_node
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
+local first_line = function()
+  return vim.api.nvim_win_get_cursor(0)[1] == 1
+end
+
 return {
   s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
     {
@@ -13,6 +17,6 @@ return {
       t({ "", "" }),
       i(0),
     },
-    { condition = line_begin }
+    { condition = first_line * line_begin }
   ),
 }

@@ -13,8 +13,6 @@ local get_visual = function(_, parent)
   end
 end
 
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
   local row, col = pos[1] - 1, pos[2] - 1
@@ -27,18 +25,6 @@ local not_in_string_comment = function()
 end
 
 return {
-  s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" },
-    fmta([[
-        #!/bin/<>
-        <>
-      ]],
-      {
-        i(1, "bash"),
-        i(0),
-      }
-    ),
-    { condition = line_begin }
-  ),
   s({ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
     fmta(
       "if <>; then\n\t<>\nfi<>",
