@@ -88,7 +88,7 @@ return {
     ),
     { condition = not_in_string_comment * line_begin }
   ),
-  s({ trig = "<cmd>", dscr = "Neovim keymap command", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "<[cC][mM][dD]>", dscr = "Neovim keymap command", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
     {
       t("<Cmd>"),
       d(1, get_visual),

@@ -55,7 +55,7 @@ return {
       { "[==[", "]==]", ft = { "lua" } },
       { "[===[", "]===]", ft = { "lua" } },
       { "<", ">", disable_start = true, disable_end = true },
-      { "<Cmd>", "<CR>", ft = { "lua" } },
+      { "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
       {
         "\\[",
         "\\]",

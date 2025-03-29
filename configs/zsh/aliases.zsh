@@ -58,6 +58,13 @@ gacp() {
   git commit -m "$@"
   git push
 }
+gitdot() {
+  if [[ $# == 0 ]]; then
+    /usr/local/bin/git_dotfiles && cd ~/.config/dotfiles && lazygit
+  else
+    /usr/local/bin/git_dotfiles $@
+  fi
+}
 
 # Neovim
 nfd() {
