@@ -4,7 +4,7 @@
 RED='\x1b[38;2;232;36;36m'     # #E82424
 YELLOW='\x1b[38;2;255;158;59m' # #FF9E3B
 GREEN='\x1b[38;2;106;149;137m' # #6A9589
-BLUE='\x1b[38;2;126;156;216m'  # #7E9CD8
+BLUE='\x1b[38;2;101;133;148m'  # #658594
 
 # list of configs and scripts to copy
 configs=("bat" "browser" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
