@@ -93,7 +93,7 @@ setopt hist_find_no_dups
 # Vi mode and cursor style
 bindkey -v # enable vi keybindings
 export KEYTIMEOUT=1 # time in ms to wait for key sequences
-zle_highlight=(region:bg="#223249",fg=15) # visual mode highlight color
+zle_highlight=(region:bg="#223249" fg=15) # visual mode highlight color
 
 function zle-keymap-select() {
   local _shape=6

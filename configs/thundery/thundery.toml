@@ -1,0 +1,9 @@
+api_key = "5ccbad39ac4b318784e38a7aeb775013"
+city = "Lyon"
+units = "metric"
+timeplus = 2
+timeminus = 0
+showcityname = false
+showdate = true
+timeformat = "24"
+use_colors = true
