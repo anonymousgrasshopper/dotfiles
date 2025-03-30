@@ -22,6 +22,7 @@ while true; do
   fi
 done
 
+# $1: file to copy relative to $SCRIPT_DIR, $2: destination, $3: command to pass cp to (sudo or nothing)
 copy_file() {
   [[ -d "$2" ]] || mkdir -p "$2"
   [[ -f "$1" ]] || {
@@ -44,7 +45,7 @@ copy_file() {
 # list the files to copy and ther destination
 declare -A scripts
 scripts=(
-  ["startup.sh"]="$HOME/.scripts"
+  ["startup.sh"]="$HOME/.local/bin"
   ["arch.vbs"]="/mnt/c/Users/$win_username/Desktop"
   ["dvorak.vbs"]="/mnt/c/Users/$win_username/Desktop"
   ["HomeRowMods.kbd"]="/mnt/c/Program Files/Kmonad"
