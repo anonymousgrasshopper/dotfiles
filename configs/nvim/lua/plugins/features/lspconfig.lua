@@ -36,79 +36,76 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "williamboman/mason.nvim",
+      {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+          "williamboman/mason.nvim",
+        },
+      },
       { "rachartier/tiny-inline-diagnostic.nvim", opts = {} },
     },
     config = function()
       local lspconfig = require("lspconfig")
+      local mason_lspconfig = require("mason-lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
-      })
-
-      lspconfig.texlab.setup({
-        capabilities = capabilities,
-      })
-
-      lspconfig.bashls.setup({
-        filetypes = { "bash", "sh", "zsh" },
-        capabilities = capabilities,
-      })
-
-      lspconfig.asm_lsp.setup({
-        settings = {
-          default_config = {
-            assembler = "nasm",
-            instruction_set = "x86-64",
-          },
+      mason_lspconfig.setup({
+        ensure_installed = {
+          "clangd",
+          "lua_ls",
+          "bashls",
+          "texlab",
+          "asm_lsp",
         },
-        capabilities = capabilities,
+        automatic_installation = false,
       })
 
-      -- require("lspconfig").markdown_oxide.setup({
-      --   capabilities = vim.tbl_deep_extend("force", capabilities, {
-      --     workspace = {
-      --       didChangeWatchedFiles = {
-      --         dynamicRegistration = true,
-      --       },
-      --     },
-      --   }),
-      -- })
-
-      lspconfig.superhtml.setup({})
-      lspconfig.cssls.setup({})
-      lspconfig.ts_ls.setup({})
-
-      lspconfig.lua_ls.setup({
-        on_init = function(client)
-          local path = client.workspace_folders[1].name
-          if
-            not (vim.fn.getcwd():match("nvim")) and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-          then
-            return
-          end
-
-          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-            runtime = {
-              -- Tell the language server which version of Lua you"re using
-              version = "LuaJIT",
-            },
-            -- Make the server aware of Neovim runtime files
-            workspace = {
-              checkThirdParty = false,
-              library = {
-                vim.env.VIMRUNTIME,
-                "${3rd}/luv/library",
-                -- "${3rd}/busted/library",
-              },
-            },
+      require("mason-lspconfig").setup_handlers({
+        function(server_name)
+          require("lspconfig")[server_name].setup({
+            capabilities = capabilities,
           })
         end,
-        settings = {
-          Lua = {},
-        },
-        capabilities = capabilities,
+
+        ["lua_ls"] = function()
+          lspconfig.lua_ls.setup({
+            on_init = function(client)
+              local path = client.workspace_folders[1].name
+              if
+                not (vim.fn.getcwd():match("nvim")) and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+              then
+                return
+              end
+
+              client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+                runtime = {
+                  -- Tell the language server which version of Lua you"re using
+                  version = "LuaJIT",
+                },
+                -- Make the server aware of Neovim runtime files
+                workspace = {
+                  checkThirdParty = false,
+                  library = {
+                    vim.env.VIMRUNTIME,
+                    "${3rd}/luv/library",
+                    -- "${3rd}/busted/library",
+                  },
+                },
+              })
+            end,
+            settings = {
+              Lua = {},
+            },
+            capabilities = capabilities,
+          })
+        end,
+
+        ["bashls"] = function()
+          lspconfig.bashls.setup({
+            filetypes = { "bash", "sh", "zsh" },
+            capabilities = capabilities,
+          })
+        end,
       })
 
       vim.api.nvim_create_autocmd("LspAttach", {

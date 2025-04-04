@@ -12,7 +12,7 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR" || exit
 
 while true; do
-  if [[ "$1" = "--overwrite" || "$1" = "-o" ]]; then
+  if [[ "$1" == "--overwrite" || "$1" == "-o" ]]; then
     OVERWRITE=1
     shift 1
   else
@@ -23,7 +23,7 @@ done
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 ]]; then
   if [[ ! $SCRIPT_DIR =~ ^/root ]]; then
-    echo -e "${YELLOW} Running this script as root might cause permission issues"
+    echo -e "${YELLOW} Running this script as root might cause permission issues."
     echo -en "${YELLOW}  Do you really want to continue (y/n) ? ${WHITE}"
     read -r answer
     case "$answer" in
@@ -38,7 +38,7 @@ fi
 
 # check wether the default shell is zsh or not
 if [[ "$SHELL" != /bin/zsh && "$SHELL" != /usr/bin/zsh ]]; then
-  echo -e "${WHITE}Install zsh if it is not already installed on your system and make it your default shell :"
+  echo -e "${WHITE}Install zsh if it is not already on your system and make it your default shell :"
   echo -e "${GREEN}> ${BLUE}chsh $USER"
   echo -e "${GREEN}> ${BLUE}/bin/zsh"
   printf '\n'
@@ -46,7 +46,7 @@ fi
 
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
 if [[ -f /etc/zsh/zshenv ]]; then
-  if ! grep "export ZDOTDIR=\$HOME/.config/zsh" </etc/zsh/zshenv >/dev/null; then
+  if ! grep --silent "export ZDOTDIR=\$HOME/.config/zsh" </etc/zsh/zshenv; then
     echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
   fi
 else
@@ -55,7 +55,7 @@ else
   echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
 fi
 if [[ -f /etc/zsh/zshrc ]]; then
-  if ! grep "zsh-newuser-install() { :; }" </etc/zsh/zshrc >/dev/null; then
+  if ! grep --silent "zsh-newuser-install() { :; }" </etc/zsh/zshrc; then
     echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc >/dev/null
   fi
 else
@@ -65,14 +65,17 @@ fi
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
 if [[ -f /etc/pulse/client.conf ]]; then
-  if ! grep -E "cookie-file = /.+/.cache/pulse/cookie" </etc/pulse/client.conf >/dev/null; then
+  if ! grep --silent -E "cookie-file = /.+/.cache/pulse/cookie" </etc/pulse/client.conf; then
     printf "\ncookie-file = %s/.cache/pulse/cookie" "$HOME" | sudo tee -a /etc/pulse/client.conf >/dev/null
   fi
 fi
 
-# Install required packages
-if [[ -f /etc/arch-release ]]; then
-  packages=("bat" "eza" "fd" "fzf" "gcc" "git" "github-cli" "glow" "hexyl" "i3-wm" "kitty" "man-db" "ncdu" "neovim" "npm" "picom" "poppler" "python" "ripgrep" "rofi" "tmux" "tree-sitter-cli" "rustup" "unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
+# specific things to do on operating systems using pacman as a package manager
+if [[ -f /bin/pacman ]]; then
+  # install required packages
+  packages=("bat" "eza" "fd" "fzf" "gcc" "git" "github-cli" "glow" "hexyl" "i3-wm" "kitty" "man-db"
+    "ncdu" "neovim" "npm" "picom" "poppler" "python" "ripgrep" "rofi" "tmux" "tree-sitter-cli" "rustup"
+    "unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
   echo -en "${BLUE}Would you like to synchronize the required packages with pacman ? (y/n) ${WHITE}"
   read -r answer
   case "$answer" in
@@ -84,6 +87,8 @@ if [[ -f /etc/arch-release ]]; then
     echo -e "${WHITE}${packages[*]}"
     ;;
   esac
+
+  # fonts
   if [[ ! -f /usr/share/fonts/TTF/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf ]]; then
     if [[ ! -f /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf ]]; then
       echo -en "${BLUE}Would you like to install the JetBrains Mono Nerd Font ? (y/n) ${WHITE}"
@@ -125,23 +130,32 @@ if [[ -f /etc/arch-release ]]; then
       ;;
     esac
   fi
-else
-  echo -e "${GREEN}Make sure the following packages are installed :"
-  echo -e "${WHITE}${packages[*]}"
-fi
 
-# Install yay (AUR helper)
-if [[ -f /etc/arch-release ]]; then
-  if [[ ! -f /usr/bin/yay ]]; then
+  # install, enable and start paccache
+  if ! systemctl status paccache.timer >/dev/null 2>&1; then
+    echo -en "${BLUE}Would you like to use paccache to automatically clean up the package cache ? (y/n) ${WHITE}"
+    read -r answer
+    case "$answer" in
+    [yY][eE][sS] | [yY])
+      [[ -f /bin/paccache ]] || sudo pacman -S pacman-contrib
+      [[ -f /etc/systemd/system/paccache.timer ]] || cat <./etc/paccache.timer >/etc/systemd/system/paccache.timer
+      sudo systemctl enable paccache.timer
+      sudo systemctl start paccache.timer
+      ;;
+    esac
+  fi
+
+  # Install yay (AUR helper)
+  if [[ ! -f /bin/yay ]]; then
     echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper (y/n) ? ${WHITE}"
     read -r answer
     case "$answer" in
     [yY][eE][sS] | [yY])
-      if [[ ! -f /usr/bin/git ]]; then
+      if [[ ! -f /bin/git ]]; then
         echo "${YELLOW}Having git installed is necessary to install yay."
         sudo pacman -S git
       fi
-      if [[ ! -f /usr/bin/makepkg ]]; then
+      if [[ ! -f /bin/makepkg ]]; then
         echo "${YELLOW}The base-devel package is necessary to install yay."
         sudo pacman -S base-devel
       fi
@@ -155,6 +169,10 @@ if [[ -f /etc/arch-release ]]; then
       ;;
     esac
   fi
+
+else
+  echo -e "${GREEN}Make sure the following packages are installed :"
+  echo -e "${WHITE}${packages[*]}"
 fi
 
 # TexLive
@@ -265,15 +283,14 @@ fi
 # modify yazi cache directory
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
 
-# run WSL/install.sh
-if [[ -n "$WSL_DISTRO_NAME" ]]; then
+# run etc/install.sh
+[[ -n "$WSL_DISTRO_NAME" ]] && wsl="--wsl"
+printf '\n'
+echo -en "${BLUE}Do you want to run ${GREEN}./etc/install.sh${BLUE} ? (y/n) ${WHITE}"
+read -r answer
+case "$answer" in
+[yY][eE][sS] | [yY])
   printf '\n'
-  echo -en "${BLUE}Looks like you are using WSL. Do you want to run ${GREEN}WSL/install.sh${BLUE} ? (y/n) ${WHITE}"
-  read -r answer
-  case "$answer" in
-  [yY][eE][sS] | [yY])
-    printf '\n'
-    WSL/install.sh
-    ;;
-  esac
-fi
+  ./etc/install.sh "$wsl"
+  ;;
+esac

@@ -27,16 +27,21 @@
     --newtab-background-color: #1f1f28 !important;
     --zen-themed-toolbar-bg: #181820 !important;
     --zen-main-browser-background: #1f1f28 !important;
-
-    --button-hover-bgcolor: #54546d !important;
     --zen-toolbox-padding: 50 !important;
 
-    --in-content-primary-button-background:      !important;
-    --in-content-primary-button-border-color:      !important;
-    --in-content-primary-button-text-color:      !important;
-    --in-content-primary-button-background-hover:      !important;
-    --in-content-primary-button-border-color-hover:      !important;
-    --in-content-primary-button-text-color-hover:      !important;
+    /* buttons */
+    --in-content-button-background: #363646 !important;
+    --in-content-button-border-color: #363646 !important;
+    --in-content-button-text-color: #fbfbfe !important;
+    --in-content-button-background-hover: #54546d !important;
+    --in-content-button-border-color-hover: #54546d !important;
+    --in-content-button-text-color-hover: #fbfbfe !important;
+    --in-content-primary-button-background: #363646 !important;
+    --in-content-primary-button-border-color: #363646 !important;
+    --in-content-primary-button-text-color: #fbfbfe !important;
+    --in-content-primary-button-background-hover: #54546d !important;
+    --in-content-primary-button-border-color-hover: #54546d !important;
+    --in-content-primary-button-text-color-hover: #fbfbfe !important;
   }
 
   #permissions-granted-icon {

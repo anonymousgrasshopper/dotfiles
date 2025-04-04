@@ -103,6 +103,16 @@ return {
         },
         opts = { skip = true },
       },
+      { -- get rid of empty messages like when running :checkhealth
+        filter = {
+          event = "notify",
+          kind = "info",
+          any = {
+            { find = "^$" },
+          },
+        },
+        opts = { skip = true },
+      },
     },
   },
 }

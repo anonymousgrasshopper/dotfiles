@@ -51,3 +51,8 @@ neomutt() {
   /bin/neomutt "$@"
   kitty_set_spacing
 }
+cxxmatrix() {
+  kitty_remove_spacing
+  /bin/cxxmatrix "$@"
+  kitty_set_spacing
+}

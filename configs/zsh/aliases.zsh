@@ -10,8 +10,6 @@ alias .....="cd ../../../.."
 alias q="exit"
 alias c="clear"
 alias -- +x="chmod u+x"
-alias rmpkg="sudo pacman -Rns"
-alias sypkg="sudo pacman -S"
 alias fetch="fastfetch"
 alias lg="lazygit"
 alias py="python3"
@@ -31,7 +29,6 @@ alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # CLI tools default options
-alias rm="rm -i"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
@@ -47,6 +44,14 @@ alias llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
 alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
+# Neovim
+nfd() {
+  nvim $(fzf -m --select-1 --query="$*")
+}
+alias vim="nvim"
+alias nv="nvim"
+alias v="nvim"
+
 # git
 clone() {
   git clone "https://github.com/$1"
@@ -60,19 +65,11 @@ gacp() {
 }
 gitdot() {
   if [[ $# == 0 ]]; then
-    /usr/local/bin/git_dotfiles && cd ~/.config/dotfiles && lazygit
+    /usr/local/bin/git_dotfiles && cd ~/.config/dotfiles && lazygit && cd - >/dev/null
   else
     /usr/local/bin/git_dotfiles $@
   fi
 }
-
-# Neovim
-nfd() {
-  nvim $(fzf -m --select-1 --query="$*")
-}
-alias vim="nvim"
-alias nv="nvim"
-alias v="nvim"
 
 # Tmux
 alias tls="tmux list-session"
@@ -121,12 +118,39 @@ killzen() {
   kill $(ps -e | rg zen\-bin | sed 's/ ?.\+//')
 }
 
+# pacman
+alias rmpkg="sudo pacman -Rns"
+alias sypkg="sudo pacman -S"
+alias pacmanclean='sudo pacman -Rns $(pacman -Qtdq)'
+
+# rm that only asks for confirmation for nonempty files
+rm() {
+  args=()
+  items=()
+  while (("$#")); do
+    if [[ "$1" =~ ^- ]]; then
+      args+=("$1")
+    else
+      items+=("$1")
+    fi
+    shift
+  done
+  for element ("$items[@]"); do
+    # print -r -- $element
+    if [[ -e "$element" && ! -s "$element" ]]; then
+      /bin/rm -f "${args[@]}" "$element"
+    else
+      /bin/rm -i "${args[@]}" "$element"
+    fi
+  done
+}
+
 # help command using bat
 help() {
   "$@" --help 2>&1 | bat --plain --language=help
 }
 
-# far /path/to/directory/ "regexp" "replacement"
+# Usage: far /path/to/directory/ "regexp" "replacement"
 far() {
   sed -i -e "s@$2@$3@g" $(rg "$2" "$1" -l --fixed-strings)
 }
@@ -138,5 +162,5 @@ function x() {
   if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
     builtin cd -- "$cwd"
   fi
-  rm -f -- "$tmp"
+  /bin/rm -f -- "$tmp"
 }

@@ -40,7 +40,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
       vim.api.nvim_create_autocmd("BufLeave", {
         group = vim.api.nvim_create_augroup("Code Action Preview", { clear = true }),
         callback = function()
-          print(vim.bo.filetype)
           vim.g.code_action_preview = nil
           vim.api.nvim_del_augroup_by_name("Code Action Preview")
         end,

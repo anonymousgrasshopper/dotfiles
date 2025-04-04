@@ -2,12 +2,8 @@ return {
   {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonLog", "MasonUninstallAl" },
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-    },
     config = function()
       local mason = require("mason")
-      local mason_lspconfig = require("mason-lspconfig")
 
       mason.setup({
         ui = {
@@ -16,16 +12,6 @@ return {
             package_pending = "➜ ",
             package_uninstalled = "✗",
           },
-        },
-      })
-
-      mason_lspconfig.setup({
-        ensure_installed = {
-          "clangd",
-          "lua_ls",
-          "bashls",
-          "texlab",
-          "asm_lsp",
         },
       })
 
