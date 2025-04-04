@@ -42,9 +42,10 @@ copy_file() {
 }
 
 # place system-wide configuration files
+[[ -f /bin/pacman ]] && copy_file pacman.conf /etc sudo
 eval type picom >/dev/null && copy_file picom.conf /etc/xdg sudo
 [[ -f /etc/arch-release ]] && copy_file paccache.timer /etc/systemd/system sudo
-[[ -f /bin/pacman ]] && copy_file pacman.conf /etc sudo
+[[ -f /etc/systemd/journald.conf ]] && copy_file journald.conf /etc/systemd sudo
 
 # Windows and WSL specific files
 if [[ -n "$WINDOWS" ]]; then
