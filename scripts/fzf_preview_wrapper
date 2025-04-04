@@ -7,7 +7,7 @@ elif [[ -f $1 ]]; then
     kitten icat "$1" 2>/dev/null
   elif [[ "$1" = *.md ]]; then
     glow -s dark "$1"
-  elif file "$1" | grep --silent "\-bit"; then
+  elif file --brief "$1" | grep --silent "\-bit"; then
     hexyl "$1"
   else
     bat --number --color=always "$1"
