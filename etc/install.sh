@@ -46,6 +46,7 @@ copy_file() {
 eval type picom >/dev/null && copy_file picom.conf /etc/xdg sudo
 [[ -f /etc/arch-release ]] && copy_file paccache.timer /etc/systemd/system sudo
 [[ -f /etc/systemd/journald.conf ]] && copy_file journald.conf /etc/systemd sudo
+[[ -n "$CPLUS_INCLUDE_PATH" ]] && copy_file dbg.h "$CPLUS_INCLUDE_PATH"
 
 # Windows and WSL specific files
 if [[ -n "$WINDOWS" ]]; then

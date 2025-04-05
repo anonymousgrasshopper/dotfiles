@@ -259,39 +259,6 @@ ${RED}Enter a number (default 3) : "
   done
 )
 
-# copy dbg.h in $CPLUS_INCLUDE_PATH
-if [[ -n "$CPLUS_INCLUDE_PATH" ]]; then
-  [[ -d "$CPLUS_INCLUDE_PATH" ]] || mkdir -p "$CPLUS_INCLUDE_PATH"
-  if [[ ! -f "$CPLUS_INCLUDE_PATH/dbg.h" ]]; then
-    cp dbg.h "$CPLUS_INCLUDE_PATH"
-  elif ! cmp --silent "dbg.h" "$CPLUS_INCLUDE_PATH/dbg.h"; then
-    if [[ ! $OVERWRITE ]]; then
-      echo -en "${BLUE}Would you like to :
-  ${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}dbg.h${WHITE} header file before replacing it
-  ${BLUE}- 2 :${WHITE} delete your current ${GREEN}dbg.h${WHITE} header file and replace it
-  ${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}dbg.h${WHITE} header file ?
-${RED}Enter a number (default 3) : "
-      read -r answer
-    else
-      answer=2
-    fi
-    case "$answer" in
-    1)
-      [[ -f "$CPLUS_INCLUDE_PATH/dbg.h.bak" ]] && rm -f "$CPLUS_INCLUDE_PATH/dbg.h.bak"
-      mv "$CPLUS_INCLUDE_PATH/dbg.h" "$CPLUS_INCLUDE_PATH/dbg.h.bak"
-      cp dbg.h "$CPLUS_INCLUDE_PATH"
-      ;;
-    2)
-      rm -f "$CPLUS_INCLUDE_PATH/dbg.h"
-      cp dbg.h "$CPLUS_INCLUDE_PATH"
-      ;;
-    *)
-      echo -e "${WHITE}Skipping..."
-      ;;
-    esac
-  fi
-fi
-
 # modify yazi cache directory
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
 
