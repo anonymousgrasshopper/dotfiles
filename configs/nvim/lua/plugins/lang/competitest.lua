@@ -5,6 +5,8 @@ return {
   },
   cmd = { "CompetiTest" },
   keys = {
+    { "<leader>ctst", "<Cmd>CompetiTest receive contest<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive contest" },
+    { "<leader>pb", "<Cmd>CompetiTest receive problem<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive problem" },
     { "<localleader>ctst", "<Cmd>CompetiTest receive contest<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive contest" },
     { "<localleader>pb", "<Cmd>CompetiTest receive problem<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive problem" },
     { "<localleader>add", "<Cmd>CompetiTest add_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Add testcase" },

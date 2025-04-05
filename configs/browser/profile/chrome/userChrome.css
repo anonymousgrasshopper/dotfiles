@@ -1,4 +1,4 @@
-/* hide webpage loading notificatins in the bottom left corner */
+/* hide webpage loading notifications in the bottom left corner */
 #statuspanel[type="status"] {
   opacity: 0 !important;
 }

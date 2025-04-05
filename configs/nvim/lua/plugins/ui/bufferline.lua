@@ -30,6 +30,13 @@ return {
             highlight = "PanelHeading",
             separator = "▐",
           },
+          {
+            filetype = "CompetiTest",
+            text = "Testcases",
+            highlight = "PanelHeading",
+            text_align = "center",
+            separator = "▌",
+          },
         },
       },
       highlights = {
