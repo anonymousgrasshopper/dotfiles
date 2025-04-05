@@ -210,43 +210,51 @@ fi
 
 # copy config folders
 (
-  if [[ "$SCRIPT_DIR" =~ (/home/[^/]+) ]]; then
-    HOME_DIR=${BASH_REMATCH[1]}
-  else
-    HOME_DIR="/root"
-  fi
-  [[ -d "$HOME_DIR/.config" ]] || mkdir "$HOME_DIR/.config"
+  [[ -d "$HOME/.config" ]] || mkdir "$HOME/.config"
   cd "$SCRIPT_DIR/configs" || {
     echo -e "${RED}Error:${WHITE} configs folder is not present in the script's directory"
     exit
   }
   printf '\n'
   for item in *; do
-    if [[ ! -d "$HOME_DIR/.config/$item" && ! -f "$HOME_DIR/.config/$item" ]]; then
-      cp -r "$item" "$HOME_DIR/.config/"
+    if [[ ! -d "$HOME/.config/$item" && ! -f "$HOME/.config/$item" ]]; then
+      cp -r "$item" "$HOME/.config/"
     else
-      if [[ ! $OVERWRITE ]]; then
-        echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?\n${RED}Enter a number (default 3) : "
-        read -r answer
-      else
-        answer=2
-      fi
-      case "$answer" in
-      1)
-        if [[ -d "$HOME_DIR/.config/$item.bak" || -f "$HOME_DIR/.config/$item.bak" ]]; then
-          rm -rf "$HOME_DIR/.config/$item.bak"
+      difference=false
+      while read -r -d ''; do
+        if ! diff "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then
+          difference=true
+          break
         fi
-        mv "$HOME_DIR/.config/$item" "$HOME_DIR/.config/$item.bak"
-        cp -r "$item" "$HOME_DIR/.config/"
-        ;;
-      2)
-        rm -rf "$HOME_DIR/.config/$item"
-        cp -r "$item" "$HOME_DIR/.config/"
-        ;;
-      *)
-        echo -e "${WHITE}Skipping..."
-        ;;
-      esac
+      done < <(if [[ -d "$item" ]]; then fd --print0 --hidden --exclude '*.git' -tf . "$item"; else echo -ne "$item\0"; fi)
+      if $difference; then
+        if [[ ! $OVERWRITE ]]; then
+          echo -en "${BLUE}Would you like to :
+  ${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it
+  ${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it
+  ${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?
+${RED}Enter a number (default 3) : "
+          read -r answer
+        else
+          answer=2
+        fi
+        case "$answer" in
+        1)
+          if [[ -d "$HOME/.config/$item.bak" || -f "$HOME/.config/$item.bak" ]]; then
+            rm -rf "$HOME/.config/$item.bak"
+          fi
+          mv "$HOME/.config/$item" "$HOME/.config/$item.bak"
+          cp -r "$item" "$HOME/.config/"
+          ;;
+        2)
+          rm -rf "$HOME/.config/$item"
+          cp -r "$item" "$HOME/.config/"
+          ;;
+        *)
+          echo -e "${WHITE}Skipping..."
+          ;;
+        esac
+      fi
     fi
   done
 )
@@ -258,7 +266,11 @@ if [[ -n "$CPLUS_INCLUDE_PATH" ]]; then
     cp dbg.h "$CPLUS_INCLUDE_PATH"
   elif ! cmp --silent "dbg.h" "$CPLUS_INCLUDE_PATH/dbg.h"; then
     if [[ ! $OVERWRITE ]]; then
-      echo -en "${BLUE}Would you like to :\n${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}dbg.h${WHITE} header file before replacing it\n${BLUE}- 2 :${WHITE} delete your current ${GREEN}dbg.h${WHITE} header file and replace it\n${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}dbg.h${WHITE} header file ?\n${RED}Enter a number (default 3) : "
+      echo -en "${BLUE}Would you like to :
+  ${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}dbg.h${WHITE} header file before replacing it
+  ${BLUE}- 2 :${WHITE} delete your current ${GREEN}dbg.h${WHITE} header file and replace it
+  ${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}dbg.h${WHITE} header file ?
+${RED}Enter a number (default 3) : "
       read -r answer
     else
       answer=2
