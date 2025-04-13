@@ -4,6 +4,9 @@ local i = ls.insert_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
+local first_line = function()
+  return vim.api.nvim_win_get_cursor(0)[1] == 1
+end
 
 local check_not_in_node = function(ignored_nodes)
   local pos = vim.api.nvim_win_get_cursor(0)
@@ -17,7 +20,7 @@ local not_in_string_comment = function()
 end
 
 return {
-  s({ trig = "tmp ", dscr = "CP template", snippetType = "autosnippet"},
+  s({ trig = "tmp", dscr = "CP template", snippetType = "autosnippet"},
     fmta(
       [[
         #pragma GCC optimize("O3,unroll-loops")
@@ -50,7 +53,7 @@ return {
         i(0),
       }
     ),
-    { condition = line_begin, not_in_string_comment }
+    { condition = first_line, not_in_string_comment }
   ),
   s({ trig = "cf ", dscr = "Codeforces template", snippetType = "autosnippet" },
     fmta(

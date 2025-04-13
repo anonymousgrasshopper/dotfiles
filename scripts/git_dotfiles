@@ -7,7 +7,7 @@ GREEN='\x1b[38;2;106;149;137m' #6A9589
 BLUE='\x1b[38;2;101;133;148m'  #658594
 
 # list of configs and scripts to copy
-configs=("bat" "browser/profile/chrome" "browser/profile/user.js" "browser/browser-homepage.html" "browser/zen_sync_profile" "browser/homepage-wallpaper.jpg" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # clone the repo if it is not in ~/.config ans cd into it

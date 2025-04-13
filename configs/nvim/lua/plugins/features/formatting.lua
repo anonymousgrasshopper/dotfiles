@@ -34,18 +34,17 @@ return {
   },
   opts = {
     formatters_by_ft = {
-      cpp = { "clang_format_config" },
+      cpp = { "clang_format" },
       lua = { "stylua" },
       bash = { "shfmt" },
       sh = { "shfmt" },
       tex = { "tex-fmt" },
       css = { "prettier" },
       js = { "prettier" },
-      -- python = { "isort", "black" },
       ["_"] = { "trim_whitespace" },
     },
     formatters = {
-      clang_format_config = {
+      clang_format = {
         command = "clang-format",
         args = "--style=file:$HOME/.config/clang-format",
       },
