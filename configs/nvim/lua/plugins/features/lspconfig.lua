@@ -63,7 +63,16 @@ return {
 
       require("mason-lspconfig").setup_handlers({
         function(server_name)
-          require("lspconfig")[server_name].setup({
+          lspconfig[server_name].setup({
+            capabilities = capabilities,
+          })
+        end,
+
+        ["clangd"] = function()
+          lspconfig.clangd.setup({
+            init_options = {
+              fallbackFlags = { "--std=c++20" },
+            },
             capabilities = capabilities,
           })
         end,

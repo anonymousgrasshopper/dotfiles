@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <type_traits>
@@ -16,9 +17,12 @@ using std::cerr, std::string, std::to_string, std::pair, std::tuple,
   for (int i = 0; i < x; i++) cerr << '\n';
 
 template <typename T>
-concept Container = requires(T t) { t.size(); };
+concept Iterable = requires(T t) {
+  std::begin(t);
+  std::end(t);
+};
 template <typename T>
-  requires(!Container<T>)
+  requires(!Iterable<T>)
 inline string dbg_format(T x) {
   return to_string(x);
 }
@@ -35,7 +39,7 @@ inline string dbg_format(const string& x) {
   string formatted_string = "";
   for (char c : x) {
     if (c == '\n') {
-      formatted_string += "\\n";  // add two characters: backslash + n
+      formatted_string += "\\n";
     } else {
       formatted_string += c;
     }
@@ -61,37 +65,34 @@ std::string dbg_format(const std::tuple<Args...>& tpl) {
   tuple_to_string_helper<std::tuple<Args...>, 0>(tpl, result);
   return result + ")";
 }
-template <Container T>
+template <Iterable T>
 inline string dbg_format(const T& container) {
   string str = "[ ";
-  for (auto elt : container) {
-    str += dbg_format(elt);
-    str += ", ";
+  for (auto&& elt : container) {
+    str += dbg_format(elt) + ", ";
   }
-  if (container.size() != 0) {
-    str.pop_back();
-    str.pop_back();
-  }
-  str += " ]";
-  return str;
+  if (!container.empty()) str.pop_back(), str.pop_back();
+  return str + " ]";
 }
 
-#define GET_MACRO_VAR(_1, _2, _3, _4, NAME, ...) NAME
-#define dbg(...) GET_MACRO_VAR(__VA_ARGS__, dbg4, dbg3, dbg2, dbg1)(__VA_ARGS__)
-
-#define dbg1(x) cerr << #x << " = " << dbg_format(x) << '\n';
-#define dbg2(x, y)                              \
-  cerr << #x << " = " << dbg_format(x) << '\n'; \
-  cerr << #y << " = " << dbg_format(y) << '\n';
-#define dbg3(x, y, z)                           \
-  cerr << #x << " = " << dbg_format(x) << '\n'; \
-  cerr << #y << " = " << dbg_format(y) << '\n'; \
-  cerr << #z << " = " << dbg_format(z) << '\n';
-#define dbg4(x, y, z, w)                        \
-  cerr << #x << " = " << dbg_format(x) << '\n'; \
-  cerr << #y << " = " << dbg_format(y) << '\n'; \
-  cerr << #z << " = " << dbg_format(z) << '\n'; \
-  cerr << #w << " = " << dbg_format(w) << '\n';
+#define dbg(...) dbg_expand(#__VA_ARGS__, __VA_ARGS__)
+template <typename T>
+void dbg_single(const char* name, const T& val) {
+  cerr << name << " = " << dbg_format(val) << '\n';
+}
+inline void dbg_expand(const char*) {}  // base case for zero args
+template <typename T, typename... Args>
+void dbg_expand(const char* names, const T& value, const Args&... args) {
+  const char* comma = strchr(names, ',');
+  if (!comma) {
+    dbg_single(names, value);
+  } else {
+    std::string name(names, comma);
+    dbg_single(name.c_str(), value);
+    while (*comma == ',' || *comma == ' ') ++comma;  // skip commas/spaces
+    dbg_expand(comma, args...);
+  }
+}
 
 template <typename T>
 void dbg_var(T& x) {
