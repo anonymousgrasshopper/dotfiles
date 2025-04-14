@@ -22,19 +22,6 @@ template <typename T>
 inline string dbg_format(T x) {
   return to_string(x);
 }
-template <Container T>
-inline string dbg_format(const T& container) {
-  string str = "[ ";
-  for (int i = 0; i < container.size() - 1; ++i) {
-    str += dbg_format(container[i]);
-    str += ", ";
-  }
-  if (container.size() != 0) {
-    str += dbg_format(container[container.size() - 1]);
-  }
-  str += " ]";
-  return str;
-}
 inline string dbg_format(const bool& x) {
   return (x ? "true" : "false");
 }
@@ -73,6 +60,20 @@ std::string dbg_format(const std::tuple<Args...>& tpl) {
   std::string result = "(";
   tuple_to_string_helper<std::tuple<Args...>, 0>(tpl, result);
   return result + ")";
+}
+template <Container T>
+inline string dbg_format(const T& container) {
+  string str = "[ ";
+  for (auto elt : container) {
+    str += dbg_format(elt);
+    str += ", ";
+  }
+  if (container.size() != 0) {
+    str.pop_back();
+    str.pop_back();
+  }
+  str += " ]";
+  return str;
 }
 
 #define GET_MACRO_VAR(_1, _2, _3, _4, NAME, ...) NAME
