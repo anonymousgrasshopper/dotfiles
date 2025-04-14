@@ -122,7 +122,6 @@ return {
           "-Wno-sign-compare",
           "-D_GLIBCXX_DEBUG",
           "-D_GLIBCXX_DEBUG_PEDANTIC",
-          "-D_FORTIFY_SOURCE=2",
           "-DLOCAL",
           "-fsanitize=address", -- comment this line out to disable the LeakSanitizer and the AddressSanitizer
           "-fno-sanitize-recover",
