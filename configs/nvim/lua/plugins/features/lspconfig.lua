@@ -48,6 +48,7 @@ return {
       local lspconfig = require("lspconfig")
       local mason_lspconfig = require("mason-lspconfig")
       local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
 
       mason_lspconfig.setup({
         ensure_installed = {
@@ -103,6 +104,13 @@ return {
         ["bashls"] = function()
           lspconfig.bashls.setup({
             filetypes = { "bash", "sh", "zsh" },
+            capabilities = capabilities,
+          })
+        end,
+
+        ["cssls"] = function()
+          lspconfig.cssls.setup({
+            filetypes = { "html", "css" },
             capabilities = capabilities,
           })
         end,

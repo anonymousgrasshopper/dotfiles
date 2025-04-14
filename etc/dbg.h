@@ -1,45 +1,78 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <type_traits>
 #include <vector>
-using namespace std;
+using std::cerr, std::string, std::to_string, std::pair, std::tuple,
+    std::vector, std::enable_if;
 
+#define id(x)                                              \
+  string str = #x;                                         \
+  cerr << str << " : \n";                                  \
+  for (int i = 0; i != str.length() + 2; ++i) cerr << "-"; \
+  cerr << '\n';
 #define line() cerr << "Line " << __LINE__ << " : ";
-#define id(x) cerr << #x << " : \n=======\n";
 #define n(x) \
   for (int i = 0; i < x; i++) cerr << '\n';
 
-inline string dbg_format(bool& x) {
-  return (x ? "true" : "false");
-}
-inline string dbg_format(char& x) {
-  return "\'" + to_string(x) + "\'";
-}
-inline string dbg_format(string& x) {
-  return "\"" + x + "\"";
-}
-template <typename A, typename B>
-inline string dbg_format(pair<A, B> x) {
-  return "(" + dbg_format(x.first) + "," + dbg_format(x.second) + ")";
-}
-template <typename A, typename B, typename C>
-inline string dbg_format(tuple<A, B, C> x) {
-  return "(" + dbg_format(x.get(0)) + "," + dbg_format(x.get(1)) + "," +
-         dbg_format(x.get(2)) + ")";
-}
 template <typename T>
-inline string dbg_format(vector<T>& vec) {
-  string str = "[ ";
-  for (T x : vec) {
-    str += dbg_format(x);
-    str += " ";
-  }
-  str += "] ";
-  return str;
-}
+concept Container = requires(T t) { t.size(); };
 template <typename T>
+  requires(!Container<T>)
 inline string dbg_format(T x) {
   return to_string(x);
+}
+template <Container T>
+inline string dbg_format(const T& container) {
+  string str = "[ ";
+  for (int i = 0; i < container.size() - 1; ++i) {
+    str += dbg_format(container[i]);
+    str += ", ";
+  }
+  if (container.size() != 0) {
+    str += dbg_format(container[container.size() - 1]);
+  }
+  str += " ]";
+  return str;
+}
+inline string dbg_format(const bool& x) {
+  return (x ? "true" : "false");
+}
+inline string dbg_format(const char& x) {
+  string formatted_string = "'";
+  formatted_string.push_back(x);
+  formatted_string.push_back('\'');
+  return formatted_string;
+}
+inline string dbg_format(const string& x) {
+  string formatted_string = "";
+  for (char c : x) {
+    if (c == '\n') {
+      formatted_string += "\\n";  // add two characters: backslash + n
+    } else {
+      formatted_string += c;
+    }
+  }
+  return "\"" + formatted_string + "\"";
+}
+template <typename A, typename B>
+inline string dbg_format(const pair<A, B>& x) {
+  return "(" + dbg_format(x.first) + ", " + dbg_format(x.second) + ")";
+}
+template <typename Tuple, std::size_t Index>
+void tuple_to_string_helper(const Tuple& tpl, std::string& result) {
+  if constexpr (Index < std::tuple_size_v<Tuple>) {
+    if (result != "(")
+      result += ", ";  // Add separator if not the first element
+    result += dbg_format(std::get<Index>(tpl));
+    tuple_to_string_helper<Tuple, Index + 1>(tpl, result);
+  }
+}
+template <typename... Args>
+std::string dbg_format(const std::tuple<Args...>& tpl) {
+  std::string result = "(";
+  tuple_to_string_helper<std::tuple<Args...>, 0>(tpl, result);
+  return result + ")";
 }
 
 #define GET_MACRO_VAR(_1, _2, _3, _4, NAME, ...) NAME
@@ -69,13 +102,17 @@ typename enable_if<sizeof...(Types)>::type dbg_var(T& x, Types&... y) {
   dbg_var(y...);
 }
 
-#define GET_MACRO_ARRAY(_1, _2, NAME, ...) NAME
-#define dbgarr(...) GET_MACRO_ARRAY(__VA_ARGS__, dbgarr2, dbgarr1)(__VA_ARGS__)
-#define dbgarr1(x)                               \
-  cerr << #x << " :\n=======\n";                 \
-  for (auto y : x) cerr << dbg_format(y) << " "; \
+#define GET_MACRO_ARRAY(_1, _2, _3, NAME, ...) NAME
+#define dbgarr(...) \
+  GET_MACRO_ARRAY(__VA_ARGS__, dbgarr3, dbgarr2, dbgarr1)(__VA_ARGS__)
+#define dbgarr1(x)                                      \
+  id(a) for (auto y : x) cerr << dbg_format(y) << ", "; \
   cerr << '\n';
-#define dbgarr2(a, n)                                          \
-  cerr << #a << " :\n=======\n";                               \
-  for (int i = 0; i < n; i++) cerr << dbg_format(a[i]) << " "; \
+#define dbgarr2(a, n)                                    \
+  id(a) for (int i = 0; i < n; i++) cerr << a[i] << " "; \
   cerr << '\n';
+#define dbgarr3(a, n, m)                              \
+  id(a) for (int i = 0; i < n; i++) {                 \
+    for (int j = 0; j != m; ++j) cerr << a[i] << " "; \
+    cerr << '\n';                                     \
+  }

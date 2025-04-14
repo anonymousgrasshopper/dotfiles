@@ -6,10 +6,6 @@ YELLOW='\x1b[38;2;255;158;59m' #FF9E3B
 GREEN='\x1b[38;2;106;149;137m' #6A9589
 BLUE='\x1b[38;2;101;133;148m'  #658594
 
-# list of configs and scripts to copy
-configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
-scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
-
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
 cd ~/.config/dotfiles || {
@@ -17,28 +13,34 @@ cd ~/.config/dotfiles || {
   exit
 }
 
+# $1: file to copy relative to ~/.config/dotfiles, $2: destination
+copy_file() {
+  [[ -e "$1" ]] || {
+    echo -e "${YELLOW} $1 not found"
+    return 1
+  }
+  if [[ -d "$1" ]]; then
+    [[ -d "configs/$(basename "$1")" ]] && rm -rf "configs/$(basename "$1")"
+    cp -r "$1" "$2/" 2>/dev/null
+  else
+    cp "$1" "$2/" 2>/dev/null
+  fi
+}
+
+# list of configs and scripts to copy
+configs=("bat" "btop" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
+
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
-  if [[ -d "configs/$config" || -f "configs/$config" ]]; then
-    rm -rf "configs/$config"
-  fi
-  if [[ -e "$HOME/.config/$config" ]]; then
-    cp -r "$HOME/.config/$config" "configs/$(dirname "$config")"
-  else
-    echo -e "${YELLOW} ~/.config/$config not found."
-  fi
+  copy_file "$HOME/.config/$config" "configs/"
 done
 # overwrite scripts in the dotfiles repo
 for script in ${scripts[@]}; do
-  if [[ -f "scripts/$script" ]]; then
-    rm -rf "scripts/$script"
-  fi
-  if [[ -f "/usr/local/bin/$script" ]]; then
-    cp "/usr/local/bin/$script" "scripts"
-  else
-    echo "${YELLOW} /usr/local/bin/$script not found."
-  fi
+  copy_file "/usr/local/bin/$script" "scripts"
 done
+# overwrite dbg.h
+copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
 
 # remove chosen files and directories
 [[ -f "configs/zsh/.zcompdump" ]] && rm "configs/zsh/.zcompdump"
