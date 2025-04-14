@@ -111,7 +111,6 @@ return {
           "-Wextra",
           "-pedantic",
           "-std=c++20",
-          "-O2",
           "-Wshadow",
           "-Wformat=2",
           "-Wfloat-equal",
