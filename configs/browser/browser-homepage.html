@@ -13,10 +13,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: url("../wallpapers/wallpaper.jpeg")
+        background: url("homepage-wallpaper.png")
           no-repeat center center fixed;
         background-size: cover;
-        font-family: "Fira Code", monospace;
+        font-family: "FiraCode Nerd Font";
       }
 
       .rounded-box {
@@ -49,12 +49,28 @@
         transition:
           opacity 0.2s,
           color 0.2s;
+        position: relative;
+        display: inline-block;
         color: white;
       }
 
-      .subtext:hover {
-        color: #6a9589;
-        opacity: 1;
+      .subtext::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: white;
+        bottom: -1px;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+
+      .subtext:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
       }
 
       .subtext.dimmed {
@@ -69,7 +85,7 @@
         left: 10px;
         right: 10px;
         font-size: 14px;
-        font-family: "Fira Code", monospace;
+        font-family: "FiraCode Nerd Font";
         letter-spacing: 2px;
       }
 
@@ -100,7 +116,7 @@
         border: none;
         color: #DCD7BA;
         font-size: 14px;
-        font-family: "Fira Code", monospace;
+        font-family: "FiraCode Nerd Font";
         outline: none;
         caret-color: #DCD7BA;
         letter-spacing: 2px;
@@ -167,7 +183,7 @@
               window.open(links[inputText], "_blank");
             } else {
               window.open(
-                `https://search.inetol.net/search?q=${encodeURIComponent(inputText)}`,
+                `https://duckduckgo.com/search?q=${encodeURIComponent(inputText)}`,
                 "_blank",
               );
             }
@@ -201,7 +217,7 @@
           <div class="category math">Mathematics</div>
           <div class="subtext">󰐱 AoPS</div>
           <div class="subtext">󰍘 Animath</div>
-          <div class="subtext"> POFM</div>
+          <div class="subtext"> POFM</div>
           <div class="subtext"> Mathraining</div>
         </div>
         <div class="column">
