@@ -39,6 +39,7 @@ return {
       bash = { "shfmt" },
       sh = { "shfmt" },
       tex = { "tex-fmt" },
+      html = { "superhtml" },
       css = { "prettier" },
       js = { "prettier" },
       ["_"] = { "trim_whitespace" },

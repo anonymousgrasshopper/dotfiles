@@ -1,9 +1,5 @@
 @import url("css/icons.css");
 
-/* variables */
-:root {
-}
-
 /* hide webpage loading notifications in the bottom left corner */
 #statuspanel[type="status"] {
   opacity: 0 !important;
@@ -14,16 +10,15 @@
   scrollbar-width: none !important;
 }
 
-/* remove the border around the ui and round the top-left corner */
+/* remove the border around the ui */
 #tabbrowser-tabbox {
   outline: none !important;
   box-shadow: none !important;
-  border-radius: 10px !important;
 }
 
 /* Roundness of webcontent */
 :root:not([sizemode="fullscreen"]) .browserStack > browser {
-  clip-path: xywh(0 0 100% 100% round 10px);
+  clip-path: inset(0 round 10px 0 0 0);
 }
 
 /* browser background */
