@@ -180,6 +180,12 @@ return {
     },
     { condition = tex.in_mathzone }
   ),
+  s({ trig = "\\Z", dscr = "integers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{Z}")
+    },
+    { condition = tex.in_mathzone }
+  ),
   s({ trig = "\\Q", dscr = "Rational numbers set", snippetType = "autosnippet" },
     {
       t("\\mathbb{Q}")
