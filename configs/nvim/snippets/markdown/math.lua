@@ -144,7 +144,7 @@ return {
     t("\\exists "),
     { condition = tex.in_mathzone }
   ),
-  s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" },
+  s({ trig = "\\ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" },
     {
       t("\\displaystyle"),
     },
@@ -159,6 +159,12 @@ return {
   s({ trig = "\\N", dscr = "Natural numbers set", snippetType = "autosnippet" },
     {
       t("\\mathbb{N}")
+    },
+    { condition = tex.in_mathzone }
+  ),
+  s({ trig = "\\Z", dscr = "integers set", snippetType = "autosnippet" },
+    {
+      t("\\mathbb{Z}")
     },
     { condition = tex.in_mathzone }
   ),
