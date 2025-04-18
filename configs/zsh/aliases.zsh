@@ -46,7 +46,7 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # Neovim
 nfd() {
-  nvim $(fzf -m --select-1 --query="$*")
+  nvim "$(fzf -m --select-1 --query="$*")"
 }
 alias vim="nvim"
 alias nv="nvim"
