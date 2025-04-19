@@ -10,7 +10,7 @@ font pango:JetBrains Mono Nerd Font 10
 # picom
 exec --no-startup-id picom
 # wallpaper
-exec --no-startup-id feh --bg-fill --no-fehbg ~/.config/wallpapers/everest.jpg
+exec --no-startup-id feh --bg-fill --no-fehbg ~/.config/wallpapers/kanagawa.jpg
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status

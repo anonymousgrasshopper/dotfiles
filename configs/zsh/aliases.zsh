@@ -17,13 +17,19 @@ alias mutt="neomutt"
 
 # miscellaneous
 cfd() {
-  cd $(fd . -td | fzf -m --query="$1")
+  cd "$(fd . -td | fzf --no-multi --query="$1")"
 }
 mkcd() {
   [[ $# == 0 ]] && echo "mkcd: missing operand"
   [[ $# -ge 2 ]] && echo "mkcd: too many operands"
   [[ $# == 1 ]] || return
   mkdir -p "$1" && cd "$1"
+}
+run() {
+  [[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
+  command="$1"
+  shift
+  nohup "$command" "$@" >/dev/null 2>&1 &
 }
 alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
@@ -91,7 +97,7 @@ tas() {
   else
     command="attach-session"
   fi
-  tmux $command -t$(/bin/tmux list-session | fzf --preview='' --select-1 --query="$1" | sed 's/:.*//')
+  tmux $command -t"$(/bin/tmux list-session | fzf --preview='' --select-1 --query="$1" | sed 's/:.*//')"
 }
 tmux_choose_pane() {
   local panes current_window current_pane target target_window target_pane
@@ -112,11 +118,8 @@ tmux_choose_pane() {
   fi
 }
 
-# Zen browser
-alias zen="zen-browser"
-killzen() {
-  kill $(ps -e | rg zen\-bin | sed 's/ ?.\+//')
-}
+# Zathura 
+alias zathura="run zathura"
 
 # pacman
 alias rmpkg="sudo pacman -Rns"
@@ -136,7 +139,6 @@ rm() {
     shift
   done
   for element ("$items[@]"); do
-    # print -r -- $element
     if [[ -e "$element" && ! -s "$element" ]]; then
       /bin/rm -f "${args[@]}" "$element"
     else
@@ -147,12 +149,12 @@ rm() {
 
 # help command using bat
 help() {
-  "$@" --help 2>&1 | bat --plain --language=help
+  "$@" --help 2&1 | bat --plain --language=help
 }
 
 # Usage: far /path/to/directory/ "regexp" "replacement"
 far() {
-  sed -i -e "s@$2@$3@g" $(rg "$2" "$1" -l --fixed-strings)
+  sed -i -e "s@$2@$3@g" "$(rg "$2" "$1" -l --fixed-strings)"
 }
 
 # wrapper around yazi to change cwd when exiting it
