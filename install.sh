@@ -21,19 +21,17 @@ while true; do
 done
 
 # warn the user if the script is being runned as root
-if [[ "$EUID" == 0 ]]; then
-  if [[ ! $SCRIPT_DIR =~ ^/root ]]; then
-    echo -e "${YELLOW} Running this script as root might cause permission issues."
-    echo -en "${YELLOW}  Do you really want to continue (y/n) ? ${WHITE}"
-    read -r answer
-    case "$answer" in
-    [yY][eE][sS] | [yY]) ;;
-    *)
-      echo -e "${RED}  Aborting..."
-      exit 1
-      ;;
-    esac
-  fi
+if [[ "$EUID" == 0 && ! "$SCRIPT_DIR" =~ ^/root ]]; then
+  echo -e "${YELLOW} Running this script as root might cause permission issues."
+  echo -en "${YELLOW}  Do you really want to continue (y/n) ? ${WHITE}"
+  read -r answer
+  case "$answer" in
+  [yY][eE][sS] | [yY]) ;;
+  *)
+    echo -e "${RED}  Aborting..."
+    exit 1
+    ;;
+  esac
 fi
 
 # check wether the default shell is zsh or not
@@ -169,7 +167,6 @@ if [[ -f /bin/pacman ]]; then
       ;;
     esac
   fi
-
 else
   echo -e "${GREEN}Make sure the following packages are installed :"
   echo -e "${WHITE}${packages[*]}"
