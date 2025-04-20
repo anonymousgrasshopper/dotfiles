@@ -31,7 +31,8 @@ alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
-rm() {
+alias rm=rm_confirm_nonempty
+rm_confirm_nonempty() {
   args=()
   items=()
   while (("$#")); do
@@ -44,9 +45,9 @@ rm() {
   done
   for element ("$items[@]"); do
     if [[ -e "$element" && ! -s "$element" ]]; then
-      /bin/rm -f "${args[@]}" "$element"
+      command rm -f "${args[@]}" "$element"
     else
-      /bin/rm -i "${args[@]}" "$element"
+      command rm -i "${args[@]}" "$element"
     fi
   done
 }
