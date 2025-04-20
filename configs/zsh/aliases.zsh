@@ -10,10 +10,6 @@ alias .....="cd ../../../.."
 alias q="exit"
 alias c="clear"
 alias -- +x="chmod u+x"
-alias fetch="fastfetch"
-alias lg="lazygit"
-alias py="python3"
-alias mutt="neomutt"
 
 # miscellaneous
 cfd() {
@@ -22,7 +18,7 @@ cfd() {
 mkcd() {
   [[ $# == 0 ]] && echo "mkcd: missing operand"
   [[ $# -ge 2 ]] && echo "mkcd: too many operands"
-  [[ $# == 1 ]] || return
+  [[ $# == 1 ]] || return 1
   mkdir -p "$1" && cd "$1"
 }
 run() {
@@ -34,29 +30,58 @@ run() {
 alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
+# rm that only asks for confirmation for nonempty files
+rm() {
+  args=()
+  items=()
+  while (("$#")); do
+    if [[ "$1" =~ ^- ]]; then
+      args+=("$1")
+    else
+      items+=("$1")
+    fi
+    shift
+  done
+  for element ("$items[@]"); do
+    if [[ -e "$element" && ! -s "$element" ]]; then
+      /bin/rm -f "${args[@]}" "$element"
+    else
+      /bin/rm -i "${args[@]}" "$element"
+    fi
+  done
+}
+
+# help command using bat
+help() {
+  "$@" --help 2&1 | bat --plain --language=help
+}
+
+# Usage: far /path/to/directory/ "regexp" "replacement"
+far() {
+  sed -i -e "s@$2@$3@g" "$(rg "$2" "$1" -l --fixed-strings)"
+}
+
 # CLI tools default options
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
 alias fzf="fzf --preview='/usr/local/bin/fzf_preview_wrapper {}'"
 
-# CLI tools replacements
+# programs
 alias cat="bat"
 alias top="btop"
+alias fetch="fastfetch"
+alias lg="lazygit"
+alias py="python3"
+alias mutt="neomutt"
+alias m="neomutt"
 
+# eza
 alias ls="eza --icons=always --group-directories-first --no-quotes"
 alias l="eza --icons=always --group-directories-first --no-quotes -a"
 alias ll="eza --icons=always --group-directories-first --no-quotes -alh"
 alias llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
 alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
-
-# Neovim
-nfd() {
-  nvim "$(fzf -m --select-1 --query="$*")"
-}
-alias vim="nvim"
-alias nv="nvim"
-alias v="nvim"
 
 # git
 clone() {
@@ -77,7 +102,20 @@ gitdot() {
   fi
 }
 
-# Tmux
+# neovim
+nfd() {
+  nvim "$(fzf -m --select-1 --query="$*")"
+}
+alias vim="nvim"
+alias nv="nvim"
+alias v="nvim"
+
+# pacman
+alias rmpkg="sudo pacman -Rns"
+alias sypkg="sudo pacman -S"
+alias pacmanclean='sudo pacman -Rns $(pacman -Qtdq)'
+
+# tmux
 alias tls="tmux list-session"
 alias trs="tmux rename-session"
 alias trw="tmux rename-window"
@@ -118,46 +156,7 @@ tmux_choose_pane() {
   fi
 }
 
-# Zathura 
-alias zathura="run zathura"
-
-# pacman
-alias rmpkg="sudo pacman -Rns"
-alias sypkg="sudo pacman -S"
-alias pacmanclean='sudo pacman -Rns $(pacman -Qtdq)'
-
-# rm that only asks for confirmation for nonempty files
-rm() {
-  args=()
-  items=()
-  while (("$#")); do
-    if [[ "$1" =~ ^- ]]; then
-      args+=("$1")
-    else
-      items+=("$1")
-    fi
-    shift
-  done
-  for element ("$items[@]"); do
-    if [[ -e "$element" && ! -s "$element" ]]; then
-      /bin/rm -f "${args[@]}" "$element"
-    else
-      /bin/rm -i "${args[@]}" "$element"
-    fi
-  done
-}
-
-# help command using bat
-help() {
-  "$@" --help 2&1 | bat --plain --language=help
-}
-
-# Usage: far /path/to/directory/ "regexp" "replacement"
-far() {
-  sed -i -e "s@$2@$3@g" "$(rg "$2" "$1" -l --fixed-strings)"
-}
-
-# wrapper around yazi to change cwd when exiting it
+# yazi
 function x() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
@@ -166,3 +165,6 @@ function x() {
   fi
   /bin/rm -f -- "$tmp"
 }
+
+# zathura 
+alias zathura="run zathura"

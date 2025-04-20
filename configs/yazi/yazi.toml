@@ -27,7 +27,6 @@ append_previewers = [
 { name = "*", run = "hexyl" },
 ]
 prepend_previewers = [
-{ name = "*.md", run = "glow" },
 { name = "*/", run = "folder", sync = true },
 { mime = "text/*",                 run = "bat" },
 { mime = "*/xml",                  run = "bat" },

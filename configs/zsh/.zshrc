@@ -74,6 +74,7 @@ zinit cdreplay -q
 # options
 setopt correct  # correction for invalid command names
 setopt rcquotes # escape single quotes with '' instead of '\'' in singly quoted strings
+setopt globdots # show dotfiles on tab completion
 
 # history
 HISTSIZE=10000

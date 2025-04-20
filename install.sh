@@ -7,10 +7,11 @@ GREEN='\x1b[38;2;106;149;137m' #6a9589
 BLUE='\x1b[38;2;126;156;216m'  #7E9CD8
 WHITE='\x1b[38;2;220;215;186m' #DCD7BA
 
-# change dir to the script's directory
+# cd to the script's directory
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR" || exit
 
+# parse arguments
 while true; do
   if [[ "$1" == "--overwrite" || "$1" == "-o" ]]; then
     OVERWRITE=1
