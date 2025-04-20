@@ -3,6 +3,15 @@ require("full-border"):setup({
   type = ui.Border.ROUNDED,
 })
 
+th.git = th.git or {}
+th.git.added_sign = " "
+th.git.modified_sign = " "
+th.git.deleted_sign = "󱟃 "
+th.git.updated_sign = " "
+th.git.untracked_sign = " "
+th.git.ignored_sign = ""
+require("git"):setup()
+
 require("yatline"):setup({
   section_separator = { open = "", close = "" },
   part_separator = { open = "", close = "" },

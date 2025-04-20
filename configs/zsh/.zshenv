@@ -22,6 +22,7 @@ export MANPAGER="nvim +Man!"
 
 # Path
 export PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # XDG environment variables
 export XDG_CONFIG_HOME="$HOME/.config"

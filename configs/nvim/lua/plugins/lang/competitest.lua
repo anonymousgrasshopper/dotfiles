@@ -5,9 +5,6 @@ return {
   },
   cmd = { "CompetiTest" },
   keys = {
-    { "<leader>ctst", "<Cmd>CompetiTest receive contest<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive contest" },
-    { "<leader>pb", "<Cmd>CompetiTest receive problem<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive problem" },
-    { "<localleader>ctst", "<Cmd>CompetiTest receive contest<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive contest" },
     { "<localleader>pb", "<Cmd>CompetiTest receive problem<CR>", ft = { "c", "cpp", "asm" }, desc = "Receive problem" },
     { "<localleader>add", "<Cmd>CompetiTest add_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Add testcase" },
     { "<localleader>dlt", "<Cmd>CompetiTest delete_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Delete testcase" },
@@ -172,4 +169,5 @@ return {
     open_received_contests = true,
     replace_received_testcases = false,
   },
+  init = function() vim.api.nvim_create_user_command("CodeForces", "CompetiTest receive contest", {}) end,
 }

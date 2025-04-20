@@ -128,9 +128,6 @@ return {
     "L3MON4D3/LuaSnip",
     event = "ModeChanged", -- instead of InsertEnter to be able to use visual snippets before having entered insert mode
     version = "v2.*",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-    },
     -- install jsregexp (optional).
     build = "make install_jsregexp",
     config = function()
@@ -152,9 +149,6 @@ return {
 
       -- filetypes
       require("luasnip").filetype_extend("bash", { "sh" })
-
-      -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-      require("luasnip.loaders.from_vscode").lazy_load()
 
       -- load snippets
       require("luasnip.loaders.from_vscode").lazy_load({

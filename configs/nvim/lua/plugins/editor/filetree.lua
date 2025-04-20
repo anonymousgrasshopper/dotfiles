@@ -90,17 +90,17 @@ return {
         git_status = {
           symbols = {
             -- Change type
-            added = "",
-            modified = "",
-            deleted = "󱟃",
-            renamed = "",
+            added = " ",
+            modified = " ",
+            deleted = "󱟃 ",
+            renamed = " ",
             removed = " ",
             -- Status type
             untracked = "",
-            ignored = "",
-            unstaged = "󰄱",
-            staged = "",
-            conflict = "",
+            ignored = " ",
+            unstaged = "󰄱 ",
+            staged = " ",
+            conflict = " ",
           },
         },
         file_size = {

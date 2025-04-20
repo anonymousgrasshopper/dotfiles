@@ -55,7 +55,7 @@ return {
     ),
     { condition = first_line, not_in_string_comment }
   ),
-  s({ trig = "cf ", dscr = "Codeforces template", snippetType = "autosnippet" },
+  s({ trig = "CF", dscr = "Codeforces template", snippetType = "autosnippet" },
     fmta(
       [[
         #pragma GCC optimize("O3,unroll-loops")
@@ -93,7 +93,7 @@ return {
         i(0),
       }
     ),
-    { condition = line_begin, not_in_string_comment }
+    { condition = first_line, not_in_string_comment }
   ),
   s({ trig = "io ", dscr = "Set io for USACO", snippetType = "autosnippet" },
     fmta(

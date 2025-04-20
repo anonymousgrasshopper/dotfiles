@@ -29,14 +29,6 @@ run  = "plugin smart-switch --args=1"
 desc = "Switch or create tab 2"
 
 [[manager.prepend_keymap]]
-on  = "k"
-run = "plugin arrow --args=-1"
-
-[[manager.prepend_keymap]]
-on  = "j"
-run = "plugin arrow --args=1"
-
-[[manager.prepend_keymap]]
 on  = "J"
 run = "arrow 5"
 
@@ -44,8 +36,12 @@ run = "arrow 5"
 on  = "K"
 run = "arrow -5"
 
+[[manager.prepend_keymap]]
+on  = "M"
+run = "plugin mount"
+
 prepend_keymap = [
-# glow.yazi
-{ on = ["<C-e>"], run = "seek 5" },
-{ on = ["<C-y>"], run = "seek -5" },
+  # glow.yazi
+  { on = ["<C-e>"], run = "seek 5" },
+  { on = ["<C-y>"], run = "seek -5" },
 ]
