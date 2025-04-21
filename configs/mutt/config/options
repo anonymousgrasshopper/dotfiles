@@ -1,0 +1,3 @@
+set history_remove_dups = "true" #
+set sort = 'reverse-date'        #
+unset help                       # remove the help bar

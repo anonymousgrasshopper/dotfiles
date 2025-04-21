@@ -1,0 +1,9 @@
+# config files
+source config/options
+source config/colorscheme
+source config/sidebar
+source config/statusbar
+source config/keys/binds
+
+# accounts
+source accounts/example@mail.com

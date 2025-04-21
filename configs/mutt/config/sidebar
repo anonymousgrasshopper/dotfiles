@@ -1,0 +1,22 @@
+set sidebar_visible                     # default sidebar visibilty
+set sidebar_divider_char = ' '
+set sidebar_width = 30
+
+# sidebar formatting
+set mail_check_stats
+set sidebar_format = '%B%* %<n?  %N>'
+
+# shorten paths to their last component
+set sidebar_short_path                  # Shorten mailbox names (truncate all subdirs)
+set sidebar_delim_chars="/"             # Delete everything up to the last or Nth / character
+
+# colors
+color sidebar_background default #181820 # sidebar background
+color sidebar_indicator  default #363646 # currently selected mailbox
+color sidebar_highlight  white   #223249 # highlighted, but not open, mailbox.
+color sidebar_spool_file #DCA561 default # receives incoming mail
+color sidebar_unread     #6a9589 default # mailboxes containing unread mail
+color sidebar_new        #76946A default # mailboxes containing new mail
+color sidebar_ordinary   default default # Color to give mailboxes by default
+color sidebar_flagged    default default # mailboxes containing flagged mail
+color sidebar_divider    #181820 #1f1f28 # divider between sidebar & content

@@ -28,7 +28,7 @@ copy_file() {
 }
 
 # list of configs and scripts to copy
-configs=("bat" "btop" "browser" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "btop" "browser" "clang-format" "eza" "fastfetch" "git" "i3" "kitty" "lazygit" "mutt" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux" "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # overwrite configs in the dotfiles repo
@@ -44,6 +44,7 @@ copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
 
 # remove chosen files and directories
 [[ -f "configs/zsh/.zcompdump" ]] && rm "configs/zsh/.zcompdump"
+[[ -d "configs/mutt/accounts" ]] && rm -rf "configs/mutt/accounts"
 
 # add everything to the index
 git add .

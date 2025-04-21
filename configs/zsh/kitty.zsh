@@ -1,10 +1,12 @@
 KITTY_SOCKET=$(echo $KITTY_LISTEN_ON)
 
 kitty_set_spacing() {
-  [[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] && kitty @ --to $KITTY_SOCKET set-spacing padding=default margin=default
+  [[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] &&
+    kitty @ --to $KITTY_SOCKET set-spacing padding=20 margin=0
 }
 kitty_remove_spacing() {
-  [[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] && kitty @ --to $KITTY_SOCKET set-spacing padding=0 margin=0
+  [[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] &&
+    kitty @ --to $KITTY_SOCKET set-spacing padding=0 margin=0
 }
 
 kitty_set_spacing
@@ -48,7 +50,7 @@ ncdu() {
 }
 neomutt() {
   kitty_remove_spacing
-  /bin/neomutt "$@"
+  TERM=xterm-direct /bin/neomutt "$@"
   kitty_set_spacing
 }
 cxxmatrix() {

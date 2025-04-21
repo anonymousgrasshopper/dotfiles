@@ -27,7 +27,6 @@ run() {
   shift
   nohup "$command" "$@" >/dev/null 2>&1 &
 }
-alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
@@ -86,7 +85,7 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # git
 clone() {
-  git clone "https://github.com/$1"
+  git clone "https://github.com/$1" "~/.config/Téléchargements/$(basename "$1")"
 }
 alias commit="git commit"
 alias push="git push"

@@ -21,32 +21,35 @@ while true; do
   fi
 done
 
-# $1: file to copy relative to $SCRIPT_DIR, $2: destination, $3: command to pass cp to (sudo or nothing)
+# $1: file to copy relative to $SCRIPT_DIR, $2: destination
 copy_file() {
-  [[ -d "$2" ]] || mkdir -p "$2"
   [[ -f "$1" ]] || {
     echo -e "${YELLOW} $1 not found"
     return 1
   }
+  [[ "$2" = ^/home ]] || sudo="sudo"
+  [[ -d "$2" ]] || $sudo mkdir -p "$2"
   if [[ ! -f "$2/$1" ]]; then
-    $3 cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
+    $sudo cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
   elif ! cmp --silent "$1" "$2/$1"; then
-    echo -en "${BLUE}Would you like to delete your current ${GREEN}$1${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
+    echo -en "${BLUE}Would you like to delete your current ${GREEN}$1${BLUE} to replace it with the one in this repo ? (y/n) ${WHITE}"
     read -r answer
     case "$answer" in
     [yY][eE][sS] | [yY])
-      $3 cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
+      $sudo cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
       ;;
     esac
   fi
 }
 
 # place system-wide configuration files
-[[ -f /bin/pacman ]] && copy_file pacman.conf /etc sudo
-eval type picom >/dev/null && copy_file picom.conf /etc/xdg sudo
-[[ -f /etc/arch-release ]] && copy_file paccache.timer /etc/systemd/system sudo
-[[ -f /etc/systemd/journald.conf ]] && copy_file journald.conf /etc/systemd sudo
+[[ -f /bin/pacman ]] && copy_file pacman.conf /etc
+eval type picom >/dev/null && copy_file picom.conf /etc/xdg
+[[ -f /etc/arch-release ]] && copy_file paccache.timer /etc/systemd/system
+[[ -f /etc/systemd/journald.conf ]] && copy_file journald.conf /etc/systemd
 [[ -n "$CPLUS_INCLUDE_PATH" ]] && copy_file dbg.h "$CPLUS_INCLUDE_PATH"
+[[ -f /usr/bin/neomutt ]] && copy_file neomutt.desktop /usr/share/applications
+[[ -f /usr/bin/neomutt ]] && copy_file neomutt.png /usr/share/icons/hicolor/325x325/apps
 
 # Windows and WSL specific files
 if [[ -n "$WINDOWS" ]]; then

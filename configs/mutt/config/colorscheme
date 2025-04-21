@@ -1,0 +1,43 @@
+color markers		color210	default
+color message		default		default
+color prompt		default	        default
+
+color normal		  default default         # Text is "Text"
+color index		    color2 default ~N       # New Messages are Green
+color index		    color1 default ~F       # Flagged messages are Red
+color index		    color13 default ~T      # Tagged Messages are Red
+color index		    color1 default ~D       # Messages to delete are Red
+color index   		color212 default 	~Q # messages which have been replied to
+color index	     	color215 default 	~T # tagged messages
+color index	    	color141 default		~v # messages part of a collapsed thread
+color attachment	color5 default          # Attachments are Pink
+color signature	  color8 default          # Signatures are Surface 2
+color search		  color4 default          # Highlighted results are Blue
+
+color indicator		default color8          # currently highlighted message Surface 2=Background Text=Foreground
+color error		    color1 default          # error messages are Red
+color status		  color15 default         # status line "Subtext 0"
+color tree        color15 default         # thread tree arrows Subtext 0
+color tilde       color15 default         # blank line padding Subtext 0
+
+# Headers highlighting:
+color hdrdefault blue    default
+color header     green   default "^Date"
+color header     color5  default "^From"
+color header     blue    default "^To"
+color header     color12 default "^(CC|BCC)"
+color header     yellow  default "^Subject"
+color header     color8  default "^User-Agent"
+
+color quoted		  color15 default
+color quoted1		  color7  default
+color quoted2		  color8  default
+color quoted3		  color0  default
+color quoted4		  color0  default
+color quoted5		  color0  default
+
+color body		color2 default		[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+               # email addresses Green
+color body	  blue default		(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+        # URLs Green
+color body		color4 default		(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text Blue
+color body		color4 default		(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)     # _underlined_ text Blue
+color body		color4 default		(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)     # /italic/ text Blue

@@ -3,6 +3,7 @@ vim.filetype.add({
     tex = "tex", -- without VimTex plaintex is assigned instead
     zsh = "bash", -- until zsh gets proper support...
     rasi = "css",
+    muttrc = "neomuttrc",
   },
   filename = {
     [".zshrc"] = "bash",
@@ -11,7 +12,7 @@ vim.filetype.add({
     [".zprofile"] = "bash",
   },
   pattern = {
-    ["kitty/*.conf"] = "kitty",
-    ["$HOME/.config/kitty/*.conf.bak"] = "kitty",
+    ["${HOME}/.config/mutt/.+"] = "neomuttrc",
+    ["${HOME}/.config/kitty/.*.conf.bak"] = "kitty",
   },
 })
