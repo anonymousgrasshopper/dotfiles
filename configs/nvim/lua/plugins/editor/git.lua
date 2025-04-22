@@ -70,9 +70,19 @@ return {
 
         vim.keymap.set("n", "<leader>gd", gitsigns.diffthis, { desc = "View diff for current file against the index" })
 
-        vim.keymap.set("n", "<leader>gD", function() gitsigns.diffthis("~") end, { desc = "View diff for current file" })
+        vim.keymap.set(
+          "n",
+          "<leader>gD",
+          function() gitsigns.diffthis("~") end,
+          { desc = "View diff for current file" }
+        )
 
-        vim.keymap.set("n", "<leader>gQ", function() gitsigns.setqflist("all") end, { desc = "Populate quickfix list with all hunks" })
+        vim.keymap.set(
+          "n",
+          "<leader>gQ",
+          function() gitsigns.setqflist("all") end,
+          { desc = "Populate quickfix list with all hunks" }
+        )
         vim.keymap.set("n", "<leader>gq", gitsigns.setqflist, { desc = "Populate quickfix list with hunks" })
 
         -- Toggles

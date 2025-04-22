@@ -3,7 +3,11 @@ return {
     "kevinhwang91/nvim-hlslens",
     lazy = true,
     keys = {
-      { "n", "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>", desc = "Previous" },
+      {
+        "n",
+        "<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>",
+        desc = "Previous",
+      },
       { "N", "<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>", desc = "Next" },
     },
     init = function()
@@ -50,7 +54,11 @@ return {
           else
             text = ("%d/%d"):format(idx, cnt)
           end
-          chunks = { { "  ◖", "HlSearchLensNearReverted" }, { text, "HlSearchLensNear" }, { "◗", "HlSearchLensNearReverted" } }
+          chunks = {
+            { "  ◖", "HlSearchLensNearReverted" },
+            { text, "HlSearchLensNear" },
+            { "◗", "HlSearchLensNearReverted" },
+          }
         else
           text = ("%s"):format(indicator, idx)
           chunks = { { "  " }, { text, "HlSearchLens" } }

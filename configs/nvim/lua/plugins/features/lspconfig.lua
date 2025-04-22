@@ -82,7 +82,8 @@ return {
             on_init = function(client)
               local path = client.workspace_folders[1].name
               if
-                not (vim.fn.getcwd():match("nvim")) and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+                not (vim.fn.getcwd():match("nvim"))
+                and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
               then
                 return
               end
@@ -127,13 +128,12 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function()
-          local bufnr = vim.api.nvim_get_current_buf()
-          vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, { desc = "Hover documentation", buffer = bufnr })
-          vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, { desc = "Go to definition", buffer = bufnr })
-          vim.keymap.set("n", "<leader>dec", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = bufnr })
-          vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = bufnr })
-          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = bufnr })
-          -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = bufnr })
+          vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, { desc = "Hover documentation", buffer = true })
+          vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, { desc = "Go to definition", buffer = true })
+          vim.keymap.set("n", "<leader>dec", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = true })
+          vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = true })
+          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = true })
+          -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = true })
         end,
       })
     end,
@@ -145,9 +145,17 @@ return {
       { "gpc", function() require("goto-preview").goto_preview_declaration() end, desc = "Preview declaration" },
       { "gpi", function() require("goto-preview").goto_preview_implementation() end, desc = "Preview implementation" },
       { "gpr", function() require("goto-preview").goto_preview_references() end, desc = "Preview references" },
-      { "gpt", function() require("goto-preview").goto_preview_type_definition() end, desc = "Preview type definition" },
+      {
+        "gpt",
+        function() require("goto-preview").goto_preview_type_definition() end,
+        desc = "Preview type definition",
+      },
       { "gpx", function() require("goto-preview").close_all_win() end, desc = "Close all previews" },
-      { "gpX", function() require("goto-preview").close_all_win({ skip_curr_window = true }) end, desc = "Close other previews" },
+      {
+        "gpX",
+        function() require("goto-preview").close_all_win({ skip_curr_window = true }) end,
+        desc = "Close other previews",
+      },
     },
     opts = {
       width = 120, -- Width of the floating window
@@ -207,7 +215,11 @@ return {
         local ignored_patterns = {
           ["lua_ls"] = { "change to parameter" },
         }
-        if ignored_patterns[client_name] ~= nil and vim.tbl_contains(ignored_patterns[client_name], code_action.title) then return false end
+        if
+          ignored_patterns[client_name] ~= nil and vim.tbl_contains(ignored_patterns[client_name], code_action.title)
+        then
+          return false
+        end
         return true
       end,
     },

@@ -1,5 +1,7 @@
 -- remove the terminal padding
-if vim.env.TERM:match("kitty") and not vim.env.TERM.NVIM_PADDING_REMOVED then vim.cmd("silent !kitty @ set-spacing padding=0 margin=0") end
+if vim.env.TERM:match("kitty") and not vim.env.TERM.NVIM_PADDING_REMOVED then
+  vim.cmd("silent !kitty @ set-spacing padding=0 margin=0")
+end
 
 require("config.autocmds")
 require("config.filetypes")

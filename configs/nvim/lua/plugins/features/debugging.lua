@@ -21,31 +21,6 @@ return {
   },
   cmd = { "DapContinue", "DapToggleBreakpoint" },
   keys = {
-    {
-      "<localleader>dbg",
-      function()
-        vim.system({
-          "clang++",
-          "-fstandalone-debug",
-          "--debug",
-          vim.fn.expand("%"),
-          "-o",
-          vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe",
-        }, {}, function(_) vim.notify("Compilation completed", "Info", { title = "Debugging" }) end)
-        vim.system({ "codelldb_stdio_redirection", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") })
-      end,
-      ft = "cpp",
-      expr = true,
-      silent = true,
-    },
-    {
-      "<localleader>rm",
-      function() vim.system({ "remove_codelldb_stdio_redirection", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") }) end,
-      ft = "cpp",
-      expr = true,
-      silent = true,
-    },
-
     { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
     { "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
     { "<leader>dt", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
@@ -106,10 +81,18 @@ return {
         name = "Launch file",
         type = "codelldb",
         request = "launch",
-        program = function() return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file") end,
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file")
+        end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
-        stdio = { path .. ".input", path .. ".output", path .. ".errors" },
+        stdio = function()
+          if vim.b.codelldb_stdio_redirection then
+            return { path .. ".input", path .. ".output", path .. ".errors" }
+          else
+            return nil
+          end
+        end,
       },
     }
 

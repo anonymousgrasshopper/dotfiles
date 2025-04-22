@@ -1,33 +1,48 @@
+mono bold bold
+mono underline underline
+mono indicator reverse
+mono error bold
+
 color markers		color210	default
 color message		default		default
 color prompt		default	        default
 
-color normal		  default default         # Text is "Text"
-color index		    color2 default ~N       # New Messages are Green
-color index		    color1 default ~F       # Flagged messages are Red
-color index		    color13 default ~T      # Tagged Messages are Red
-color index		    color1 default ~D       # Messages to delete are Red
-color index   		color212 default 	~Q # messages which have been replied to
-color index	     	color215 default 	~T # tagged messages
-color index	    	color141 default		~v # messages part of a collapsed thread
-color attachment	color5 default          # Attachments are Pink
-color signature	  color8 default          # Signatures are Surface 2
-color search		  color4 default          # Highlighted results are Blue
+color normal		  default default             # Text is "Text"
 
-color indicator		default color8          # currently highlighted message Surface 2=Background Text=Foreground
-color error		    color1 default          # error messages are Red
-color status		  color15 default         # status line "Subtext 0"
-color tree        color15 default         # thread tree arrows Subtext 0
-color tilde       color15 default         # blank line padding Subtext 0
+# index colors
+color index         #76946a default '.*'
+color index_author  #c34043 default '.*'
+color index_number  #54546d default
+color index_subject #dca561 default '.*'
+color index		      brightyellow default "~N" # New Messages
+color index_author  brightred default "~N"    # New Messages
+color index_number  brightblue default "~N"   # New Messages
+color index         brightyellow blue "~T"    # Tagged Messages
+color index_author  brightred blue "~T"       # Tagged Messages
+color index_subject brightcyan blue "~T"      # Tagged Messages
+color index		      color1 default "~F"       # Flagged messages
+color index		      color1 default "~D"       # Messages to delete
+color index   		  #ff9e3b default "~Q"      # Messages which have been replied to
+color index	     	  color215 default "~T"     # Tagged messages
+color index	    	  color141 default "~v"     # Messages part of a collapsed thread
+color attachment	  #6a9589 default           # Attachments
+color signature	    color8 default            # Signatures
+color search		    color4 default            # Highlighted
+
+color indicator		default #363646              # currently highlighted message Surface 2=Background Text=Foreground
+color error		    #e82424 default              # error messages are Red
+color status		  #c8c093 default              # status line "Subtext 0"
+color tree        color15 default              # thread tree arrows Subtext 0
+color tilde       color15 default              # blank line padding Subtext 0
 
 # Headers highlighting:
 color hdrdefault blue    default
-color header     green   default "^Date"
-color header     color5  default "^From"
-color header     blue    default "^To"
-color header     color12 default "^(CC|BCC)"
-color header     yellow  default "^Subject"
-color header     color8  default "^User-Agent"
+color header     #76946a default "^Date"
+color header     #c34043 default "^From"
+color header     #957fb8 default "^To"
+color header     #957fb8 default "^(CC|BCC)"
+color header     #dca561 default "^Subject"
+color header     #727169 default "^User-Agent"
 
 color quoted		  color15 default
 color quoted1		  color7  default
@@ -36,8 +51,8 @@ color quoted3		  color0  default
 color quoted4		  color0  default
 color quoted5		  color0  default
 
-color body		color2 default		[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+               # email addresses Green
-color body	  blue default		(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+        # URLs Green
-color body		color4 default		(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text Blue
-color body		color4 default		(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)     # _underlined_ text Blue
-color body		color4 default		(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)     # /italic/ text Blue
+color body		#2d4f67 default		[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+               # email addresses
+color body	  #7e9cd8 default		(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+        # URLs
+color body		#c8c093 default		(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text
+color body		#c8c093 default		(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)     # _underlined_ text
+color body		#c8c093 default		(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)     # /italic/ text

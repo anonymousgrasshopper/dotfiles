@@ -1,3 +1,4 @@
-set history_remove_dups = "true" #
-set sort = 'reverse-date'        #
-unset help                       # remove the help bar
+set date_format = "%a %d %h %H:%M"
+set history_remove_dups = "true"
+set sort = 'reverse-date'
+unset help

@@ -16,8 +16,18 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
   callback = function()
-    local enabled_filetypes =
-      { "diff", "alpha", "aerial", "undotree", "neo-tree", "dropbar_menu", "DiffviewFiles", "neo-tree-popup", "yazi", "trouble" }
+    local enabled_filetypes = {
+      "diff",
+      "alpha",
+      "aerial",
+      "undotree",
+      "neo-tree",
+      "dropbar_menu",
+      "DiffviewFiles",
+      "neo-tree-popup",
+      "yazi",
+      "trouble",
+    }
     if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
       vim.cmd("hi Cursor blend=100")
     else
@@ -102,7 +112,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spell = true
 
     vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
-    vim.keymap.set("i", "<C-r>", "<c-g>u<Esc>[szg`]a<c-g>u", { desc = "Add last word marked as misspelled to dictionnary", buffer = true })
+    vim.keymap.set(
+      "i",
+      "<C-r>",
+      "<c-g>u<Esc>[szg`]a<c-g>u",
+      { desc = "Add last word marked as misspelled to dictionnary", buffer = true }
+    )
   end,
 })
 
@@ -115,9 +130,17 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 
     if cmd_type == ":" then
       if cmd_line == "s " then
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true),
+          "n",
+          false
+        )
       elseif cmd_line == "'<,'>s " then
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true), "n", false)
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true),
+          "n",
+          false
+        )
       else
         local match = cmd_line:match("(%d+,%s*%d+%s*s) ")
         if match then

@@ -27,6 +27,7 @@ run() {
   shift
   nohup "$command" "$@" >/dev/null 2>&1 &
 }
+alias sudo="sudo "                  # enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
@@ -85,7 +86,11 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # git
 clone() {
-  git clone "https://github.com/$1" "~/.config/Téléchargements/$(basename "$1")"
+  [[ $# == 1 ]] || { echo "clone: missing operand"; exit 1 }
+  [[ ! "$1" =~ ^https?:// ]] && 1="https://github.com/$1" # default domain
+  dir="$HOME/Téléchargements/git/$(basename "$1")"
+  [[ "$dir" =~ ^(.*)/([^/]+)\.git$ ]] && dir="${match[1]}/${match[2]}" # strip trailing .git, if any
+  git clone "$1" "$dir" && cd "$dir"
 }
 alias commit="git commit"
 alias push="git push"
