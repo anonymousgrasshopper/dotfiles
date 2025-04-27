@@ -50,7 +50,7 @@ vim.o.sessionoptions   = "blank,buffers,curdir,folds,help,tabpages,winsize,winpo
 -- tabs & indentation
 vim.opt.tabstop        = 2      -- 2 spaces for tabs
 vim.opt.shiftwidth     = 2      -- 2 spaces for indent width
-vim.opt.expandtab      = true   -- expand tab to spaces
+vim.opt.expandtab      = false  -- expand tab to spaces
 vim.opt.autoindent     = true   -- copy indent from current line when starting new one
 vim.opt.shiftround     = true   -- round indentation
 

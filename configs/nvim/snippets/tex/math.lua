@@ -55,7 +55,7 @@ return {
   s({ trig = "pd", dscr = "product", wordTrig = false, snippetType = "autosnippet" },
     fmta(
       [[
-        \prod_{<>=<>}^{<>}<>
+        \prod_{<>}^{<>}<>
       ]],
       {
         i(1, "i = 0"),

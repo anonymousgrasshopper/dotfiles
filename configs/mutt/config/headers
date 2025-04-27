@@ -1,0 +1,10 @@
+# Headers highlighting:
+color hdrdefault #7e9cd8 default
+color header     #c34043 default "^From"
+color header     #957fb8 default "^To"
+color header     #7e9cd8 default "^(CC|BCC)"
+color header     #76946a default "^Date"
+color header     #dca561 default "^Subject"
+color header     #727169 default "^User-Agent"
+
+hdr_order from: to: cc: date: subject:  # header item ordering

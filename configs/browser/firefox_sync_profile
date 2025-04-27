@@ -6,32 +6,32 @@ RED='\x1b[38;2;232;36;36m' # #e82424
 # check there is at least one directory in ~/.mozilla/firefox
 exists_profile=false
 for item in ~/.mozilla/firefox/*; do
-  if [[ -d "$item" ]]; then
-    exists_profile=true
-    break
-  fi
+	if [[ -d "$item" ]]; then
+		exists_profile=true
+		break
+	fi
 done
 $exists_profile || {
-  echo -e "${RED}Where even is your Firefox profile ?"
-  exit 1
+	echo -e "${RED}Where even is your Firefox profile ?"
+	exit 1
 }
 
 # let the user select a profile through fzf
 FIREFOX_PROFILE_DIR=$(
-  fd --hidden --max-depth 1 -td . ~/.mozilla/firefox |
-    grep -v "Crash Reports" |
-    grep -v "Pending Pings" |
-    fzf --select-1 --preview='eza -1alh --group-directories-first --color=always --icons {}'
+	fd --hidden --max-depth 1 -td . ~/.mozilla/firefox |
+		grep -v "Crash Reports" |
+		grep -v "Pending Pings" |
+		fzf --select-1 --preview='eza -1alh --group-directories-first --color=always --icons {}'
 )
 if [[ -z "$FIREFOX_PROFILE_DIR" ]]; then
-  echo -e "${RED}Please select a Firefox profile."
+	echo -e "${RED}Please select a Firefox profile."
 fi
 
 # create symbolic links
 for item in ~/.config/browser/profile/*; do
-  stripped="${item%/}" # strip trailing slash (if any)
-  name="${stripped##*/}"
+	stripped="${item%/}" # strip trailing slash (if any)
+	name="${stripped##*/}"
 
-  [[ -e "$FIREFOX_PROFILE_DIR/$name" || -L "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
-  ln -s "$item" "$FIREFOX_PROFILE_DIR/$name"
+	[[ -e "$FIREFOX_PROFILE_DIR/$name" || -L "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
+	ln -s "$item" "$FIREFOX_PROFILE_DIR/$name"
 done

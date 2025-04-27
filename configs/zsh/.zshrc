@@ -7,7 +7,7 @@
 
 # source Powerlevel10k's instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 
@@ -16,8 +16,8 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/"
 
 # download Zinit if it's not here yet and source it
 if [[ ! -d "$ZINIT_HOME" ]]; then
-  mkdir -p "$(dirname $ZINIT_HOME)"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+	mkdir -p "$(dirname $ZINIT_HOME)"
+	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
@@ -55,15 +55,15 @@ zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word 
 zstyle ':fzf-tab:complete:git-log:*'                fzf-preview 'git log --color=always $word'
 zstyle ':fzf-tab:complete:git-help:*'               fzf-preview 'git help $word | bat -plman --color=always'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
-  'case "$group" in
-  "commit tag") git show --color=always $word ;;
-  *) git show --color=always $word | delta ;;
+	'case "$group" in
+	"commit tag") git show --color=always $word ;;
+	*) git show --color=always $word | delta ;;
 esac'
 zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
-  'case "$group" in
-  "modified file") git diff $word | delta ;;
-  "recent commit object name") git show --color=always $word | delta ;;
-  *) git log --color=always $word ;;
+	'case "$group" in
+	"modified file") git diff $word | delta ;;
+	"recent commit object name") git show --color=always $word | delta ;;
+	*) git log --color=always $word ;;
 esac'
 
 # load completions
@@ -97,31 +97,31 @@ export KEYTIMEOUT=1 # time in ms to wait for key sequences
 zle_highlight=(region:bg="#223249" fg=15) # visual mode highlight color
 
 function zle-keymap-select() {
-  local _shape=6
-  case "${KEYMAP}" in
-    vicmd)
-      case "${REGION_ACTIVE}" in
-        1) _shape=2 ;; # visual mode: block
-        2) _shape=2 ;; # V-line mode: block
-        *) _shape=2 ;; # normal mode: block
-      esac
-      ;;
-    viins|main)
-      if [[ "${ZLE_STATE}" == *overwrite* ]]; then
-        _shape=4 # replace mode: underline
-      else
-        _shape=6 # insert mode: beam
-      fi
-      ;;
-    viopp) _shape=0 ;; # operator pending mode: blinking block
-    visual) _shape=2 ;; # visual mode: block
-  esac
-  printf $'\e[%d q' ${_shape}
+	local _shape=6
+	case "${KEYMAP}" in
+		vicmd)
+			case "${REGION_ACTIVE}" in
+				1) _shape=2 ;; # visual mode: block
+				2) _shape=2 ;; # V-line mode: block
+				*) _shape=2 ;; # normal mode: block
+			esac
+			;;
+		viins|main)
+			if [[ "${ZLE_STATE}" == *overwrite* ]]; then
+				_shape=4 # replace mode: underline
+			else
+				_shape=6 # insert mode: beam
+			fi
+			;;
+		viopp) _shape=0 ;; # operator pending mode: blinking block
+		visual) _shape=2 ;; # visual mode: block
+	esac
+	printf $'\e[%d q' ${_shape}
 }
 zle -N zle-keymap-select
 
 _set_cursor_beam() {
-  echo -ne '\e[6 q'
+	echo -ne '\e[6 q'
 }
 precmd_functions+=(_set_cursor_beam)
 

@@ -1,3 +1,3 @@
 return {
-  "mong8se/actually.nvim",
+	"mong8se/actually.nvim",
 }

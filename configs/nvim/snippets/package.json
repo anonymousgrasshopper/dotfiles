@@ -1,15 +1,15 @@
 {
-  "name": "snippets",
-  "contributes": {
-    "snippets": [
-      {
-        "language": ["cpp"],
-        "path": "./cpp.json"
-      },
-      {
-        "language": ["json"],
-        "path": "./json.json"
-      }
-    ]
-  }
+	"name": "snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": ["cpp"],
+				"path": "./cpp.json"
+			},
+			{
+				"language": ["json"],
+				"path": "./json.json"
+			}
+		]
+	}
 }

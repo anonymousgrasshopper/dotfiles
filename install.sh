@@ -261,13 +261,12 @@ ${RED}Enter a number (default 3) : "
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
 
 # run etc/install.sh
-[[ -n "$WSL_DISTRO_NAME" ]] && wsl="--wsl"
 printf '\n'
 echo -en "${BLUE}Do you want to run ${GREEN}./etc/install.sh${BLUE} ? (y/n) ${WHITE}"
 read -r answer
 case "$answer" in
 [yY][eE][sS] | [yY])
   printf '\n'
-  ./etc/install.sh "$wsl"
+  ./etc/install.sh
   ;;
 esac

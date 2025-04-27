@@ -14,15 +14,17 @@ color index         #76946a default '.*'
 color index_author  #c34043 default '.*'
 color index_number  #54546d default
 color index_subject #dca561 default '.*'
+color index_flags   #7e9cd8 default '.*'
+color index_size    #727169 default '.*'
 color index		      brightyellow default "~N" # New Messages
 color index_author  brightred default "~N"    # New Messages
 color index_number  brightblue default "~N"   # New Messages
 color index         brightyellow blue "~T"    # Tagged Messages
 color index_author  brightred blue "~T"       # Tagged Messages
 color index_subject brightcyan blue "~T"      # Tagged Messages
-color index		      color1 default "~F"       # Flagged messages
-color index		      color1 default "~D"       # Messages to delete
-color index   		  #ff9e3b default "~Q"      # Messages which have been replied to
+color index_subject #ff9e3b default "~F"      # Flagged messages
+color index		      #e82424 default "~D"      # Messages to delete
+color index   		  #76946a default "~Q"      # Messages which have been replied to
 color index	     	  color215 default "~T"     # Tagged messages
 color index	    	  color141 default "~v"     # Messages part of a collapsed thread
 color attachment	  #6a9589 default           # Attachments
@@ -30,19 +32,11 @@ color signature	    color8 default            # Signatures
 color search		    color4 default            # Highlighted
 
 color indicator		default #363646              # currently highlighted message Surface 2=Background Text=Foreground
-color error		    #e82424 default              # error messages are Red
+color error		    #e82424 default              # error messages
+color warning     #ff9e3b default              # warnings
 color status		  #c8c093 default              # status line "Subtext 0"
-color tree        color15 default              # thread tree arrows Subtext 0
-color tilde       color15 default              # blank line padding Subtext 0
-
-# Headers highlighting:
-color hdrdefault blue    default
-color header     #76946a default "^Date"
-color header     #c34043 default "^From"
-color header     #957fb8 default "^To"
-color header     #957fb8 default "^(CC|BCC)"
-color header     #dca561 default "^Subject"
-color header     #727169 default "^User-Agent"
+color tree        #54546d default              # thread tree arrows Subtext 0
+color tilde       #c8c093 default              # blank line padding Subtext 0
 
 color quoted		  color15 default
 color quoted1		  color7  default

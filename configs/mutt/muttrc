@@ -1,13 +1,16 @@
+source config/etc/wizard
+
 # config files
-source /usr/share/mutt-wizard/mutt-wizard.muttrc
 source config/options
-source config/colorscheme
+source config/icons
+source config/headers
 source config/sidebar
 source config/statusbar
 source config/keys/binds
+source config/colorscheme
 
-# accounts
+# account
+macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
+macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
+macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
 source accounts/example@mail.com # primary account
-macro index,pager i1 '<sync-mailbox><enter-command>source accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
-macro index,pager i2 '<sync-mailbox><enter-command>source accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
-macro index,pager i3 '<sync-mailbox><enter-command>source accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"

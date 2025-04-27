@@ -2,23 +2,23 @@
 
 /* hide webpage loading notifications in the bottom left corner */
 #statuspanel[type="status"] {
-  opacity: 0 !important;
+	opacity: 0 !important;
 }
 
 /* hide all scrollbars */
 * {
-  scrollbar-width: none !important;
+	scrollbar-width: none !important;
 }
 
 /* remove the border around the ui */
 #tabbrowser-tabbox {
-  outline: none !important;
-  box-shadow: none !important;
+	outline: none !important;
+	box-shadow: none !important;
 }
 
 /* Roundness of webcontent */
 :root:not([sizemode="fullscreen"]) .browserStack > browser {
-  clip-path: inset(0 round 10px 0 0 0);
+	clip-path: inset(0 round 10px 0 0 0);
 }
 
 /* browser background */
@@ -26,5 +26,5 @@
 .browserStack,
 #browser,
 #nav-bar {
-  background-color: #1f1f28 !important;
+	background-color: #1f1f28 !important;
 }

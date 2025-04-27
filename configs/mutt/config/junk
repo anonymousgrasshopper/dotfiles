@@ -1,0 +1,219 @@
+set mailcap_path = $HOME/.config/mutt/mailcap
+set rfc2047_parameters = yes
+set check_mbox_size = yes
+
+#### General Settings
+set smtp_authenticators = 'gssapi:login'
+unset help
+set sleep_time = 0		        # Pause 0 seconds for informational messages
+set mime_forward = no	  	    # attachments are forwarded with mail
+set wait_key = no		          # mutt won't ask "press key to continue"
+set fast_reply			          # skip to compose when replying
+set fcc_attach			          # save attachments with the body
+set forward_format = "FW: %s" # format of subject when forwarding
+set forward_quote		          # quote forwarded message
+set reverse_name	            # reply as whomever it was to
+set reverse_realname=yes      # use any real name provided when replying
+set auto_tag                  # automatically apply commands to all tagged messages (if some messages are tagged)
+set include			              # include message in replies
+set mail_check=5              # to avoid lags using IMAP with some email providers (yahoo for example)
+set timeout=5                 # how long to wait after user input until unblocking background stuff like mail syncing
+set count_alternatives=yes    # recurse into text/multipart when looking for attachement types
+set thorough_search=no        # don't process mail (via mailcap etc) before parsing with queries like ~B
+set flag_safe                 # flagged messages can't be deleted
+
+#### Colors, Symbols and Formatting
+# Nerd icons idea based on https://github.com/sheoak/neomutt-powerline-nerdfonts/
+# Dracula colors based on Dracula Theme by Paul Townsend <paul@caprica.org>
+
+
+# Formatting   ----------------------------------------------------------------------
+set date_format = "%a %d %h %H:%M"
+set index_format="%zc %zs %zt  %-35.35L   %@attachment_info@ %-30.85s %> %?Y?%Y ? %(!%a %d %h %H:%M)  "
+set pager_format="%n %T %s%*  %{!%d %b · %H:%M} %?X? %X?%P"
+set status_format = " %D %?u? %u ?%?R? %R ?%?d? %d ?%?t? %t ?%?F? %F ?%?p? %p? \n  \n"
+set compose_format="-- NeoMutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
+# set vfolder_format = "%N %?n?%3n&   ?  %8m  · %f"
+# set attach_format = "%u%D  %T%-75.75d %?T?%&   ? %5s · %m/%M"
+# set sidebar_format = '%D%?Z? [%Z]?%* %?S?%S?'
+index-format-hook attachment_info '=B text/calendar ~X 1' ' '
+index-format-hook attachment_info '=B text/calendar' "  "
+index-format-hook attachment_info '~X 1' "  "
+index-format-hook attachment_info '~A' "   "
+
+
+#### Header Options
+ignore *                                # ignore all headers
+unignore to: cc:                        # ..then selectively show only these headers
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # header item ordering
+
+#### View Settings
+set allow_ansi             # allow ansi escape codes (e.g. colors)
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set smart_wrap             # wrap lines at word boundaries rather than splitting up words
+set wrap=90                # email view width
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+# Tidy up emails significantly
+set display_filter="perl -0777pe 's/___{10,}[^_]*microsoft teams meeting.*to join the meeting<([^>]*).*(___{10,})/\\n────────────────────────────────────────────────────────────────────────\\n\\nTeams Meeting ~~\\n\\nMeeting URL:\\n$1\\n\\n────────────────────────────────────────────────────────────────────────/is'| sed 's/^\\(To\\|CC\\): \\([^<]*[^>]\\)$/\\1\:<\\2>/g' | perl -0777pe 's/(((?!.*CC:)To:|CC:).+?(?=>\\n)>)/$1!REMOVE_ME!\\n!END!/gs' | sed '/^To:/{;:l N;/!END!/b; s/\\(\\n\\|  *\\|\\t\\t*\\)/ /g; bl}' | sed '/^To:/,/>$/ s/\\([^>]*>,\\?\\)/\\1\\n/g' | sed -e 's/^ \\(CC:\\)\\(.*$\\)/\\1\\n\\2/' -e 's/^\\(To:\\)\\(.*$\\)/\\1 --------------------------------------------------------------------\\n\\2/' -e 's/^!END!$/------------------------------------------------------------------------/' -e '/!REMOVE_ME!/d' -e '/\\[-- Type: text.* --\\]/d' -e '/\\[-- Autoview.* --\\]/d' -e '/\\[-- Type.* --\\]/d' -e '/\\[-- .*unsupported.* --\\]/d' -e '/\\[-- Attachment #[0-9] --\\]/d' -e 's/Attachment #[0-9]: //g' -e '/./,/^$/!d' -e 's/\\([A-Z]*\\), *\\([A-Za-z]*\\)\\(\"\\)\\?/\\2 \\L\\u\\1\\E\\3/g'"
+
+#### Notmuch Config
+set nm_query_type=threads                                   # bring in the whole thread instead of just the matched message, really useful
+set nm_default_url = "notmuch:///$HOME/.local/share/mail"   # default notmuch URL
+set nm_record_tags = "sent"                                 # default 'sent' tag
+set virtual_spoolfile=yes                                   # allow using virtual mailboxes as spoolfile
+macro index \Cg "<enter-command>unset wait_key<enter><shell-escape>read -p 'Enter a search: ' x; echo \$x >~/.cache/mutt_terms<enter><change-folder>All Accounts<enter><limit>~i \"\`notmuch --config ~/.config/notmuch/notmuchrc search --output=messages \$(/bin/cat ~/.cache/mutt_terms) | head -n 1000 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a' | sed 's/id://g' \`\"<enter>" "Search all mailboxes in all accounts (Global search)"
+
+#### Content/Autoview
+auto_view application/ics
+auto_view text/calendar
+auto_view text/plain
+auto_view text/html
+auto_view application/pgp-encrypted
+alternative_order text/calendar application/ics text/plain text/enriched text/html
+
+#### Thread ordering
+set use_threads=reverse
+set sort='last-date'
+set collapse_all = yes
+set uncollapse_new = no
+set thread_received = yes
+set narrow_tree=no
+
+#### Lists
+set auto_subscribe
+
+### Sounds
+set beep=no  # don't beep for errors
+set beep_new # beep for new messages
+
+#### Text editor
+set editor="mutt-trim %s; nvim +':set textwidth=72' +':set wrapmargin=0' +':set wrap' +':set spell' %s"
+
+#### Markdown to html email conversion
+macro compose M "F pandoc -s -f markdown -t html \ny^T^Utext/html; charset=UTF-8\n" "Convert from MD to HTML"
+
+#### Show patch files (requires git-split-diffs)
+macro attach P "|git-split-diffs --color | less -RF<enter>" "View a patch file as a diff"
+set wait_key=no
+
+
+# this is a bit of a hack which you may not want/need
+timeout-hook 'exec sync-mailbox' # sync mailbox whenever idle
+
+
+
+# --- colors
+
+# General Colors   ------------------------------------------------------------------
+color normal default default                            # general text
+color error color231 color212                           # error messages
+color message default default                           # messages at the bottom
+color prompt default default                            # prompt text
+color search black color10                              # search highlight
+
+
+# Statusbar Colors   ----------------------------------------------------------------
+color status color141 default
+color status color7 color8 '([a-zA-Z0-9\.,]|\[|\])(\s)'  # bubble content 1
+color status color7 color8 '(\s)([a-zA-Z0-9\.,]|\[|\])'  # bubble content 2
+color status color7 color8 '(\% )'                       # % symbol
+color status color7 color8 '(\S)'                        # empty spaces
+color status color8 default '(|)'                      # statusline "bubbles"
+color status color69 black '(\` )'                      # bubble account variation
+color status white color69 '([a-zA-Z0-9\.]+)( )'         # account text
+color status green color8 ''                            # Unread messages count
+color status blue color8 ''                             # Read messages count icon
+color status yellow color8 ''                           # Flagged icon
+color status red color8 ''                              # Pending delete icon
+
+
+# Index Colors   --------------------------------------------------------------------
+color index color15 default '~N'                # new messages
+color index color8 default '~R'                 # read messages
+color index color8 default '~Q'                 # messages which have been replied to
+color index_collapsed color4 default            # collapsed thread (message count text)
+color index color5 default '!~Q^~p'             # sent only to me and haven't been replied to
+color index color22 default '~h X-Label..'     # messages with a complete label
+color index color6 default '~F'                 # flagged messages
+color index color6 default '~F~N'               # flagged messages (new)
+color index color14 default '~F~R'              # flagged messages (read)
+color index color1 default '~D'                 # deleted messages
+color index color1 default '~D~N'               # deleted messages (new)
+color index color9 default '~D~R'               # deleted messages (read)
+color index color3 default '~T'                 # tagged messages
+color index color3 default '~T~N'               # tagged messages (new)
+color index color11 default '~T~R'              # tagged messages (read)
+color tree  color8 color8                       # thread tree lines/arrow
+color indicator default color8                  # selection indicator
+color index_date color8 default                 # date is always the same colour
+color index_label color6 default                # label is always the same colour
+
+# Message Headers   -----------------------------------------------------------------
+color hdrdefault color8 default
+
+
+# Message Body   --------------------------------------------------------------------
+
+# Attachments
+color attachment color8 default
+
+# Signature
+color signature color8 default
+
+# emails
+# color body  color14 default  '[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+'
+
+# hide "mailto"
+color body  color0 color0  '<mailto:[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+>'
+
+# URLs
+color body  color3 default  '(https?|ftp)://[-\.,/%~_:?&=\#a-zA-Z0-9\+]+'
+
+# Dividers
+color body color8 default '(^[-_]*$)'
+
+# Important info in calendar invites
+color body color6 default '^(Date\/Time|Location|Organiser|Invitees|Teams Meeting)(:| \~\~)'
+
+# Quotes
+color quoted		color61		default
+color quoted1		color117	default
+color quoted2		color84		default
+color quoted3		color215	default
+color quoted4		color212	default
+
+# Forward/reply headers
+color body color8 default '(^(To|From|Sent|Subject):.*)'
+
+# Patch syntax highlighting
+# color   body    brightwhite     default         '^[[:space:]].*'
+# color   body    yellow          default         ^(diff).*
+# color   body    white           default         ^[\-\-\-].*
+# color   body    white           default         ^[\+\+\+].*
+# color   body    green           default         ^[\+].*
+# color   body    red             default         ^[\-].*
+# color   body    brightblue      default         [@@].*
+# color   body    cyan            default         ^(Signed-off-by).*
+# color   body    brightwhite     default         ^(Cc)
+# color   body    yellow          default         "^diff \-.*"
+# color   body    brightwhite     default         "^index [a-f0-9].*"
+# color   body    brightblue      default         "^---$"
+# color   body    white           default         "^\-\-\- .*"
+# color   body    white           default         "^[\+]{3} .*"
+# color   body    green           default         "^[\+][^\+]+.*"
+# color   body    red             default         "^\-[^\-]+.*"
+# color   body    brightblue      default         "^@@ .*"
+# color   body    green           default         "LGTM"
+# color   body    brightmagenta   default         "-- Commit Summary --"
+# color   body    brightmagenta   default         "-- File Changes --"
+# color   body    brightmagenta   default         "-- Patch Links --"
+# color   body    green           default         "^Merged #.*"
+# color   body    red             default         "^Closed #.*"
+# color   body    brightblue      default         "^Reply to this email.*"
+
+

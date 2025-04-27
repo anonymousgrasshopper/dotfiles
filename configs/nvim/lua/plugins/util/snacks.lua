@@ -1,8 +1,9 @@
 return {
-  "folke/snacks.nvim",
-  priority = 1001,
-  opts = {
-    scroll = {},
-    bigfile = {},
-  },
+	"folke/snacks.nvim",
+	priority = 1001,
+	opts = {
+		scroll = {},
+		bigfile = {},
+		bufdelete = {},
+	},
 }

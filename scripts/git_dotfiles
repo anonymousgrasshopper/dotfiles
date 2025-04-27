@@ -9,38 +9,38 @@ BLUE='\x1b[38;2;101;133;148m'  #658594
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
 cd ~/.config/dotfiles || {
-  echo "${RED}Cloning the GitHub repository failed. Check you internet connection and try again"
-  exit
+	echo "${RED}Cloning the GitHub repository failed. Check you internet connection and try again"
+	exit
 }
 
 # $1: file to copy relative to ~/.config/dotfiles, $2: destination
 copy_file() {
-  [[ -e "$1" ]] || {
-    echo -e "${YELLOW} $1 not found"
-    return 1
-  }
-  if [[ -d "$1" ]]; then
-    [[ -d "configs/$(basename "$1")" ]] && rm -rf "configs/$(basename "$1")"
-    cp -r "$1" "$2/" 2>/dev/null
-  else
-    cp "$1" "$2/" 2>/dev/null
-  fi
+	[[ -e "$1" ]] || {
+		echo -e "${YELLOW} $1 not found"
+		return 1
+	}
+	if [[ -d "$1" ]]; then
+		[[ -d "configs/$(basename "$1")" ]] && rm -rf "configs/$(basename "$1")"
+		cp -r "$1" "$2/" 2>/dev/null
+	else
+		cp "$1" "$2/" 2>/dev/null
+	fi
 }
 
 # list of configs and scripts to copy
-configs=("bat" "btop" "browser" "clang-format" "eza" "fastfetch" "git" "i3" "kitty"
-  "lazygit" "mutt" "ncdu" "npm" "nvim" "rofi" "stylua.toml" "thundery" "tmux"
-  "wallpapers" "wget" "yazi" "zathura" "zsh" "fzf.conf" "ripgrep.conf" "shellcheckrc")
+configs=("bat" "btop" "browser" "eza" "fastfetch" "formatters" "git" "i3" "kitty"
+	"lazygit" "mutt" "ncdu" "npm" "nvim" "rofi" "thundery" "tmux" "wallpapers" "wget"
+	"yazi" "zathura" "zsh" "fzf.conf" "mimeapps.list" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fix_corrupt_history"
-  "fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
+	"fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
-  copy_file "$HOME/.config/$config" "configs/"
+	copy_file "$HOME/.config/$config" "configs/"
 done
 # overwrite scripts in the dotfiles repo
 for script in ${scripts[@]}; do
-  copy_file "/usr/local/bin/$script" "scripts"
+	copy_file "/usr/local/bin/$script" "scripts"
 done
 # overwrite dbg.h
 copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
@@ -54,9 +54,9 @@ git add .
 
 # commit if args are passed to the scripts
 if [[ $# == 2 ]]; then
-  git commit -m"$1" -m"$2"
-  git push
+	git commit -m"$1" -m"$2"
+	git push
 elif [[ $# == 1 ]]; then
-  git commit -m"$1"
-  git push
+	git commit -m"$1"
+	git push
 fi

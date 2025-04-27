@@ -1,124 +1,124 @@
 {
-  "cout": {
-    "prefix": "cout",
-    "body": [
-      "cout << "
-    ],
-    "luasnip": {
-      "autotrigger": false,
-      "wordTrig": false
-    }
-  },
-  "cerr": {
-    "prefix": "cerr",
-    "body": [
-      "cerr << "
-    ],
-    "luasnip": {
-      "autotrigger": false,
-      "wordTrig": false
-    }
-  },
-  "cin": {
-    "prefix": "cin",
-    "body": [
-      "cin >> "
-    ],
-    "luasnip": {
-      "autotrigger": false,
-      "wordTrig": false
-    }
-  },
-  "first": {
-    "prefix": ".f ",
-    "body": [
-      ".first "
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "second": {
-    "prefix": ".s ",
-    "body": [
-      ".second "
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "push_back": {
-    "prefix": ".pb(",
-    "body": [
-      ".push_back($1"
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "push_front": {
-    "prefix": ".pb(",
-    "body": [
-      ".push_back($1"
-    ],
-    "luasnip": {
-      "autotrigger": true,
-      "wordTrig": false
-    }
-  },
-  "long long": {
-    "prefix": "ll ",
-    "body": [
-      "long long "
-    ],
-    "luasnip": {
-      "autotrigger": true
-    }
-  },
-  "array" : {
-    "prefix" : "arr",
-    "body" : [
-      "${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
-    ],
-    "desciption": "Dynamic array"
-  },
-  "vector<int>": {
-    "prefix": "vi ",
-    "body": [
-      "vector<int> ${1:name}(${2:size});"
-    ],
-    "luasnip": {
-      "autotrigger": true
-    }
-  },
-  "vector<vector<int>>": {
-    "prefix": "vvi ",
-    "body": [
-      "vector<vector<int>> ${1:name}(${2:size});"
-    ],
-    "luasnip": {
-      "autotrigger": true
-    }
-  },
-  "vector<pair<int,int>>": {
-    "prefix": "vii ",
-    "body": [
-      "vector<pair<int,int>> ${1:name}(${2:size});"
-    ],
-    "luasnip": {
-      "autotrigger": true
-    }
-  },
-  "builtin": {
-    "prefix": "bltn",
-    "body": [
-      "__builtin_"
-    ],
-    "luasnip": {
-      "autotrigger": true
-    }
-  }
+	"cout": {
+		"prefix": "cout",
+		"body": [
+			"cout << "
+		],
+		"luasnip": {
+			"autotrigger": false,
+			"wordTrig": false
+		}
+	},
+	"cerr": {
+		"prefix": "cerr",
+		"body": [
+			"cerr << "
+		],
+		"luasnip": {
+			"autotrigger": false,
+			"wordTrig": false
+		}
+	},
+	"cin": {
+		"prefix": "cin",
+		"body": [
+			"cin >> "
+		],
+		"luasnip": {
+			"autotrigger": false,
+			"wordTrig": false
+		}
+	},
+	"first": {
+		"prefix": ".f ",
+		"body": [
+			".first "
+		],
+		"luasnip": {
+			"autotrigger": true,
+			"wordTrig": false
+		}
+	},
+	"second": {
+		"prefix": ".s ",
+		"body": [
+			".second "
+		],
+		"luasnip": {
+			"autotrigger": true,
+			"wordTrig": false
+		}
+	},
+	"push_back": {
+		"prefix": ".pb(",
+		"body": [
+			".push_back($1"
+		],
+		"luasnip": {
+			"autotrigger": true,
+			"wordTrig": false
+		}
+	},
+	"push_front": {
+		"prefix": ".pb(",
+		"body": [
+			".push_back($1"
+		],
+		"luasnip": {
+			"autotrigger": true,
+			"wordTrig": false
+		}
+	},
+	"long long": {
+		"prefix": "ll ",
+		"body": [
+			"long long "
+		],
+		"luasnip": {
+			"autotrigger": true
+		}
+	},
+	"array" : {
+		"prefix" : "arr",
+		"body" : [
+			"${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
+		],
+		"desciption": "Dynamic array"
+	},
+	"vector<int>": {
+		"prefix": "vi ",
+		"body": [
+			"vector<int> ${1:name}(${2:size});"
+		],
+		"luasnip": {
+			"autotrigger": true
+		}
+	},
+	"vector<vector<int>>": {
+		"prefix": "vvi ",
+		"body": [
+			"vector<vector<int>> ${1:name}(${2:size});"
+		],
+		"luasnip": {
+			"autotrigger": true
+		}
+	},
+	"vector<pair<int,int>>": {
+		"prefix": "vii ",
+		"body": [
+			"vector<pair<int,int>> ${1:name}(${2:size});"
+		],
+		"luasnip": {
+			"autotrigger": true
+		}
+	},
+	"builtin": {
+		"prefix": "bltn",
+		"body": [
+			"__builtin_"
+		],
+		"luasnip": {
+			"autotrigger": true
+		}
+	}
 }

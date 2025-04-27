@@ -1,7 +1,7 @@
 # colorscheme
 include kanagawa_theme
 
-# optoins
+# options
 set selection-clipboard clipboard
 set guioptions none
 set statusbar-h-padding 0

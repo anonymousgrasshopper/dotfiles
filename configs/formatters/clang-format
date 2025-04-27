@@ -1,0 +1,16 @@
+# indentation
+UseTab: Always
+TabWidth: 2
+IndentWidth: 2
+
+ColumnLimit: 0
+
+---
+Language: Cpp
+BasedOnStyle: google
+
+# Force pointers to the type for C++.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+AllowShortFunctionsOnASingleLine: Empty

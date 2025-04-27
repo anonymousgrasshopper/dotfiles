@@ -11,15 +11,7 @@ WHITE='\x1b[38;2;220;215;186m' #DCD7BA
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR" || exit
 
-# get args passed to the script
-while true; do
-  if [[ "$1" = "--wsl" ]]; then
-    WINDOWS=1
-    shift 1
-  else
-    break
-  fi
-done
+[[ -n "$WSL_DISTRO_NAME" ]] && WINDOWS=1
 
 # $1: file to copy relative to $SCRIPT_DIR, $2: destination
 copy_file() {
