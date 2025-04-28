@@ -3,8 +3,6 @@
 # colors
 RED='\x1b[38;2;232;36;36m'     #E82424
 YELLOW='\x1b[38;2;255;158;59m' #FF9E3B
-GREEN='\x1b[38;2;106;149;137m' #6A9589
-BLUE='\x1b[38;2;101;133;148m'  #658594
 
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
@@ -46,8 +44,13 @@ done
 copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
 
 # remove chosen files and directories
-[[ -f "configs/zsh/.zcompdump" ]] && rm "configs/zsh/.zcompdump"
-[[ -d "configs/mutt/accounts" ]] && rm -rf "configs/mutt/accounts"
+[[ -f configs/zsh/.zcompdump ]] && rm configs/zsh/.zcompdump
+find configs/mutt/accounts -regex "\S*@\S*" -type f -delete
+# hide email adresses
+[[ -f configs/mutt/muttrc ]] && {
+	sed -i 's:\(source .*/\)\S*@\S*\(<enter>;<check-stats>. "switch to \)\S*@\S*\("\):\1example@mail.com\2example@mail.com\3:' configs/mutt/muttrc
+	sed -i 's:\(source .*/\)\S*@\S*\( # primary account\):\1example@mail.com\2:' configs/mutt/muttrc
+}
 
 # add everything to the index
 git add .

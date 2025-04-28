@@ -39,7 +39,6 @@ return {
 			lua = { "stylua" },
 			bash = { "shfmt" },
 			sh = { "shfmt" },
-			html = { "superhtml" },
 			css = { "prettier" },
 			js = { "prettier" },
 
@@ -58,14 +57,22 @@ return {
 				command = "stylua",
 				prepend_args = { "--config-path", vim.env.HOME .. "/.config/formatters/stylua.toml" },
 			},
+			prettier = {
+				command = "prettier",
+				prepend_args = { "--use-tabs" },
+			},
 		},
 		format_on_save = function(bufnr)
 			-- Disable with a global or buffer-local variable
-			if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+			if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+				return
+			end
 
 			local disabled_paths = { "nvim/lua/config/options.lua", "zsh/.zshrc", "zsh/aliases.zsh" }
 			for _, disabled_path in ipairs(disabled_paths) do
-				if vim.api.nvim_buf_get_name(0):match(disabled_path) then return end
+				if vim.api.nvim_buf_get_name(0):match(disabled_path) then
+					return
+				end
 			end
 
 			return { timeout_ms = 500, lsp_format = "fallback" }

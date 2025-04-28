@@ -31,12 +31,12 @@ color attachment	  #6a9589 default           # Attachments
 color signature	    color8 default            # Signatures
 color search		    color4 default            # Highlighted
 
-color indicator		default #363646              # currently highlighted message Surface 2=Background Text=Foreground
-color error		    #e82424 default              # error messages
-color warning     #ff9e3b default              # warnings
-color status		  #c8c093 default              # status line "Subtext 0"
-color tree        #54546d default              # thread tree arrows Subtext 0
-color tilde       #c8c093 default              # blank line padding Subtext 0
+color indicator		default #363646             # currently highlighted message Surface 2=Background Text=Foreground
+color error		    #e82424 default             # error messages
+color warning     #ff9e3b default             # warnings
+color status		  #c8c093 default             # status line "Subtext 0"
+color tree        #54546d default             # thread tree arrows Subtext 0
+color tilde       #c8c093 default             # blank line padding Subtext 0
 
 color quoted		  color15 default
 color quoted1		  color7  default
@@ -45,8 +45,8 @@ color quoted3		  color0  default
 color quoted4		  color0  default
 color quoted5		  color0  default
 
-color body		#2d4f67 default		[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+               # email addresses
-color body	  #7e9cd8 default		(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+        # URLs
-color body		#c8c093 default		(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$) # *bold* text
-color body		#c8c093 default		(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)     # _underlined_ text
-color body		#c8c093 default		(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)     # /italic/ text
+color body		#2d4f67 default		"[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+"               # Email addresses
+color body	  #7e9cd8 default		"(https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+"        # URLs
+color body		#c8c093 default		"(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$)" # *bold* text
+color body		#c8c093 default		"(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)"     # _underlined_ text
+color body		#c8c093 default		"(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)"     # /italic/ text

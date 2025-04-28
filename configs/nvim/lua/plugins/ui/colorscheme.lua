@@ -113,8 +113,11 @@ return {
 					HlSearchLensNear = { fg = palette.oldWhite, bg = palette.waveBlue2 },
 					HlSearchLensNearReverted = { fg = palette.waveBlue2, bg = "none" },
 
-					GitConflictIncoming = { bg = palette.waveBlue2 },
-					GitConflictCurrent = { bg = palette.sumiInk6 },
+					ConflictMarkerBegin = { fg = palette.samuraiRed },
+					ConflictMarkerOurs = { fg = palette.samuraiRed },
+					ConflictMarkerTheirs = { fg = palette.samuraiRed },
+					ConflictMarkerEnd = { fg = palette.samuraiRed },
+					ConflictMarkerCommonAncestorHunk = { bg = palette.samuraiRed },
 
 					LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 					MasonNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },

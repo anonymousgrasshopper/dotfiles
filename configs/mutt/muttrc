@@ -9,8 +9,8 @@ source config/statusbar
 source config/keys/binds
 source config/colorscheme
 
-# account
-macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
-macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
-macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter><change-folder>!<enter>;<check-stats>' "switch to example@mail.com"
+# accounts
+macro index,pager i1 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter>;<check-stats>' "switch to example@mail.com"
+macro index,pager i2 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter>;<check-stats>' "switch to example@mail.com"
+macro index,pager i3 '<sync-mailbox><enter-command>source $HOME/.config/mutt/accounts/example@mail.com<enter>;<check-stats>' "switch to example@mail.com"
 source accounts/example@mail.com # primary account

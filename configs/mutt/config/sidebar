@@ -15,6 +15,14 @@ set sidebar_format = '%B%* %<n?  %N >'
 set sidebar_short_path = yes             # Shorten mailbox names (truncate all subdirs)
 set sidebar_delim_chars = "/"            # Delete everything up to the last / character
 
+# mappings
+bind index,pager \Cb sidebar-toggle-visible
+bind index,pager \Cj sidebar-next
+bind index,pager \Ck sidebar-prev
+bind index,pager \Co sidebar-open
+bind index,pager \CP sidebar-prev-new
+bind index,pager \CN sidebar-next-new
+
 # colors
 color sidebar_background default #181820 # sidebar background
 color sidebar_indicator  default #363646 # currently selected mailbox

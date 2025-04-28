@@ -44,7 +44,7 @@ return {
 			{
 				"<localleader>l",
 				group = "LazyGit",
-				icon = { icon = " ", color = "green" },
+				icon = { icon = "󰊢 ", color = "red" },
 				cond = vim.bo.filetype == "lazy",
 			},
 		})
@@ -108,6 +108,7 @@ return {
 					{ pattern = "increment", icon = " ", color = "white" },
 					{ pattern = "decrement", icon = " ", color = "white" },
 					{ pattern = "git", icon = "󰊢 ", color = "red" },
+					{ pattern = "^choose ", icon = " ", color = "red" },
 					{ pattern = "yazi", icon = "󰇥 ", color = "yellow" },
 					{ pattern = "context", icon = "󱎸 ", color = "green" },
 					{ pattern = "paste", icon = "󰅇 ", color = "yellow" },

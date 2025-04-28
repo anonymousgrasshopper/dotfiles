@@ -1,23 +1,23 @@
 set index_format=" %zs %zc %zt  󱓻  %-28.28L  %?M?(%1M)&  ? %?X?&·? %s %{!%a %d %h %H:%M}    "
-set pager_format=" %n %zc  %T %s%*  %{!%d %b · %H:%M} %?X?  %X ? %P  "
-set status_format = " %f%?r? %r?  󰇯 %m %?n?  %n ?  %?d?  %d ?%?t?  %t ?%?F?  %F? %> %?p?   %p ?"
-# set attach_format = "%u%D  %T%-75.75d %?T?%&   ? %5s · %m/%M"
+set pager_format=" %n%zc %T %s%*  %{!%d %b · %H:%M} %?X?  %X ? %P  "
+set status_format = " %f%?r?%r? 󰇯 %m %?n?  %n ?  %?d?  %d ?%?t?  %t ?%?F?  %F? %> %?p?   %p ?"
+set attach_format = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
 
-color status white black
-# powerline status bar hack
-color status #76946a #1f1f28 ''
-color status #dca561 #1f1f28 ''
-color status #c34043 #1f1f28 ''
-color status #1f1f28 #7e9cd8 '(.*)' 1
-color status #7e9cd8 #1f1f28 '.*()' 1
-color status #1f1f28 #7e9cd8 '\s* [0-9]+\s*'
-color status #7e9cd8 #1f1f28 '().*$' 1
-color status #dca561 #1f1f28 '()\s*\s*[0-9]+\s*' 1
-color status #1f1f28 #dca561 '\s*\s*[0-9]+\s*'
+# colors
+color status #76946a #2a2a37 ''
+color status #dca561 #2a2a37 ''
+color status #c34043 #2a2a37 ''
+color status #2a2a37 #7e9cd8 '(.*)' 1
+color status #7e9cd8 #2a2a37 '.*()' 1
+color status #2a2a37 #7e9cd8 '\s* [0-9]+\s*'
+color status #7e9cd8 #2a2a37 '().*$' 1
+color status #dca561 #2a2a37 '()\s*\s*[0-9]+\s*' 1
+color status #2a2a37 #dca561 '\s*\s*[0-9]+\s*'
 color status #7e9cd8 #dca561 '() ([0-9]+%|all|end) \s*' 1
-color status #1f1f28 #7e9cd8 ' ([0-9]+%|all|end) \s*'
-color status #dca561 #1f1f28 '()\s*' 1
-color status default #1f1f28 ''
+color status #2a2a37 #7e9cd8 ' ([0-9]+%|all|end) \s*'
+color status #dca561 #2a2a37 '()\s*' 1
+color status default #2a2a37 ''
+color status #c8c093 #2a2a37
 
 
 # set index_format="     %zs %zc %zt | %-28.28L  %?X?& ? %.46s %?M10?(%1M)&? %> %{!%a %d %h %H:%M}      "

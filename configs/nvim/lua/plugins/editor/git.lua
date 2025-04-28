@@ -112,30 +112,17 @@ return {
 		},
 	},
 	{
-		"akinsho/git-conflict.nvim",
-		version = "*",
-		opts = function()
-			vim.api.nvim_create_autocmd("User", {
-				pattern = "GitConflictDetected",
-				callback = function()
-					vim.keymap.set("n", "<leader>go", "<Plug>(git-conflict-ours)", { desc = "Choose ours", buffer = true })
-					vim.keymap.set("n", "<leader>gt", "<Plug>(git-conflict-theirs)", { desc = "Choose theirs", buffer = true })
-					vim.keymap.set("n", "<leader>g2", "<Plug>(git-conflict-both)", { desc = "Choose both", buffer = true })
-					vim.keymap.set("n", "<leader>g0", "<Plug>(git-conflict-none)", { desc = "Choose none", buffer = true })
-					vim.keymap.set("n", "[x", "<Plug>(git-conflict-prev-conflict)", { desc = "Previous conflict", buffer = true })
-					vim.keymap.set("n", "]x", "<Plug>(git-conflict-next-conflict)", { desc = "Next conflict", buffer = true })
-					---@diagnostic disable-next-line: unused-local
-					vim.notify("Merge conflict detected", "error", { title = "Conflict !", icon = " " })
-				end,
-			})
-			return {
-				default_mappings = false,
-				disable_diagnostics = false,
-				highlights = {
-					incoming = "GitConflictIncoming",
-					current = "GitConflictCurrent",
-				},
-			}
+		"rhysd/conflict-marker.vim",
+		event = { "BufEnter" },
+		config = function()
+			vim.keymap.set("n", "<leader>co", "<Cmd>ConflictMarkerOurselves<CR>", { desc = "Choose ours" })
+			vim.keymap.set("n", "<leader>ct", "<Cmd>ConflictMarkerThemselves<CR>", { desc = "Choose theirs" })
+			vim.keymap.set("n", "<leader>cb", "<Cmd>ConflictMarkerBoth<CR>", { desc = "Choose both" })
+			vim.keymap.set("n", "<leader>cn", "<Cmd>ConflictMarkerNone<CR>", { desc = "Choose none" })
+			vim.keymap.set("n", "<leader>cB", "<Cmd>ConflictMarkerBoth!<CR>", { desc = "Choose both in reverse order" })
+			vim.g.conflict_marker_highlight_group = ""
+			vim.g.conflict_marker_enable_mappings = 1 -- [x and ]x mappings
+			vim.g.conflict_marker_enable_matchit = 1 -- use % to jump within a conflict marker
 		end,
 	},
 }
