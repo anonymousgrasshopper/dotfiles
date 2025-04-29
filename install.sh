@@ -21,25 +21,42 @@ while true; do
 	fi
 done
 
+# util functin for getting user input
+get_answer() {
+	read -r answer
+	case "$answer" in
+	[yY][eE][sS] | [yY])
+		answer=true
+		;;
+	*)
+		answer=false
+		;;
+	esac
+}
+
 # warn the user if the script is being runned as root
 if [[ "$EUID" == 0 && ! "$SCRIPT_DIR" =~ ^/root ]]; then
 	echo -e "${YELLOW} Running this script as root might cause permission issues."
-	echo -en "${YELLOW}  Do you really want to continue (y/n) ? ${WHITE}"
-	read -r answer
-	case "$answer" in
-	[yY][eE][sS] | [yY]) ;;
-	*)
+	echo -en "${YELLOW}  Do you really want to continue ? (y/n) ${WHITE}"
+	if ! get_answer; then
 		echo -e "${RED}  Aborting..."
 		exit 1
-		;;
-	esac
+	fi
 fi
 
 # check wether the default shell is zsh or not
-if [[ "$SHELL" != /bin/zsh && "$SHELL" != /usr/bin/zsh ]]; then
-	echo -e "${WHITE}Install zsh if it is not already on your system and make it your default shell :"
-	echo -e "${GREEN}> ${BLUE}chsh $USER"
-	echo -e "${GREEN}> ${BLUE}/bin/zsh"
+if [[ ! "$SHELL" =~ /zsh$ ]]; then
+	if [[ -f /bin/zsh ]]; then
+		echo -en "${BLUE}Do you want to make zsh your default shell ? (y/n) ${WHITE}"
+		get_answer
+		if "$answer"; then
+			chsh --shell /bin/zsh
+		fi
+	else
+		echo -e "${WHITE}Install zsh if it is not already on your system and make it your default shell :"
+		echo -e "${GREEN}> ${BLUE}chsh $USER"
+		echo -e "${GREEN}> ${BLUE}/bin/zsh"
+	fi
 	printf '\n'
 fi
 
@@ -49,7 +66,7 @@ if [[ -f /etc/zsh/zshenv ]]; then
 		echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
 	fi
 else
-	[[ -d /etc/zsh ]] || sudo mkdir /etc/zsh
+	[[ -d /etc/zsh ]] || sudo mkdir -p /etc/zsh
 	sudo touch /etc/zsh/zshenv
 	echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
 fi
@@ -58,6 +75,7 @@ if [[ -f /etc/zsh/zshrc ]]; then
 		echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc >/dev/null
 	fi
 else
+	[[ -d /etc/zsh ]] || sudo mkdir -p /etc/zsh
 	sudo touch /etc/zsh/zshrc
 	echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc >/dev/null
 fi
@@ -74,9 +92,8 @@ if [[ -f /bin/pacman ]]; then
 	# Install yay (AUR helper)
 	if [[ ! -f /bin/yay ]]; then
 		echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper (y/n) ? ${WHITE}"
-		read -r answer
-		case "$answer" in
-		[yY][eE][sS] | [yY])
+		get_answer
+		if "$answer"; then
 			if [[ ! -f /bin/git ]]; then
 				echo "${YELLOW}Having git installed is necessary to install yay."
 				sudo pacman -S git
@@ -92,8 +109,7 @@ if [[ -f /bin/pacman ]]; then
 			else
 				echo "${RED} Cloning yay failed. Check your internet connection and try again."
 			fi
-			;;
-		esac
+		fi
 	fi
 
 	# install required packages
@@ -110,29 +126,24 @@ if [[ -f /bin/pacman ]]; then
 	fi
 
 	echo -en "${BLUE}Would you like to synchronize the required packages with $package_manager ? (y/n) ${WHITE}"
-	read -r answer
-	case "$answer" in
-	[yY][eE][sS] | [yY])
+	get_answer
+	if "$answer"; then
 		$package_manager -S "${packages[@]}"
-		;;
-	*)
+	else
 		echo -e "${GREEN}Make sure the following packages are installed :"
 		echo -e "${WHITE}${packages[*]}"
-		;;
-	esac
+	fi
 
 	# fonts
 	if [[ ! -f /usr/share/fonts/TTF/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf ]]; then
 		if [[ ! -f /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf ]]; then
 			echo -en "${BLUE}Would you like to install the JetBrains Mono Nerd Font ? (y/n) ${WHITE}"
-			read -r answer
-			case "$answer" in
-			[yY][eE][sS] | [yY])
+			get_answer
+			if "$answer"; then
 				sudo pacman -S ttf-jetbrains-mono-nerd
 				[[ -d /usr/share/fonts/TTF/JetBrainsMono ]] || sudo mkdir -p /usr/share/fonts/TTF/JetBrainsMono
 				sudo mv /usr/share/fonts/TTF/JetBrainsMonoNerdFont*.ttf /usr/share/fonts/TTF/JetBrainsMono/
-				;;
-			esac
+			fi
 		else
 			[[ -d /usr/share/fonts/TTF/JetBrainsMono ]] || sudo mkdir -p /usr/share/fonts/TTF/JetBrainsMono
 			sudo mv /usr/share/fonts/TTF/JetBrainsMonoNerdFont*.ttf /usr/share/fonts/TTF/JetBrainsMono/
@@ -141,14 +152,12 @@ if [[ -f /bin/pacman ]]; then
 	if [[ ! -f /usr/share/fonts/TTF/FiraCode/FiraCodeNerdFont-Regular.ttf ]]; then
 		if [[ ! -f /usr/share/fonts/TTF/FiraCodeNerdFont-Regular.ttf ]]; then
 			echo -en "${BLUE}Would you like to install the FiraCode Nerd Font ? (y/n) ${WHITE}"
-			read -r answer
-			case "$answer" in
-			[yY][eE][sS] | [yY])
+			get_answer
+			if "$answer"; then
 				sudo pacman -S ttf-firacode-nerd
 				[[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
 				sudo mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
-				;;
-			esac
+			fi
 		else
 			[[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
 			sudo mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
@@ -156,26 +165,22 @@ if [[ -f /bin/pacman ]]; then
 	fi
 	if [[ ! -d /usr/share/fonts/noto ]]; then
 		echo -en "${BLUE}Would you like to install the Noto font to have a fallback font for unicode symbols ? (y/n) ${WHITE}"
-		read -r answer
-		case "$answer" in
-		[yY][eE][sS] | [yY])
+		get_answer
+		if "$answer"; then
 			sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
-			;;
-		esac
+		fi
 	fi
 
 	# install, enable and start paccache
 	if ! systemctl status paccache.timer >/dev/null 2>&1; then
 		echo -en "${BLUE}Would you like to use paccache to automatically clean up the package cache ? (y/n) ${WHITE}"
-		read -r answer
-		case "$answer" in
-		[yY][eE][sS] | [yY])
+		get_answer
+		if "$answer"; then
 			[[ -f /bin/paccache ]] || sudo pacman -S pacman-contrib
 			[[ -f /etc/systemd/system/paccache.timer ]] || cat <./etc/paccache.timer >/etc/systemd/system/paccache.timer
 			sudo systemctl enable paccache.timer
 			sudo systemctl start paccache.timer
-			;;
-		esac
+		fi
 	fi
 else
 	echo -e "${GREEN}Make sure the following packages are installed :"
@@ -229,7 +234,7 @@ fi
 		else
 			difference=false
 			while read -r -d ''; do
-				if ! diff "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then
+				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore hidden e-mail adresses
 					difference=true
 					break
 				fi
@@ -272,10 +277,8 @@ ${RED}Enter a number (default 3) : "
 # run etc/install.sh
 printf '\n'
 echo -en "${BLUE}Do you want to run ${GREEN}./etc/install.sh${BLUE} ? (y/n) ${WHITE}"
-read -r answer
-case "$answer" in
-[yY][eE][sS] | [yY])
+get_answer
+if "$answer"; then
 	printf '\n'
 	./etc/install.sh
-	;;
-esac
+fi

@@ -125,4 +125,12 @@ return {
 			vim.g.conflict_marker_enable_matchit = 1 -- use % to jump within a conflict marker
 		end,
 	},
+	{
+		"rbong/vim-flog",
+		lazy = true,
+		cmd = { "Flog", "Flogsplit", "Floggit" },
+		dependencies = {
+			"tpope/vim-fugitive",
+		},
+	},
 }

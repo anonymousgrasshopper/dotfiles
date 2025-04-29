@@ -1,5 +1,10 @@
+source etc/wizard
+
+
 set history_remove_dups = yes
 set sort = 'reverse-date'
+
+set mailcap_path = $HOME/.config/mutt/config/attachments/mailcap
 
 set wait_key = no
 set pager_read_delay = 0      # View a message for this number of seconds to mark as read
@@ -15,11 +20,9 @@ set markers = no # don't put '+' at the beginning of wrapped lines
 set use_threads = yes
 set collapse_all = no
 
-# editor
+# composing
 set edit_headers = yes
-set editor="vim -c 'startinsert' '+/^$'"
-
-timeout-hook 'exec sync-mailbox' # sync mailbox whenever idle
+set editor="nvim -c '8' -c 'startinsert'"
 
 set pager_context = 3                # show 3 lines of context
 set pager_stop                       # stop at end of message
@@ -55,3 +58,5 @@ set uncollapse_jump
 # set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 # set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 # set send_charset = "utf-8:iso-8859-1:us-ascii" # send in utf-8
+
+# timeout-hook 'exec sync-mailbox' # sync mailbox whenever idle

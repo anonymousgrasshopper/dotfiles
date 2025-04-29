@@ -16,7 +16,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/"
 
 # download Zinit if it's not here yet and source it
 if [[ ! -d "$ZINIT_HOME" ]]; then
-	mkdir -p "$(dirname $ZINIT_HOME)"
+	mkdir -p "$(dirname "$ZINIT_HOME")"
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
@@ -38,7 +38,59 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w 
 zstyle ':completion:*:git-checkout:*'  sort false
 zstyle ':completion:*:git-rebase:*'    sort false
 zstyle ':completion:*:descriptions'    format '[%d]'
-zstyle ':completion:*' list-colors     ${(s.:.)LS_COLORS}
+export LS_COLORS='
+di=1;34:\
+ln=1;32:\
+mh=00:\
+pi=33:\
+so=35:\
+do=1;35:\
+bd=1;33:\
+cd=1;33:\
+or=1;31:\
+mi=0;5;31:\
+su=0;41:\
+sg=0;46:\
+ca=30;41:\
+tw=0;42:\
+ow=34;42:\
+st=37;44:\
+ex=1;32:\
+*.jpg=1;35:\
+*.jpeg=1;35:\
+*.png=1;35:\
+*.gif=1;35:\
+*.bmp=1;35:\
+*.webp=1;35:\
+*.mp4=1;35:\
+*.mkv=1;35:\
+*.avi=1;35:\
+*.mov=1;35:\
+*.mp3=1;36:\
+*.flac=1;36:\
+*.wav=1;36:\
+*.ogg=1;36:\
+*.opus=1;36:\
+*.pdf=1;32:\
+*.doc=1;32:\
+*.docx=1;32:\
+*.odt=1;32:\
+*.tar=1;31:\
+*.tgz=1;31:\
+*.zip=1;31:\
+*.rar=1;31:\
+*.gz=1;31:\
+*.xz=1;31:\
+*.7z=1;31:\
+*.c=1;33:\
+*.cpp=1;33:\
+*.h=1;33:\
+*.hpp=1;33:\
+*.py=1;33:\
+*.java=1;33:\
+*.rs=1;33'
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*:options' list-colors '=^(-- *)=34'
 
 zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'

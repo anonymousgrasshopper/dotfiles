@@ -50,8 +50,8 @@ users:
   group_root: {foreground: "#dcd7ba"}
 
 links:
-  normal: {foreground: Red, is_bold: true}
-  multi_link_file: {foreground: Red, background: Yellow}
+  normal: {foreground: "#c34043", is_bold: true}
+  multi_link_file: {foreground: "#c34043", background: "#c0a36e"}
 
 git:
   new: {foreground: "#76946a"}
@@ -70,33 +70,33 @@ git_repo:
 
 security_context:
   colon: {foreground: Default, is_dimmed: true}
-  user: {foreground: Blue}
-  role: {foreground: Green}
-  typ: {foreground: Yellow}
-  range: {foreground: Cyan}
+  user: {foreground: "#7e9cd8"}
+  role: {foreground: "#76946a"}
+  typ: {foreground: "#c0a36e"}
+  range: {foreground: "#6a9589"}
 
 file_type:
-  image: {foreground: Purple}
-  video: {foreground: Purple, is_bold: true}
-  music: {foreground: Cyan}
-  lossless: {foreground: Cyan, is_bold: true}
-  crypto: {foreground: Green, is_bold: true}
-  document: {foreground: Green}
-  compressed: {foreground: Red}
-  temp: {foreground: White}
-  compiled: {foreground: Yellow}
-  build: {foreground: Yellow, is_bold: true, is_underlined: true}
-  source: {foreground: Yellow, is_bold: true}
+  image: {foreground: "#957fb8"}
+  video: {foreground: "#957fb8", is_bold: true}
+  music: {foreground: "#6a9589"}
+  lossless: {foreground: "#6a9589", is_bold: true}
+  crypto: {foreground: "#76946a", is_bold: true}
+  document: {foreground: "#76946a"}
+  compressed: {foreground: "#c34043"}
+  temp: {foreground: "#dcd7ba"}
+  compiled: {foreground: "#c0a36e"}
+  build: {foreground: "#c0a36e", is_bold: true, is_underlined: true}
+  source: {foreground: "#c0a36e", is_bold: true}
 
 punctuation: {foreground: "#54546d", is_bold: true}
 date: {foreground: "#c8c093"}
-inode: {foreground: Purple}
-blocks: {foreground: Cyan}
+inode: {foreground: "#957fb8"}
+blocks: {foreground: "#6a9589"}
 header: {foreground: Default, is_underlined: true}
-octal: {foreground: Purple}
+octal: {foreground: "#957fb8"}
 flags: {foreground: Default}
 
-symlink_path: {foreground: Cyan}
-control_char: {foreground: Red}
+symlink_path: {foreground: "#6a9589"}
+control_char: {foreground: "#c34043"}
 broken_symlink: {foreground: "#e82424"}
 broken_path_overlay: {foreground: Default, is_underlined: true}

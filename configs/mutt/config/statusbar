@@ -1,7 +1,9 @@
-set index_format=" %zs %zc %zt  󱓻  %-28.28L  %?M?(%1M)&  ? %?X?&·? %s %{!%a %d %h %H:%M}    "
+set index_format=" %zs %zc %zt  󱓻  %-25.25L %?X?&·? %s %.40s %> %{!%a %d %h %H:%M}    "
+# set index_format=" %zs %zc %zt | %-28.28L  %?X?& ? %.46s %> %{!%a %d %h %H:%M}      "
 set pager_format=" %n%zc %T %s%*  %{!%d %b · %H:%M} %?X?  %X ? %P  "
-set status_format = " %f%?r?%r? 󰇯 %m %?n?  %n ?  %?d?  %d ?%?t?  %t ?%?F?  %F? %> %?p?   %p ?"
 set attach_format = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
+
+set status_format = " %f%?r?%r? 󰇯 %m %?n?  %n ?  %?d?  %d ?%?t?  %t ?%?F?  %F? %> %?p?   %p ?"
 
 # colors
 color status #76946a #2a2a37 ''

@@ -27,11 +27,10 @@ run() {
 	shift
 	nohup "$command" "$@" >/dev/null 2>&1 &
 }
-alias sudo="sudo "									# enable aliases in sudo
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
-alias rm=rm_confirm_nonempty
+[[ $EUID -ne 0 ]] && alias rm=rm_confirm_nonempty
 rm_confirm_nonempty() {
 	args=()
 	items=()
@@ -54,7 +53,7 @@ rm_confirm_nonempty() {
 
 # help command using bat
 help() {
-	"$@" --help 2&1 | bat --plain --language=help
+	"$@" --help 2>&1 | bat --plain --language=help --paging=always
 }
 
 # Usage: far /path/to/directory/ "regexp" "replacement"
@@ -92,7 +91,9 @@ clone() {
 	[[ "$dir" =~ ^(.*)/([^/]+)\.git$ ]] && dir="${match[1]}/${match[2]}" # strip trailing .git, if any
 	git clone "$1" "$dir" && cd "$dir"
 }
-alias commit="git commit"
+alias gc="git commit"
+alias ga="git add"
+alias gco="git checkout"
 alias push="git push"
 gacp() {
 	git add .
@@ -101,9 +102,13 @@ gacp() {
 }
 gitdot() {
 	if [[ $# == 0 ]]; then
-		/usr/local/bin/git_dotfiles && cd ~/.config/dotfiles && lazygit && cd - >/dev/null
+		git_dotfiles
+		if cd ~/.config/dotfiles; then
+			lazygit	
+			cd - >/dev/null
+		fi
 	else
-		/usr/local/bin/git_dotfiles $@
+		git_dotfiles "$@" && cd - >/dev/null
 	fi
 }
 

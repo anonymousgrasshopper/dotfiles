@@ -35,6 +35,7 @@
 [delta "theme"]
 	dark = true
 	syntax-theme = Kanagawa
+	tabs = 2
 	commit-decoration-style = bold yellow ul overline
 	file-style = yellow
 	file-decoration-style = bold yellow box
