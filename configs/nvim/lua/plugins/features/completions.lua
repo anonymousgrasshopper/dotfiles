@@ -23,6 +23,17 @@ return {
 					"fallback",
 				},
 
+				["<A-&>"] = { function(cmp) cmp.accept({ index = 1 }) end },
+				["<A-é>"] = { function(cmp) cmp.accept({ index = 2 }) end },
+				['<A-">'] = { function(cmp) cmp.accept({ index = 3 }) end },
+				["<A-'>"] = { function(cmp) cmp.accept({ index = 4 }) end },
+				["<A-(>"] = { function(cmp) cmp.accept({ index = 5 }) end },
+				["<A-->"] = { function(cmp) cmp.accept({ index = 6 }) end },
+				["<A-è>"] = { function(cmp) cmp.accept({ index = 7 }) end },
+				["<A-_>"] = { function(cmp) cmp.accept({ index = 8 }) end },
+				["<A-ç>"] = { function(cmp) cmp.accept({ index = 9 }) end },
+				["<A-à>"] = { function(cmp) cmp.accept({ index = 10 }) end },
+
 				["<Up>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
 				["<C-p>"] = { "select_prev", "fallback" },
@@ -34,6 +45,7 @@ return {
 				["<C-b>"] = { "scroll_documentation_up", "fallback" },
 				["<C-f>"] = { "scroll_documentation_down", "fallback" },
 			},
+
 			cmdline = {
 				keymap = {
 					["<C-e>"] = { "hide", "fallback" },
@@ -63,15 +75,6 @@ return {
 					end
 					return {}
 				end,
-			},
-
-			appearance = {
-				nerd_font_variant = "normal",
-			},
-
-			snippets = { preset = "luasnip" },
-			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
 			},
 
 			completion = {
@@ -131,6 +134,14 @@ return {
 					},
 				},
 			},
+
+			appearance = { nerd_font_variant = "normal" },
+
+			snippets = { preset = "luasnip" },
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
 		},
 		opts_extend = { "sources.default" },
 	},
@@ -158,7 +169,7 @@ return {
 			})
 
 			-- filetypes
-			require("luasnip").filetype_extend("bash", { "sh" })
+			require("luasnip").filetype_extend("bash", { "sh", "zsh" })
 
 			-- load snippets
 			require("luasnip.loaders.from_vscode").lazy_load({

@@ -68,9 +68,7 @@ vim.keymap.set("n", "<leader>sx", "<Cmd>close<CR>", { desc = "Close current spli
 -- diagnostics
 local diagnostic_jump = function(count, severity)
 	local severity = severity and vim.diagnostic.severity[severity] or nil
-	return function()
-		vim.diagnostic.jump({ count = count, severity = severity })
-	end
+	return function() vim.diagnostic.jump({ count = count, severity = severity }) end
 end
 vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 vim.keymap.set("n", "]d", diagnostic_jump(1), { desc = "Next Diagnostic" })
@@ -112,9 +110,12 @@ vim.keymap.set("n", "<leader>os", "<Cmd>set spell!<CR>", { desc = "Toggle spell 
 vim.keymap.set("n", "<leader>ow", "<Cmd>set wrap!<CR>", { desc = "Toggle line wrapping" })
 vim.keymap.set("n", "<leader>or", "<Cmd>set relativenumber!<CR>", { desc = "Toggle relative numbers" })
 vim.keymap.set("n", "<leader>oa", "<Cmd>set autochdir!<CR>", { desc = "Sync cwd with buffer's" })
-vim.keymap.set("n", "<leader>od", function()
-	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "Toggle diagnostics" })
+vim.keymap.set(
+	"n",
+	"<leader>od",
+	function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end,
+	{ desc = "Toggle diagnostics" }
+)
 
 -- search
 vim.keymap.set("n", "n", "nzz")
@@ -126,13 +127,6 @@ vim.keymap.set("n", "<leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 
 -- lazy
 vim.keymap.set("n", "<leader>L", "<Cmd>Lazy<CR>", { desc = "Open Lazy.nvim ui" })
-
--- Treesitter
-vim.api.nvim_create_user_command(
-	"GetNode",
-	"lua print(vim.treesitter.get_node({ pos = { vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2] }}):type())",
-	{}
-)
 
 -- clean up copied LaTeX from AoPS
 vim.api.nvim_create_user_command("Aops", ":s/![\\(\\$.\\{-}\\$\\).(.\\{-}png)/\\1/g", {})

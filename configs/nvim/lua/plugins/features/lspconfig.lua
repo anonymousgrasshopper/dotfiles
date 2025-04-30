@@ -45,7 +45,6 @@ return {
 			{ "rachartier/tiny-inline-diagnostic.nvim", opts = {} },
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local mason_lspconfig = require("mason-lspconfig")
 
 			mason_lspconfig.setup({
@@ -70,9 +69,7 @@ return {
 			})
 
 			require("mason-lspconfig").setup_handlers({
-				function(server_name)
-					vim.lsp.enable(server_name)
-				end,
+				function(server_name) vim.lsp.enable(server_name) end,
 
 				["clangd"] = function()
 					vim.lsp.config("clangd", {
@@ -128,6 +125,36 @@ return {
 					vim.lsp.enable("bashls")
 				end,
 
+				["jsonls"] = function()
+					vim.lsp.config("jsonls", {
+						settings = {
+							json = {
+								schemas = require("schemastore").json.schemas(),
+								validate = { enable = true },
+							},
+						},
+					})
+					vim.lsp.enable("jsonls")
+				end,
+
+				["yamlls"] = function()
+					vim.lsp.config("yamlls", {
+						settings = {
+							yaml = {
+								schemaStore = {
+									-- You must disable built-in schemaStore support if you want to use
+									-- this plugin and its advanced options like `ignore`.
+									enable = false,
+									-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+									url = "",
+								},
+								schemas = require("schemastore").yaml.schemas(),
+							},
+						},
+					})
+					vim.lsp.enable("yamlls")
+				end,
+
 				["cssls"] = function()
 					vim.lsp.config("cssls", {
 						filetypes = { "html", "css", "scss" },
@@ -153,51 +180,37 @@ return {
 		keys = {
 			{
 				"gpd",
-				function()
-					require("goto-preview").goto_preview_definition()
-				end,
+				function() require("goto-preview").goto_preview_definition() end,
 				desc = "Preview definition",
 			},
 			{
 				"gpc",
-				function()
-					require("goto-preview").goto_preview_declaration()
-				end,
+				function() require("goto-preview").goto_preview_declaration() end,
 				desc = "Preview declaration",
 			},
 			{
 				"gpi",
-				function()
-					require("goto-preview").goto_preview_implementation()
-				end,
+				function() require("goto-preview").goto_preview_implementation() end,
 				desc = "Preview implementation",
 			},
 			{
 				"gpr",
-				function()
-					require("goto-preview").goto_preview_references()
-				end,
+				function() require("goto-preview").goto_preview_references() end,
 				desc = "Preview references",
 			},
 			{
 				"gpt",
-				function()
-					require("goto-preview").goto_preview_type_definition()
-				end,
+				function() require("goto-preview").goto_preview_type_definition() end,
 				desc = "Preview type definition",
 			},
 			{
 				"gpx",
-				function()
-					require("goto-preview").close_all_win()
-				end,
+				function() require("goto-preview").close_all_win() end,
 				desc = "Close all previews",
 			},
 			{
 				"gpX",
-				function()
-					require("goto-preview").close_all_win({ skip_curr_window = true })
-				end,
+				function() require("goto-preview").close_all_win({ skip_curr_window = true }) end,
 				desc = "Close other previews",
 			},
 		},
@@ -207,9 +220,7 @@ return {
 			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }, -- Border characters of the floating window
 			opacity = 20, -- 0-100 opacity level of the floating window where 100 is fully transparent.
 			resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-			post_open_hook = function()
-				vim.keymap.set("n", "<esc>", "<Cmd>quit<CR>", { buffer = true })
-			end,
+			post_open_hook = function() vim.keymap.set("n", "<esc>", "<Cmd>quit<CR>", { buffer = true }) end,
 			focus_on_open = true, -- Focus the floating window when opening it.
 			dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
 			force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close

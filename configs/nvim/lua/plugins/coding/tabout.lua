@@ -1,7 +1,6 @@
 return {
 	"abecodes/tabout.nvim",
 	event = "InsertCharPre",
-	priority = 1000,
 	dependencies = { -- optional
 		"nvim-treesitter/nvim-treesitter",
 	},

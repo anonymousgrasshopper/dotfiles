@@ -18,6 +18,12 @@ return {
 				separator_style = "thin",
 				offsets = {
 					{
+						filetype = "ClangdAST",
+						text = "",
+						highlight = "#16161D",
+						separator = "",
+					},
+					{
 						filetype = "neo-tree",
 						text = "File Explorer",
 						highlight = "PanelHeading",
@@ -40,8 +46,11 @@ return {
 				},
 			},
 			highlights = {
+				fill = {
+					bg = "#16161d",
+				},
 				offset_separator = {
-					bg = "#111116",
+					bg = "#16161d",
 					fg = "#2a2a37",
 				},
 				tab = {

@@ -93,6 +93,7 @@ clone() {
 }
 alias gc="git commit"
 alias ga="git add"
+alias gb="git branch"
 alias gco="git checkout"
 alias push="git push"
 gacp() {

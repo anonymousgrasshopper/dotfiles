@@ -16,21 +16,18 @@ local get_visual = function(_, parent)
 end
 
 local tex = {}
-tex.in_mathzone = function()
-	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
-end
+tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 
 return {
 	s(
 		{ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
 		fmta(
 			[[
-        \sum_{<>=<>}^{<>}<>
+        \sum_{<>}^{<>}<>
       ]],
 			{
-				i(1, "i"),
-				i(2, "0"),
-				i(3, "n"),
+				i(1, "i = 0"),
+				i(2, "n"),
 				i(0),
 			}
 		),
@@ -40,12 +37,11 @@ return {
 		{ trig = "pd", dscr = "product", wordTrig = false, snippetType = "autosnippet" },
 		fmta(
 			[[
-        \prod_{<>=<>}^{<>}<>
+        \prod_{<>}^{<>}<>
       ]],
 			{
-				i(1, "i"),
-				i(2, "0"),
-				i(3, "n"),
+				i(1, "i = 0"),
+				i(2, "n"),
 				i(0),
 			}
 		),
@@ -96,9 +92,7 @@ return {
 	s(
 		{ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
 		fmta("<>^{<>}", {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
+			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
@@ -106,9 +100,7 @@ return {
 	s(
 		{ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
 		fmta("<>_{<>}", {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
+			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
@@ -122,9 +114,7 @@ return {
 			snippetType = "autosnippet",
 		},
 		fmta("<>^{<>}_{<>}", {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
+			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			i(2),
 		}),
@@ -145,7 +135,7 @@ return {
 		t("\\exists "),
 		{ condition = tex.in_mathzone }
 	),
-	s({ trig = "\\ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" }, {
+	s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\displaystyle"),
 	}, { condition = tex.in_mathzone }),
 	s({ trig = "\\P", dscr = "Prime numbers set", snippetType = "autosnippet" }, {

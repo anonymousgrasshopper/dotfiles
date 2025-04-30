@@ -89,7 +89,8 @@ ex=1;32:\
 *.py=1;33:\
 *.java=1;33:\
 *.rs=1;33'
-# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+alias ls="ls --color"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # zstyle ':completion:*:options' list-colors '=^(-- *)=34'
 
 zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
