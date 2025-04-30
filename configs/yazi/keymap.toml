@@ -20,7 +20,7 @@ desc = "Create a tab and enter the hovered directory"
 
 [[manager.prepend_keymap]]
 on   = "2"
-run  = "plugin smart-switch --args=1"
+run  = "plugin smart-switch 1"
 desc = "Switch or create tab 2"
 
 [[manager.prepend_keymap]]
