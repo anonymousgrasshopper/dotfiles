@@ -3,16 +3,12 @@ return {
 	keys = {
 		{
 			"<leader>m",
-			function()
-				require("treesj").toggle()
-			end,
+			function() require("treesj").toggle() end,
 			desc = "Split/Join",
 		},
 		{
 			"<leader>M",
-			function()
-				require("treesj").toggle({ split = { recursive = true } })
-			end,
+			function() require("treesj").toggle({ split = { recursive = true } }) end,
 			desc = "Split recursively/Join",
 		},
 	},

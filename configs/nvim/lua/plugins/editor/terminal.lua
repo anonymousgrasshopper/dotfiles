@@ -45,9 +45,7 @@ return {
 			},
 		})
 
-		vim.api.nvim_create_user_command("Btop", function()
-			btop:toggle()
-		end, {})
+		vim.api.nvim_create_user_command("Btop", function() btop:toggle() end, {})
 
 		return {
 			shade_terminals = false,

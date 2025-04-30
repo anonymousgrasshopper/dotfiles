@@ -391,21 +391,15 @@ return {
 				},
 				{
 					event = "file_moved",
-					handler = function(_)
-						vim.cmd("highlight! Cursor blend=100")
-					end,
+					handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
 				},
 				{
 					event = "file_deleted",
-					handler = function(_)
-						vim.cmd("highlight! Cursor blend=100")
-					end,
+					handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
 				},
 				{
 					event = "file_renamed",
-					handler = function(_)
-						vim.cmd("highlight! Cursor blend=100")
-					end,
+					handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
 				},
 				-- {
 				--   event = "file_open_requested",

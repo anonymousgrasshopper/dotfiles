@@ -69,6 +69,7 @@ return {
 			end
 
 			local disabled_paths = {
+				"nvim/ftplugin/cpp.lua",
 				"nvim/lua/config/options.lua",
 				"nvim/lua/plugins/util/browsing.lua",
 				"nvim/lua/plugins/util/unix.lua",

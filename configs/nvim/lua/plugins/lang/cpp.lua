@@ -185,9 +185,7 @@ return {
 			open_received_contests = true,
 			replace_received_testcases = false,
 		},
-		init = function()
-			vim.api.nvim_create_user_command("CodeForces", "CompetiTest receive contest", {})
-		end,
+		init = function() vim.api.nvim_create_user_command("CodeForces", "CompetiTest receive contest", {}) end,
 	},
 	{
 		"p00f/clangd_extensions.nvim",

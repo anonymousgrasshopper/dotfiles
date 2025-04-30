@@ -6,9 +6,7 @@ local f = ls.function_node
 
 return {
 	s({ trig = "^(%s+[%-%w]+: )", dscr = "auto add semicolon", regTrig = true, snippetType = "autosnippet" }, {
-		f(function(_, snip)
-			return snip.captures[1]
-		end),
+		f(function(_, snip) return snip.captures[1] end),
 		i(1),
 		t(";"),
 		i(0),

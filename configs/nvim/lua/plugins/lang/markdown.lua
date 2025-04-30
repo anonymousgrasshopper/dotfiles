@@ -18,9 +18,7 @@ return {
 							return item.indent * (1 / (parent_indnet * 2))
 						end,
 						marker_minus = {
-							add_padding = function(_, item)
-								return item.indent > 1
-							end,
+							add_padding = function(_, item) return item.indent > 1 end,
 						},
 					},
 				},

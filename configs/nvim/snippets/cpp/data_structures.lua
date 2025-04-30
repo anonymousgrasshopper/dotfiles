@@ -13,9 +13,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function()
-	return check_not_in_node({ "string_content", "comment" })
-end
+local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
 
 return {
 	s(
@@ -26,9 +24,7 @@ return {
         };
       ]],
 			{
-				f(function(_, snip)
-					return snip.captures[1]
-				end),
+				f(function(_, snip) return snip.captures[1] end),
 				c(1, {
 					{ t({ "{", "\t" }), i(1), i(0) },
 					{ t(": public "), i(1), t({ " {", "\t" }), i(0) },
@@ -48,9 +44,7 @@ return {
         };
       ]],
 			{
-				f(function(_, snip)
-					return snip.captures[1]
-				end),
+				f(function(_, snip) return snip.captures[1] end),
 				c(1, {
 					{ t({ "{", "\t" }), i(1), i(0) },
 					{ t(": public "), i(1), t({ " {", "\t" }), i(0) },
@@ -71,9 +65,7 @@ return {
         };
       ]],
 			{
-				f(function(_, snip)
-					return snip.captures[1]
-				end),
+				f(function(_, snip) return snip.captures[1] end),
 				i(1),
 			}
 		),

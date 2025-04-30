@@ -4,9 +4,7 @@
 
 -- show the cursorline in the active buffer only, and hide for some filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
-	callback = function()
-		vim.opt_local.cursorline = false
-	end,
+	callback = function() vim.opt_local.cursorline = false end,
 })
 vim.api.nvim_create_autocmd("WinEnter", {
 	callback = function()
@@ -41,14 +39,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 })
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "alpha",
-	callback = function()
-		vim.cmd("hi Cursor blend=100")
-	end,
+	callback = function() vim.cmd("hi Cursor blend=100") end,
 })
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
-	callback = function()
-		vim.cmd("hi Cursor blend=0")
-	end,
+	callback = function() vim.cmd("hi Cursor blend=0") end,
 })
 
 -- toggle some options in terminals and darken their background
@@ -174,8 +168,6 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 -- restore the padding of the terminal emulator
 if vim.env.TERM:match("kitty") then
 	vim.api.nvim_create_autocmd("VimLeave", {
-		callback = function()
-			vim.cmd("silent !kitty @ set-spacing margin=20")
-		end,
+		callback = function() vim.cmd("silent !kitty @ set-spacing margin=20") end,
 	})
 end

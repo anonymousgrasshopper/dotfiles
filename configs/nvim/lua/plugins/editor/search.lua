@@ -80,8 +80,6 @@ return {
 			{ "g*", "<Plug>(asterisk-gz*)zz<Cmd>lua require('hlslens').start()<CR>" },
 			{ "g#", "<Plug>(asterisk-gz#)zz<Cmd>lua require('hlslens').start()<CR>" },
 		},
-		config = function()
-			vim.cmd("let g:asterisk#keeppos = 1")
-		end,
+		config = function() vim.cmd("let g:asterisk#keeppos = 1") end,
 	},
 }

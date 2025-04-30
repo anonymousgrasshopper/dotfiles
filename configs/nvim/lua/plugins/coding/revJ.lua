@@ -3,9 +3,7 @@ return {
 	keys = {
 		{
 			"<leader>j",
-			function()
-				require("trevj").format_at_cursor()
-			end,
+			function() require("trevj").format_at_cursor() end,
 			desc = "reverse J operator",
 		},
 	},

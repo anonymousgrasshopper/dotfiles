@@ -27,51 +27,37 @@ return {
 	keys = {
 		{
 			"<M-a>",
-			function()
-				require("harpoon"):list():add()
-			end,
+			function() require("harpoon"):list():add() end,
 			desc = "Add file to Harpoon",
 		},
 		{
 			"<M-h>",
-			function()
-				toggle_telescope(require("harpoon"):list())
-			end,
+			function() toggle_telescope(require("harpoon"):list()) end,
 			desc = "Toggle Harpoon ui",
 		},
 
 		{
 			"<M-p>",
-			function()
-				require("harpoon"):list():select(1)
-			end,
+			function() require("harpoon"):list():select(1) end,
 		},
 		{
 			"<M-m>",
-			function()
-				require("harpoon"):list():select(2)
-			end,
+			function() require("harpoon"):list():select(2) end,
 		},
 		{
 			"<M-l>",
-			function()
-				require("harpoon"):list():select(3)
-			end,
+			function() require("harpoon"):list():select(3) end,
 		},
 		{
 			"<M-o>",
-			function()
-				require("harpoon"):list():select(4)
-			end,
+			function() require("harpoon"):list():select(4) end,
 		},
 	},
 	opts = {
 		settings = {
 			save_on_toggle = true,
 			sync_on_ui_close = true,
-			key = function()
-				return vim.uv.cwd()
-			end,
+			key = function() return vim.uv.cwd() end,
 		},
 	},
 }

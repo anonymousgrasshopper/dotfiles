@@ -75,9 +75,7 @@ return {
         end<>
       ]],
 			{
-				f(function(_, snip)
-					return snip.captures[1]
-				end),
+				f(function(_, snip) return snip.captures[1] end),
 				i(1),
 				d(2, get_visual),
 				i(0),
@@ -88,9 +86,7 @@ return {
 	s(
 		{ trig = "([^%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
 		fmta("<>function(<>) <> end<>", {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
+			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			d(2, get_visual),
 			i(0),

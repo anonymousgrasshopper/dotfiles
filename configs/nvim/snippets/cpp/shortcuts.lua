@@ -14,9 +14,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function()
-	return check_not_in_node({ "string_content", "comment" })
-end
+local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
 
 return {
 	s({ trig = "template", dscr = "template", snippetType = "autosnippet" }, {
@@ -31,19 +29,14 @@ return {
 			{ t('#include "'), i(1), t({ '"', "" }), i(0) },
 		}),
 	}, { condition = line_begin, not_in_string_comment }),
-	s(
-		{
-			trig = "([^%w_]%s*)virt",
-			dscr = "virtual member function",
-			regTrig = true,
-			wordTrig = false,
-			snippetType = "autosnippet",
-		},
-		{
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
-			t("virtual "),
-		}
-	),
+	s({
+		trig = "([^%w_]%s*)virt",
+		dscr = "virtual member function",
+		regTrig = true,
+		wordTrig = false,
+		snippetType = "autosnippet",
+	}, {
+		f(function(_, snip) return snip.captures[1] end),
+		t("virtual "),
+	}),
 }

@@ -24,9 +24,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function()
-	return check_not_in_node({ "string_content", "comment" })
-end
+local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
 
 return {
 	s(
@@ -94,20 +92,17 @@ return {
 		),
 		{ condition = not_in_string_comment * line_begin }
 	),
-	s(
-		{
-			trig = "<[cC][mM][dD]>",
-			dscr = "Neovim keymap command",
-			wordTrig = false,
-			regTrig = true,
-			snippetType = "autosnippet",
-		},
-		{
-			t("<Cmd>"),
-			d(1, get_visual),
-			t("<CR>"),
-		}
-	),
+	s({
+		trig = "<[cC][mM][dD]>",
+		dscr = "Neovim keymap command",
+		wordTrig = false,
+		regTrig = true,
+		snippetType = "autosnippet",
+	}, {
+		t("<Cmd>"),
+		d(1, get_visual),
+		t("<CR>"),
+	}),
 	s({ trig = "vks", dscr = "Create a keymap", snippetType = "autosnippet" }, {
 		t('vim.keymap.set("'),
 		i(1, "n"),

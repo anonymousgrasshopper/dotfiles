@@ -4,9 +4,7 @@ local i = ls.insert_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
-local first_line = function()
-	return vim.api.nvim_win_get_cursor(0)[1] == 1
-end
+local first_line = function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end
 
 local check_not_in_node = function(ignored_nodes)
 	local pos = vim.api.nvim_win_get_cursor(0)
@@ -15,9 +13,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function()
-	return check_not_in_node({ "string_content", "comment" })
-end
+local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
 
 return {
 	s(

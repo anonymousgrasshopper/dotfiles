@@ -2,7 +2,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		version = "*",
-		event = "ModeChanged",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 		},
@@ -23,16 +23,16 @@ return {
 					"fallback",
 				},
 
-				["<A-&>"] = { function(cmp) cmp.accept({ index = 1 }) end },
-				["<A-é>"] = { function(cmp) cmp.accept({ index = 2 }) end },
-				['<A-">'] = { function(cmp) cmp.accept({ index = 3 }) end },
-				["<A-'>"] = { function(cmp) cmp.accept({ index = 4 }) end },
-				["<A-(>"] = { function(cmp) cmp.accept({ index = 5 }) end },
-				["<A-->"] = { function(cmp) cmp.accept({ index = 6 }) end },
-				["<A-è>"] = { function(cmp) cmp.accept({ index = 7 }) end },
-				["<A-_>"] = { function(cmp) cmp.accept({ index = 8 }) end },
-				["<A-ç>"] = { function(cmp) cmp.accept({ index = 9 }) end },
-				["<A-à>"] = { function(cmp) cmp.accept({ index = 10 }) end },
+				["<M-&>"] = { function(cmp) cmp.accept({ index = 1 }) end },
+				["<M-é>"] = { function(cmp) cmp.accept({ index = 2 }) end },
+				['<M-">'] = { function(cmp) cmp.accept({ index = 3 }) end },
+				["<M-'>"] = { function(cmp) cmp.accept({ index = 4 }) end },
+				["<M-(>"] = { function(cmp) cmp.accept({ index = 5 }) end },
+				["<M-->"] = { function(cmp) cmp.accept({ index = 6 }) end },
+				["<M-è>"] = { function(cmp) cmp.accept({ index = 7 }) end },
+				["<M-_>"] = { function(cmp) cmp.accept({ index = 8 }) end },
+				["<M-ç>"] = { function(cmp) cmp.accept({ index = 9 }) end },
+				["<M-à>"] = { function(cmp) cmp.accept({ index = 10 }) end },
 
 				["<Up>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
@@ -42,8 +42,8 @@ return {
 				["<M-j>"] = { "snippet_forward", "fallback" },
 				["<M-k>"] = { "snippet_backward", "fallback" },
 
-				["<C-b>"] = { "scroll_documentation_up", "fallback" },
-				["<C-f>"] = { "scroll_documentation_down", "fallback" },
+				["<M-b>"] = { "scroll_documentation_up", "fallback" },
+				["<M-f>"] = { "scroll_documentation_down", "fallback" },
 			},
 
 			cmdline = {

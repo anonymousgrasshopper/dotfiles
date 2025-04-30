@@ -58,19 +58,13 @@ return {
 			filetypes = { "CompetiTest" },
 			sections = {
 				lualine_a = {
-					function()
-						return vim.b.competitest_title or "CompetiTest"
-					end,
+					function() return vim.b.competitest_title or "CompetiTest" end,
 				},
 				lualine_y = {
-					function()
-						return " "
-					end,
+					function() return " " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -79,19 +73,13 @@ return {
 			filetypes = { "TelescopePrompt" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Telescope"
-					end,
+					function() return "Telescope" end,
 				},
 				lualine_y = {
-					function()
-						return "󰭎 "
-					end,
+					function() return "󰭎 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -100,19 +88,13 @@ return {
 			filetypes = { "yazi" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Yazi"
-					end,
+					function() return "Yazi" end,
 				},
 				lualine_y = {
-					function()
-						return "󰇥 "
-					end,
+					function() return "󰇥 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -121,19 +103,13 @@ return {
 			filetypes = { "toggleterm" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Terminal #" .. vim.b.toggle_number
-					end,
+					function() return "Terminal #" .. vim.b.toggle_number end,
 				},
 				lualine_y = {
-					function()
-						return " "
-					end,
+					function() return " " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -142,19 +118,13 @@ return {
 			filetypes = { "neo-tree" },
 			sections = {
 				lualine_a = {
-					function()
-						return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
-					end,
+					function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end,
 				},
 				lualine_y = {
-					function()
-						return "󰙅 "
-					end,
+					function() return "󰙅 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -170,19 +140,13 @@ return {
 			},
 			sections = {
 				lualine_a = {
-					function()
-						return vim.bo.filetype:match("[-_](%w+)$")
-					end,
+					function() return vim.bo.filetype:match("[-_](%w+)$") end,
 				},
 				lualine_y = {
-					function()
-						return " "
-					end,
+					function() return " " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -191,19 +155,13 @@ return {
 			filetypes = { "aerial" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Aerial"
-					end,
+					function() return "Aerial" end,
 				},
 				lualine_y = {
-					function()
-						return "󱏒 "
-					end,
+					function() return "󱏒 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -212,28 +170,20 @@ return {
 			filetypes = { "lazy" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Lazy"
-					end,
+					function() return "Lazy" end,
 				},
 				lualine_b = {
-					function()
-						return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count
-					end,
+					function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
 				},
 				lualine_c = {
 					require("lazy.status").updates,
 					cond = require("lazy.status").has_updates,
 				},
 				lualine_y = {
-					function()
-						return "󰒲 "
-					end,
+					function() return "󰒲 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -242,9 +192,7 @@ return {
 			filetypes = { "mason" },
 			sections = {
 				lualine_a = {
-					function()
-						return "Mason"
-					end,
+					function() return "Mason" end,
 				},
 				lualine_b = {
 					function()
@@ -255,14 +203,10 @@ return {
 					end,
 				},
 				lualine_y = {
-					function()
-						return " "
-					end,
+					function() return " " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -281,9 +225,7 @@ return {
 			filetypes = { "git", "fugitive" },
 			sections = {
 				lualine_a = {
-					function()
-						return " " .. vim.fn.FugitiveHead()
-					end,
+					function() return " " .. vim.fn.FugitiveHead() end,
 				},
 				lualine_b = {
 					{ git_root },
@@ -294,9 +236,7 @@ return {
 					{ "location", padding = { left = 0, right = 1 } },
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -305,20 +245,14 @@ return {
 			filetypes = { "DiffviewFiles" },
 			sections = {
 				lualine_a = {
-					function()
-						return " " .. vim.fn.FugitiveHead()
-					end,
+					function() return " " .. vim.fn.FugitiveHead() end,
 				},
 				lualine_b = { { git_root } },
 				lualine_y = {
-					function()
-						return "󰊢 "
-					end,
+					function() return "󰊢 " end,
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 		}
@@ -375,9 +309,7 @@ return {
 					{ "location", padding = { left = 0, right = 1 } },
 				},
 				lualine_z = {
-					function()
-						return " " .. os.date("%R")
-					end,
+					function() return " " .. os.date("%R") end,
 				},
 			},
 			extensions = {

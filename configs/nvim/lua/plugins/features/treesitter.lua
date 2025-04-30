@@ -17,7 +17,7 @@ return {
 				highlight = {
 					enable = true,
 					disable = function()
-						return vim.tbl_contains({ "latex", "markdown", "html", "checkhealth" }, vim.bo.filetype)
+						return vim.tbl_contains({ "tex", "latex", "markdown", "html", "checkhealth" }, vim.bo.filetype)
 					end,
 					-- disable = { "latex", "markdown", "html", "checkhealth" }, -- doesn't work for checkhealth for some reason
 				},
@@ -29,7 +29,6 @@ return {
 					"lua",
 					"vim",
 					"bash",
-					"latex",
 					"regex",
 					"python",
 					"vimdoc",

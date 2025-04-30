@@ -48,31 +48,41 @@ return {
 				vim.keymap.set("n", "<leader>gs", gitsigns.stage_hunk, { desc = "Stage hunk" })
 				vim.keymap.set("n", "<leader>gr", gitsigns.reset_hunk, { desc = "Reset hunk" })
 
-				vim.keymap.set("v", "<leader>gs", function()
-					gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-				end, { desc = "Stage the current line" })
-				vim.keymap.set("v", "<leader>gr", function()
-					gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-				end, { desc = "Reset the current line" })
+				vim.keymap.set(
+					"v",
+					"<leader>gs",
+					function() gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
+					{ desc = "Stage the current line" }
+				)
+				vim.keymap.set(
+					"v",
+					"<leader>gr",
+					function() gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end,
+					{ desc = "Reset the current line" }
+				)
 
 				vim.keymap.set("n", "<leader>gS", gitsigns.stage_buffer, { desc = "Stage buffer" })
 				vim.keymap.set("n", "<leader>gR", gitsigns.reset_buffer, { desc = "Reset buffer" })
 				vim.keymap.set("n", "<leader>gp", gitsigns.preview_hunk, { desc = "Preview hunk" })
 				vim.keymap.set("n", "<leader>gi", gitsigns.preview_hunk_inline, { desc = "Preview hunk inline" })
 
-				vim.keymap.set("n", "<leader>gb", function()
-					gitsigns.blame_line({ full = true })
-				end, { desc = "Blame line" })
+				vim.keymap.set("n", "<leader>gb", function() gitsigns.blame_line({ full = true }) end, { desc = "Blame line" })
 
 				vim.keymap.set("n", "<leader>gd", gitsigns.diffthis, { desc = "View diff for current file against the index" })
 
-				vim.keymap.set("n", "<leader>gD", function()
-					gitsigns.diffthis("~")
-				end, { desc = "View diff for current file" })
+				vim.keymap.set(
+					"n",
+					"<leader>gD",
+					function() gitsigns.diffthis("~") end,
+					{ desc = "View diff for current file" }
+				)
 
-				vim.keymap.set("n", "<leader>gQ", function()
-					gitsigns.setqflist("all")
-				end, { desc = "Populate quickfix list with all hunks" })
+				vim.keymap.set(
+					"n",
+					"<leader>gQ",
+					function() gitsigns.setqflist("all") end,
+					{ desc = "Populate quickfix list with all hunks" }
+				)
 				vim.keymap.set("n", "<leader>gq", gitsigns.setqflist, { desc = "Populate quickfix list with hunks" })
 
 				-- Toggles
@@ -105,9 +115,7 @@ return {
 					vim.cmd("hi Cursor blend=100")
 					vim.opt_local.relativenumber = false
 				end,
-				view_opened = function(_)
-					vim.opt_local.sidescrolloff = 0
-				end,
+				view_opened = function(_) vim.opt_local.sidescrolloff = 0 end,
 			},
 		},
 	},

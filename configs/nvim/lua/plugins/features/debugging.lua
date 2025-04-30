@@ -23,138 +23,100 @@ return {
 	keys = {
 		{
 			"<leader>dc",
-			function()
-				require("dap").continue()
-			end,
+			function() require("dap").continue() end,
 			desc = "Continue",
 		},
 		{
 			"<leader>dp",
-			function()
-				require("dap").pause()
-			end,
+			function() require("dap").pause() end,
 			desc = "Pause",
 		},
 		{
 			"<leader>dt",
-			function()
-				require("dap").toggle_breakpoint()
-			end,
+			function() require("dap").toggle_breakpoint() end,
 			desc = "Toggle Breakpoint",
 		},
 		{
 			"<leader>dB",
-			function()
-				require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-			end,
+			function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
 			desc = "Breakpoint Condition",
 		},
 		{
 			"<leader>di",
-			function()
-				require("dap").step_into()
-			end,
+			function() require("dap").step_into() end,
 			desc = "Step Into",
 		},
 		{
 			"<leader>do",
-			function()
-				require("dap").step_out()
-			end,
+			function() require("dap").step_out() end,
 			desc = "Step Out",
 		},
 		{
 			"<leader>dO",
-			function()
-				require("dap").step_over()
-			end,
+			function() require("dap").step_over() end,
 			desc = "Step Over",
 		},
 		{
 			"<leader>dC",
-			function()
-				require("dap").run_to_cursor()
-			end,
+			function() require("dap").run_to_cursor() end,
 			desc = "Run to Cursor",
 		},
 		{
 			"<leader>dg",
-			function()
-				require("dap").goto_()
-			end,
+			function() require("dap").goto_() end,
 			desc = "Go to Line (No Execute)",
 		},
 		{
 			"<leader>dj",
-			function()
-				require("dap").down()
-			end,
+			function() require("dap").down() end,
 			desc = "Down",
 		},
 		{
 			"<leader>dk",
-			function()
-				require("dap").up()
-			end,
+			function() require("dap").up() end,
 			desc = "Up",
 		},
 		{
 			"<leader>dr",
-			function()
-				require("dap").repl.toggle()
-			end,
+			function() require("dap").repl.toggle() end,
 			desc = "Toggle repl",
 		},
 		{
 			"<leader>ds",
-			function()
-				require("dap").session()
-			end,
+			function() require("dap").session() end,
 			desc = "Debugging session",
 		},
 		{
 			"<leader>dw",
-			function()
-				require("dap.ui.widgets").hover()
-			end,
+			function() require("dap.ui.widgets").hover() end,
 			desc = "Widgets",
 		},
 		{
 			"<leader>dw",
-			function()
-				require("dap.ui.widgets").preview()
-			end,
+			function() require("dap.ui.widgets").preview() end,
 			desc = "Preview widgets",
 		},
 		{
 			"<leader>du",
-			function()
-				require("dapui").toggle()
-			end,
+			function() require("dapui").toggle() end,
 			desc = "Toggle ui",
 			silent = false,
 		},
 		{
 			"<leader>dR",
-			function()
-				require("dap").restart()
-			end,
+			function() require("dap").restart() end,
 			desc = "Restart",
 			silent = false,
 		},
 		{
 			"<leader>de",
-			function()
-				require("dapui").eval()
-			end,
+			function() require("dapui").eval() end,
 			desc = "Eval line",
 			silent = false,
 		},
 		{
 			"<leader>dl",
-			function()
-				require("dap").run_last()
-			end,
+			function() require("dap").run_last() end,
 			desc = "Run last",
 			silent = false,
 		},
@@ -173,18 +135,10 @@ return {
 		local dapui = require("dapui")
 		local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")
 
-		dap.listeners.before.attach.dapui_config = function()
-			dapui.open()
-		end
-		dap.listeners.before.launch.dapui_config = function()
-			dapui.open()
-		end
-		dap.listeners.before.event_terminated.dapui_config = function()
-			dapui.close()
-		end
-		dap.listeners.before.event_exited.dapui_config = function()
-			dapui.close()
-		end
+		dap.listeners.before.attach.dapui_config = function() dapui.open() end
+		dap.listeners.before.launch.dapui_config = function() dapui.open() end
+		dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+		dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 
 		dapui.setup()
 
