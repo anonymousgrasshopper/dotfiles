@@ -139,6 +139,5 @@ return {
 		})
 
 		telescope.load_extension("fzf")
-		telescope.load_extension("yank_history")
 	end,
 }

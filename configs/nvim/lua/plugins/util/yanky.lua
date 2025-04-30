@@ -33,5 +33,7 @@ return {
 				history_length = 10,
 			},
 		})
+
+		require("telescope").load_extension("yank_history")
 	end,
 }
