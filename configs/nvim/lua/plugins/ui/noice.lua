@@ -10,6 +10,7 @@ return {
 				vim.notify = require("notify")
 				return {
 					timeout = 3000,
+					on_open = function(win) vim.api.nvim_win_set_config(win, { zindex = 100 }) end,
 				}
 			end,
 		},
@@ -72,26 +73,6 @@ return {
 			},
 		},
 		routes = {
-			{
-				filter = {
-					event = "notify",
-					kind = "info",
-					any = {
-						{ find = "[Neo-tree INFO]" },
-					},
-				},
-				opts = { skip = true },
-			},
-			{
-				filter = {
-					event = "notify",
-					kind = "warn",
-					any = {
-						{ find = "[Neo-tree WARN]" },
-					},
-				},
-				opts = { skip = true },
-			},
 			{
 				filter = {
 					event = "lsp",

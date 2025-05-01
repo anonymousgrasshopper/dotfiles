@@ -5,5 +5,6 @@ return {
 		scroll = {},
 		bigfile = {},
 		bufdelete = {},
+		image = {},
 	},
 }

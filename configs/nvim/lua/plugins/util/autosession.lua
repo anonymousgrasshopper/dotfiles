@@ -17,7 +17,6 @@ return {
 		auto_restore = false,
 		bypass_save_filetypes = { "alpha" },
 		pre_restore_cmds = {
-			-- if the Neotree window is active, its content is going to get loaded in a regular buffer and will throw E37 upon trying to quit Neovim
 			function()
 				if vim.bo.filetype == "neo-tree" then
 					vim.cmd("Neotree close")

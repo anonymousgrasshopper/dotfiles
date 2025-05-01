@@ -54,6 +54,21 @@ return {
 			},
 		}
 
+		local aerial = {
+			filetypes = { "aerial" },
+			sections = {
+				lualine_a = {
+					function() return "Aerial" end,
+				},
+				lualine_y = {
+					function() return "󱏒 " end,
+				},
+				lualine_z = {
+					function() return " " .. os.date("%R") end,
+				},
+			},
+		}
+
 		local competitest = {
 			filetypes = { "CompetiTest" },
 			sections = {
@@ -69,14 +84,25 @@ return {
 			},
 		}
 
-		local telescope = {
-			filetypes = { "TelescopePrompt" },
+		local git_root = function()
+			if vim.b.lualine_git_dir then
+				return vim.b.lualine_git_dir
+			end
+			local gitdir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.getcwd()))
+			local isgitdir = vim.fn.matchstr(gitdir, "^fatal:.*") == ""
+			vim.b.lualine_git_dir = isgitdir and vim.trim(vim.fn.fnamemodify(gitdir, ":t")) or "git"
+			return vim.b.lualine_git_dir
+		end
+
+		local diffview = {
+			filetypes = { "DiffviewFiles" },
 			sections = {
 				lualine_a = {
-					function() return "Telescope" end,
+					function() return " " .. vim.fn.FugitiveHead() end,
 				},
+				lualine_b = { { git_root } },
 				lualine_y = {
-					function() return "󰭎 " end,
+					function() return "󰊢 " end,
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -84,14 +110,19 @@ return {
 			},
 		}
 
-		local yazi = {
-			filetypes = { "yazi" },
+		local git = {
+			filetypes = { "git", "fugitive" },
 			sections = {
 				lualine_a = {
-					function() return "Yazi" end,
+					function() return " " .. vim.fn.FugitiveHead() end,
+				},
+				lualine_b = {
+					{ git_root },
+					{ "filetype", icon_only = true, padding = { left = 1, right = 1 } },
 				},
 				lualine_y = {
-					function() return "󰇥 " end,
+					{ "progress", separator = " ", padding = { left = 1, right = 0 } },
+					{ "location", padding = { left = 0, right = 1 } },
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -99,14 +130,46 @@ return {
 			},
 		}
 
-		local toggleterm = {
-			filetypes = { "toggleterm" },
+		local lazy = {
+			filetypes = { "lazy" },
 			sections = {
 				lualine_a = {
-					function() return "Terminal #" .. vim.b.toggle_number end,
+					function() return "Lazy" end,
+				},
+				lualine_b = {
+					function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
+				},
+				lualine_c = {
+					{
+						require("lazy.status").updates,
+						cond = require("lazy.status").has_updates,
+					},
 				},
 				lualine_y = {
-					function() return " " end,
+					function() return "󰒲 " end,
+				},
+				lualine_z = {
+					function() return " " .. os.date("%R") end,
+				},
+			},
+		}
+
+		local mason = {
+			filetypes = { "mason" },
+			sections = {
+				lualine_a = {
+					function() return "Mason" end,
+				},
+				lualine_b = {
+					function()
+						return "Installed: "
+							.. #require("mason-registry").get_installed_packages()
+							.. "/"
+							.. #require("mason-registry").get_all_package_specs()
+					end,
+				},
+				lualine_y = {
+					function() return " " end,
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -151,14 +214,14 @@ return {
 			},
 		}
 
-		local aerial = {
-			filetypes = { "aerial" },
+		local telescope = {
+			filetypes = { "TelescopePrompt" },
 			sections = {
 				lualine_a = {
-					function() return "Aerial" end,
+					function() return "Telescope" end,
 				},
 				lualine_y = {
-					function() return "󱏒 " end,
+					function() return "󰭎 " end,
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -166,21 +229,14 @@ return {
 			},
 		}
 
-		local lazy = {
-			filetypes = { "lazy" },
+		local toggleterm = {
+			filetypes = { "toggleterm" },
 			sections = {
 				lualine_a = {
-					function() return "Lazy" end,
-				},
-				lualine_b = {
-					function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
-				},
-				lualine_c = {
-					require("lazy.status").updates,
-					cond = require("lazy.status").has_updates,
+					function() return "Terminal #" .. vim.b.toggle_number end,
 				},
 				lualine_y = {
-					function() return "󰒲 " end,
+					function() return " " end,
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -188,68 +244,14 @@ return {
 			},
 		}
 
-		local mason = {
-			filetypes = { "mason" },
+		local yazi = {
+			filetypes = { "yazi" },
 			sections = {
 				lualine_a = {
-					function() return "Mason" end,
-				},
-				lualine_b = {
-					function()
-						return "Installed: "
-							.. #require("mason-registry").get_installed_packages()
-							.. "/"
-							.. #require("mason-registry").get_all_package_specs()
-					end,
+					function() return "Yazi" end,
 				},
 				lualine_y = {
-					function() return " " end,
-				},
-				lualine_z = {
-					function() return " " .. os.date("%R") end,
-				},
-			},
-		}
-
-		local git_root = function()
-			if vim.b.lualine_git_dir then
-				return vim.b.lualine_git_dir
-			end
-			local gitdir = vim.fn.system(string.format("git -C %s rev-parse --show-toplevel", vim.fn.getcwd()))
-			local isgitdir = vim.fn.matchstr(gitdir, "^fatal:.*") == ""
-			vim.b.lualine_git_dir = isgitdir and vim.trim(vim.fn.fnamemodify(gitdir, ":t")) or "git"
-			return vim.b.lualine_git_dir
-		end
-
-		local git = {
-			filetypes = { "git", "fugitive" },
-			sections = {
-				lualine_a = {
-					function() return " " .. vim.fn.FugitiveHead() end,
-				},
-				lualine_b = {
-					{ git_root },
-					{ "filetype", icon_only = true, padding = { left = 1, right = 1 } },
-				},
-				lualine_y = {
-					{ "progress", separator = " ", padding = { left = 1, right = 0 } },
-					{ "location", padding = { left = 0, right = 1 } },
-				},
-				lualine_z = {
-					function() return " " .. os.date("%R") end,
-				},
-			},
-		}
-
-		local diffview = {
-			filetypes = { "DiffviewFiles" },
-			sections = {
-				lualine_a = {
-					function() return " " .. vim.fn.FugitiveHead() end,
-				},
-				lualine_b = { { git_root } },
-				lualine_y = {
-					function() return "󰊢 " end,
+					function() return "󰇥 " end,
 				},
 				lualine_z = {
 					function() return " " .. os.date("%R") end,
@@ -289,12 +291,47 @@ return {
 				lualine_c = {
 					{
 						"filename",
-						file_status = true, -- displays file status (readonly status, modified status)
-						path = 3, -- 0 = just filename, 1 = relative path, 2 = absolute path, 3 = use ~ as home directory
-						separator = " ",
+						file_status = false,
+						path = 3, -- 0: just filename, 1: relative path, 2: absolute path, 3: use ~ as home directory
+						separator = "",
 						padding = { left = 1, right = 0 },
 					},
-					{ "filetype", icon_only = true, padding = { left = 0, right = 1 } },
+					{
+						"filetype",
+						icon_only = true,
+						separator = "",
+						padding = { left = 1, right = 0 },
+					},
+					{
+						function() return "" end,
+						cond = function() return not vim.bo.modifiable or vim.bo.readonly end,
+						separator = "",
+						padding = { left = 1, right = 0 },
+					},
+					{
+						function() return "" end,
+						cond = function()
+							local filename = vim.fn.expand("%")
+							if
+								filename ~= ""
+								and filename:match("^%a+://") == nil
+								and vim.bo.buftype == ""
+								and vim.fn.filereadable(filename) == 0
+							then
+								return true
+							end
+							return false
+						end,
+						separator = "",
+						padding = { left = 1, right = 0 },
+					},
+					{
+						function() return "●" end,
+						cond = function() return vim.bo.modified end,
+						color = { fg = "#98bb6c" },
+						separator = "",
+						padding = { left = 1, right = 1 },
+					},
 				},
 				lualine_x = {
 					{
@@ -313,18 +350,18 @@ return {
 				},
 			},
 			extensions = {
-				git,
 				aerial,
-				"man",
-				lazy,
-				"fugitive",
-				mason,
-				nvim_dap_ui,
-				neo_tree,
-				toggleterm,
 				competitest,
-				telescope,
 				diffview,
+				"fugitive",
+				git,
+				lazy,
+				"man",
+				mason,
+				neo_tree,
+				nvim_dap_ui,
+				telescope,
+				toggleterm,
 				yazi,
 			},
 		})
