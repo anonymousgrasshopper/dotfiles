@@ -19,16 +19,16 @@ vim.api.nvim_create_autocmd("WinEnter", {
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 	callback = function()
 		local enabled_filetypes = {
-			"diff",
-			"alpha",
 			"aerial",
-			"undotree",
-			"neo-tree",
-			"dropbar_menu",
+			"alpha",
+			"diff",
 			"DiffviewFiles",
+			"dropbar_menu",
+			"neo-tree",
 			"neo-tree-popup",
-			"yazi",
 			"trouble",
+			"undotree",
+			"yazi",
 		}
 		if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
 			vim.cmd("hi Cursor blend=100")

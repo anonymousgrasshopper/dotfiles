@@ -12,14 +12,27 @@ return {
 				ft = { "c", "cpp", "asm" },
 				desc = "Receive problem",
 			},
-			{ "<localleader>add", "<Cmd>CompetiTest add_testcase<CR>", ft = { "c", "cpp", "asm" }, desc = "Add testcase" },
+			{
+				"<localleader>add",
+				"<Cmd>CompetiTest add_testcase<CR>",
+				ft = { "c", "cpp", "asm" },
+				desc = "Add testcase",
+			},
 			{
 				"<localleader>dlt",
-				"<Cmd>CompetiTest delete_testcase<CR>",
+				function()
+					vim.cmd("hi Cursor blend=100")
+					vim.cmd("CompetiTest delete_testcase")
+				end,
 				ft = { "c", "cpp", "asm" },
 				desc = "Delete testcase",
 			},
-			{ "<localleader>run", "<Cmd>CompetiTest run<CR>", ft = { "c", "cpp", "asm" }, desc = "Run the code on tests" },
+			{
+				"<localleader>run",
+				"<Cmd>CompetiTest run<CR>",
+				ft = { "c", "cpp", "asm" },
+				desc = "Run the code on tests",
+			},
 			{ "<localleader>shw", "<Cmd>CompetiTest show_ui<CR>", ft = { "c", "cpp", "asm" }, desc = "Show ui" },
 			{
 				"<localleader>tst",
@@ -27,7 +40,15 @@ return {
 				ft = { "c", "cpp", "asm" },
 				desc = "Test without recompiling",
 			},
-			{ "<localleader>edt", ":CompetiTest edit_testcase ", ft = { "c", "cpp", "asm" }, desc = "Edit testcase" },
+			{
+				"<localleader>edt",
+				function()
+					vim.cmd("hi Cursor blend=100")
+					vim.cmd("CompetiTest edit_testcase")
+				end,
+				ft = { "c", "cpp", "asm" },
+				desc = "Edit testcase",
+			},
 		},
 		opts = {
 			local_config_file_name = "competitest.lua",

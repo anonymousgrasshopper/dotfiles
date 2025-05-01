@@ -54,6 +54,9 @@ return {
 
 					["<C-p>"] = { "select_prev", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
+
+					["<Left>"] = { "fallback" },
+					["<Right>"] = { "fallback" },
 				},
 				completion = {
 					menu = { auto_show = true },
