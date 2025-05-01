@@ -42,7 +42,7 @@ return {
 			css = { "prettier" },
 			js = { "prettier" },
 
-			["_"] = { "trim_whitespace" },
+			["*"] = { "trim_whitespace", "trim_newlines" },
 		},
 		formatters = {
 			clang_format = {
