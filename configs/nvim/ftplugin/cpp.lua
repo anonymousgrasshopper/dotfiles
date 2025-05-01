@@ -18,6 +18,8 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		local answer = vim.fn.input("Do you want to use codelldb stdio redirection ?")
 		if answer:match("y") then
 			vim.b.codelldb_stdio_redirection = true
+		else
+			vim.b.codelldb_stdio_redirection = false
 		end
 	end
 	if vim.b.codelldb_stdio_redirection then
