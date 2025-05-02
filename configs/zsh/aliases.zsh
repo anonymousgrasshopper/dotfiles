@@ -27,7 +27,7 @@ run() {
 		command="$1"
 		nohup "$command" "$@" >/dev/null 2>&1 &
 		shift
-	done 
+	done
 }
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
@@ -108,7 +108,7 @@ gitdot() {
 	if [[ $# == 0 ]]; then
 		git_dotfiles
 		if cd ~/.config/dotfiles; then
-			lazygit	
+			lazygit
 			cd - >/dev/null
 		fi
 	else
@@ -119,7 +119,9 @@ gitdot() {
 # neovim
 nfd() {
 	declare -a lines; lines=( ${(f)"$(fzf --multi --select-1 --query=$*)"} )
-	nvim $lines
+	if [[ ${#lines} != 0 ]]; then
+		nvim $lines
+	fi
 }
 alias vim="nvim"
 alias nv="nvim"
@@ -181,5 +183,5 @@ function x() {
 	/bin/rm -f -- "$tmp"
 }
 
-# zathura 
+# zathura
 alias zathura="run zathura"

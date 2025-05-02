@@ -29,7 +29,7 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w 
 zstyle ':completion:*:git-checkout:*'  sort false
 zstyle ':completion:*:git-rebase:*'    sort false
 zstyle ':completion:*:descriptions'    format '[%d]'
-eval "$(dircolors "$ZDOTDIR/.dircolors")" # colorize completion menu entries 
+eval "$(dircolors "$ZDOTDIR/dircolors")" # colorize completion menu entries
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # preview
@@ -65,9 +65,12 @@ zinit cdreplay -q
 
 
 # options
+setopt extendedglob
+setopt dot_glob # let globs match dotfiles
+setopt globdots # show dotfiles on tab completion
 setopt correct  # correction for invalid command names
 setopt rcquotes # escape single quotes with '' instead of '\'' in singly quoted strings
-setopt globdots # show dotfiles on tab completion
+
 
 # history
 HISTSIZE=10000

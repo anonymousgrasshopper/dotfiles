@@ -74,9 +74,6 @@ return {
 				"nvim/lua/plugins/editor/telescope.lua",
 				"nvim/lua/plugins/util/browsing.lua",
 				"nvim/lua/plugins/util/unix.lua",
-
-				"zsh/.zshrc",
-				"zsh/aliases.zsh",
 			}
 			for _, disabled_path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(disabled_path) then

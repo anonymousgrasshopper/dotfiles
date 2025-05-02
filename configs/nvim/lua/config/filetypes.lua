@@ -5,11 +5,8 @@ vim.filetype.add({
 		muttrc = "neomuttrc",
 	},
 	filename = {
-		[".zshrc"] = "bash",
-		[".zshenv"] = "bash",
-		[".zlogout"] = "bash",
-		[".zprofile"] = "bash",
 		["clang-format"] = "yaml",
+		["dircolors"] = "dircolors",
 	},
 	pattern = {
 		["${HOME}/.config/mutt/.+"] = "neomuttrc",
