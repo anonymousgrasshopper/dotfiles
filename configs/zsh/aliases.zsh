@@ -23,9 +23,11 @@ mkcd() {
 }
 run() {
 	[[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
-	command="$1"
-	shift
-	nohup "$command" "$@" >/dev/null 2>&1 &
+	while (("$#")); do
+		command="$1"
+		nohup "$command" "$@" >/dev/null 2>&1 &
+		shift
+	done 
 }
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
@@ -76,6 +78,7 @@ alias mutt="neomutt"
 alias m="neomutt"
 
 # eza
+alias eza="LS_COLORS= eza"
 alias ls="eza --icons=always --group-directories-first --no-quotes"
 alias l="eza --icons=always --group-directories-first --no-quotes -a"
 alias ll="eza --icons=always --group-directories-first --no-quotes -alh"
@@ -115,7 +118,8 @@ gitdot() {
 
 # neovim
 nfd() {
-	nvim "$(fzf -m --select-1 --query="$*")"
+	declare -a lines; lines=( ${(f)"$(fzf --multi --select-1 --query=$*)"} )
+	nvim $lines
 }
 alias vim="nvim"
 alias nv="nvim"

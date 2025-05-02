@@ -10,7 +10,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-
 # set the directory where the plugins are stored
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/"
 
@@ -21,14 +20,6 @@ if [[ ! -d "$ZINIT_HOME" ]]; then
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
-# plugins
-zinit light Aloxaf/fzf-tab # needs to load before fast-syntax-highlighting
-zinit light hlissner/zsh-autopair
-zinit light zdharma-continuum/fast-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
 
 # completions
 zstyle ':completion:*'                 matcher-list "m:{a-z}={A-Za-z}"
@@ -38,7 +29,10 @@ zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w 
 zstyle ':completion:*:git-checkout:*'  sort false
 zstyle ':completion:*:git-rebase:*'    sort false
 zstyle ':completion:*:descriptions'    format '[%d]'
+eval "$(dircolors "$ZDOTDIR/.dircolors")" # colorize completion menu entries 
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+# preview
 zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
@@ -49,7 +43,7 @@ zstyle ':fzf-tab:complete:*:argument-1'       fzf-flags --preview=""
 zstyle ':fzf-tab:complete:tmux:*'             fzf-flags --preview=""
 zstyle ':fzf-tab:*:git-checkout:*'            fzf-flags --preview=""
 zstyle ':fzf-tab:*:git-rebase:*'              fzf-flags --preview=""
-
+# git
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*'                fzf-preview 'git log --color=always $word'
 zstyle ':fzf-tab:complete:git-help:*'               fzf-preview 'git help $word | bat -plman --color=always'
@@ -144,7 +138,15 @@ bindkey -a -r  ':' # disable vicmd mode
 bindkey "^?"   backward-delete-char # fix backspace in insert mode
 
 
+# plugins
+zinit light Aloxaf/fzf-tab
+zinit light hlissner/zsh-autopair
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma/fast-syntax-highlighting
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
 # setup programs
-eval "$(zoxide init --cmd cd zsh)"
 eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 [[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"

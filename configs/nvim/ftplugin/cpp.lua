@@ -12,7 +12,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		vim.fn.expand("%"),
 		"-o",
 		vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe",
-	}, {}, function(_) vim.notify("Compilation completed", "Info", { title = "Debugging" }) end)
+	}, {}, function(_) vim.notify("Compilation completed", "Info", { title = "Debugging", icon = " " }) end)
 
 	if vim.b.codelldb_stdio_redirection == nil then
 		local answer = vim.fn.input("Do you want to use codelldb stdio redirection ?")
