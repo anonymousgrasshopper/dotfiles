@@ -33,6 +33,7 @@ eval "$(dircolors "$ZDOTDIR/dircolors")" # colorize completion menu entries
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # preview
+zstyle ':fzf-tab:complete:*'                  fzf-flags --style=default --info=right
 zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
