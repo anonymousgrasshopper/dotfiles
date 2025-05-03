@@ -234,7 +234,7 @@ fi
 	${BLUE}- 1 :${WHITE} create a backup of your current ${GREEN}$item${WHITE} config before replacing it
 	${BLUE}- 2 :${WHITE} delete your current ${GREEN}$item${WHITE} config and replace it
 	${BLUE}- 3 :${WHITE} skip this step and keep your current ${GREEN}$item${WHITE} config ?
-${RED}Enter a number (default 3) : "
+${RED}Enter a number (default 3) :${WHITE} "
 					read -r answer
 				else
 					answer=2
