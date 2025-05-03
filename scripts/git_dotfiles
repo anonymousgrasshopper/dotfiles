@@ -38,7 +38,7 @@ for config in ${configs[@]}; do
 done
 # overwrite scripts in the dotfiles repo
 for script in ${scripts[@]}; do
-	copy_file "/usr/local/bin/$script" "scripts"
+	copy_file "$HOME/.local/bin/$script" "scripts"
 done
 # overwrite dbg.h
 copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"

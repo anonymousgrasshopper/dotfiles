@@ -33,25 +33,24 @@ eval "$(dircolors "$ZDOTDIR/dircolors")" # colorize completion menu entries
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # preview
-zstyle ':fzf-tab:complete:*'                  fzf-flags --style=default --no-scrollbar --info=right
+zstyle ':fzf-tab:*:*'                         fzf-flags   --style=default --no-scrollbar --info=right
 zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'
+zstyle ':fzf-tab:complete:help:*'             fzf-preview 'help $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview-window=down:3:wrap'
-zstyle ':fzf-tab:complete:kill:*'             popup-pad   0 3
-zstyle ':fzf-tab:complete:*:options'          fzf-flags --preview=""
-zstyle ':fzf-tab:complete:*:argument-1'       fzf-flags --preview=""
-zstyle ':fzf-tab:complete:tmux:*'             fzf-flags --preview=""
-zstyle ':fzf-tab:*:git-checkout:*'            fzf-flags --preview=""
-zstyle ':fzf-tab:*:git-rebase:*'              fzf-flags --preview=""
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags    '--preview-window=down:3:wrap'
+zstyle ':fzf-tab:complete:kill:*'             popup-pad    0 3
+zstyle ':fzf-tab:complete:*:options'          fzf-preview 'echo $desc'
+zstyle ':fzf-tab:complete:*:argument-1'       fzf-preview 'echo $desc'
+
 # git
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*'                fzf-preview 'git log --color=always $word'
 zstyle ':fzf-tab:complete:git-help:*'               fzf-preview 'git help $word | bat -plman --color=always'
 zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
 	'case "$group" in
-	"commit tag") git show --color=always $word ;;
-	*) git show --color=always $word | delta ;;
+	"commit tag" git show --color=always $word ;;
+	* git show --color=always $word | delta ;;
 esac'
 zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
 	'case "$group" in
@@ -66,11 +65,14 @@ zinit cdreplay -q
 
 
 # options
-setopt extendedglob
-setopt dot_glob # let globs match dotfiles
-setopt globdots # show dotfiles on tab completion
-setopt correct  # correction for invalid command names
-setopt rcquotes # escape single quotes with '' instead of '\'' in singly quoted strings
+setopt extendedglob # extendglob patterns
+setopt dot_glob     # let globs match dotfiles
+setopt globdots     # show dotfiles on tab completion
+setopt autocd       # cd in a directory by typing its name
+setopt auto_pushd   # automatically push the last directory on the directory stack
+setopt cdable_vars  # cd to a directory by typing its path relative to $HOME
+setopt correct      # correction for invalid command names
+setopt rcquotes     # escape single quotes with '' instead of '\'' in singly quoted strings
 
 
 # history

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # colors
 RED='\x1b[38;2;232;36;36m'     #e82424
@@ -21,17 +21,25 @@ while true; do
 	fi
 done
 
-# util functin for getting user input
+# util function for getting user input
 get_answer() {
 	read -r answer
 	case "$answer" in
 	[yY][eE][sS] | [yY])
-		answer=true
+		return 0
 		;;
 	*)
-		answer=false
+		return 1
 		;;
 	esac
+}
+# util function for checking if a program is in $PATH
+program() {
+	if type "$1" >/dev/null 2>&1; then
+		return 0
+	else
+		return 1
+	fi
 }
 
 # warn the user if the script is being runned as root
@@ -48,12 +56,11 @@ fi
 if [[ ! "$SHELL" =~ /zsh$ ]]; then
 	if [[ -f /bin/zsh ]]; then
 		echo -en "${BLUE}Do you want to make zsh your default shell ? (y/n) ${WHITE}"
-		get_answer
-		if "$answer"; then
+		if get_answer; then
 			chsh --shell /bin/zsh
 		fi
 	else
-		echo -e "${WHITE}Install zsh if it is not already on your system and make it your default shell :"
+		echo -e "${WHITE}Install zsh and make it your default shell :"
 		echo -e "${GREEN}> ${BLUE}chsh $USER"
 		echo -e "${GREEN}> ${BLUE}/bin/zsh"
 	fi
@@ -61,48 +68,45 @@ if [[ ! "$SHELL" =~ /zsh$ ]]; then
 fi
 
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
-if [[ -f /etc/zsh/zshenv ]]; then
-	if ! grep --silent "export ZDOTDIR=\$HOME/.config/zsh" </etc/zsh/zshenv; then
-		echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
+add_line() {
+	if [[ -f "$2" ]]; then
+		if ! grep --silent "$1" "$2"; then
+			echo "$1" | sudo tee -a "$2" >/dev/null
+		fi
+	else
+		[[ -d "$(dirname "$2")" ]] || sudo mkdir -p "$(dirname "$2")"
+		sudo touch "$2"
+		echo "$1" | sudo tee -a "$2" >/dev/null
 	fi
-else
-	[[ -d /etc/zsh ]] || sudo mkdir -p /etc/zsh
-	sudo touch /etc/zsh/zshenv
-	echo "export ZDOTDIR=\$HOME/.config/zsh" | sudo tee -a /etc/zsh/zshenv >/dev/null
-fi
-if [[ -f /etc/zsh/zshrc ]]; then
-	if ! grep --silent "zsh-newuser-install() { :; }" </etc/zsh/zshrc; then
-		echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc >/dev/null
-	fi
-else
-	[[ -d /etc/zsh ]] || sudo mkdir -p /etc/zsh
-	sudo touch /etc/zsh/zshrc
-	echo "zsh-newuser-install() { :; }" | sudo tee -a /etc/zsh/zshrc >/dev/null
-fi
+}
+add_line "export ZDOTDIR=\$HOME/.config/zsh" /etc/zsh/zshenv
+add_line "zsh-newuser-install() { :; }" /etc/zsh/zshrc
 
 # configure Pulseaudio to avoid having its cookies in ~/.config
-if [[ -f /etc/pulse/client.conf ]]; then
-	if ! grep --silent -E "cookie-file = /.+/.cache/pulse/cookie" </etc/pulse/client.conf; then
-		printf "\ncookie-file = %s/.cache/pulse/cookie" "$HOME" | sudo tee -a /etc/pulse/client.conf >/dev/null
-	fi
+if [[ -f /etc/pulse/client.conf ]] &&
+	! grep --silent -E "cookie-file = /.+/.cache/pulse/cookie" /etc/pulse/client.conf; then
+	printf "\ncookie-file = %s/.cache/pulse/cookie" "$HOME" | sudo tee -a /etc/pulse/client.conf >/dev/null
 fi
 
 # specific things to do on operating systems using pacman as a package manager
-if [[ -f /bin/pacman ]]; then
+packages=("7zip" "bat" "btop" "clang" "cronie" "eza" "fd" "feh" "firefox" "fzf"
+	"gcc" "git" "git-delta" "github-cli" "glow" "hexyl" "i3-wm" "imagemagick" "kitty"
+	"lazygit" "lynx" "man-db" "nasm" "ncdu" "neovim" "notmuch" "npm" "obsidian" "picom"
+	"poppler" "python" "ripgrep" "rofi" "tldr" "tmux" "tree-sitter-cli" "rustup"
+	"unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
+if program pacman; then
 	# Install yay (AUR helper)
-	if [[ ! -f /bin/yay ]]; then
+	if ! program yay; then
 		echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper (y/n) ? ${WHITE}"
-		get_answer
-		if "$answer"; then
-			if [[ ! -f /bin/git ]]; then
+		if get_answer; then
+			if ! program git; then
 				echo "${YELLOW}Having git installed is necessary to install yay."
 				sudo pacman -S git
 			fi
-			if [[ ! -f /bin/makepkg ]]; then
+			if ! program makepkg; then
 				echo "${YELLOW}The base-devel package is necessary to install yay."
 				sudo pacman -S base-devel
 			fi
-
 			git clone https://aur.archlinux.org/yay.git
 			if cd yay; then
 				makepkg -si
@@ -113,60 +117,39 @@ if [[ -f /bin/pacman ]]; then
 	fi
 
 	# install required packages
-	packages=("7zip" "bat" "btop" "clang" "cronie" "eza" "fd" "feh" "firefox" "fzf"
-		"gcc" "git" "git-delta" "github-cli" "glow" "hexyl" "i3-wm" "imagemagick" "kitty"
-		"lazygit" "lynx" "man-db" "nasm" "ncdu" "neovim" "notmuch" "npm" "obsidian" "picom"
-		"poppler" "python" "ripgrep" "rofi" "tldr" "tmux" "tree-sitter-cli" "rustup"
-		"unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
-	if [[ -f /bin/yay ]]; then
+	if program yay; then
 		package_manager="yay"
 		packages+=("abook" "cppman" "map-gnupg")
 	else
 		package_manager="sudo pacman"
 	fi
-
 	echo -en "${BLUE}Would you like to synchronize the required packages with $package_manager ? (y/n) ${WHITE}"
-	get_answer
-	if "$answer"; then
+	if get_answer; then
 		$package_manager -S "${packages[@]}"
 	else
 		echo -e "${GREEN}Make sure the following packages are installed :"
 		echo -e "${WHITE}${packages[*]}"
 	fi
 
-	# fonts
-	if [[ ! -f /usr/share/fonts/TTF/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf ]]; then
-		if [[ ! -f /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf ]]; then
-			echo -en "${BLUE}Would you like to install the JetBrains Mono Nerd Font ? (y/n) ${WHITE}"
-			get_answer
-			if "$answer"; then
-				sudo pacman -S ttf-jetbrains-mono-nerd
-				[[ -d /usr/share/fonts/TTF/JetBrainsMono ]] || sudo mkdir -p /usr/share/fonts/TTF/JetBrainsMono
-				sudo mv /usr/share/fonts/TTF/JetBrainsMonoNerdFont*.ttf /usr/share/fonts/TTF/JetBrainsMono/
+	# install fonts
+	install_font() {
+		if [[ ! -f /usr/share/fonts/TTF/$3/$2-Regular.ttf ]] &&
+			[[ ! -f /usr/share/fonts/TTF/$2-Regular.ttf ]]; then
+			echo -en "${BLUE}Would you like to install the $1 ? (y/n) ${WHITE}"
+			if get_answer; then
+				sudo pacman -S "$4"
 			fi
-		else
-			[[ -d /usr/share/fonts/TTF/JetBrainsMono ]] || sudo mkdir -p /usr/share/fonts/TTF/JetBrainsMono
-			sudo mv /usr/share/fonts/TTF/JetBrainsMonoNerdFont*.ttf /usr/share/fonts/TTF/JetBrainsMono/
 		fi
-	fi
-	if [[ ! -f /usr/share/fonts/TTF/FiraCode/FiraCodeNerdFont-Regular.ttf ]]; then
-		if [[ ! -f /usr/share/fonts/TTF/FiraCodeNerdFont-Regular.ttf ]]; then
-			echo -en "${BLUE}Would you like to install the FiraCode Nerd Font ? (y/n) ${WHITE}"
-			get_answer
-			if "$answer"; then
-				sudo pacman -S ttf-firacode-nerd
-				[[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
-				sudo mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
-			fi
-		else
-			[[ -d /usr/share/fonts/TTF/FiraCode ]] || sudo mkdir -p /usr/share/fonts/TTF/FiraCode
-			sudo mv /usr/share/fonts/TTF/FiraCodeNerdFont*.ttf /usr/share/fonts/TTF/FiraCode/
+		if [[ -f "/usr/share/fonts/TTF/$2-Regular.ttf" ]]; then
+			[[ -d "/usr/share/fonts/TTF/$3" ]] || sudo mkdir -p "/usr/share/fonts/TTF/$3"
+			sudo mv "/usr/share/fonts/TTF/$2"*.ttf "/usr/share/fonts/TTF/$3/"
 		fi
-	fi
+	}
+	install_font "JetBrains Mono Nerd Font" JetBrainsMonoNerdFont JetBrainsMono ttf-jetbrains-mono-nerd
+	install_font "FiraCode Nerd Font" FiraCodeNerdFont FiraCode ttf-firacode-nerd
 	if [[ ! -d /usr/share/fonts/noto ]]; then
 		echo -en "${BLUE}Would you like to install the Noto font to have a fallback font for unicode symbols ? (y/n) ${WHITE}"
-		get_answer
-		if "$answer"; then
+		if get_answer; then
 			sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 		fi
 	fi
@@ -174,9 +157,8 @@ if [[ -f /bin/pacman ]]; then
 	# install, enable and start paccache
 	if ! systemctl status paccache.timer >/dev/null 2>&1; then
 		echo -en "${BLUE}Would you like to use paccache to automatically clean up the package cache ? (y/n) ${WHITE}"
-		get_answer
-		if "$answer"; then
-			[[ -f /bin/paccache ]] || sudo pacman -S pacman-contrib
+		if get_answer; then
+			program paccache || sudo pacman -S pacman-contrib
 			[[ -f /etc/systemd/system/paccache.timer ]] || cat <./etc/paccache.timer >/etc/systemd/system/paccache.timer
 			sudo systemctl enable paccache.timer
 			sudo systemctl start paccache.timer
@@ -188,44 +170,51 @@ else
 fi
 
 # TexLive
-if [[ ! -d /usr/local/texlive ]]; then
+if ! program pdflatex; then
 	echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
 fi
 
-# copy scripts to /usr/local/bin
+# check the user has a home directory
+if [[ -z "$HOME" ]]; then
+	echo "${RED}You don't have a home directory. Create one ? (y/n) ${WHITE}"
+	if get_answer; then
+		sudo mkhomedir_helper "$USER"
+	else
+		echo "${RED}Aborting..."
+	fi
+	[[ -z "$HOME" ]] && exit 1
+fi
+
+# copy scripts to ~/.local/bin
 (
 	cd scripts || {
-		echo -e "${RED}Error:${WHITE} scripts folder is not present in the script's directory"
-		exit
+		echo -e "${RED}Error:${WHITE} scripts directory is not present in $SCRIPT_DIR"
+		exit 1
 	}
 	printf '\n'
+	[[ -d "$HOME/.local/bin" ]] || mkdir -p "$HOME/.local/bin"
 	for file in *; do
-		if [[ ! -f "/usr/local/bin/$file" ]]; then
-			sudo cp "$file" "/usr/local/bin/"
-			sudo chmod +x "/usr/local/bin/$file"
-		elif ! cmp --silent "$file" "/usr/local/bin/$file"; then
+		if [[ ! -f "$HOME/.local/bin/$file" ]]; then
+			cp "$file" "$HOME/.local/bin/"
+			chmod +x "$HOME/.local/bin/$file"
+		elif ! cmp --silent "$file" "$HOME/.local/bin/$file"; then
 			if [[ ! $OVERWRITE ]]; then
 				echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
-				read -r answer
-			else
-				answer=yes
 			fi
-			case "$answer" in
-			[yY][eE][sS] | [yY])
-				sudo cp "$file" "/usr/local/bin/"
-				sudo chmod +x "/usr/local/bin/$file"
-				;;
-			esac
+			if $OVERWRITE || get_answer; then
+				cp "$file" "$HOME/.local/bin/"
+				chmod +x "$HOME/.local/bin/$file"
+			fi
 		fi
 	done
 )
 
-# copy config folders
+# copy config directories to ~/.config
 (
 	[[ -d "$HOME/.config" ]] || mkdir "$HOME/.config"
 	cd "$SCRIPT_DIR/configs" || {
-		echo -e "${RED}Error:${WHITE} configs folder is not present in the script's directory"
-		exit
+		echo -e "${RED}Error:${WHITE} configs directory is not present in $SCRIPT_DIR"
+		exit 1
 	}
 	printf '\n'
 	for item in *; do
@@ -277,8 +266,7 @@ ${RED}Enter a number (default 3) : "
 # run etc/install.sh
 printf '\n'
 echo -en "${BLUE}Do you want to run ${GREEN}./etc/install.sh${BLUE} ? (y/n) ${WHITE}"
-get_answer
-if "$answer"; then
+if get_answer; then
 	printf '\n'
 	./etc/install.sh
 fi
