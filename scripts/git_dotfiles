@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # colors
-RED='\x1b[38;2;232;36;36m'     #E82424
-YELLOW='\x1b[38;2;255;158;59m' #FF9E3B
+RED='\x1b[38;2;232;36;36m'     #e82424
+YELLOW='\x1b[38;2;255;158;59m' #ff9e3b
 
 # clone the repo if it is not in ~/.config ans cd into it
 [[ -d ~/.config/dotfiles ]] || git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles
@@ -12,7 +12,7 @@ cd ~/.config/dotfiles || {
 }
 
 # $1: file to copy relative to ~/.config/dotfiles, $2: destination
-copy_file() {
+copy() {
 	[[ -e "$1" ]] || {
 		echo -e "${YELLOW} $1 not found"
 		return 1
@@ -34,14 +34,14 @@ scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fix_corrupt_his
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
-	copy_file "$HOME/.config/$config" "configs/"
+	copy "$HOME/.config/$config" "configs/"
 done
 # overwrite scripts in the dotfiles repo
 for script in ${scripts[@]}; do
-	copy_file "$HOME/.local/bin/$script" "scripts"
+	copy "$HOME/.local/bin/$script" "scripts"
 done
 # overwrite dbg.h
-copy_file "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
+copy "$CPLUS_INCLUDE_PATH/dbg.h" "etc"
 
 # remove chosen files and directories
 [[ -f configs/zsh/.zcompdump ]] && rm configs/zsh/.zcompdump

@@ -198,10 +198,10 @@ fi
 			cp "$file" "$HOME/.local/bin/"
 			chmod +x "$HOME/.local/bin/$file"
 		elif ! cmp --silent "$file" "$HOME/.local/bin/$file"; then
-			if [[ ! $OVERWRITE ]]; then
+			if [[ -z $OVERWRITE ]]; then
 				echo -en "${BLUE}Would you like to delete your current ${GREEN}$file${BLUE} script to replace it with the one in this repo ? (y/n) ${WHITE}"
 			fi
-			if $OVERWRITE || get_answer; then
+			if [[ -n $OVERWRITE ]] || get_answer; then
 				cp "$file" "$HOME/.local/bin/"
 				chmod +x "$HOME/.local/bin/$file"
 			fi
