@@ -68,98 +68,87 @@ return {
 				},
 			})
 
-			require("mason-lspconfig").setup_handlers({
-				function(server_name) vim.lsp.enable(server_name) end,
-
-				["clangd"] = function()
-					vim.lsp.config("clangd", {
-						init_options = {
-							fallbackFlags = {
-								"--std=c++20",
-							},
+			local lsp_configs = {
+				["clangd"] = {
+					init_options = {
+						fallbackFlags = {
+							"--std=c++20",
 						},
-					})
-					vim.lsp.enable("clangd")
-				end,
+					},
+				},
 
-				["lua_ls"] = function()
-					vim.lsp.config("lua_ls", {
-						on_init = function(client)
-							if client.workspace_folders then
-								local path = client.workspace_folders[1].name
-								if
-									not (vim.fn.getcwd():match("nvim"))
-									and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-								then
-									return
-								end
+				["lua_ls"] = {
+					on_init = function(client)
+						if client.workspace_folders then
+							local path = client.workspace_folders[1].name
+							if
+								not (vim.fn.getcwd():match("nvim"))
+								and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+							then
+								return
 							end
+						end
 
-							client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-								runtime = {
-									-- Tell the language server which version of Lua you"re using
-									version = "LuaJIT",
-								},
-								-- Make the server aware of Neovim runtime files
-								workspace = {
-									checkThirdParty = false,
-									library = {
-										vim.env.VIMRUNTIME,
-										"${3rd}/luv/library",
-										-- "${3rd}/busted/library",
-									},
-								},
-							})
-						end,
-						settings = {
-							Lua = {},
-						},
-					})
-					vim.lsp.enable("lua_ls")
-				end,
-
-				["bashls"] = function()
-					vim.lsp.config("bashls", {
-						filetypes = { "bash", "sh", "zsh" },
-					})
-					vim.lsp.enable("bashls")
-				end,
-
-				["jsonls"] = function()
-					vim.lsp.config("jsonls", {
-						settings = {
-							json = {
-								schemas = require("schemastore").json.schemas(),
-								validate = { enable = true },
+						client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+							runtime = {
+								-- Tell the language server which version of Lua you"re using
+								version = "LuaJIT",
 							},
-						},
-					})
-					vim.lsp.enable("jsonls")
-				end,
-
-				["yamlls"] = function()
-					vim.lsp.config("yamlls", {
-						settings = {
-							yaml = {
-								schemaStore = {
-									-- You must disable built-in schemaStore support if you want to use
-									-- this plugin and its advanced options like `ignore`.
-									enable = false,
-									-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-									url = "",
+							-- Make the server aware of Neovim runtime files
+							workspace = {
+								checkThirdParty = false,
+								library = {
+									vim.env.VIMRUNTIME,
+									"${3rd}/luv/library",
+									-- "${3rd}/busted/library",
 								},
-								schemas = require("schemastore").yaml.schemas(),
 							},
-						},
-					})
-					vim.lsp.enable("yamlls")
-				end,
+						})
+					end,
+					settings = {
+						Lua = {},
+					},
+				},
 
-				["cssls"] = function()
-					vim.lsp.config("cssls", {
-						filetypes = { "html", "css", "scss" },
-					})
-					vim.lsp.enable("cssls")
+				["bashls"] = {
+					filetypes = { "bash", "sh", "zsh" },
+				},
+
+				["jsonls"] = {
+					settings = {
+						json = {
+							schemas = require("schemastore").json.schemas(),
+							validate = { enable = true },
+						},
+					},
+				},
+
+				["yamlls"] = {
+					settings = {
+						yaml = {
+							schemaStore = {
+								-- You must disable built-in schemaStore support if you want to use
+								-- this plugin and its advanced options like `ignore`.
+								enable = false,
+								-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+								url = "",
+							},
+							schemas = require("schemastore").yaml.schemas(),
+						},
+					},
+				},
+
+				["cssls"] = {
+					filetypes = { "html", "css", "scss" },
+				},
+			}
+
+			require("mason-lspconfig").setup_handlers({
+				function(server_name)
+					if lsp_configs[server_name] then
+						vim.lsp.config(server_name, lsp_configs[server_name])
+					end
+					vim.lsp.enable(server_name)
 				end,
 			})
 

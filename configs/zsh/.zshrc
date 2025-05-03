@@ -35,7 +35,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # preview
 zstyle ':fzf-tab:*:*'                         fzf-flags   --style=default --no-scrollbar --info=right
-zstyle ':fzf-tab:complete:*'                  fzf-preview '/usr/local/bin/fzf_preview_wrapper ${realpath:-$word}'
+zstyle ':fzf-tab:complete:*'                  fzf-preview '~/.local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'
 zstyle ':fzf-tab:complete:help:*'             fzf-preview 'help $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'

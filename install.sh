@@ -4,8 +4,8 @@
 RED='\x1b[38;2;232;36;36m'     #e82424
 YELLOW='\x1b[38;2;255;158;59m' #ff9e3b
 GREEN='\x1b[38;2;106;149;137m' #6a9589
-BLUE='\x1b[38;2;126;156;216m'  #7E9CD8
-WHITE='\x1b[38;2;220;215;186m' #DCD7BA
+BLUE='\x1b[38;2;126;156;216m'  #7e9cD8
+WHITE='\x1b[38;2;220;215;186m' #dcd7ba
 
 # cd to the script's directory
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)

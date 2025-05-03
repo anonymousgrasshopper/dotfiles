@@ -24,8 +24,8 @@ export GOPATH="$HOME/.local/share/go"
 export MANPAGER="nvim +Man!"
 
 # Path
-export PATH="/usr/local/texlive/2024/bin/x86_64-linux:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:/usr/local/texlive/2024/bin/x86_64-linux"
 
 # XDG environment variables
 export XDG_CONFIG_HOME="$HOME/.config"
