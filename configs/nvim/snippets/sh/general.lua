@@ -1,8 +1,10 @@
 local ls = require("luasnip")
 local s = ls.snippet
-local sn = ls.snippet_node
+local t = ls.text_node
 local i = ls.insert_node
+local c = ls.choice_node
 local d = ls.dynamic_node
+local sn = ls.snippet_node
 local fmta = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
@@ -14,6 +16,9 @@ local get_visual = function(_, parent)
 end
 
 local check_not_in_node = function(ignored_nodes)
+	if not require("nvim-treesitter.parsers").has_parser() then
+		return true
+	end
 	local pos = vim.api.nvim_win_get_cursor(0)
 	local row, col = pos[1] - 1, pos[2] - 1
 	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
@@ -21,6 +26,25 @@ local check_not_in_node = function(ignored_nodes)
 end
 
 local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
+
+local rec_switch
+rec_switch = function()
+	return sn(
+		nil,
+		c(1, {
+			t(""),
+			sn(nil, {
+				t({ "", "\t" }),
+				i(1),
+				t({ ")", "" }),
+				t("\t\t"),
+				i(2),
+				t({ "", "\t\t;;" }),
+				d(3, rec_switch, {}),
+			}),
+		})
+	)
+end
 
 return {
 	s(
@@ -115,10 +139,10 @@ return {
 	s(
 		{ trig = "case", name = "cases", dscr = "cases" },
 		fmta(
-			[[ 
-        case <> in 
+			[[
+        case <> in
             <>
-            *) <> ;; 
+            *) <> ;;
         esac
       ]],
 			{
@@ -134,12 +158,26 @@ return {
 		fmta(
 			[[
         <>() {
-            <>
+          <>
         }
       ]],
 			{
 				i(1),
 				i(0),
+			}
+		),
+		{ condition = not_in_string_comment }
+	),
+	s(
+		{ trig = "case ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
+		fmta(
+			[[
+        case <> in<>
+        esac
+      ]],
+			{
+				i(1),
+				d(2, rec_switch, {}),
 			}
 		),
 		{ condition = not_in_string_comment }

@@ -15,13 +15,14 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit/"
 
 # download Zinit if it's not here yet and source it
 if [[ ! -d "$ZINIT_HOME" ]]; then
-	mkdir -p "$(dirname "$ZINIT_HOME")"
 	git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 
 # completions
+zstyle ':completion:*'                 use-cache on
+zstyle ':completion:*'                 cache-path ~/.cache/zsh/completion-cache
 zstyle ':completion:*'                 matcher-list "m:{a-z}={A-Za-z}"
 zstyle ':completion:*'                 complete-options true
 zstyle ':completion:*'                 menu no
@@ -156,3 +157,8 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 [[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
+
+alias -s tex="nvim"
+alias -s cpp="nvim"
+alias -s c="nvim"
+alias -s asm="nvim"

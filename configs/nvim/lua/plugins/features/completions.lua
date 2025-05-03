@@ -145,6 +145,27 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},
+
+			fuzzy = {
+				sorts = {
+					function(a, b)
+						local source_priority = {
+							snippets = 4,
+							lsp = 3,
+							path = 2,
+							buffer = 1,
+						}
+						local a_priority = source_priority[a.source_id]
+						local b_priority = source_priority[b.source_id]
+						if a_priority ~= b_priority then
+							return a_priority > b_priority
+						end
+					end,
+					-- defaults
+					"score",
+					"sort_text",
+				},
+			},
 		},
 		opts_extend = { "sources.default" },
 	},
@@ -172,7 +193,8 @@ return {
 			})
 
 			-- filetypes
-			require("luasnip").filetype_extend("bash", { "sh", "zsh" })
+			require("luasnip").filetype_extend("bash", { "sh" })
+			require("luasnip").filetype_extend("zsh", { "sh" })
 
 			-- load snippets
 			require("luasnip.loaders.from_vscode").lazy_load({

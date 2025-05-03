@@ -2,6 +2,10 @@
 ############################################# Aliases #############################################
 ###################################################################################################
 
+# global aliases
+alias -g C='| wc -l'
+alias -g NUL=">/dev/null 2>&1"
+
 # shortcuts
 alias ..="cd .."
 alias ...="cd ../.."
@@ -28,6 +32,22 @@ run() {
 		nohup "$command" "$@" >/dev/null 2>&1 &
 		shift
 	done
+}
+compile() {
+	file_extension="$1:e"
+	ouput_filename="$1:r"
+	case "$file_extension" in
+		cpp)
+			compiler="g++"
+			;;
+		c)
+			compiler="gcc"
+			;;
+		*)
+			echo "file extension not recognized"
+			;;
+	esac
+	[[ -n "$compiler" ]] && command "$compiler" "$1" -o $ouput_filename
 }
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
@@ -78,7 +98,7 @@ alias mutt="neomutt"
 alias m="neomutt"
 
 # eza
-alias eza="LS_COLORS= eza"
+alias eza="LS_COLORS= eza" # prevent eza from reading LS_COLORS instead of ~/.config/eza/theme.yml
 alias ls="eza --icons=always --group-directories-first --no-quotes"
 alias l="eza --icons=always --group-directories-first --no-quotes -a"
 alias ll="eza --icons=always --group-directories-first --no-quotes -alh"
