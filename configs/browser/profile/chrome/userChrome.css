@@ -1,5 +1,10 @@
 @import url("css/icons.css");
 
+:root {
+	--sidebar-background-color: #1f1f28 !important;
+	--sidebar-border-color: #54546d !important;
+}
+
 /* hide webpage loading notifications in the bottom left corner */
 #statuspanel[type="status"] {
 	opacity: 0 !important;
@@ -27,4 +32,11 @@
 #browser,
 #nav-bar {
 	background-color: #1f1f28 !important;
+}
+
+/* hide stuff */
+.titlebar-button,
+button[title="Tridactyl sidebar"],
+button[title="Customize sidebar"] {
+	display: none;
 }

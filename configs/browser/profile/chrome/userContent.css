@@ -1,12 +1,12 @@
 /* hide things on firefox home page */
-@-moz-document url("about:newtab") {
-	.wallpaper-attribution {
-		display: none !important;
-	}
-	.personalize-button {
-		background: transparent !important;
-		border: none !important;
-		font-size: 0 !important;
-		cursor: pointer;
-	}
+@-moz-document url("about:newtab"), url("about:home") {
+  .wallpaper-attribution {
+    display: none !important;
+  }
+  .personalize-button {
+    background: transparent !important;
+    border: none !important;
+    font-size: 0 !important;
+    cursor: pointer;
+  }
 }

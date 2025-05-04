@@ -247,27 +247,20 @@ return {
 		opts = {
 			priority = 5, -- Priority of the lightbulb for all handlers except float.
 			hide_in_unfocused_buffer = true,
-			link_highlights = true,
 			validate_config = "never",
 			code_lenses = true,
-			sign = { enabled = false, text = " ", lens_text = " " },
+			sign = { enabled = true, text = " ", lens_text = " " },
 			virtual_text = { enabled = false, text = " ", lens_text = " ", pos = "eol" },
 			float = { enabled = false, text = " ", lens_text = " ", win_opts = { focusable = false } },
 			status_text = { enabled = true, text = " ", lens_text = " ", text_unavailable = "" },
 			number = { enabled = false },
 			line = { enabled = false },
-			autocmd = { enabled = true, updatetime = 200, events = { "CursorHold", "CursorHoldI" } },
+			autocmd = { enabled = true },
 			filter = function(client_name, code_action)
-				local ignored_patterns = {
-					["lua_ls"] = { "change to parameter" },
+				local ignored_kinds = {
+					["lua_ls"] = { "refactor.rewrite" },
 				}
-				if
-					ignored_patterns[client_name] ~= nil
-					and vim.tbl_contains(ignored_patterns[client_name], code_action.title)
-				then
-					return false
-				end
-				return true
+				return not vim.tbl_contains(ignored_kinds[client_name] or {}, code_action.kind)
 			end,
 		},
 	},

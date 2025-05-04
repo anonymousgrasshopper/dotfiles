@@ -124,7 +124,7 @@ return {
 
 					TelescopePromptPrefix = { fg = palette.autumnYellow, bg = palette.sumiInk3 },
 
-					SatelliteBar = { bg = palette.sumiInk5 },
+					LightBulbSign = { fg = palette.oldWhite },
 				}
 			end,
 			colors = {
