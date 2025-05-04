@@ -8,6 +8,9 @@ return {
 			"rcarriga/nvim-notify",
 			opts = function()
 				vim.notify = require("notify")
+				if package.loaded["telescope"] then
+					require("telescope").load_extension("notify")
+				end
 				return {
 					timeout = 3000,
 					on_open = function(win) vim.api.nvim_win_set_config(win, { zindex = 100 }) end,

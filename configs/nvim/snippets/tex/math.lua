@@ -5,7 +5,7 @@ local sn = ls.snippet_node
 local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -38,7 +38,7 @@ return {
 	}),
 	s(
 		{ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \sum_{<>}^{<>}<>
       ]],
@@ -52,7 +52,7 @@ return {
 	),
 	s(
 		{ trig = "pd", dscr = "product", wordTrig = false, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \prod_{<>}^{<>}<>
       ]],
@@ -66,7 +66,7 @@ return {
 	),
 	s(
 		{ trig = "ff", dscr = "fraction", wordTrig = false, snippetType = "autosnippet" },
-		fmta("\\frac{<>}{<>}", {
+		fmt("\\frac{<>}{<>}", {
 			i(1),
 			i(2),
 		}),
@@ -74,28 +74,28 @@ return {
 	),
 	s(
 		{ trig = "floor", dscr = "floor", wordTrig = false, snippetType = "autosnippet" },
-		fmta("\\left\\lfoor <> \\right\\rfloor", {
+		fmt("\\left\\lfoor <> \\right\\rfloor", {
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
 	),
 	s(
 		{ trig = "ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
-		fmta("\\left\\lceil <> \\right\\rceil", {
+		fmt("\\left\\lceil <> \\right\\rceil", {
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
 	),
 	s(
 		{ trig = "sq", dscr = "square root", wordTrig = false, snippetType = "autosnippet" },
-		fmta("\\sqrt{<>}", {
+		fmt("\\sqrt{<>}", {
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
 	),
 	s(
 		{ trig = "cbrt", dscr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
-		fmta("\\sqrt[3]{<>}", {
+		fmt("\\sqrt[3]{<>}", {
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
@@ -108,7 +108,7 @@ return {
 	s({ trig = "ty", dscr = "lemniscate", snippetType = "autosnippet" }, t("\\infty"), { condition = tex.in_mathzone }),
 	s(
 		{ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
-		fmta("<>^{<>}", {
+		fmt("<>^{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
 		}),
@@ -116,7 +116,7 @@ return {
 	),
 	s(
 		{ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
-		fmta("<>_{<>}", {
+		fmt("<>_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
 		}),
@@ -130,7 +130,7 @@ return {
 			regTrig = true,
 			snippetType = "autosnippet",
 		},
-		fmta("<>^{<>}_{<>}", {
+		fmt("<>^{<>}_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			i(2),

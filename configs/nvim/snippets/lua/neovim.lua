@@ -5,7 +5,7 @@ local i = ls.insert_node
 local c = ls.choice_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -32,7 +32,7 @@ local not_in_string_comment = function() return check_not_in_node({ "string_cont
 return {
 	s(
 		{ trig = "autocmd ", dscr = "Neovim API autocmd", wordTrig = false, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         vim.api.nvim_create_autocmd(<>, {<>
           callback = function()
@@ -57,7 +57,7 @@ return {
 	),
 	s(
 		{ trig = "snp", dscr = "LuaSnip lua snippet template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[=[
         s({ trig = "<>", dscr = "<>"<><><> },
           <>
@@ -72,7 +72,7 @@ return {
 				c(6, {
 					sn(
 						nil,
-						fmta(
+						fmt(
 							[=[
               fmta(
                   [[

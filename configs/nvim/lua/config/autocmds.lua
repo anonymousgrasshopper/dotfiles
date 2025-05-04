@@ -81,7 +81,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "help", "diff", "tutor", "lspinfo", "grug-far", "checkhealth" },
+	pattern = {
+		"checkhealth",
+		"diff",
+		"grug-far",
+		"help",
+		"lspinfo",
+		"notify",
+		"qf",
+		"tutor",
+	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false
 		vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })

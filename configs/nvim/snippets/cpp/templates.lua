@@ -1,7 +1,7 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local i = ls.insert_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 local first_line = function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end
@@ -21,7 +21,7 @@ local not_in_string_comment = function() return check_not_in_node({ "string_cont
 return {
 	s(
 		{ trig = "tmp", dscr = "CP template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         #pragma GCC optimize("O3,unroll-loops")
         #include <<bits/stdc++.h>>
@@ -57,7 +57,7 @@ return {
 	),
 	s(
 		{ trig = "CF", dscr = "Codeforces template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         #pragma GCC optimize("O3,unroll-loops")
         #include <<bits/stdc++.h>>
@@ -98,7 +98,7 @@ return {
 	),
 	s(
 		{ trig = "io ", dscr = "Set io for USACO", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         void setIO(string name = "<>") {
           if ( name!="" ) {

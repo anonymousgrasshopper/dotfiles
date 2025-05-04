@@ -5,7 +5,7 @@ local i = ls.insert_node
 local c = ls.choice_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -49,7 +49,7 @@ end
 return {
 	s(
 		{ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
-		fmta("if <>; then\n\t<>\nfi<>", {
+		fmt("if <>; then\n\t<>\nfi<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
@@ -58,7 +58,7 @@ return {
 	),
 	s(
 		{ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         for <> in <>; do
           <>
@@ -75,7 +75,7 @@ return {
 	),
 	s(
 		{ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         while <>; do
           <>
@@ -91,7 +91,7 @@ return {
 	),
 	s(
 		{ trig = "until ", dscr = "until loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         until <>; do
           <>
@@ -107,7 +107,7 @@ return {
 	),
 	s(
 		{ trig = "select ", dscr = "select loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         select <> in <>; do
           <>
@@ -124,21 +124,21 @@ return {
 	),
 	s(
 		{ trig = "if [", dscr = "test condition", snippetType = "autosnippet" },
-		fmta("if [[ <> ]", {
+		fmt("if [[ <> ]", {
 			i(1),
 		}),
 		{ condition = not_in_string_comment }
 	),
 	s(
 		{ trig = "while [", dscr = "test condition", snippetType = "autosnippet" },
-		fmta("while [[ <> ]", {
+		fmt("while [[ <> ]", {
 			i(1),
 		}),
 		{ condition = not_in_string_comment }
 	),
 	s(
 		{ trig = "case", name = "cases", dscr = "cases" },
-		fmta(
+		fmt(
 			[[
         case <> in
             <>
@@ -155,7 +155,7 @@ return {
 	),
 	s(
 		{ trig = "func", name = "function", dscr = "define a function" },
-		fmta(
+		fmt(
 			[[
         <>() {
           <>
@@ -170,7 +170,7 @@ return {
 	),
 	s(
 		{ trig = "case ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         case <> in<>
         esac

@@ -7,7 +7,7 @@ local d = ls.dynamic_node
 local f = ls.function_node
 local rep = require("luasnip.extras").rep
 local sn = ls.snippet_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -54,7 +54,7 @@ local SNIP_CAPTURES_1
 return {
 	s(
 		{ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
-		fmta("if (<>) {\n\t<>\n}<>", {
+		fmt("if (<>) {\n\t<>\n}<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
@@ -63,7 +63,7 @@ return {
 	),
 	s(
 		{ trig = "else ", dscr = "else statement", snippetType = "autosnippet" },
-		fmta("else {\n\t<>\n}<>", {
+		fmt("else {\n\t<>\n}<>", {
 			d(1, get_visual),
 			i(0),
 		}),
@@ -71,7 +71,7 @@ return {
 	),
 	s(
 		{ trig = "elif ", dscr = "else if statement", snippetType = "autosnippet" },
-		fmta("else if (<>) {\n\t<>\n}<>", {
+		fmt("else if (<>) {\n\t<>\n}<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
@@ -80,7 +80,7 @@ return {
 	),
 	s(
 		{ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         for (<>) {
           <>
@@ -100,7 +100,7 @@ return {
 	),
 	s(
 		{ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         while (<>) {
           <>
@@ -116,7 +116,7 @@ return {
 	),
 	s(
 		{ trig = "do ", dscr = "do while loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         do {
           <>
@@ -131,7 +131,7 @@ return {
 	),
 	s(
 		{ trig = "switch ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         switch (<>) {<>
         }

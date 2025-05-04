@@ -3,7 +3,7 @@ local s = ls.snippet
 local i = ls.insert_node
 local f = ls.function_node
 local rep = require("luasnip.extras").rep
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local check_not_in_node = function(ignored_nodes)
 	if not require("nvim-treesitter.parsers").has_parser() then
@@ -20,7 +20,7 @@ local not_in_string_comment = function() return check_not_in_node({ "string_cont
 return {
 	s(
 		{ trig = "([^%w_])all%(", regTrig = true, wordTrig = false, dscr = "iterator range", snippetType = "autosnippet" },
-		fmta("<><>.begin(), <>.end(", {
+		fmt("<><>.begin(), <>.end(", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			rep(1),
@@ -35,7 +35,7 @@ return {
 			dscr = "reverse iterator range",
 			snippetType = "autosnippet",
 		},
-		fmta("<><>.rbegin(), <>.rend(", {
+		fmt("<><>.rbegin(), <>.rend(", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			rep(1),

@@ -1,8 +1,5 @@
 return {
 	"gbprod/yanky.nvim",
-	opts = {
-		ring = { storage = "sqlite" },
-	},
 	keys = {
 		{
 			"<leader>p",
@@ -27,13 +24,10 @@ return {
 		{ "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
 		{ "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 	},
-	config = function()
-		require("yanky").setup({
-			ring = {
-				history_length = 10,
-			},
-		})
-
-		require("telescope").load_extension("yank_history")
+	opts = function()
+		if package.loaded["telescope"] then
+			require("telescope").load_extension("yank_history")
+		end
+		return {}
 	end,
 }

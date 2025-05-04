@@ -49,6 +49,12 @@ end
 
 return {
 	"nvim-telescope/telescope.nvim",
+	branch = "0.1.x",
+	dependencies = {
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		-- nvim-lua/plenary.nvim
+		-- nvim-tree/nvim-web-devicons
+	},
 	cmd = {
 		"Telescope",
 	},
@@ -83,12 +89,8 @@ return {
 		{ "<leader>gfb", function() require("telescope.builtin").git_branches() end, desc = "Search git branches" },
 		{ "<leader>gfs", function() require("telescope.builtin").git_status() end, desc = "Search git status" },
 		{ "<leader>gfS", function() require("telescope.builtin").git_stash() end, desc = "Search git stash items" },
-	},
-	branch = "0.1.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+
+		{ "<leader>sn", function() require("telescope").extensions.notify.notify() end, desc = "Search notifications" },
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -139,5 +141,14 @@ return {
 		})
 
 		telescope.load_extension("fzf")
+		local extensions = {
+			["notify"] = "notify",
+			["yanky"] = "yank_history",
+		}
+		for _, extension in ipairs(extensions) do
+			if package.loaded[extension] then
+				telescope.load_extension(extension)
+			end
+		end
 	end,
 }

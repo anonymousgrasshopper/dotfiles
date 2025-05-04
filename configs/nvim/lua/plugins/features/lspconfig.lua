@@ -222,10 +222,9 @@ return {
 	},
 	{
 		"rachartier/tiny-code-action.nvim",
-		dependencies = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-		},
+		-- dependencies:
+		-- nvim-telescope/telescope.nvim
+		-- nvim-lua/plenary.nvim
 		keys = {
 			{
 				"<leader>ca",

@@ -3,9 +3,6 @@ return {
 		"saghen/blink.cmp",
 		version = "*",
 		event = { "InsertEnter", "CmdlineEnter" },
-		dependencies = {
-			"L3MON4D3/LuaSnip",
-		},
 		opts = {
 			keymap = {
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },

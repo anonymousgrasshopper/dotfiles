@@ -1,9 +1,8 @@
 return {
 	{
 		"xeluxee/competitest.nvim",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-		},
+		-- dependencies:
+		-- MunifTanjim/nui.nvim
 		cmd = { "CompetiTest" },
 		keys = {
 			{

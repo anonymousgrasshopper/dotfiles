@@ -1,7 +1,7 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local i = ls.insert_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local tex = {}
 tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
@@ -11,7 +11,7 @@ local line_begin = require("luasnip.extras.expand_conditions").line_begin
 return {
 	s(
 		{ trig = "tmp", dscr = "template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \documentclass{<>}
         \title{<>}
@@ -34,7 +34,7 @@ return {
 	),
 	s(
 		{ trig = "toc", dscr = "Table of contents", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \tablofcontents
         <>
@@ -47,7 +47,7 @@ return {
 	),
 	s(
 		{ trig = "pkg", dscr = "include package", snippetType = "autosnippet" },
-		fmta("\\usepackage[<>]{<>}", {
+		fmt("\\usepackage[<>]{<>}", {
 			i(2),
 			i(1),
 		}),
@@ -55,7 +55,7 @@ return {
 	),
 	s(
 		{ trig = "fr", dscr = "Français", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \usepackage[T1]{fontenc}
         \usepackage[french]{babel}

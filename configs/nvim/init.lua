@@ -1,3 +1,7 @@
+---------------------------------------------------------------------------------------------------
+--------------------------------------------- INIT.LUA  -------------------------------------------
+---------------------------------------------------------------------------------------------------
+
 -- remove the terminal padding
 if not vim.env.TERM.NVIM_PADDING_REMOVED and vim.env.TERM:match("kitty") then
 	vim.fn.system({ "kitty", "@set-spacing", "padding=0", "margin=0" })
@@ -9,7 +13,7 @@ require("config.keymaps")
 require("config.options")
 
 -- download lazy.nvim if it isn't here yet
-local lazypath = vim.fn.stdpath("data") .. "/packages/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/pack/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -23,7 +27,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	root = vim.fn.stdpath("data") .. "/packages",
+	root = vim.fn.stdpath("data") .. "/pack",
 	lockfile = vim.fn.stdpath("config") .. "/lockfile.json",
 	readme = { root = vim.fn.stdpath("state") .. "docs/readme" },
 	spec = {

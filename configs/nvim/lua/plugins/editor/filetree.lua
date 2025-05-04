@@ -2,9 +2,9 @@ return {
 	{
 		"antosha417/nvim-lsp-file-operations",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
 			"nvim-neo-tree/neo-tree.nvim",
 		},
+		-- dependencies: nvim-lua/plenary.nvim
 		opts = {},
 	},
 	{
@@ -16,12 +16,11 @@ return {
 		cmd = {
 			"Neotree",
 		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-			{ "3rd/image.nvim", opts = {} }, -- requires imagemagick to be installed
-		},
+		-- dependencies:
+		-- 	nvim-lua/plenary.nvim
+		-- 	nvim-tree/nvim-web-devicons
+		-- 	MunifTanjim/nui.nvim
+		-- 	3rd/image.nvim" -- requires imagemagick to be installed
 		init = function()
 			vim.api.nvim_create_autocmd("BufEnter", {
 				group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
@@ -388,9 +387,9 @@ return {
 						event = "neo_tree_buffer_enter",
 						handler = function()
 							vim.cmd([[
-							highlight! cursor blend=100
-							setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
-							setlocal sidescrolloff=0
+								highlight! cursor blend=100
+								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
+								setlocal sidescrolloff=0
 							]])
 						end,
 					},
@@ -398,10 +397,11 @@ return {
 						event = "neo_tree_popup_buffer_enter",
 						handler = function()
 							vim.opt_local.winhighlight = "normal:NormalDark"
+							vim.notify("hey")
 							vim.cmd([[
-							highlight! cursor blend=100
-							setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
-							setlocal sidescrolloff=0
+								highlight! cursor blend=100
+								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
+								setlocal sidescrolloff=0
 							]])
 						end,
 					},

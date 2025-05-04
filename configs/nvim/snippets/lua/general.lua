@@ -4,7 +4,7 @@ local i = ls.insert_node
 local d = ls.dynamic_node
 local f = ls.function_node
 local sn = ls.snippet_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -31,7 +31,7 @@ end
 return {
 	s(
 		{ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
-		fmta("if <> then\n\t<>\nend<>", {
+		fmt("if <> then\n\t<>\nend<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
@@ -40,7 +40,7 @@ return {
 	),
 	s(
 		{ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         for <> do
           <>
@@ -56,7 +56,7 @@ return {
 	),
 	s(
 		{ trig = "repeat ", dscr = "repeat until loop", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         repeat
           <>
@@ -71,7 +71,7 @@ return {
 	),
 	s(
 		{ trig = "([^%w_])function", dscr = "function", regTrig = true, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         <>function(<>)
           <>
@@ -88,7 +88,7 @@ return {
 	),
 	s(
 		{ trig = "([^%w_])func ", dscr = "function", regTrig = true, snippetType = "autosnippet" },
-		fmta("<>function(<>) <> end<>", {
+		fmt("<>function(<>) <> end<>", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			d(2, get_visual),

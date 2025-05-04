@@ -4,7 +4,7 @@ local t = ls.text_node
 local i = ls.insert_node
 local c = ls.choice_node
 local f = ls.function_node
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local check_not_in_node = function(ignored_nodes)
 	if not require("nvim-treesitter.parsers").has_parser() then
@@ -21,7 +21,7 @@ local not_in_string_comment = function() return check_not_in_node({ "string_cont
 return {
 	s(
 		{ trig = "class%s+([%w_]+)%s", regTrig = true, dscr = "class template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         class <> <><>
         };
@@ -41,7 +41,7 @@ return {
 	),
 	s(
 		{ trig = "struct%s+([%w_]+)%s", regTrig = true, dscr = "struct template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         struct <> <><>
         };
@@ -61,7 +61,7 @@ return {
 	),
 	s(
 		{ trig = "union%s+([%w_]+)%s", regTrig = true, dscr = "union template", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         union <> {
           <>

@@ -3,6 +3,7 @@ return {
 	-- event = { "BufReadPre", "BufNewFile" },
 	-- config = function()
 	--   require("lint").linters_by_ft = {
+	--     bash = { "shellcheck" },
 	--     html = { "htmlhint" },
 	--   }
 	--   vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePost", "InsertLeave", "TextChanged" }, {

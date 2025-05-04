@@ -6,7 +6,7 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
 local rep = require("luasnip.extras").rep
-local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmta
 
 local rec_item
 rec_item = function()
@@ -27,7 +27,7 @@ local line_begin = require("luasnip.extras.expand_conditions").line_begin
 return {
 	s(
 		{ trig = "beg", dscr = "Environment", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \begin{<>}
           <>
@@ -43,7 +43,7 @@ return {
 	),
 	s(
 		{ trig = "\\beg", dscr = "Environment", snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \begin{<>}
           <>
@@ -58,7 +58,7 @@ return {
 	),
 	s(
 		{ trig = "\\?se", dscr = "section", regTrig = true, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \section<>{<>}
       ]],
@@ -71,7 +71,7 @@ return {
 	),
 	s(
 		{ trig = "\\?sb", dscr = "section", regTrig = true, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
         \subsection<>{<>}
       ]],
@@ -90,7 +90,7 @@ return {
 	}, { condition = tex.in_text * line_begin }),
 	s(
 		{ trig = "\\?enn", dscr = "orderdered list", regTrig = true, snippetType = "autosnippet" },
-		fmta(
+		fmt(
 			[[
       \begin{enumerate}
 
