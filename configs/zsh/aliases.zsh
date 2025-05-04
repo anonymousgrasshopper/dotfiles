@@ -132,7 +132,7 @@ gitdot() {
 			cd - >/dev/null
 		fi
 	else
-		git_dotfiles "$@" && cd - >/dev/null
+		git_dotfiles "$@"
 	fi
 }
 
