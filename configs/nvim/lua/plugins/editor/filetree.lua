@@ -397,7 +397,6 @@ return {
 						event = "neo_tree_popup_buffer_enter",
 						handler = function()
 							vim.opt_local.winhighlight = "normal:NormalDark"
-							vim.notify("hey")
 							vim.cmd([[
 								highlight! cursor blend=100
 								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
