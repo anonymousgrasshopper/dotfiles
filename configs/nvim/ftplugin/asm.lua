@@ -1,7 +1,7 @@
 -- assembles and links the current asm file
 vim.api.nvim_create_user_command("Assemble", function()
 	local filename = vim.fn.fnamemodify(vim.fn.expand("%"), ":r")
-	vim.system({ "nasm", "-f", "elf64", "-o", filename .. ".o", filename .. ".asm" }, { text = true }, function(obj)
+	vim.system({ "nasm", "-f", "elf64", "-o", filename .. ".o", vim.fn.expand("%") }, { text = true }, function(obj)
 		print(obj.stderr)
 		if obj.signal == 0 then
 			vim.system(
@@ -9,7 +9,11 @@ vim.api.nvim_create_user_command("Assemble", function()
 				{ text = true },
 				function(obj) print(obj.stderr) end
 			)
-			vim.fn.system("rm " .. filename .. ".o")
+			vim.system(
+				{ "rm", filename .. ".o" },
+				{},
+				function(_) vim.notify("Assembling completed", "Info", { title = "Assembling", icon = " " }) end
+			)
 		end
 	end)
 end, {})

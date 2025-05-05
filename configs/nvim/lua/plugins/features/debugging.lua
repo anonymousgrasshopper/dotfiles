@@ -22,7 +22,10 @@ return {
 	keys = {
 		{
 			"<leader>dc",
-			function() require("dap").continue() end,
+			function()
+				require("dap").continue()
+				require("hydra").activate("Debug mode")
+			end,
 			desc = "Continue",
 		},
 		{

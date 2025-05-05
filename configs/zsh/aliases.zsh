@@ -43,6 +43,9 @@ compile() {
 		c)
 			compiler="gcc"
 			;;
+		asm)
+			compiler="assemble"
+			;;
 		*)
 			echo "file extension not recognized"
 			;;

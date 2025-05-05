@@ -163,7 +163,7 @@ return {
 						"$(FNOEXT).exe",
 					},
 				},
-				asm = { exec = "/usr/local/bin/assemble", args = { "$(FNOEXT)" } },
+				asm = { exec = "assemble", args = { "$(FNAME)" } },
 				rust = { exec = "rustc", args = { "$(FNAME)" } },
 				java = { exec = "javac", args = { "$(FNAME)" } },
 			},
