@@ -4,6 +4,9 @@ CompileFlags:
 Completion:
   ArgumentLists: Delimiters
 
+Hover:
+  ShowAKA: true
+
 ---
 If:
   PathMatch: .*\.(cpp|hpp|h)$
