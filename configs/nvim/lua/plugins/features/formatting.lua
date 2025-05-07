@@ -69,14 +69,14 @@ return {
 			end
 
 			local disabled_paths = {
-				"nvim/ftplugin/cpp.lua",
 				"nvim/lua/config/options.lua",
 				"nvim/lua/plugins/editor/telescope.lua",
+				"nvim/lua/plugins/features/debugging.lua",
 				"nvim/lua/plugins/util/browsing.lua",
 				"nvim/lua/plugins/util/unix.lua",
 			}
-			for _, disabled_path in ipairs(disabled_paths) do
-				if vim.api.nvim_buf_get_name(0):match(disabled_path) then
+			for _, path in ipairs(disabled_paths) do
+				if vim.api.nvim_buf_get_name(0):match(path) then
 					return
 				end
 			end

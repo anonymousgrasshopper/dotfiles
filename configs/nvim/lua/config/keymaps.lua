@@ -90,9 +90,10 @@ vim.keymap.set("i", ".", ".<c-g>u")
 vim.keymap.set("i", ";", ";<c-g>u")
 
 -- yanking and pasting
+vim.keymap.set("n", "<localleader>p", '"_diwP', { desc = "replace word under cursor" })
 vim.keymap.set("x", "<leader>r", '"_dP')
 vim.keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = 'Paste "+ content before cursor' })
-vim.keymap.set({ "n", "v" }, "<C-S-y>", "<Cmd>%y+<CR>", { desc = "Yank file text into the + register" })
+vim.keymap.set({ "n", "v" }, "<C-S-y>", "<Cmd>%y+<CR>", { desc = "Yank buffer content into the + register" })
 vim.keymap.set("v", "<C-z>", '"+y', { desc = 'Yank selected text into "+' })
 vim.keymap.set("n", "<leader>cwd", '<Cmd>let @+=expand("%")<CR>', { desc = 'Copy absolute path to the "+' })
 

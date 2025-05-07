@@ -41,8 +41,8 @@ zstyle ':fzf-tab:complete:help:*'             fzf-preview 'help $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags    '--preview-window=down:3:wrap'
 zstyle ':fzf-tab:complete:kill:*'             popup-pad    0 3
-zstyle ':fzf-tab:complete:*:options'          fzf-preview 'echo $desc'
-zstyle ':fzf-tab:complete:*:argument-1'       fzf-preview 'echo $desc'
+zstyle ':fzf-tab:complete:*:options'          fzf-preview ''
+zstyle ':fzf-tab:complete:*:argument-1'       fzf-preview ''
 
 # git
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
@@ -158,7 +158,8 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 [[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
 
+alias -s c="nvim"
 alias -s tex="nvim"
 alias -s cpp="nvim"
-alias -s c="nvim"
+alias -s lua="nvim"
 alias -s asm="nvim"

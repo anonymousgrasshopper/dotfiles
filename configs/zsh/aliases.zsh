@@ -78,7 +78,7 @@ rm_confirm_nonempty() {
 
 # help command using bat
 help() {
-	"$@" --help 2>&1 | bat --plain --language=help --paging=always
+	"$@" --help 2>/dev/null | bat --plain --language=help --paging=always
 }
 
 # Usage: far /path/to/directory/ "regexp" "replacement"

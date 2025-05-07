@@ -79,8 +79,6 @@ vim.opt.cmdheight      = 0
 
 -- mouse
 vim.opt.mouse          = "nvi"  -- disable the mouse in command mode
-vim.cmd.aunmenu({ "PopUp.How-to\\ disable\\ mouse" })
-vim.cmd.aunmenu({ "PopUp.-2-" })
 
 -- search settings
 vim.opt.ignorecase     = true

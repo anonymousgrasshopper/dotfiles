@@ -1,6 +1,5 @@
 vim.filetype.add({
 	extension = {
-		tex = "tex", -- without VimTex plaintex is assigned instead
 		rasi = "css",
 		muttrc = "neomuttrc",
 	},

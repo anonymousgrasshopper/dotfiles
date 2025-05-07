@@ -16,8 +16,9 @@ return {
 			require("nvim-treesitter.configs").setup({
 				highlight = {
 					enable = true,
-					disable = function() return vim.tbl_contains({ "tex", "markdown", "checkhealth" }, vim.bo.filetype) end,
-					-- disable = { "tex", "markdown", "checkhealth" }, -- doesn't work for checkhealth for some reason
+					disable = function() return vim.tbl_contains({ "tex", "checkhealth" }, vim.bo.filetype) end,
+					-- disable = { "tex", "markdown", "checkhealth" }, -- doesn't work on checkhealth for some reason
+					additional_vim_regex_highlighting = { "markdown" }, -- for markdown %% comments
 				},
 				indent = { enable = true },
 				ensure_installed = {

@@ -19,6 +19,6 @@ elif [[ -n $(printenv "$1") ]]; then
 	else
 		printenv "$1"
 	fi
-else
-	true
+elif type "$1" >/dev/null 2>&1; then
+	help=$("$1" --help) && echo "$help" | bat --plain --language=help --paging=always
 fi
