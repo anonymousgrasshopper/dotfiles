@@ -70,7 +70,7 @@ return {
 			if line then
 				local original_pos = vim.api.nvim_win_get_cursor(0)
 				vim.api.nvim_win_set_cursor(0, { line, 0 })
-				require("dap").toggle_breakpoint()
+				require("dap").set_breakpoint()
 			end
 		end
 

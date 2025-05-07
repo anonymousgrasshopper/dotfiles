@@ -71,9 +71,13 @@ return {
 			local lsp_configs = {
 				["clangd"] = {
 					init_options = {
-						fallbackFlags = {
-							"--std=c++20",
-						},
+						fallbackFlags = function()
+							if vim.bo.filetype == "cpp" then
+								return { "--std=c++20" }
+							else
+								return {}
+							end
+						end,
 					},
 				},
 
