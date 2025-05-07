@@ -74,33 +74,47 @@ return {
 		dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 		dapui.setup()
 
+		-- keymaps
+		local debugging_keymaps = {
+			["t"] = function() require("dap").toggle_breakpoint() end,
+			["i"] = function()
+				require("dap.ui.widgets").hover()
+				vim.cmd("hi Cursor blend=100")
+			end,
+			["c"] = function() require("dap").continue() end,
+			["H"] = function() require("dap").step_back() end,
+			["J"] = function() require("dap").step_into() end,
+			["K"] = function() require("dap").step_out() end,
+			["L"] = function() require("dap").step_over() end,
+			["G"] = function() require("dap").run_to_cursor() end,
+			["q"] = function() require("dap").terminate() end,
+		}
+		local keys = {}
+		for key, _ in pairs(debugging_keymaps) do
+			table.insert(keys, key)
+		end
 		local keymap_restore = {}
+
 		dap.listeners.after["event_initialized"]["me"] = function()
 			for _, buf in pairs(vim.api.nvim_list_bufs()) do
 				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
 				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
+					if vim.tbl_contains(keys, keymap.lhs) then
 						table.insert(keymap_restore, keymap)
 						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
 					end
 				end
 			end
-			vim.keymap.set("n", "t", function() require("dap").toggle_breakpoint() end, { buffer = true })
-			vim.keymap.set("n", "c", function() require("dap").continue() end, { buffer = true })
-			vim.keymap.set("n", "H", function() require("dap").step_back() end, { buffer = true })
-			vim.keymap.set("n", "J", function() require("dap").step_into() end, { buffer = true })
-			vim.keymap.set("n", "K", function() require("dap").step_out() end, { buffer = true })
-			vim.keymap.set("n", "L", function() require("dap").step_over() end, { buffer = true })
-			vim.keymap.set("n", "G", function() require("dap").run_to_cursor() end, { buffer = true })
-			vim.keymap.set("n", "q", function() require("dap").terminate() end, { buffer = true })
+			for key, func in pairs(debugging_keymaps) do
+			  vim.keymap.set("n", key, func, { buffer = true })
+			end
 		end
 
-		-- keymaps
 		dap.listeners.after["event_terminated"]["me"] = function()
 			for _, buf in pairs(vim.api.nvim_list_bufs()) do
 				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
 				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
+					if vim.tbl_contains(keys, keymap.lhs) then
 						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
 					end
 				end
@@ -126,13 +140,13 @@ return {
 			keymap_restore = {}
 		end
 
+		-- C++
 		dap.adapters.codelldb = {
 			type = "server",
 			port = "${port}",
 			executable = {
 				command = vim.env.HOME .. "/.local/share/nvim/mason/bin/codelldb",
 				args = { "--port", "${port}" },
-				-- detached = false,
 			},
 		}
 

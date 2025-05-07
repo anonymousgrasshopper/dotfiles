@@ -21,6 +21,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 		local enabled_filetypes = {
 			"aerial",
 			"alpha",
+			"dap-float",
 			"diff",
 			"DiffviewFiles",
 			"dropbar_menu",
@@ -80,6 +81,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = {
 		"checkhealth",
+		"dap-float",
 		"diff",
 		"grug-far",
 		"help",

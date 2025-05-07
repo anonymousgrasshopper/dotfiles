@@ -65,6 +65,7 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<localleader>dbg", function()
+	vim.cmd("silent! write")
 	local buf = vim.api.nvim_get_current_buf()
 
 	vim.b[buf].compilation_completed = false
@@ -77,13 +78,13 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe",
 	}, {}, function(obj)
 		if obj.stderr ~= nil then
-			if obj.stderr:match(": error") then
+			if obj.stderr:match("error[^\n]*\n$") then
 				vim.notify(obj.stderr, "Error", { title = "Compiler", icon = "" })
 			else
-				vim.notify(obj.stderr, "Warning", { title = "Compiler", icon = "" })
+				vim.notify(obj.stderr, "Warn", { title = "Compiler", icon = "" })
 			end
 		end
-		if obj.signal == 0 then
+		if obj.code == 0 then
 			vim.notify("Compilation completed", "Info", { title = "Debugging", icon = "" })
 			vim.b[buf].compilation_completed = true
 			vim.b[buf].use_default_executable_path = true
