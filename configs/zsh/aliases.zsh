@@ -142,6 +142,9 @@ gitdot() {
 # neovim
 nfd() {
 	declare -a lines;
+	if [[ "$#" == 0 ]]; then
+	   lines+=( ${(f)"$(fzf --multi --select-1)"} )
+	fi
 	for arg in "$@" ; do
 	   lines+=( ${(f)"$(fzf --multi --select-1 --query=$arg)"} )
 	done
