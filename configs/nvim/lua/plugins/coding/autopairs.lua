@@ -10,6 +10,11 @@ return {
 					"grug-far",
 				},
 			},
+			fastwarp = {
+				multi = true,
+				{},
+				{ faster = true, map = "<C-A-e>", cmap = "<C-A-e>" },
+			},
 			extensions = {
 				-- Improve performance when typing fast, see
 				-- https://github.com/altermo/ultimate-autopair.nvim/issues/74
