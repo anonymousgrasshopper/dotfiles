@@ -26,7 +26,7 @@ copy() {
 }
 
 # list of configs and scripts to copy
-configs=("bat" "btop" "browser" "eza" "fastfetch" "formatters" "git" "i3" "kitty"
+configs=("bat" "btop" "browser" "clangd" "eza" "fastfetch" "formatters" "git" "i3" "kitty"
 	"lazygit" "mutt" "ncdu" "npm" "nvim" "rofi" "thundery" "tmux" "wallpapers" "wget"
 	"yazi" "zathura" "zsh" "fzf.conf" "mimeapps.list" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "codelldb_stdio_redirection" "compile_sfml" "fix_corrupt_history"
