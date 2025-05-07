@@ -1,6 +1,9 @@
 CompileFlags:
   Add: [-Wall, -Wextra]
 
+Completion:
+  ArgumentLists: Delimiters
+
 ---
 If:
   PathMatch: .*\.(cpp|hpp|h)$
