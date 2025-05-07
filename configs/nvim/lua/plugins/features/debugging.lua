@@ -106,7 +106,7 @@ return {
 				end
 			end
 			for key, func in pairs(debugging_keymaps) do
-			  vim.keymap.set("n", key, func, { buffer = true })
+				vim.keymap.set("n", key, func, { buffer = true })
 			end
 		end
 
