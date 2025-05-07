@@ -69,18 +69,6 @@ return {
 			})
 
 			local lsp_configs = {
-				["clangd"] = {
-					init_options = {
-						fallbackFlags = function()
-							if vim.bo.filetype == "cpp" then
-								return { "--std=c++20" }
-							else
-								return {}
-							end
-						end,
-					},
-				},
-
 				["lua_ls"] = {
 					on_init = function(client)
 						if client.workspace_folders then

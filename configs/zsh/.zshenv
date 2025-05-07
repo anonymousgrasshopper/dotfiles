@@ -9,7 +9,6 @@ export SUDO_EDITOR="$EDITOR"
 export BROWSER="/mnt/c/Program Files/Mozilla Firefox/firefox.exe"
 
 # program-specific variables
-# export _ZO_FZF_OPTS="--scheme=path --bind 'ctrl-a:reload(zoxide edit increment {2..})"
 export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 export PYTHON_HISTORY="$HOME/.local/state/python/history"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep.conf"

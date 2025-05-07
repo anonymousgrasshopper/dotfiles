@@ -155,7 +155,7 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 # setup programs
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh --cmd cd)"
 [[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
 
 alias -s c="nvim"

@@ -49,29 +49,81 @@ return {
 		local dapui = require("dapui")
 		local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")
 
+		-- icons
+		local signs = {
+			Stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
+			Breakpoint = "",
+			BreakpointCondition = "",
+			BreakpointRejected = { "", "DiagnosticError" },
+			LogPoint = ".>",
+		}
+		for name, sign in pairs(signs) do
+			sign = type(sign) == "table" and sign or { sign }
+			vim.fn.sign_define("Dap" .. name, {
+				text = sign[1],
+				texthl = sign[2] or "DiagnosticInfo",
+				linehl = sign[3],
+				numhl = sign[3],
+			})
+		end
+
+		-- setup dapui
 		dap.listeners.before.attach.dapui_config = function() dapui.open() end
 		dap.listeners.before.launch.dapui_config = function() dapui.open() end
 		dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
 		dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 		dapui.setup()
 
-		-- automatically add a breakpoint at the beginning of main
-		dap.listeners.before.event_initialized["auto-main-breakpoint"] = function()
-			if not vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
-				return
-			end
-			local line = nil
-			for lnum = 1, vim.fn.line("$") do
-				if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
-					line = lnum
-					break
+		local keymap_restore = {}
+		dap.listeners.after["event_initialized"]["me"] = function()
+			for _, buf in pairs(vim.api.nvim_list_bufs()) do
+				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
+				for _, keymap in pairs(keymaps) do
+					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
+						table.insert(keymap_restore, keymap)
+						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
+					end
 				end
 			end
-			if line then
-				local original_pos = vim.api.nvim_win_get_cursor(0)
-				vim.api.nvim_win_set_cursor(0, { line, 0 })
-				require("dap").set_breakpoint()
+			vim.keymap.set("n", "t", function() require("dap").toggle_breakpoint() end, { buffer = true })
+			vim.keymap.set("n", "c", function() require("dap").continue() end, { buffer = true })
+			vim.keymap.set("n", "H", function() require("dap").step_back() end, { buffer = true })
+			vim.keymap.set("n", "J", function() require("dap").step_into() end, { buffer = true })
+			vim.keymap.set("n", "K", function() require("dap").step_out() end, { buffer = true })
+			vim.keymap.set("n", "L", function() require("dap").step_over() end, { buffer = true })
+			vim.keymap.set("n", "G", function() require("dap").run_to_cursor() end, { buffer = true })
+			vim.keymap.set("n", "q", function() require("dap").terminate() end, { buffer = true })
+		end
+
+		-- keymaps
+		dap.listeners.after["event_terminated"]["me"] = function()
+			for _, buf in pairs(vim.api.nvim_list_bufs()) do
+				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
+				for _, keymap in pairs(keymaps) do
+					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
+						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
+					end
+				end
 			end
+			for _, keymap in pairs(keymap_restore) do
+				if keymap.rhs then
+					vim.api.nvim_buf_set_keymap(
+						keymap.buffer,
+						keymap.mode,
+						keymap.lhs,
+						keymap.rhs,
+						{ silent = keymap.silent == 1 }
+					)
+				elseif keymap.callback then
+					vim.keymap.set(
+						keymap.mode,
+						keymap.lhs,
+						keymap.callback,
+						{ buffer = keymap.buffer, silent = keymap.silent == 1 }
+					)
+				end
+			end
+			keymap_restore = {}
 		end
 
 		dap.adapters.codelldb = {
@@ -107,72 +159,23 @@ return {
 			},
 		}
 
-		local signs = {
-			Stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
-			Breakpoint = "",
-			BreakpointCondition = "",
-			BreakpointRejected = { "", "DiagnosticError" },
-			LogPoint = ".>",
-		}
-		for name, sign in pairs(signs) do
-			sign = type(sign) == "table" and sign or { sign }
-			vim.fn.sign_define("Dap" .. name, {
-				text = sign[1],
-				texthl = sign[2] or "DiagnosticInfo",
-				linehl = sign[3],
-				numhl = sign[3],
-			})
-		end
-
-		local keymap_restore = {}
-		dap.listeners.after["event_initialized"]["me"] = function()
-			for _, buf in pairs(vim.api.nvim_list_bufs()) do
-				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
-				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
-						table.insert(keymap_restore, keymap)
-						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
-					end
+		-- automatically add a breakpoint at the beginning of main in C and C++
+		dap.listeners.before.event_initialized["auto-main-breakpoint"] = function()
+			if not vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
+				return
+			end
+			local line = nil
+			for lnum = 1, vim.fn.line("$") do
+				if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
+					line = lnum
+					break
 				end
 			end
-			vim.keymap.set("n", "t", function() require("dap").toggle_breakpoint() end, { buffer = true })
-			vim.keymap.set("n", "c", function() require("dap").continue() end, { buffer = true })
-			vim.keymap.set("n", "H", function() require("dap").step_back() end, { buffer = true })
-			vim.keymap.set("n", "J", function() require("dap").step_into() end, { buffer = true })
-			vim.keymap.set("n", "K", function() require("dap").step_out() end, { buffer = true })
-			vim.keymap.set("n", "L", function() require("dap").step_over() end, { buffer = true })
-			vim.keymap.set("n", "G", function() require("dap").run_to_cursor() end, { buffer = true })
-			vim.keymap.set("n", "q", function() require("dap").terminate() end, { buffer = true })
-		end
-
-		dap.listeners.after["event_terminated"]["me"] = function()
-			for _, buf in pairs(vim.api.nvim_list_bufs()) do
-				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
-				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains({ "t", "c", "H", "J", "K", "L", "G", "q" }, keymap.lhs) then
-						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
-					end
-				end
+			if line then
+				local original_pos = vim.api.nvim_win_get_cursor(0)
+				vim.api.nvim_win_set_cursor(0, { line, 0 })
+				require("dap").set_breakpoint()
 			end
-			for _, keymap in pairs(keymap_restore) do
-				if keymap.rhs then
-					vim.api.nvim_buf_set_keymap(
-						keymap.buffer,
-						keymap.mode,
-						keymap.lhs,
-						keymap.rhs,
-						{ silent = keymap.silent == 1 }
-					)
-				elseif keymap.callback then
-					vim.keymap.set(
-						keymap.mode,
-						keymap.lhs,
-						keymap.callback,
-						{ buffer = keymap.buffer, silent = keymap.silent == 1 }
-					)
-				end
-			end
-			keymap_restore = {}
 		end
 	end,
 }

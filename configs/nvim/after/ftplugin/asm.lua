@@ -1,4 +1,4 @@
--- assembles and links the current asm file
+-- assembles and links the current file
 vim.api.nvim_create_user_command("Assemble", function()
 	local filename = vim.fn.fnamemodify(vim.fn.expand("%"), ":r")
 	vim.system({ "nasm", "-f", "elf64", "-o", filename .. ".o", vim.fn.expand("%") }, { text = true }, function(obj)

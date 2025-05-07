@@ -45,15 +45,14 @@ return {
 
 			cmdline = {
 				keymap = {
+					preset = "none",
 					["<C-e>"] = { "hide", "fallback" },
+					["<C-space>"] = { "show", "fallback" },
 
 					["<Tab>"] = { "accept", "fallback" },
 
 					["<C-p>"] = { "select_prev", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
-
-					["<Left>"] = { "fallback" },
-					["<Right>"] = { "fallback" },
 				},
 				completion = {
 					menu = { auto_show = true },
@@ -143,7 +142,7 @@ return {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},
 		},
-		opts_extend = { "sources.default" },
+		oxts_extend = { "sources.default" },
 	},
 	{
 		"L3MON4D3/LuaSnip",

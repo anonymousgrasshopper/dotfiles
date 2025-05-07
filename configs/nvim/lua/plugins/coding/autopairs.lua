@@ -10,11 +10,6 @@ return {
 					"grug-far",
 				},
 			},
-			fastwarp = {
-				multi = true,
-				{},
-				{ faster = true, map = "<C-A-e>", cmap = "<C-A-e>" },
-			},
 			extensions = {
 				-- Improve performance when typing fast, see
 				-- https://github.com/altermo/ultimate-autopair.nvim/issues/74
@@ -51,39 +46,23 @@ return {
 			},
 			{ "\\(", "\\)", newline = true },
 			{ "\\{", "\\}", newline = true },
-			{ "\\[", "\\]", newline = true, nft = { "tex" } },
-
+			{ "\\[", "\\]", newline = true },
+			{ "<", ">", nft = { "sh", "bash", "zsh" } },
+			-- comments
+			{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
+			{ "[=[", "]=]", ft = { "lua" } },
+			{ "[==[", "]==]", ft = { "lua" } },
+			{ "[===[", "]===]", ft = { "lua" } },
+			-- filetype-specific
 			{ "$", "$", ft = { "tex", "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
 			{ "[[", "]]", ft = { "markdown" } },
 			{ "*", "*", ft = { "markdown" } },
 			{ "**", "**", ft = { "markdown" } },
 			{ "~~", "~~", ft = { "markdown" } },
-			{ "[=[", "]=]", ft = { "lua" } },
-			{ "[==[", "]==]", ft = { "lua" } },
-			{ "[===[", "]===]", ft = { "lua" } },
-			{ "<", ">", disable_start = true, disable_end = true },
 			{ "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
-			{
-				"\\[",
-				"\\]",
-				ft = { "tex" },
-				newline = true,
-			},
-			{
-				"/*",
-				"*/",
-				ft = { "c", "cpp", "css", "go" },
-				newline = true,
-				space = true,
-			},
-			{
-				">",
-				"<",
-				ft = { "html", "xml", "markdown" },
-				newline = true,
-				space = true,
-			},
+			{ ">", "<", ft = { "html", "xml", "markdown" }, newline = true, space = true },
+			-- LaTeX
 			{
 				"\\begin{bmatrix}",
 				"\\end{bmatrix}",
