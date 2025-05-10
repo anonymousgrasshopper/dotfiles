@@ -19,6 +19,10 @@ end
 
 return {
 	{
+		"preservim/vim-markdown",
+		ft = "markdown",
+	},
+	{
 		"OXY2DEV/markview.nvim",
 		ft = "markdown",
 		dependencies = {

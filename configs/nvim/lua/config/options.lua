@@ -81,7 +81,7 @@ vim.opt.cmdheight      = 0
 vim.opt.mouse          = "nvi"  -- disable the mouse in command mode
 
 -- search settings
-vim.opt.ignorecase     = true
+vim.opt.gdefault       = true   -- substitute globally (in the whole line) by default
 vim.opt.smartcase      = true   -- if mixed cases are used, then the search is case-sensitive
 
 -- colors

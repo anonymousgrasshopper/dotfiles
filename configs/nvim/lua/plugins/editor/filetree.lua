@@ -115,19 +115,19 @@ return {
 					},
 					file_size = {
 						enabled = true,
-						required_width = 42, -- min width of window required to show this column
+						required_width = 42,
 					},
 					type = {
 						enabled = true,
-						required_width = 54, -- min width of window required to show this column
+						required_width = 54,
 					},
 					last_modified = {
 						enabled = true,
-						required_width = 75, -- min width of window required to show this column
+						required_width = 75,
 					},
 					created = {
 						enabled = true,
-						required_width = 100, -- min width of window required to show this column
+						required_width = 100,
 					},
 					symlink_target = {
 						enabled = false,

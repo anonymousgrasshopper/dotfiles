@@ -6,6 +6,7 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmta
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -27,7 +28,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
+local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
 
 return {
 	s(

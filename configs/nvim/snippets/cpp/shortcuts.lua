@@ -4,6 +4,7 @@ local t = ls.text_node
 local i = ls.insert_node
 local c = ls.choice_node
 local f = ls.function_node
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
@@ -17,7 +18,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
+local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
 
 return {
 	s({ trig = "template", dscr = "template", snippetType = "autosnippet" }, {

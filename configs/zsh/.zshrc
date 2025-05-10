@@ -74,6 +74,7 @@ setopt auto_pushd   # automatically push the last directory on the directory sta
 setopt cdable_vars  # cd to a directory by typing its path relative to $HOME
 setopt correct      # correction for invalid command names
 setopt rcquotes     # escape single quotes with '' instead of '\'' in singly quoted strings
+setopt c_bases      # use 0x and 0 for displaying hexadecimal and octal numbers
 
 
 # history

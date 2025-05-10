@@ -13,10 +13,11 @@ return {
 			},
 		},
 		config = function()
+			vim.treesitter.language.register("bash", "zsh") -- for conditional autosnippet expansion
 			require("nvim-treesitter.configs").setup({
 				highlight = {
 					enable = true,
-					disable = function() return vim.tbl_contains({ "tex", "checkhealth" }, vim.bo.filetype) end,
+					disable = function() return vim.tbl_contains({ "tex", "checkhealth", "zsh" }, vim.bo.filetype) end,
 					-- disable = { "tex", "markdown", "checkhealth" }, -- doesn't work on checkhealth for some reason
 					additional_vim_regex_highlighting = { "markdown" }, -- for markdown %% comments
 				},

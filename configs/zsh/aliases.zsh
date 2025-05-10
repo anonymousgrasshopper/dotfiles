@@ -29,22 +29,22 @@ run() {
 	[[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
 	while (("$#")); do
 		command="$1"
-		nohup "$command" "$@" >/dev/null 2>&1 &
+		nohup "$command" $@ >/dev/null 2>&1 &
 		shift
 	done
 }
 compile() {
-	file_extension="$1:e"
-	ouput_filename="$1:r"
+	local file_extension="$1:e"
+	local ouput_filename="$1:r"
 	case "$file_extension" in
 		cpp)
-			compiler="g++"
+			local compiler="g++"
 			;;
 		c)
-			compiler="gcc"
+			local compiler="gcc"
 			;;
 		asm)
-			compiler="assemble"
+			local compiler="assemble"
 			;;
 		*)
 			echo "file extension not recognized"
@@ -57,8 +57,8 @@ alias path='echo -e ${PATH//:/\\n}' # human-readable path
 # rm that only asks for confirmation for nonempty files
 [[ $EUID -ne 0 ]] && alias rm=rm_confirm_nonempty
 rm_confirm_nonempty() {
-	args=()
-	items=()
+	local args=()
+	local items=()
 	while (("$#")); do
 		if [[ "$1" =~ ^- ]]; then
 			args+=("$1")
@@ -78,7 +78,7 @@ rm_confirm_nonempty() {
 
 # help command using bat
 help() {
-	"$@" --help 2>/dev/null | bat --plain --language=help --paging=always
+	$@ --help 2>/dev/null | bat --plain --language=help --paging=always
 }
 
 # Usage: far /path/to/directory/ "regexp" "replacement"
@@ -113,7 +113,7 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 clone() {
 	[[ $# == 1 ]] || { echo "clone: missing operand"; exit 1 }
 	[[ ! "$1" =~ ^https?:// ]] && 1="https://github.com/$1" # default domain
-	dir="$HOME/Téléchargements/git/$(basename "$1")"
+	dir="$HOME/Téléchargements/git/${1:t}"
 	[[ "$dir" =~ ^(.*)/([^/]+)\.git$ ]] && dir="${match[1]}/${match[2]}" # strip trailing .git, if any
 	git clone "$1" "$dir" && cd "$dir"
 }
@@ -124,7 +124,7 @@ alias gco="git checkout"
 alias push="git push"
 gacp() {
 	git add .
-	git commit -m "$@"
+	git commit -m $@
 	git push
 }
 gitdot() {
@@ -135,17 +135,17 @@ gitdot() {
 			cd - >/dev/null
 		fi
 	else
-		git_dotfiles "$@"
+		git_dotfiles $@
 	fi
 }
 
 # neovim
 nfd() {
-	declare -a lines;
+	local lines=()
 	if [[ $# == 0 ]]; then
 	   lines+=( ${(f)"$(fzf --multi --select-1)"} )
 	fi
-	for arg in "$@" ; do
+	for arg in $@ ; do
 	   lines+=( ${(f)"$(fzf --multi --select-1 --query=$arg)"} )
 	done
 	if [[ ${#lines} != 0 ]]; then
@@ -176,7 +176,7 @@ tas() {
 	if [[ -n "$TMUX" ]]; then
 		command="switch-client"
 	elif ! /bin/tmux run 2>/dev/null; then
-		tns "$@"
+		tns $@
 		exit
 	else
 		command="attach-session"
@@ -205,7 +205,7 @@ tmux_choose_pane() {
 # yazi
 function x() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
+	yazi $@ --cwd-file="$tmp"
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
 		builtin cd -- "$cwd"
 	fi

@@ -1,6 +1,5 @@
 vim.filetype.add({
 	extension = {
-		rasi = "css",
 		muttrc = "neomuttrc",
 	},
 	filename = {

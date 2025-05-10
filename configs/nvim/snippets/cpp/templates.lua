@@ -2,9 +2,10 @@ local ls = require("luasnip")
 local s = ls.snippet
 local i = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmta
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
-local first_line = function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end
+local first_line = make_condition(function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end)
 
 local check_not_in_node = function(ignored_nodes)
 	if not require("nvim-treesitter.parsers").has_parser() then
@@ -16,7 +17,7 @@ local check_not_in_node = function(ignored_nodes)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
+local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
 
 return {
 	s(

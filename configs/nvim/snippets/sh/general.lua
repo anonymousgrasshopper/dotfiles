@@ -6,6 +6,7 @@ local c = ls.choice_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmta
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -16,16 +17,23 @@ local get_visual = function(_, parent)
 end
 
 local check_not_in_node = function(ignored_nodes)
-	if not require("nvim-treesitter.parsers").has_parser() then
-		return true
-	end
 	local pos = vim.api.nvim_win_get_cursor(0)
 	local row, col = pos[1] - 1, pos[2] - 1
 	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 
-local not_in_string_comment = function() return check_not_in_node({ "string_content", "comment" }) end
+local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
+
+local check_not_expanded = function(regexp)
+	local line = vim.api.nvim_get_current_line()
+	return not line:match(regexp)
+end
+
+local check_then_not_expanded = make_condition(function() return check_not_expanded(";%s*then") end)
+local check_do_not_expanded = make_condition(function() return check_not_expanded(";%s*do") end)
+local check_func_not_expanded = make_condition(function() return check_not_expanded("()%s*{") end)
+local check_switch_not_expanded = make_condition(function() return check_not_expanded("%s+in") end)
 
 local rec_switch
 rec_switch = function()
@@ -54,7 +62,7 @@ return {
 			d(2, get_visual),
 			i(0),
 		}),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_then_not_expanded }
 	),
 	s(
 		{ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
@@ -71,7 +79,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_do_not_expanded }
 	),
 	s(
 		{ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
@@ -87,7 +95,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_do_not_expanded }
 	),
 	s(
 		{ trig = "until ", dscr = "until loop", snippetType = "autosnippet" },
@@ -103,7 +111,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_do_not_expanded }
 	),
 	s(
 		{ trig = "select ", dscr = "select loop", snippetType = "autosnippet" },
@@ -120,7 +128,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_do_not_expanded }
 	),
 	s(
 		{ trig = "if [", dscr = "test condition", snippetType = "autosnippet" },
@@ -137,23 +145,6 @@ return {
 		{ condition = not_in_string_comment }
 	),
 	s(
-		{ trig = "case", name = "cases", dscr = "cases" },
-		fmt(
-			[[
-        case <> in
-            <>
-            *) <> ;;
-        esac
-      ]],
-			{
-				i(1, "expr"),
-				i(2),
-				i(3, "exit 1"),
-			}
-		),
-		{ condition = not_in_string_comment }
-	),
-	s(
 		{ trig = "func", name = "function", dscr = "define a function" },
 		fmt(
 			[[
@@ -166,7 +157,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_func_not_expanded }
 	),
 	s(
 		{ trig = "case ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
@@ -180,6 +171,6 @@ return {
 				d(2, rec_switch, {}),
 			}
 		),
-		{ condition = not_in_string_comment }
+		{ condition = not_in_string_comment * check_switch_not_expanded }
 	),
 }

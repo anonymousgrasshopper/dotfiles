@@ -1,4 +1,4 @@
-set index_format=" %zs %zc %zt  󱓻  %-25.25L %?X?&·? %s %.40s %> %{!%a %d %h %H:%M}    "
+set index_format=" %zs %zc %zt  󱓻  %-25.25L  %?M?(%1M)&  ? %?X?&·? %s %.46s %> %{!%a %d %h %H:%M}    "
 # set index_format=" %zs %zc %zt | %-28.28L  %?X?& ? %.46s %> %{!%a %d %h %H:%M}      "
 set pager_format=" %n%zc %T %s%*  %{!%d %b · %H:%M} %?X?  %X ? %P  "
 set attach_format = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
@@ -41,4 +41,3 @@ color status #c8c093 #2a2a37
 # color status #dca561 color0 ''
 # color status #c34043 color0 ''
 # color tree   color15 color0
-
