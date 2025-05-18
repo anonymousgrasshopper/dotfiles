@@ -2,11 +2,13 @@ local ls = require("luasnip")
 local s = ls.snippet
 local i = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmta
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local tex = {}
 tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
+local first_line = make_condition(function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end)
 
 return {
 	s(
@@ -30,7 +32,7 @@ return {
 				i(0),
 			}
 		),
-		{ condition = tex.in_text * line_begin }
+		{ condition = first_line * line_begin }
 	),
 	s(
 		{ trig = "toc", dscr = "Table of contents", snippetType = "autosnippet" },

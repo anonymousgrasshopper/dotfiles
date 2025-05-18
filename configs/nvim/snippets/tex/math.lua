@@ -6,6 +6,7 @@ local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
 local fmt = require("luasnip.extras.fmt").fmta
+local make_condition = require("luasnip.extras.conditions").make_condition
 
 local get_visual = function(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
@@ -17,6 +18,7 @@ end
 
 local tex = {}
 tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
+tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
 
 return {
 	s({ trig = "[", dscr = "math mode", wordTrig = false, snippetType = "autosnippet" }, {
@@ -24,17 +26,11 @@ return {
 		i(1),
 		t("\\"),
 	}, {
-		condition = function()
-			if vim.fn["vimtex#syntax#in_mathzone"]() == 1 then
-				return false
-			end
+		condition = tex.in_text * make_condition(function()
 			local col = vim.api.nvim_win_get_cursor(0)[2]
 			local line = vim.api.nvim_get_current_line()
-			if col == 0 then
-				return true
-			end
-			return line:sub(col, col) ~= "\\"
-		end,
+			return (col == 0) or line:sub(col, col) ~= "\\"
+		end),
 	}),
 	s(
 		{ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
@@ -155,25 +151,25 @@ return {
 	s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\displaystyle"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\P", dscr = "Prime numbers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\P", dscr = "Prime numbers set", wordTrig = false, snippetType = "autosnippet" }, {,
 		t("\\mathbb{P}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\N", dscr = "Natural numbers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\N", dscr = "Natural numbers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{N}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\Z", dscr = "integers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\Z", dscr = "integers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{Z}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\Q", dscr = "Rational numbers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\Q", dscr = "Rational numbers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{Q}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\R", dscr = "Real numbers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\R", dscr = "Real numbers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{R}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\C", dscr = "Complex numbers set", snippetType = "autosnippet" }, {
+	s({ trig = "\\C", dscr = "Complex numbers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{C}"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "(\\?left)", dscr = "pairs", regTrig = true, snippetType = "autosnippet" }, {
+	s({ trig = "(\\?left)", dscr = "pairs", regTrig = true, wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\left"),
 		i(1),
 		d(2, get_visual),

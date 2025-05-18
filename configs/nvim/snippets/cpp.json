@@ -5,7 +5,7 @@
 			"cout << "
 		],
 		"luasnip": {
-			"autotrigger": false,
+			"autotrigger": true,
 			"wordTrig": false
 		}
 	},
@@ -15,7 +15,7 @@
 			"cerr << "
 		],
 		"luasnip": {
-			"autotrigger": false,
+			"autotrigger": true,
 			"wordTrig": false
 		}
 	},
@@ -25,7 +25,7 @@
 			"cin >> "
 		],
 		"luasnip": {
-			"autotrigger": false,
+			"autotrigger": true,
 			"wordTrig": false
 		}
 	},
@@ -70,12 +70,13 @@
 		}
 	},
 	"long long": {
-		"prefix": "ll ",
+		"prefix": "^ll ",
 		"body": [
 			"long long "
 		],
 		"luasnip": {
-			"autotrigger": true
+			"autotrigger": true,
+			"regTrig": true
 		}
 	},
 	"array" : {

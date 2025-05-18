@@ -1,6 +1,7 @@
 vim.filetype.add({
 	extension = {
 		muttrc = "neomuttrc",
+		tex = "tex",
 	},
 	filename = {
 		["clang-format"] = "yaml",

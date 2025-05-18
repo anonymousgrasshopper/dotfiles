@@ -106,8 +106,8 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		end
 	elseif vim.b.codelldb_stdio_redirection == nil then
 		local answer = vim.fn.input("Do you want to use stdio redirection ?")
-		if answer:match("y") then
-			vim.b.codelldb_stdio_redirection = true
+		if answer[1] == "y" then
+			vim.b[buf].codelldb_stdio_redirection = true
 			open_floating_window(input_filename)
 		else
 			vim.b[buf].codelldb_stdio_redirection = false

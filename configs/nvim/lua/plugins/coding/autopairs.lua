@@ -36,7 +36,7 @@ return {
 							else
 								if
 									vim.tbl_contains(
-										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~" },
+										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
 										o.line:sub(o.col - 2, o.col - 1)
 									)
 								then
@@ -52,7 +52,7 @@ return {
 			{ "\\(", "\\)", newline = true },
 			{ "\\{", "\\}", newline = true },
 			{ "\\[", "\\]", newline = true },
-			{ "<", ">", nft = { "sh", "bash", "zsh" } },
+			{ "<", ">", disable_start = true, disable_end = true },
 			-- comments
 			{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
 			{ "[=[", "]=]", ft = { "lua" } },
@@ -65,6 +65,7 @@ return {
 			{ "*", "*", ft = { "markdown" } },
 			{ "**", "**", ft = { "markdown" } },
 			{ "~~", "~~", ft = { "markdown" } },
+			{ "```", "```", ft = { "markdown" }, newline = true },
 			{ "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
 			{ ">", "<", ft = { "html", "xml", "markdown" }, newline = true, space = true },
 			-- LaTeX

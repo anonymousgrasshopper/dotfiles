@@ -47,17 +47,6 @@ return {
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
 
-			mason_lspconfig.setup({
-				ensure_installed = {
-					"clangd",
-					"lua_ls",
-					"bashls",
-					"texlab",
-					"asm_lsp",
-				},
-				automatic_installation = false,
-			})
-
 			vim.lsp.config("*", {
 				capabilities = {
 					textDocument = {
@@ -68,7 +57,7 @@ return {
 				},
 			})
 
-			local lsp_configs = {
+			local lspconfigs = {
 				["lua_ls"] = {
 					on_init = function(client)
 						if client.workspace_folders then
@@ -135,14 +124,9 @@ return {
 				},
 			}
 
-			require("mason-lspconfig").setup_handlers({
-				function(server_name)
-					if lsp_configs[server_name] then
-						vim.lsp.config(server_name, lsp_configs[server_name])
-					end
-					vim.lsp.enable(server_name)
-				end,
-			})
+			for server, config in pairs(lspconfigs) do
+				vim.lsp.config(server, config)
+			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function()
@@ -153,6 +137,16 @@ return {
 					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = true })
 					-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = true })
 				end,
+			})
+
+			mason_lspconfig.setup({
+				ensure_installed = {
+					"clangd",
+					"lua_ls",
+					"bashls",
+					"texlab",
+					"asm_lsp",
+				},
 			})
 		end,
 	},
