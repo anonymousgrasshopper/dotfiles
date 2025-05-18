@@ -118,6 +118,7 @@ clone() {
 	git clone "$1" "$dir" && cd "$dir"
 }
 alias gc="git commit"
+alias amend="git commit --amend"
 alias ga="git add"
 alias gb="git branch"
 alias gco="git checkout"
