@@ -18,6 +18,7 @@
 
 # syntax mappings: map a certain filename pattern to a language.
 --map-syntax "*.rasi:CSS"
+--map-syntax "clang-format:YAML"
 --map-syntax "*zsh*:Bourne Again Shell (bash)"
 --map-syntax ".zcompdump:Bourne Again Shell (bash)"
 --map-syntax "config:Bourne Again Shell (bash)"
