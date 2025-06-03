@@ -139,7 +139,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- type 's ' in the command line to subsitute globally with very magic mode
+-- type 's ' in the command line to substitute with very magic mode
 vim.api.nvim_create_autocmd("CmdlineChanged", {
 	pattern = "*",
 	callback = function()
@@ -148,22 +148,14 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 
 		if cmd_type == ":" then
 			if cmd_line == "s " then
-				vim.api.nvim_feedkeys(
-					vim.api.nvim_replace_termcodes("<C-u>%s/\\v//g<Left><Left><Left>", true, true, true),
-					"n",
-					false
-				)
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s@\\v@<Left>", true, true, true), "n", false)
 			elseif cmd_line == "'<,'>s " then
-				vim.api.nvim_feedkeys(
-					vim.api.nvim_replace_termcodes("<C-u>'<,'>s/\\v//g<Left><Left><Left>", true, true, true),
-					"n",
-					false
-				)
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s@\\v@<Left>", true, true, true), "n", false)
 			else
 				local match = cmd_line:match("(%d+,%s*%d+%s*s) ")
 				if match then
 					vim.api.nvim_feedkeys(
-						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "/\\v//g<Left><Left><Left>", true, true, true),
+						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "@\\v@<Left>", true, true, true),
 						"n",
 						false
 					)

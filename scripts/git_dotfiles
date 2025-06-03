@@ -19,9 +19,9 @@ copy() {
 	}
 	if [[ -d "$1" ]]; then
 		[[ -d "configs/$(basename "$1")" ]] && rm -rf "configs/$(basename "$1")"
-		cp -r "$1" "$2/" 2>/dev/null
+		cp -rL "$1" "$2/" 2>/dev/null
 	else
-		cp "$1" "$2/" 2>/dev/null
+		cp -L "$1" "$2/" 2>/dev/null
 	fi
 }
 

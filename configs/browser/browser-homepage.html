@@ -178,11 +178,11 @@
 					if (event.key === "Enter") {
 						const inputText = inputBox.value.trim().toLowerCase();
 						if (links[inputText]) {
-							window.open(links[inputText], "_blank");
+							window.open(links[inputText], "_self");
 						} else {
 							window.open(
 								`https://duckduckgo.com/search?q=${encodeURIComponent(inputText)}`,
-								"_blank",
+								"_self",
 							);
 						}
 						inputBox.value = "";

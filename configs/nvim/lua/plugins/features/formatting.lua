@@ -72,6 +72,7 @@ return {
 				"nvim/lua/config/options.lua",
 				"nvim/lua/plugins/editor/telescope.lua",
 				"nvim/lua/plugins/features/debugging.lua",
+				"nvim/lua/plugins/lang/markdown.lua",
 				"nvim/lua/plugins/util/browsing.lua",
 				"nvim/lua/plugins/util/unix.lua",
 			}

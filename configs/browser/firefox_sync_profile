@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # colors
-RED='\x1b[38;2;232;36;36m' # #e82424
+RED='\x1b[38;2;232;36;36m' #e82424
 
 # check there is at least one directory in ~/.mozilla/firefox
 exists_profile=false
@@ -31,7 +31,6 @@ fi
 for item in ~/.config/browser/profile/*; do
 	stripped="${item%/}" # strip trailing slash (if any)
 	name="${stripped##*/}"
-
-	[[ -e "$FIREFOX_PROFILE_DIR/$name" || -L "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
+	[[ -e "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
 	ln -s "$item" "$FIREFOX_PROFILE_DIR/$name"
 done

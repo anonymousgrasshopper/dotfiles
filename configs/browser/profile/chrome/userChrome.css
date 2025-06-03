@@ -40,3 +40,20 @@ button[title="Tridactyl sidebar"],
 button[title="Customize sidebar"] {
 	display: none;
 }
+
+/* tab groups */
+.tab-group-label {
+	color: #1f1f28 !important; /* text color */
+	background-color: light-dark(
+		var(--tab-group-color),
+		var(--tab-group-color-invert)
+	) !important;
+	tab-group[collapsed] > .tab-group-label-container > & {
+		/* when collapsed */
+		background-color: light-dark(
+			var(--tab-group-color),
+			var(--tab-group-color-invert)
+		) !important; /* same bg */
+		outline: 0px !important; /* remove hideous border */
+	}
+}

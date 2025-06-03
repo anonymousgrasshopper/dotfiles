@@ -14,8 +14,8 @@ local vim_enter_early_redraw = function()
 		local lang = vim.treesitter.language.get_lang(ft)
 
 		-- language-specific plugins to load
-		if lang == "tex" then
-			vim.cmd("source $VIMRUNTIME/syntax/tex.vim")
+		if lang == "tex" or lang == "markdown" then
+			vim.defer_fn(function() vim.cmd("source $VIMRUNTIME/syntax/tex.vim") end, 0)
 		end
 
 		-- find filetype icon and color
@@ -73,6 +73,10 @@ return {
 					StatusLineSeparatorBlue = { fg = palette.crystalBlue, bg = palette.sumiInk6 },
 					StatusLineSeparatorGray = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
 
+					NormalDark = { bg = palette.sumiInk1 },
+					TerminalBackground = { bg = palette.sumiInk0 },
+
+					-- plugins
 					markdownH1 = { fg = "#ff5d62" },
 					markdownH2 = { fg = "#ffa066" },
 					markdownH3 = { fg = "#e6c384" },
@@ -80,23 +84,12 @@ return {
 					markdownH5 = { fg = "#7fb4ca" },
 					markdownH6 = { fg = "#957fb8" },
 
-					NormalDark = { bg = palette.sumiInk1 },
-					TerminalBackground = { bg = palette.sumiInk0 },
-
-					-- plugins
-					MarkviewHeading1 = { link = "markdownH1" },
-					MarkviewHeading2 = { link = "markdownH2" },
-					MarkviewHeading3 = { link = "markdownH3" },
-					MarkviewHeading4 = { link = "markdownH4" },
-					MarkviewHeading5 = { link = "markdownH5" },
-					MarkviewHeading6 = { link = "markdownH6" },
-
-					MarkviewBlockQuoteDefault = { fg = "#7e9cd8" },
-					MarkviewBlockQuoteError = { fg = "#e82424" },
-					MarkviewBlockQuoteNote = { fg = "#6a9589" },
-					MarkviewBlockQuoteOk = { fg = "#98bb6c" },
-					MarkviewBlockQuoteSpecial = { fg = "#957fb8" },
-					MarkviewBlockQuoteWarn = { fg = "#ff9e3b" },
+					MarkdownInfo = { fg = "#7e9cd8" },
+					MarkdownSuccess = { fg = "#98bb6c" },
+					MarkdownWarn = { fg = "#ff9e3b" },
+					MarkdownError = { fg = "#e82424" },
+					MarkdownHint = { fg = "#6a9589" },
+					MarkdownQuote = { fg = "#957fb8" },
 
 					MarkviewCheckboxChecked = { fg = "#98bb6c" },
 					MarkviewCheckboxUnchecked = { fg = "#727169" },
@@ -139,7 +132,6 @@ return {
 			},
 		})
 		vim.cmd("colorscheme kanagawa-wave")
-
 		vim_enter_early_redraw()
 	end,
 }
