@@ -91,8 +91,7 @@ return {
 					MarkdownHint = { fg = "#6a9589" },
 					MarkdownQuote = { fg = "#957fb8" },
 
-					MarkviewCheckboxChecked = { fg = "#98bb6c" },
-					MarkviewCheckboxUnchecked = { fg = "#727169" },
+					MarkdownTable = { fg = "#54546d" },
 
 					IlluminatedWordText = { bold = true },
 					IlluminatedWordRead = { bold = true },
