@@ -13,8 +13,9 @@ using std::cerr, std::string, std::to_string, std::pair, std::tuple,
   for (int i = 0; i != str.length() + 2; ++i) cerr << "-"; \
   cerr << '\n';
 #define line() cerr << "Line " << __LINE__ << " : ";
-#define n(x) \
-  for (int i = 0; i < x; i++) cerr << '\n';
+void n(uint lines = 1) {
+  for (uint i = 0; i < lines; i++) cerr << '\n';
+}
 
 template <typename T>
 concept Iterable = requires(T t) {
