@@ -25,6 +25,7 @@ FIREFOX_PROFILE_DIR=$(
 )
 if [[ -z "$FIREFOX_PROFILE_DIR" ]]; then
 	echo -e "${RED}Please select a Firefox profile."
+	break
 fi
 
 # create symbolic links
