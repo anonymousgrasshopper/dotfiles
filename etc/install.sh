@@ -36,7 +36,7 @@ copy_file() {
 
 # place system-wide configuration files
 [[ -f /bin/pacman ]] && copy_file pacman.conf /etc
-eval type picom >/dev/null && copy_file picom.conf /etc/xdg
+eval type picom >/dev/null 2>&1 && copy_file picom.conf /etc/xdg
 [[ -f /etc/arch-release ]] && copy_file paccache.timer /etc/systemd/system
 [[ -f /etc/systemd/journald.conf ]] && copy_file journald.conf /etc/systemd
 [[ -n "$CPLUS_INCLUDE_PATH" ]] && copy_file dbg.h "$CPLUS_INCLUDE_PATH"
