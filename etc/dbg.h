@@ -13,7 +13,7 @@ using std::cerr, std::string, std::to_string, std::pair, std::tuple,
   for (int i = 0; i != str.length() + 2; ++i) cerr << "-"; \
   cerr << '\n';
 #define line() cerr << "Line " << __LINE__ << " : ";
-void n(uint lines = 1) {
+inline void n(uint lines = 1) {
   for (uint i = 0; i < lines; i++) cerr << '\n';
 }
 
