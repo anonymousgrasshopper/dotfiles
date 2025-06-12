@@ -171,6 +171,11 @@ if ! program pdflatex; then
 	printf '\n'
 fi
 
+# setup rust toolchain
+if program rustup && ! program cargo; then
+	rustup default stable
+fi
+
 # check the user has a home directory
 if [[ -z "$HOME" ]]; then
 	echo "${RED}You don't have a home directory. Create one ? (y/n) ${WHITE}"
