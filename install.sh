@@ -92,7 +92,7 @@ fi
 packages=("7zip" "bat" "btop" "clang" "cronie" "eza" "fd" "feh" "firefox" "fzf"
 	"gcc" "git" "git-delta" "github-cli" "glow" "hexyl" "i3-wm" "imagemagick" "kitty"
 	"lazygit" "lynx" "man-db" "nasm" "ncdu" "neovim" "notmuch" "npm" "obsidian" "picom"
-	"poppler" "python" "ripgrep" "rofi" "tldr" "tmux" "tree-sitter-cli" "rustup"
+	"python" "ripgrep" "rofi" "tldr" "tmux" "tree-sitter-cli" "rustup"
 	"unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
 if program pacman; then
 	# Install yay (AUR helper)
