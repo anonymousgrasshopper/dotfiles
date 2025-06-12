@@ -99,17 +99,12 @@ if program pacman; then
 	if ! program yay; then
 		echo -en "${BLUE}Do you want to install the Yet Another Yogurt AUR helper (y/n) ? ${WHITE}"
 		if get_answer; then
-			if ! program git; then
-				echo "${YELLOW}Having git installed is necessary to install yay."
-				sudo pacman -S git
-			fi
-			if ! program makepkg; then
-				echo "${YELLOW}The base-devel package is necessary to install yay."
-				sudo pacman -S base-devel
-			fi
-			git clone https://aur.archlinux.org/yay.git
-			if cd yay; then
+			sudo pacman -S --needed git base-devel binutils fakeroot debugedit
+			git clone https://aur.archlinux.org/yay.git /tmp/yay
+			if cd /tmp/yay; then
 				makepkg -si
+				rm -rf /tmp/yay
+				cd "$SCRIPT_DIR"
 			else
 				echo "${RED} Cloning yay failed. Check your internet connection and try again."
 			fi
@@ -123,9 +118,9 @@ if program pacman; then
 	else
 		package_manager="sudo pacman"
 	fi
-	echo -en "${BLUE}Would you like to synchronize the required packages with $package_manager ? (y/n) ${WHITE}"
+	echo -en "${BLUE}Would you like to synchronize the required packages with ${package_manager##* } ? (y/n) ${WHITE}"
 	if get_answer; then
-		$package_manager -S "${packages[@]}"
+		$package_manager -S --needed "${packages[@]}"
 	else
 		echo -e "${GREEN}Make sure the following packages are installed :"
 		echo -e "${WHITE}${packages[*]}"
@@ -168,16 +163,18 @@ else
 	echo -e "${GREEN}Make sure the following packages are installed :"
 	echo -e "${WHITE}${packages[*]}"
 fi
+printf '\n'
 
 # TexLive
 if ! program pdflatex; then
 	echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
+	printf '\n'
 fi
 
 # check the user has a home directory
 if [[ -z "$HOME" ]]; then
 	echo "${RED}You don't have a home directory. Create one ? (y/n) ${WHITE}"
-	if get_answer; then
+	if get_answer && program mkhomedir_helper; then
 		sudo mkhomedir_helper "$USER"
 	else
 		echo "${RED}Aborting..."
@@ -191,7 +188,6 @@ fi
 		echo -e "${RED}Error:${WHITE} scripts directory is not present in $SCRIPT_DIR"
 		exit 1
 	}
-	printf '\n'
 	[[ -d "$HOME/.local/bin" ]] || mkdir -p "$HOME/.local/bin"
 	for file in *; do
 		if [[ ! -f "$HOME/.local/bin/$file" ]]; then
@@ -207,6 +203,7 @@ fi
 			fi
 		fi
 	done
+	printf '\n'
 )
 
 # copy config directories to ~/.config
@@ -216,18 +213,17 @@ fi
 		echo -e "${RED}Error:${WHITE} configs directory is not present in $SCRIPT_DIR"
 		exit 1
 	}
-	printf '\n'
 	for item in *; do
-		if [[ ! -d "$HOME/.config/$item" && ! -f "$HOME/.config/$item" ]]; then
+		if [[ ! -e "$HOME/.config/$item" ]]; then
 			cp -r "$item" "$HOME/.config/"
 		else
 			difference=false
-			while read -r -d ''; do
-				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore hidden e-mail adresses
+			while read -r -d ''; do # check wether the version in the repo and in ~/.config differ or not
+				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore obfuscated e-mail adresses
 					difference=true
 					break
 				fi
-			done < <(if [[ -d "$item" ]]; then fd --print0 --hidden --exclude '*.git' -tf . "$item"; else echo -ne "$item\0"; fi)
+			done < <(if [[ -d "$item" ]]; then find "$item" -path "./.git/*" -prune -o -type f -print0; else echo -ne "$item\0"; fi)
 			if $difference; then
 				if [[ ! $OVERWRITE ]]; then
 					echo -en "${BLUE}Would you like to :
@@ -258,13 +254,13 @@ ${RED}Enter a number (default 3) :${WHITE} "
 			fi
 		fi
 	done
+	printf '\n'
 )
 
 # modify yazi cache directory
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml
 
 # run etc/install.sh
-printf '\n'
 echo -en "${BLUE}Do you want to run ${GREEN}./etc/install.sh${BLUE} ? (y/n) ${WHITE}"
 if get_answer; then
 	printf '\n'

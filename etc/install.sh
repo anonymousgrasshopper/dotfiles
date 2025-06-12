@@ -49,7 +49,7 @@ if [[ -n "$WINDOWS" ]]; then
 	while true; do
 		echo -en "${BLUE}What is your Windows username ? ${WHITE}"
 		read -r win_username
-		if [[ -d "/mnt/c/Users/$win_username" ]]; then
+		if [[ -d "/mnt/c/Users/$win_username" && -n $win_username ]]; then
 			break
 		else
 			echo -e "${RED}Home directory not found. Try again..."
