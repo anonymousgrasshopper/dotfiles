@@ -111,10 +111,10 @@ alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # git
 clone() {
-	[[ $# == 1 ]] || { echo "clone: missing operand"; exit 1 }
+	[[ $# == 0 ]] && { echo "clone: missing operand"; return 1 }
 	[[ ! "$1" =~ ^https?:// ]] && 1="https://github.com/$1" # default domain
-	dir="$HOME/Téléchargements/git/${1:t}"
-	[[ "$dir" =~ ^(.*)/([^/]+)\.git$ ]] && dir="${match[1]}/${match[2]}" # strip trailing .git, if any
+	dir="${2:-$HOME/Téléchargements/git/${1:t}}"
+	[[ -z "$2" && "$dir" =~ ^(.*)/([^/]+)\.git$ ]] && dir="${match[1]}/${match[2]}" # strip trailing .git, if any
 	git clone "$1" "$dir" && cd "$dir"
 }
 alias gc="git commit"
