@@ -1,10 +1,9 @@
 # Installation instruction for Windows
--  [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install [Arch WSL](https://apps.microsoft.com/detail/9mznmnksm73x?hl=en-us&gl=US) through the Microsoft Store
-- Inside of the Arch WSL, create a root password and a user, `sudo pacman -S git` and `git clone https://github.com/anonymousgrasshopper/dotfiles` (in `~/.config` for example), then run `install.sh`.
+-  [Install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install Arch Linux WSL (`wsl -- install archlinux`)
+- Inside of the Arch WSL, `pacman -S sudo git zsh`, create a root password (`passwd`) and a user (`useradd -m -G wheel -s /bin/zsh Antoine`) with its password, execute `visudo` and uncomment the ` %wheel   ALL=(ALL)   ALL` line.
+- `git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles && ~/.config/dotfiles/install.sh`, run `etc/install.sh`.
 
 - Install [Vcxsrv](https://vcxsrv.com/) ([download link](https://sourceforge.net/projects/vcxsrv/files/latest/download)).
-
-- Run etc/install.sh:
 
 - If you want audio support in WSL, [this link](https://www.reddit.com/r/bashonubuntuonwindows/comments/hrn1lz/wsl_sound_through_pulseaudio_solved/) explains how to setup PulseAudio for this purpose.
 
