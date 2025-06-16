@@ -357,7 +357,7 @@
 
 	# Untracked files icon. It's really a question mark, your font isn't broken.
 	# Change the value of this parameter to show a different icon.
-	typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON=''
+	typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON=" "
 
 	# Formatter for Git status.
 	#
@@ -379,18 +379,24 @@
 
 		if (( $1 )); then
 			# Styling for up-to-date Git status.
-			local       meta='%f'     # default foreground
-			local      clean='%76F'   # green foreground
-			local   modified='%178F'  # yellow foreground
-			local  untracked='%39F'   # blue foreground
-			local conflicted='%196F'  # red foreground
+
+# colors
+			local       meta='%f' # default foreground
+			local      clean='%76F'
+			local     staged='%F{#76946A\}'
+			local    stashed='%F{#7AA89F\}'
+			local   modified='%F{#dca561\}'
+			local  untracked='%F{#957FB8\}'
+			local conflicted='%F{#e82424\}'
 		else
 			# Styling for incomplete and stale Git status.
-			local       meta='%244F'  # grey foreground
-			local      clean='%244F'  # grey foreground
-			local   modified='%244F'  # grey foreground
-			local  untracked='%244F'  # grey foreground
-			local conflicted='%244F'  # grey foreground
+			local       meta='%F{#727169\}'
+			local      clean='%F{#727169\}'
+			local     staged='%F{#727169\}'
+			local    stashed='%F{#727169\}'
+			local   modified='%F{#727169\}'
+			local  untracked='%F{#727169\}'
+			local conflicted='%F{#727169\}'
 		fi
 
 		local res
@@ -420,7 +426,7 @@
 		# Display the current Git commit if there is no branch and no tag.
 		# Tip: To always display the current Git commit, delete the next line.
 		[[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] &&  # <-- this line
-			res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
+			res+="${meta} ${clean}${VCS_STATUS_COMMIT[1,8]}"
 
 		# Show tracking branch name if it differs from local branch.
 		if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
@@ -443,21 +449,21 @@
 			# res+=" ${clean}="
 		fi
 
-		# ⇠42 if behind the push remote.
-		(( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${clean}⇠${VCS_STATUS_PUSH_COMMITS_BEHIND}"
+		# ⇠ 42 if behind the push remote.
+		(( VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" ${clean}⇠ ${VCS_STATUS_PUSH_COMMITS_BEHIND}"
 		(( VCS_STATUS_PUSH_COMMITS_AHEAD && !VCS_STATUS_PUSH_COMMITS_BEHIND )) && res+=" "
-		# ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
-		(( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean}⇢${VCS_STATUS_PUSH_COMMITS_AHEAD}"
-		# *42 if have stashes.
-		(( VCS_STATUS_STASHES        )) && res+=" ${clean}*${VCS_STATUS_STASHES}"
+		# ⇢ 42 if ahead of the push remote; no leading space if also behind: ⇠ 42⇢ 42.
+		(( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean}⇢ ${VCS_STATUS_PUSH_COMMITS_AHEAD}"
+		#  42 if have stashes.
+		(( VCS_STATUS_STASHES        )) && res+=" ${stashed} ${VCS_STATUS_STASHES}"
 		# 'merge' if the repo is in an unusual state.
 		[[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
-		# ~42 if have merge conflicts.
-		(( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
-		# +42 if have staged changes.
-		(( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
-		# !42 if have unstaged changes.
-		(( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified}!${VCS_STATUS_NUM_UNSTAGED}"
+		#  42 if have merge conflicts.
+		(( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted} ${VCS_STATUS_NUM_CONFLICTED}"
+		#  42 if have staged changes.
+		(( VCS_STATUS_NUM_STAGED     )) && res+=" ${staged} ${VCS_STATUS_NUM_STAGED}"
+		#  42 if have unstaged changes.
+		(( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified} ${VCS_STATUS_NUM_UNSTAGED}"
 		# ?42 if have untracked files. It's really a question mark, your font isn't broken.
 		# See POWERLEVEL9K_VCS_UNTRACKED_ICON above if you want to use a different icon.
 		# Remove the next line if you don't want to see untracked files at all.
@@ -732,7 +738,7 @@
 	typeset -g POWERLEVEL9K_RANGER_FOREGROUND=178
 	# Custom icon.
 	# typeset -g POWERLEVEL9K_RANGER_VISUAL_IDENTIFIER_EXPANSION='⭐'
-	
+
 	####################[ yazi: yazi shell (https://github.com/sxyazi/yazi) ]#####################
 	# Yazi shell color.
 	typeset -g POWERLEVEL9K_YAZI_FOREGROUND="#dca561"
