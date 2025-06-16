@@ -12,7 +12,7 @@ cd ~/.config/dotfiles || {
 }
 
 # $1: file to copy relative to ~/.config/dotfiles, $2: destination
-copy() {
+function copy {
 	[[ -e "$1" ]] || {
 		echo -e "${YELLOW} $1 not found"
 		return 1

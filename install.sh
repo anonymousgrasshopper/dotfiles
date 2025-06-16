@@ -22,7 +22,7 @@ while true; do
 done
 
 # util function for getting user input
-get_answer() {
+function get_answer {
 	read -r answer
 	case "$answer" in
 	[yY][eE][sS] | [yY])
@@ -34,7 +34,7 @@ get_answer() {
 	esac
 }
 # util function for checking if a program is in $PATH
-program() {
+function program {
 	if type "$1" >/dev/null 2>&1; then
 		return 0
 	else
@@ -68,7 +68,7 @@ if [[ ! "$SHELL" =~ /zsh$ ]]; then
 fi
 
 # configure /etc/zsh files for avoiding dotfiles clutter in home directory
-add_line() {
+function add_line {
 	if [[ -f "$2" ]]; then
 		if ! grep --silent "$1" "$2"; then
 			echo "$1" | sudo tee -a "$2" >/dev/null
@@ -127,7 +127,7 @@ if program pacman; then
 	fi
 
 	# install fonts
-	install_font() {
+	function install_font {
 		if [[ ! -f /usr/share/fonts/TTF/$3/$2-Regular.ttf ]] &&
 			[[ ! -f /usr/share/fonts/TTF/$2-Regular.ttf ]]; then
 			echo -en "${BLUE}Would you like to install the $1 ? (y/n) ${WHITE}"
@@ -164,17 +164,6 @@ else
 	echo -e "${WHITE}${packages[*]}"
 fi
 printf '\n'
-
-# TexLive
-if ! program pdflatex; then
-	echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
-	printf '\n'
-fi
-
-# setup rust toolchain
-if program rustup && ! program cargo; then
-	rustup default stable
-fi
 
 # check the user has a home directory
 if [[ -z "$HOME" ]]; then
@@ -261,6 +250,22 @@ ${RED}Enter a number (default 3) :${WHITE} "
 	done
 	printf '\n'
 )
+
+# TexLive
+if ! program pdflatex; then
+	echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
+	printf '\n'
+fi
+
+# setup rust toolchain
+if program rustup && ! program cargo; then
+	rustup default stable
+fi
+
+# rebuild bat cache
+if program bat && ! bat --list-themes | grep --silent "Kanagawa"; then
+	bat cache --build
+fi
 
 # modify yazi cache directory
 [[ -f ~/.config/yazi/yazi.toml ]] && sed -i 's@/home/Antoine@'"$HOME"'@g' ~/.config/yazi/yazi.toml

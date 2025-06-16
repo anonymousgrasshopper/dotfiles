@@ -132,23 +132,27 @@ return {
 	),
 	s(
 		{ trig = "if [", dscr = "test condition", snippetType = "autosnippet" },
-		fmt("if [[ <> ]", {
+		{
+			t("if [[ "),
 			i(1),
-		}),
+			t(" ]]")
+		},
 		{ condition = not_in_string_comment }
 	),
 	s(
 		{ trig = "while [", dscr = "test condition", snippetType = "autosnippet" },
-		fmt("while [[ <> ]", {
+		{
+			t("while [[ "),
 			i(1),
-		}),
+			t(" ]]")
+		},
 		{ condition = not_in_string_comment }
 	),
 	s(
 		{ trig = "func", name = "function", dscr = "define a function" },
 		fmt(
 			[[
-        <>() {
+        function <> {
           <>
         }
       ]],

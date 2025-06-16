@@ -14,7 +14,7 @@ cd "$SCRIPT_DIR" || exit
 [[ -n "$WSL_DISTRO_NAME" ]] && WINDOWS=1
 
 # $1: file to copy relative to $SCRIPT_DIR, $2: destination
-copy_file() {
+function copy_file {
 	[[ -f "$1" ]] || {
 		echo -e "${YELLOW} $1 not found"
 		return 1
@@ -27,7 +27,7 @@ copy_file() {
 		echo -en "${BLUE}Would you like to delete your current ${GREEN}$1${BLUE} to replace it with the one in this repo ? (y/n) ${WHITE}"
 		read -r answer
 		case "$answer" in
-		[yY][eE][sS] | [yY])
+		[yY][eE][sS] | [yY]
 			$sudo cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
 			;;
 		esac

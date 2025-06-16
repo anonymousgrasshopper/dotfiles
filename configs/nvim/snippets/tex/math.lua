@@ -188,4 +188,9 @@ return {
 			end
 		end, { 1 }),
 	}),
+	s({ trig = "tx", dscr = "text", wordTrig = false, snippetType = "autosnippet" },
+	  {
+			t("\\text{"), i(0), t("}")
+		}
+	),
 }

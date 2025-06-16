@@ -31,6 +31,13 @@ return {
 							then
 								return false
 							end
+							if o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, vim.bo.filetype) then
+								if o.line:sub(1, o.col - 1):match("if%s+$") or
+									 o.line:sub(1, o.col - 1):match("while%s+$")
+								then
+									return false
+								end
+							end
 							if o.key ~= vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
 								return true -- return true, unless we've hitten backspace
 							else
@@ -61,7 +68,7 @@ return {
 			-- filetype-specific
 			{ "$", "$", ft = { "tex", "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
-			{ "[[", "]]", ft = { "markdown" } },
+			{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
 			{ "*", "*", ft = { "markdown" } },
 			{ "**", "**", ft = { "markdown" } },
 			{ "~~", "~~", ft = { "markdown" } },

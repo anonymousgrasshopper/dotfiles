@@ -1,3 +1,3 @@
 ```
-[[ -d ~/.config ]] || mkdir ~/.config; cd ~/.config; git clone https://github.com/anonymousgrasshopper/dotfiles.git && dotfiles/install.sh
+git clone https://github.com/anonymousgrasshopper/dotfiles ~/.config/dotfiles && ~/.config/dotfiles/install.sh
 ```
