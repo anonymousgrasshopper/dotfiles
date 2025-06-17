@@ -17,12 +17,8 @@ function copy {
 		echo -e "${YELLOW} $1 not found"
 		return 1
 	}
-	if [[ -d "$1" ]]; then
-		[[ -d "configs/$(basename "$1")" ]] && rm -rf "configs/$(basename "$1")"
-		cp -rL "$1" "$2/" 2>/dev/null
-	else
-		cp -L "$1" "$2/" 2>/dev/null
-	fi
+[[ -d "$1" ]] && rsync -a --delete "$1/" "$2/$(basename "$1")/"
+[[ -f "$1" ]] && rsync -a --delete "$1"  "$2/$(basename "$1")"
 }
 
 # list of configs and scripts to copy
@@ -34,7 +30,7 @@ scripts=("assemble" "compile_sfml" "fix_corrupt_history"
 
 # overwrite configs in the dotfiles repo
 for config in ${configs[@]}; do
-	copy "$HOME/.config/$config" "configs/"
+	copy "$HOME/.config/$config" "configs"
 done
 # overwrite scripts in the dotfiles repo
 for script in ${scripts[@]}; do
