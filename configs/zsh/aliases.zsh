@@ -11,11 +11,11 @@ alias     q="exit"
 alias     c="clear"
 alias -- +x="chmod u+x"
 dots="..";
-cdpath="../"
+back="../"
 for i in {1..7}; do
-	alias $dots="cd $cdpath"
+	alias $dots="cd $back"
 	dots="$dots."
-	cdpath="$cdpath../"
+	back="$back../"
 done
 
 # miscellaneous
@@ -53,12 +53,12 @@ compile() {
 			echo "file extension not recognized"
 			;;
 	esac
-	[[ -n "$compiler" ]] && command "$compiler" "$1" -o $ouput_filename
+	[[ -n "$compiler" ]] && command "$compiler" "$1" -o "$ouput_filename"
 }
 alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
-[[ $EUID -ne 0 ]] && alias rm=rm_confirm_nonempty
+alias rm=rm_confirm_nonempty
 rm_confirm_nonempty() {
 	local args=()
 	local items=()
@@ -84,8 +84,9 @@ help() {
 	$@ --help 2>/dev/null | bat --plain --language=help --paging=always
 }
 
-# Usage: far /path/to/directory/ "regexp" "replacement"
+# find and replace
 far() {
+	[[ ! -d "$1" ]] && echo "Usage: far /path/to/directory/ regexp replacement"
 	sed -i -e "s@$2@$3@g" "$(rg "$2" "$1" -l --fixed-strings)"
 }
 

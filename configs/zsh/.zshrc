@@ -78,6 +78,7 @@ setopt c_bases      # use 0x and 0 for displaying hexadecimal and octal numbers
 # history
 HISTSIZE=10000
 HISTFILE=$HOME/.local/state/zsh/zsh_history
+[[ -f $HISTFILE ]] || mkdir -p $(dirname $HISTFILE)
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
 HIST_STAMPS="dd/mm/yyyy"

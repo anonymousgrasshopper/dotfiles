@@ -30,6 +30,7 @@ return {
 			local col = vim.api.nvim_win_get_cursor(0)[2]
 			local line = vim.api.nvim_get_current_line()
 			return (col == 0) or line:sub(col, col) ~= "\\"
+				and vim.bo.filetype == "tex" -- disable in linked markdown
 		end),
 	}),
 	s(
@@ -151,7 +152,7 @@ return {
 	s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\displaystyle"),
 	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\P", dscr = "Prime numbers set", wordTrig = false, snippetType = "autosnippet" }, {,
+	s({ trig = "\\P", dscr = "Prime numbers set", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\mathbb{P}"),
 	}, { condition = tex.in_mathzone }),
 	s({ trig = "\\N", dscr = "Natural numbers set", wordTrig = false, snippetType = "autosnippet" }, {
@@ -171,22 +172,31 @@ return {
 	}, { condition = tex.in_mathzone }),
 	s({ trig = "(\\?left)", dscr = "pairs", regTrig = true, wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\left"),
-		i(1),
 		d(2, get_visual),
+		f(function(arg)
+			if arg[1][1] == "{" then
+				return "\\"
+			else
+				return ""
+			end
+		end, 1),
+		i(1),
 		t("\\right"),
 		f(function(arg)
 			if arg[1][1] == "{" then
-				return "}"
+				return "\\}"
 			elseif arg[1][1] == "(" then
 				return ")"
 			elseif arg[1][1] == "[" then
 				return "]"
-			elseif arg[1][1]:match("\\l") then
-				return "\\r" .. arg[1]:sub("3", "-1")
+			elseif arg[1][1]:sub(1, 3) == "\\ll" then
+				return "\\rr" .. arg[1][1]:sub("4", "-1")
+			elseif arg[1][1]:sub(1, 2) == "\\l" then
+				return "\\r" .. arg[1][1]:sub("3", "-1")
 			else
 				return arg[1][1]
 			end
-		end, { 1 }),
+		end, 1),
 	}),
 	s({ trig = "tx", dscr = "text", wordTrig = false, snippetType = "autosnippet" },
 	  {

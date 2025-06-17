@@ -25,33 +25,34 @@ return {
 							if fn.get_mode == "R" then -- disable in replace mode
 								return false
 							end
+							local line = vim.api.nvim_get_current_line()
+							local col = vim.api.nvim_win_get_cursor(0)[2]
 							if
 								vim.tbl_contains({ "markdown", "tex" }, vim.bo.filetype)
-								and o.line:sub(o.col - 5, o.col - 1):match("\\left")
+								and line:sub(col - 5, col):match("\\left")
 							then
 								return false
 							end
 							if o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, vim.bo.filetype) then
-								if o.line:sub(1, o.col - 1):match("if%s+$") or
-									 o.line:sub(1, o.col - 1):match("while%s+$")
+								if line:sub(1, col):match("if%s+$") or
+									 line:sub(1, col):match("while%s+$")
 								then
 									return false
 								end
 							end
 							if o.key ~= vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
-								return true -- return true, unless we've hitten backspace
+								return true -- return true, unless we've hit backspace
 							else
 								if
 									vim.tbl_contains(
 										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
-										o.line:sub(o.col - 2, o.col - 1)
+										line:sub(col - 1, col)
 									)
 								then
 									return false -- if the two characters before the cursor are paired, don't remove them
-								else
-									return true
 								end
 							end
+							return true
 						end,
 					},
 				},
@@ -68,13 +69,12 @@ return {
 			-- filetype-specific
 			{ "$", "$", ft = { "tex", "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
-			{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
 			{ "*", "*", ft = { "markdown" } },
 			{ "**", "**", ft = { "markdown" } },
 			{ "~~", "~~", ft = { "markdown" } },
 			{ "```", "```", ft = { "markdown" }, newline = true },
+			{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
 			{ "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
-			{ ">", "<", ft = { "html", "xml", "markdown" }, newline = true, space = true },
 			-- LaTeX
 			{
 				"\\begin{bmatrix}",
