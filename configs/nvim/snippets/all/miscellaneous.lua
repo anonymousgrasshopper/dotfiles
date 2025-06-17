@@ -25,8 +25,6 @@ return {
 	s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" }, {
 		t("#!/bin/"),
 		i(1, "bash"),
-		t({ "", "" }),
-		i(0),
 		update_filetype(1),
 	}, { condition = first_line * line_begin }),
 }

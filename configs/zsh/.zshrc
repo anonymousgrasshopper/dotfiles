@@ -34,13 +34,11 @@ eval "$(dircolors "$ZDOTDIR/dircolors")" # colorize completion menu entries
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # preview
-zstyle ':fzf-tab:*:*'                         fzf-flags   --style=default --no-scrollbar --info=right
+zstyle ':fzf-tab:*:*'                         fzf-flags   '--style=default' '--no-scrollbar' '--info=right'
 zstyle ':fzf-tab:complete:*'                  fzf-preview '~/.local/bin/fzf_preview_wrapper ${realpath:-$word}'
 zstyle ':fzf-tab:complete:(\\|*/|)man:*'      fzf-preview 'man $word'
 zstyle ':fzf-tab:complete:help:*'             fzf-preview 'help $word'
 zstyle ':fzf-tab:complete:kill:argument-rest' fzf-preview 'ps --pid=$word -o cmd --no-headers -w -w'
-zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags    '--preview-window=down:3:wrap'
-zstyle ':fzf-tab:complete:kill:*'             popup-pad    0 3
 zstyle ':fzf-tab:complete:*:options'          fzf-preview ''
 zstyle ':fzf-tab:complete:*:argument-1'       fzf-preview ''
 
@@ -159,8 +157,12 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 [[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
 
-alias -s c="nvim"
-alias -s tex="nvim"
+
+# Aliases
+source "$ZDOTDIR/aliases.zsh"
+
+alias -s   c="nvim"
 alias -s cpp="nvim"
+alias -s tex="nvim"
 alias -s lua="nvim"
 alias -s asm="nvim"

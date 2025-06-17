@@ -7,23 +7,26 @@ alias -g C='| wc -l'
 alias -g NUL=">/dev/null 2>&1"
 
 # shortcuts
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias q="exit"
-alias c="clear"
+alias     q="exit"
+alias     c="clear"
 alias -- +x="chmod u+x"
+dots="..";
+cdpath="../"
+for i in {1..7}; do
+	alias $dots="cd $cdpath"
+	dots="$dots."
+	cdpath="$cdpath../"
+done
 
 # miscellaneous
 cfd() {
 	cd "$(fd . -td | fzf --no-multi --query="$1")"
 }
 mkcd() {
-	[[ $# == 0 ]] && echo "mkcd: missing operand"
+	[[ $# ==  0 ]] && echo "mkcd: missing operand"
 	[[ $# -ge 2 ]] && echo "mkcd: too many operands"
-	[[ $# == 1 ]] || return 1
-	mkdir -p "$1" && cd "$1"
+	[[ $# -ne 1 ]] && return 1
+	mkdir -p "$1"  && cd "$1"
 }
 run() {
 	[[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
