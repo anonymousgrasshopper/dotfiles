@@ -31,21 +31,21 @@ inline string dbg_format(const bool& x) {
   return (x ? "true" : "false");
 }
 inline string dbg_format(const char& x) {
-  string formatted_string = "'";
-  formatted_string.push_back(x);
-  formatted_string.push_back('\'');
-  return formatted_string;
+  string fmt = "'";
+  fmt.push_back(x);
+  fmt.push_back('\'');
+  return fmt;
 }
 inline string dbg_format(const string& x) {
-  string formatted_string = "";
+  string fmt = "";
   for (char c : x) {
     if (c == '\n') {
-      formatted_string += "\\n";
+      fmt += "\\n";
     } else {
-      formatted_string += c;
+      fmt += c;
     }
   }
-  return "\"" + formatted_string + "\"";
+  return "\"" + fmt + "\"";
 }
 template <typename A, typename B>
 inline string dbg_format(const pair<A, B>& x) {
