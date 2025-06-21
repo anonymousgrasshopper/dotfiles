@@ -6,9 +6,13 @@ return {
 		cmd = { "CompetiTest" },
 		keys = {
 			{
+				"<localleader>ctst",
+				"<Cmd>CompetiTest receive contest<CR>",
+				desc = "Receive contest",
+			},
+			{
 				"<localleader>pb",
 				"<Cmd>CompetiTest receive problem<CR>",
-				ft = { "c", "cpp", "asm" },
 				desc = "Receive problem",
 			},
 			{

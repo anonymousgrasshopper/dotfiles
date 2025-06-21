@@ -121,12 +121,11 @@ return {
 			end
 			for _, keymap in pairs(keymap_restore) do
 				if keymap.rhs then
-					vim.api.nvim_buf_set_keymap(
-						keymap.buffer,
+					vim.keymap.set(
 						keymap.mode,
 						keymap.lhs,
 						keymap.rhs,
-						{ silent = keymap.silent == 1 }
+						{ buffer = keymap.buffer, silent = keymap.silent == 1 }
 					)
 				elseif keymap.callback then
 					vim.keymap.set(
