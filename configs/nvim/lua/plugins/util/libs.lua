@@ -1,6 +1,6 @@
 M = {}
 
-libs = {
+local libs = {
 	"nvim-lua/plenary.nvim",
 	"nvim-neotest/nvim-nio",
 	"MunifTanjim/nui.nvim",

@@ -82,10 +82,10 @@ return {
 				vim.cmd("hi Cursor blend=100")
 			end,
 			["c"] = function() require("dap").continue() end,
-			["H"] = function() require("dap").step_back() end,
-			["J"] = function() require("dap").step_into() end,
-			["K"] = function() require("dap").step_out() end,
-			["L"] = function() require("dap").step_over() end,
+			["H"] = function() require("dap").step_out() end,
+			["J"] = function() require("dap").step_over() end,
+			["K"] = function() require("dap").step_back() end,
+			["L"] = function() require("dap").step_into() end,
 			["G"] = function() require("dap").run_to_cursor() end,
 			["q"] = function() require("dap").terminate() end,
 		}
@@ -174,20 +174,18 @@ return {
 
 		-- automatically add a breakpoint at the beginning of main in C and C++
 		dap.listeners.before.event_initialized["auto-main-breakpoint"] = function()
-			if not vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
-				return
-			end
-			local line = nil
-			for lnum = 1, vim.fn.line("$") do
-				if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
-					line = lnum
-					break
+			if vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
+				local line = nil
+				for lnum = 1, vim.fn.line("$") do
+					if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
+						line = lnum
+						break
+					end
 				end
-			end
-			if line then
-				local original_pos = vim.api.nvim_win_get_cursor(0)
-				vim.api.nvim_win_set_cursor(0, { line, 0 })
-				require("dap").set_breakpoint()
+				if line then
+					vim.api.nvim_win_set_cursor(0, { line, 0 })
+					require("dap").set_breakpoint()
+				end
 			end
 		end
 	end,

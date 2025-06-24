@@ -21,10 +21,16 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		ft = "markdown",
-		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+		cmd = "RenderMarkdown",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			-- nvim-tree/nvim-web-devicons
+		},
 		opts = {
 			render_modes = { "n", "c", "t" },
 			completions = { blink = { enabled = true } },
+			anti_conceal = { enabled = false },
+
 			heading = {
 				position = "inline",
 				icons = { "󰼏 ", "󰼐 ", "󰼑 ", "󰼒 ", "󰼓 ", "󰼔 " },
@@ -102,7 +108,7 @@ return {
 		version = "*",
 		event = vault_enter,
 		-- dependencies:
-		-- nvim-lua/plenary.nvim
+		--  nvim-lua/plenary.nvim
 		opts = {
 			workspaces = workspaces,
 			log_level = vim.log.levels.INFO,

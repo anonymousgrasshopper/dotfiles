@@ -7,9 +7,9 @@ vim.api.nvim_create_autocmd("WinLeave", {
 	callback = function() vim.opt_local.cursorline = false end,
 })
 vim.api.nvim_create_autocmd("WinEnter", {
-	callback = function()
+	callback = function(event)
 		local excluded_filetypes = { "alpha", "neo-tree-popup" }
-		if not vim.tbl_contains(excluded_filetypes, vim.bo.filetype) then
+		if not vim.tbl_contains(excluded_filetypes, vim.bo[event.buf].filetype) then
 			vim.opt_local.cursorline = true
 		end
 	end,
@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
 
 -- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
-	callback = function()
+	callback = function(event)
 		local enabled_filetypes = {
 			"aerial",
 			"alpha",
@@ -26,12 +26,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 			"DiffviewFiles",
 			"dropbar_menu",
 			"neo-tree",
-			"neo-tree-popup",
 			"trouble",
 			"undotree",
 			"yazi",
 		}
-		if vim.tbl_contains(enabled_filetypes, vim.bo.filetype) or vim.g.undotree_settargetfocus then
+		if vim.tbl_contains(enabled_filetypes, vim.bo[event.buf].filetype) or vim.g.undotree_settargetfocus then
 			vim.cmd("hi Cursor blend=100")
 		else
 			vim.cmd("hi Cursor blend=0")
@@ -42,8 +41,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "alpha",
 	callback = function() vim.cmd("hi Cursor blend=100") end,
 })
-vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
+vim.api.nvim_create_autocmd("InsertEnter", {
 	callback = function() vim.cmd("hi Cursor blend=0") end,
+})
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+	callback = function()
+		vim.defer_fn(function() vim.cmd("hi Cursor blend=0") end, 0)
+	end,
 })
 
 -- toggle some options in terminals and darken their background

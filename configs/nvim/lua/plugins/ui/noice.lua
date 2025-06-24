@@ -7,9 +7,8 @@ return {
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		{
-			"rcarriga/nvim-notify",
+			"anonymousgrasshopper/nvim-notify",
 			opts = function()
-				vim.notify = require("notify")
 				if package.loaded["telescope"] then
 					require("telescope").load_extension("notify")
 				end

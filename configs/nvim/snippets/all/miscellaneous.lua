@@ -22,7 +22,7 @@ local update_filetype = function(index)
 end
 
 return {
-	s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet" }, {
+	s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet", hidden = true }, {
 		t("#!/bin/"),
 		i(1, "bash"),
 		update_filetype(1),

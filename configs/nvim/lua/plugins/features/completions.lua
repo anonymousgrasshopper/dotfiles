@@ -151,7 +151,8 @@ return {
 		-- install jsregexp (optional).
 		build = "make install_jsregexp",
 		config = function()
-			require("luasnip").config.set_config({
+			local ls = require("luasnip")
+			ls.config.set_config({
 				history = true,
 				updateevents = "TextChanged,TextChangedI",
 				enable_autosnippets = true,
@@ -168,8 +169,8 @@ return {
 			})
 
 			-- filetypes
-			require("luasnip").filetype_extend("bash", { "sh" })
-			require("luasnip").filetype_extend("zsh", { "sh" })
+			ls.filetype_extend("bash", { "sh" })
+			ls.filetype_extend("zsh", { "sh" })
 
 			-- load snippets
 			require("luasnip.loaders.from_vscode").lazy_load({

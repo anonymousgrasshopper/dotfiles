@@ -4,7 +4,8 @@ return {
 		dependencies = {
 			"nvim-neo-tree/neo-tree.nvim",
 		},
-		-- dependencies: nvim-lua/plenary.nvim
+		-- dependencies:
+		--  nvim-lua/plenary.nvim
 		opts = {},
 	},
 	{
@@ -20,7 +21,7 @@ return {
 		-- 	nvim-lua/plenary.nvim
 		-- 	nvim-tree/nvim-web-devicons
 		-- 	MunifTanjim/nui.nvim
-		-- 	3rd/image.nvim" -- requires imagemagick to be installed
+		-- 	3rd/image.nvim
 		init = function()
 			vim.api.nvim_create_autocmd("BufEnter", {
 				group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
@@ -386,7 +387,7 @@ return {
 						event = "neo_tree_buffer_enter",
 						handler = function()
 							vim.cmd([[
-								highlight! cursor blend=100
+								hi Cursor blend=100
 								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
 								setlocal sidescrolloff=0
 							]])
@@ -395,25 +396,29 @@ return {
 					{
 						event = "neo_tree_popup_buffer_enter",
 						handler = function()
-							vim.opt_local.winhighlight = "normal:NormalDark"
-							vim.cmd([[
-								highlight! cursor blend=100
-								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
-								setlocal sidescrolloff=0
-							]])
+							if vim.api.nvim_get_mode()["mode"] == "i" then
+								vim.cmd([[
+									hi Cursor blend=0
+								]])
+							else
+								vim.cmd([[
+									hi Cursor blend=100
+									setlocal sidescrolloff=0
+								]])
+							end
 						end,
 					},
 					{
 						event = "file_moved",
-						handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
+						handler = function(_) vim.cmd("hi Cursor blend=100") end,
 					},
 					{
 						event = "file_deleted",
-						handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
+						handler = function(_) vim.cmd("hi Cursor blend=100") end,
 					},
 					{
 						event = "file_renamed",
-						handler = function(_) vim.cmd("highlight! Cursor blend=100") end,
+						handler = function(_) vim.cmd("hi Cursor blend=100") end,
 					},
 					-- {
 					--   event = "file_open_requested",

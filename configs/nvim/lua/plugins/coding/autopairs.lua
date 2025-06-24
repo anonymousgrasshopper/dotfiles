@@ -27,39 +27,35 @@ return {
 							end
 							local line = vim.api.nvim_get_current_line()
 							local col = vim.api.nvim_win_get_cursor(0)[2]
-							if
-								vim.tbl_contains({ "markdown", "tex" }, vim.bo.filetype)
-								and line:sub(col - 5, col):match("\\left")
-							then
-								return false
-							end
-							if o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, vim.bo.filetype) then
-								if line:sub(1, col):match("if%s+$") or
-									 line:sub(1, col):match("while%s+$")
-								then
-									return false
-								end
-							end
-							if o.key ~= vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
-								return true -- return true, unless we've hit backspace
-							else
+							if o.key == vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
 								if
 									vim.tbl_contains(
 										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
 										line:sub(col - 1, col)
-									)
+									) -- if the two characters before the cursor are paired, don't remove them
 								then
-									return false -- if the two characters before the cursor are paired, don't remove them
+									return false
 								end
 							end
+							-- snippets
+							if
+								(vim.tbl_contains({ "markdown", "tex" }, vim.bo.filetype)
+								and line:sub(col - 5, col):match("\\left"))
+								or
+								(o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, vim.bo.filetype)
+								and (line:sub(1, col):match("if%s+$") or line:sub(1, col):match("while%s+$")))
+								or
+								(o.key == "(" and vim.bo.filetype == "cpp" and line:sub(col - 4, col):match("%Wall"))
+							then
+								return false
+							end
+
 							return true
 						end,
 					},
 				},
 			},
-			{ "\\(", "\\)", newline = true },
-			{ "\\{", "\\}", newline = true },
-			{ "\\[", "\\]", newline = true },
+			-- { "\\[", "\\]", newline = true, ft = "tex" },
 			{ "<", ">", disable_start = true, disable_end = true },
 			-- comments
 			{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },

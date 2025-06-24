@@ -1,9 +1,8 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	event = "UiEnter",
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
+	-- dependencies:
+	-- 	nvim-tree/nvim-web-devicons
 	config = function()
 		local lualine = require("lualine")
 		local palette = require("kanagawa.colors").setup().palette

@@ -24,7 +24,6 @@ return {
 		{ trig = "tmp", dscr = "CP template", snippetType = "autosnippet" },
 		fmt(
 			[[
-        #pragma GCC optimize("O3,unroll-loops")
         #include <<bits/stdc++.h>>
         using namespace std;
 
@@ -57,10 +56,9 @@ return {
 		{ condition = first_line, not_in_string_comment }
 	),
 	s(
-		{ trig = "CF", dscr = "Codeforces template", snippetType = "autosnippet" },
+		{ trig = "cf", dscr = "Codeforces template", snippetType = "autosnippet" },
 		fmt(
 			[[
-        #pragma GCC optimize("O3,unroll-loops")
         #include <<bits/stdc++.h>>
         using namespace std;
 
@@ -98,13 +96,13 @@ return {
 		{ condition = first_line, not_in_string_comment }
 	),
 	s(
-		{ trig = "io ", dscr = "Set io for USACO", snippetType = "autosnippet" },
+		{ trig = "io ", dscr = "input/output from file", snippetType = "autosnippet" },
 		fmt(
 			[[
         void setIO(string name = "<>") {
-          if ( name!="" ) {
-            freopen((name+".in").c_str(), "r", stdin);
-            freopen((name+".out").c_str(), "w", stdout);
+          if ( name != "" ) {
+            freopen((name + ".in").c_str(), "r", stdin);
+            freopen((name + ".out").c_str(), "w", stdout);
           }
         }
       ]],

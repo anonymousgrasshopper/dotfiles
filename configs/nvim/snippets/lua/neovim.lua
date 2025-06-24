@@ -118,4 +118,9 @@ return {
 		i(4),
 		t('" })'),
 	}, { condition = not_in_string_comment * line_begin }),
+	s({ trig = "vni", dscr = "Inspect", snippetType = "autosnippet" }, {
+		t('vim.notify(vim.inspect('),
+		i(1),
+		t('))'),
+	}, { condition = not_in_string_comment * line_begin }),
 }

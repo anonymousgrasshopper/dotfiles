@@ -11,7 +11,7 @@ vim.keymap.set("n", "<S-l>", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 vim.keymap.set("n", "[b", "<Cmd>bprevious<CR>", { desc = "Previous Buffer" })
 vim.keymap.set("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
-vim.keymap.set("n", "<leader>bd", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
+vim.keymap.set("n", "<leader>bd", "<Cmd>bd<CR>", { desc = "Delete Buffer and Window" })
 
 -- tabs
 vim.keymap.set("n", "<leader>tt", "<Cmd>tabnew<CR>", { desc = "New Tab" })
@@ -56,8 +56,8 @@ vim.keymap.set("n", "<M-j>", "<Cmd>m .+1<CR>==", { desc = "Move Down" })
 vim.keymap.set("n", "<M-k>", "<Cmd>m .-2<CR>==", { desc = "Move Up" })
 vim.keymap.set("i", "<M-j>", "<esc><Cmd>m .+1<CR>==gi", { desc = "Move Down" })
 vim.keymap.set("i", "<M-k>", "<esc><Cmd>m .-2<CR>==gi", { desc = "Move Up" })
-vim.keymap.set("v", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move Down" })
-vim.keymap.set("v", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move Up" })
+vim.keymap.set("v", "<M-j>", "<Cmd>m '+1<CR>gv=gv", { desc = "Move Down" })
+vim.keymap.set("v", "<M-k>", "<Cmd>m '<-2<CR>gv=gv", { desc = "Move Up" })
 
 -- window management
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })

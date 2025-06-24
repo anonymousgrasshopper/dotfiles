@@ -12,7 +12,8 @@ return {
 			desc = "Split recursively/Join",
 		},
 	},
-	-- dependencies: nvim-treesitter/nvim-treesitter
+	-- dependencies:
+	--  nvim-treesitter/nvim-treesitter
 	opts = {
 		use_default_keymaps = false,
 		check_syntax_error = true,

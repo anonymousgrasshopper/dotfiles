@@ -2,7 +2,7 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		-- dependencies:
-		-- MunifTanjim/nui.nvim
+		--  MunifTanjim/nui.nvim
 		cmd = { "CompetiTest" },
 		keys = {
 			{
@@ -107,6 +107,7 @@ return {
 					height = 0.5,
 					show_nu = true,
 					show_rnu = false,
+					open_when_compilation_fails = false,
 				},
 			},
 			popup_ui = {

@@ -1,9 +1,8 @@
 return {
 	"akinsho/bufferline.nvim",
 	event = "VeryLazy",
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
+	-- dependencies:
+	-- 	nvim-tree/nvim-web-devicons
 	opts = function()
 		vim.keymap.set("n", "L", "<Cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
 		vim.keymap.set("n", "H", "<Cmd>BufferLineCyclePrev<CR>", { desc = "Next buffer" })

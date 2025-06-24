@@ -169,6 +169,13 @@ return {
 				find_files = {
 					hidden = true,
 				},
+				buffers = {
+					mappings = {
+						i = {
+							["<C-x>"] = actions.delete_buffer,
+						}
+					}
+				}
 			},
 			extensions = {
 				fzf = {},

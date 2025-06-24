@@ -71,6 +71,7 @@ return {
 			local disabled_paths = {
 				"nvim/lua/config/options.lua",
 				"nvim/lua/plugins/editor/telescope.lua",
+				"nvim/lua/plugins/coding/telescope.lua",
 				"nvim/lua/plugins/features/debugging.lua",
 				"nvim/lua/plugins/lang/markdown.lua",
 				"nvim/lua/plugins/util/browsing.lua",
@@ -82,7 +83,7 @@ return {
 				end
 			end
 
-			return { timeout_ms = 500, lsp_format = "fallback" }
+			return { timeout_ms = 1000, lsp_format = "fallback" }
 		end,
 	},
 }
