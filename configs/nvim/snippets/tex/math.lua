@@ -29,8 +29,7 @@ return {
 		condition = tex.in_text * make_condition(function()
 			local col = vim.api.nvim_win_get_cursor(0)[2]
 			local line = vim.api.nvim_get_current_line()
-			return (col == 0) or line:sub(col, col) ~= "\\"
-				and vim.bo.filetype == "tex" -- disable in linked markdown
+			return (col == 0) or line:sub(col, col) ~= "\\" and vim.bo.filetype == "tex" -- disable in linked markdown
 		end),
 	}),
 	s(
@@ -79,6 +78,27 @@ return {
 	s(
 		{ trig = "ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
 		fmt("\\left\\lceil <> \\right\\rceil", {
+			d(1, get_visual),
+		}),
+		{ condition = tex.in_mathzone }
+	),
+	s(
+		{ trig = "set", dscr = "curly braces", wordTrig = false, snippetType = "autosnippet" },
+		fmt("\\left\\{ <> \\right\\}", {
+			d(1, get_visual),
+		}),
+		{ condition = tex.in_mathzone }
+	),
+	s(
+		{ trig = "abs", dscr = "module", wordTrig = false, snippetType = "autosnippet" },
+		fmt("\\left\\lvert <> \\right\\rvert", {
+			d(1, get_visual),
+		}),
+		{ condition = tex.in_mathzone }
+	),
+	s(
+		{ trig = "nrm", dscr = "vector norm", wordTrig = false, snippetType = "autosnippet" },
+		fmt("\\left\\lVert <> \\right\\rVert", {
 			d(1, get_visual),
 		}),
 		{ condition = tex.in_mathzone }
@@ -198,9 +218,9 @@ return {
 			end
 		end, 1),
 	}),
-	s({ trig = "tx", dscr = "text", wordTrig = false, snippetType = "autosnippet" },
-	  {
-			t("\\text{"), i(0), t("}")
-		}
-	),
+	s({ trig = "tx", dscr = "text", wordTrig = false, snippetType = "autosnippet" }, {
+		t("\\text{"),
+		i(0),
+		t("}"),
+	}),
 }
