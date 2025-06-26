@@ -50,7 +50,7 @@ local open_floating_window = function(filepath)
 		callback = function()
 			vim.b[buf].stdio_completed = true
 			if vim.b[buf].compilation_completed then
-				vim.defer_fn(function() require("dap").continue() end, 0)
+				vim.schedule(function() require("dap").continue() end)
 			end
 		end,
 		once = true,
@@ -89,7 +89,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 			vim.b[buf].compilation_completed = true
 			vim.b[buf].use_default_executable_path = true
 			if vim.b[buf].stdio_completed then
-				vim.defer_fn(function() require("dap").continue() end, 0)
+				vim.schedule(function() require("dap").continue() end)
 			end
 		end
 	end)
@@ -102,7 +102,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		vim.b[buf].codelldb_stdio_redirection = true
 		vim.b[buf].stdio_completed = true
 		if vim.b[buf].compilation_completed then
-			vim.defer_fn(function() require("dap").continue() end, 0)
+			vim.schedule(function() require("dap").continue() end)
 		end
 	elseif vim.b.codelldb_stdio_redirection == nil then
 		local answer = vim.fn.input("Do you want to use stdio redirection ?")
@@ -114,7 +114,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 			vim.b[buf].codelldb_stdio_redirection = false
 			vim.b[buf].stdio_completed = true
 			if vim.b[buf].compilation_completed then
-				vim.defer_fn(require("dap").continue(), 0)
+				vim.schedule(require("dap").continue())
 			end
 		end
 	end

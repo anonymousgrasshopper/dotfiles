@@ -1,5 +1,5 @@
 local obsidian_vaults = {
-	["Mathématiques"] = { vim.env.HOME .. "/Mathématiques/Mathématiques", "Solutions et Notes/Compétitions" },
+	["Mathématiques"] = { vim.env.HOME .. "/Notes/Mathématiques", "Solutions et Notes/Compétitions" },
 }
 local workspaces = {}
 for vault, path in pairs(obsidian_vaults) do
@@ -29,7 +29,7 @@ return {
 		opts = {
 			render_modes = { "n", "c", "t" },
 			completions = { blink = { enabled = true } },
-			anti_conceal = { enabled = false },
+			anti_conceal = { enabled = true },
 
 			heading = {
 				position = "inline",
@@ -83,8 +83,11 @@ return {
 			},
 			code = {
 				sign = false,
+				border = "thin",
+				position = "right",
 				width = "block",
-				min_width = 45,
+				left_pad = 1,
+				right_pad = 1,
 				highlight = "TerminalBackground",
 				highlight_border = "TerminalBackground",
 				highlight_fallback = "TerminalBackground",
@@ -116,28 +119,31 @@ return {
 				blink = true,
 				nvim_cmp = false,
 				min_chars = 2,
-				picker = {
-					name = "telescope.nvim",
-					note_mappings = {
-						-- Create a new note from your query.
-						new = "<C-x>",
-						-- Insert a link to the selected note.
-						insert_link = "<C-l>",
-					},
-					tag_mappings = {
-						-- Add tag(s) to current note.
-						tag_note = "<C-x>",
-						-- Insert a tag at the current location.
-						insert_tag = "<C-l>",
-					},
+			},
+			wiki_link_func = "use_alias_only",
+			disable_frontmatter = true,
+			picker = {
+				name = "telescope.nvim",
+				note_mappings = {
+					-- Create a new note from your query.
+					new = "<C-x>",
+					-- Insert a link to the selected note.
+					insert_link = "<C-l>",
+				},
+				tag_mappings = {
+					-- Add tag(s) to current note.
+					tag_note = "<C-x>",
+					-- Insert a tag at the current location.
+					insert_tag = "<C-l>",
 				},
 			},
+			backlinks = {
+				parse_headers = true,
+			},
 			open_notes_in = "current", -- current, vsplit or hsplit
-
 			ui = {
 				enable = false, -- set to false to disable all additional syntax features
 			},
-
 			attachments = {
 				img_folder = "assets/imgs",
 				---@return string

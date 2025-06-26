@@ -13,11 +13,6 @@ local vim_enter_early_redraw = function()
 		-- Add treesitter highlights and fallback to syntax
 		local lang = vim.treesitter.language.get_lang(ft)
 
-		-- language-specific plugins to load
-		if lang == "tex" or lang == "markdown" then
-			vim.defer_fn(function() vim.cmd("source $VIMRUNTIME/syntax/tex.vim") end, 0)
-		end
-
 		-- find filetype icon and color
 		require("nvim-web-devicons").setup()
 		local icon, color =

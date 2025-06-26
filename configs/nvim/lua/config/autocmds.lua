@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 vim.api.nvim_create_autocmd("CmdlineEnter", {
 	callback = function()
-		vim.defer_fn(function() vim.cmd("hi Cursor blend=0") end, 0)
+		vim.schedule(function() vim.cmd("hi Cursor blend=0") end)
 	end,
 })
 
