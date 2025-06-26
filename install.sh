@@ -90,7 +90,7 @@ fi
 
 # specific things to do on operating systems using pacman as a package manager
 packages=("7zip" "bat" "btop" "clang" "cronie" "eza" "fd" "feh" "firefox" "fzf"
-	"gcc" "git" "git-delta" "github-cli" "glow" "hexyl" "i3-wm" "imagemagick" "kitty"
+	"gcc" "git" "git-delta" "github-cli" "hexyl" "i3-wm" "imagemagick" "kitty"
 	"lazygit" "lynx" "man-db" "nasm" "ncdu" "neovim" "notmuch" "npm" "obsidian" "picom"
 	"python" "ripgrep" "rofi" "rsync" "tldr" "tmux" "tree-sitter-cli" "rustup"
 	"unzip" "wget" "xdotool" "yazi" "zathura" "zathura-pdf-mupdf" "zoxide" "zsh")
@@ -212,7 +212,7 @@ fi
 			cp -r "$item" "$HOME/.config/"
 		else
 			difference=false
-			while read -r -d ''; do # check wether the version in the repo and in ~/.config differ or not
+			while read -r -d ''; do                                                                            # check wether the version in the repo and in ~/.config differ or not
 				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore obfuscated e-mail adresses
 					difference=true
 					break
