@@ -52,13 +52,12 @@ return {
 		-- icons
 		local signs = {
 			Stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
-			Breakpoint = "",
-			BreakpointCondition = "",
+			Breakpoint = { "" },
+			BreakpointCondition = { "" },
 			BreakpointRejected = { "", "DiagnosticError" },
-			LogPoint = ".>",
+			LogPoint = { ".>" },
 		}
 		for name, sign in pairs(signs) do
-			sign = type(sign) == "table" and sign or { sign }
 			vim.fn.sign_define("Dap" .. name, {
 				text = sign[1],
 				texthl = sign[2] or "DiagnosticInfo",
@@ -89,54 +88,17 @@ return {
 			["G"] = function() require("dap").run_to_cursor() end,
 			["q"] = function() require("dap").terminate() end,
 		}
-		local keys = {}
-		for key, _ in pairs(debugging_keymaps) do
-			table.insert(keys, key)
-		end
-		local keymap_restore = {}
-
+		local buf
 		dap.listeners.after["event_initialized"]["me"] = function()
-			for _, buf in pairs(vim.api.nvim_list_bufs()) do
-				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
-				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains(keys, keymap.lhs) then
-						table.insert(keymap_restore, keymap)
-						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
-					end
-				end
-			end
-			for key, func in pairs(debugging_keymaps) do
-				vim.keymap.set("n", key, func, { buffer = true })
+			buf = vim.fn.bufnr()
+			for key, callback in pairs(debugging_keymaps) do
+				vim.keymap.set("n", key, callback, { buffer = buf })
 			end
 		end
-
 		dap.listeners.after["event_terminated"]["me"] = function()
-			for _, buf in pairs(vim.api.nvim_list_bufs()) do
-				local keymaps = vim.api.nvim_buf_get_keymap(buf, "n")
-				for _, keymap in pairs(keymaps) do
-					if vim.tbl_contains(keys, keymap.lhs) then
-						vim.api.nvim_buf_del_keymap(buf, "n", keymap.lhs)
-					end
-				end
+			for key, _ in pairs(debugging_keymaps) do
+				vim.keymap.del("n", key, { buffer = buf })
 			end
-			for _, keymap in pairs(keymap_restore) do
-				if keymap.rhs then
-					vim.keymap.set(
-						keymap.mode,
-						keymap.lhs,
-						keymap.rhs,
-						{ buffer = keymap.buffer, silent = keymap.silent == 1 }
-					)
-				elseif keymap.callback then
-					vim.keymap.set(
-						keymap.mode,
-						keymap.lhs,
-						keymap.callback,
-						{ buffer = keymap.buffer, silent = keymap.silent == 1 }
-					)
-				end
-			end
-			keymap_restore = {}
 		end
 
 		-- C++
