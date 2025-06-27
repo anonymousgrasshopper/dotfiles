@@ -137,16 +137,12 @@ return {
 		-- automatically add a breakpoint at the beginning of main in C and C++
 		dap.listeners.before.event_initialized["auto-main-breakpoint"] = function()
 			if vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
-				local line = nil
 				for lnum = 1, vim.fn.line("$") do
 					if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
-						line = lnum
-						break
+						vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+						require("dap").set_breakpoint()
+						return
 					end
-				end
-				if line then
-					vim.api.nvim_win_set_cursor(0, { line, 0 })
-					require("dap").set_breakpoint()
 				end
 			end
 		end

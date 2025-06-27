@@ -114,7 +114,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 			vim.b[buf].codelldb_stdio_redirection = false
 			vim.b[buf].stdio_completed = true
 			if vim.b[buf].compilation_completed then
-				vim.schedule(require("dap").continue())
+				vim.schedule(function() require("dap").continue() end)
 			end
 		end
 	end

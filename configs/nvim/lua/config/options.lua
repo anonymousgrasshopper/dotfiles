@@ -20,6 +20,7 @@ vim.opt.foldexpr       = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldcolumn     = "0"    --size of column for folding indications
 vim.opt.foldlevelstart = 99
 vim.opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
+vim.opt.concealcursor  = "nc"   -- modes in which the cursor line is concealed
 
 -- lines & statuscolumn
 vim.opt.number         = true   -- shows absolute line number in the cursorcolumn

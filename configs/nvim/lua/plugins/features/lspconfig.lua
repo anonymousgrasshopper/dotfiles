@@ -207,7 +207,7 @@ return {
 		},
 	},
 	{
-		"rachartier/tiny-code-action.nvim",
+		"anonymousgrasshopper/tiny-code-action.nvim",
 		-- dependencies:
 		--  nvim-telescope/telescope.nvim
 		--  nvim-lua/plenary.nvim
@@ -224,6 +224,25 @@ return {
 		},
 		opts = {
 			backend = "delta",
+			picker = "telescope",
+			backend_opts = {
+				delta = {
+					header_lines_to_remove = 5,
+					trailing_newlines_to_add = 10,
+				},
+			},
+			signs = {
+				quickfix = { "", { link = "DiagnosticWarning" } },
+				others = { "", { link = "DiagnosticWarning" } },
+				refactor = { "", { link = "DiagnosticInfo" } },
+				["refactor.move"] = { "󰪹", { link = "DiagnosticInfo" } },
+				["refactor.extract"] = { "", { link = "DiagnosticError" } },
+				["source.organizeImports"] = { "", { link = "DiagnosticWarning" } },
+				["source.fixAll"] = { "󰃢", { link = "DiagnosticError" } },
+				["source"] = { "", { link = "DiagnosticError" } },
+				["rename"] = { "󰑕", { link = "DiagnosticWarning" } },
+				["codeAction"] = { "", { link = "DiagnosticWarning" } },
+			},
 		},
 	},
 	{

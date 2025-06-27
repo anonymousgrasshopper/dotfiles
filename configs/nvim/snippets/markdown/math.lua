@@ -121,11 +121,13 @@ return {
 		t("\\text{"),
 		i(1),
 		t("}"),
+		{ condition = tex.in_mathzone },
 	}),
 	s({ trig = "op", dscr = "operatorname", wordTrig = false, snippetType = "autosnippet" }, {
 		t("\\operatorname{"),
 		i(1),
 		t("}"),
+		{ condition = tex.in_mathzone },
 	}),
 	s(
 		{ trig = "²", dscr = "square", wordTrig = false, snippetType = "autosnippet" },

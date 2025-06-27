@@ -29,7 +29,17 @@ return {
 		opts = {
 			render_modes = { "n", "c", "t" },
 			completions = { blink = { enabled = true } },
-			anti_conceal = { enabled = true },
+			anti_conceal = { enabled = false },
+			win_options = {
+				conceallevel = {
+					default = vim.o.conceallevel,
+					rendered = 3,
+				},
+				concealcursor = {
+					default = vim.o.concealcursor,
+					rendered = "nc",
+				},
+			},
 
 			heading = {
 				position = "inline",

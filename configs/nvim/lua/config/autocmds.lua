@@ -64,7 +64,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
 			return
 		end
 
-		vim.opt_local.cursorline = false
 		vim.opt_local.winhighlight = "Normal:TerminalBackground"
 		vim.cmd("startinsert")
 	end,
@@ -148,15 +147,15 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 	pattern = "*",
 	callback = function()
 		local cmd_type = vim.fn.getcmdtype()
-		local cmd_line = vim.fn.getcmdline()
+		local cmd_text = vim.fn.getcmdline()
 
 		if cmd_type == ":" then
-			if cmd_line == "s " then
+			if cmd_text == "s " then
 				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s@\\v@<Left>", true, true, true), "n", false)
-			elseif cmd_line == "'<,'>s " then
+			elseif cmd_text == "'<,'>s " then
 				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s@\\v@<Left>", true, true, true), "n", false)
 			else
-				local match = cmd_line:match("(%d+,%s*%d+%s*s) ")
+				local match = cmd_text:match("(%d+,%s*%d+%s*s) ")
 				if match then
 					vim.api.nvim_feedkeys(
 						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "@\\v@<Left>", true, true, true),
