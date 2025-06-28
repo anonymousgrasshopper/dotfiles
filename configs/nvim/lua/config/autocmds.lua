@@ -53,17 +53,6 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
 -- toggle some options in terminals and darken their background
 vim.api.nvim_create_autocmd("TermOpen", {
 	callback = function()
-		if vim.g.code_action_preview then
-			vim.api.nvim_create_autocmd("BufLeave", {
-				once = true,
-				callback = function() vim.g.code_action_preview = nil end,
-			})
-			return
-		end
-		if vim.bo.filetype == "yazi" then
-			return
-		end
-
 		vim.opt_local.winhighlight = "Normal:TerminalBackground"
 		vim.cmd("startinsert")
 	end,
