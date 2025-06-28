@@ -26,6 +26,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 			"DiffviewFiles",
 			"dropbar_menu",
 			"neo-tree",
+			"noice",
 			"trouble",
 			"undotree",
 			"yazi",

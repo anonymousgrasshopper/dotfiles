@@ -10,15 +10,15 @@ return {
 					"grug-far",
 				},
 			},
+			space2 = { enable = true }, -- symmetric space in pairs
+			close = { enable = true }, -- use <A-)> to close open pairs
 			fastwarp = {
 				multi = true,
 				{},
 				{ faster = true, map = "<C-A-e>", cmap = "<C-A-e>" },
 			},
 			extensions = {
-				-- Improve performance when typing fast, see
-				-- https://github.com/altermo/ultimate-autopair.nvim/issues/74
-				utf8 = false,
+				utf8 = false, -- see https://github.com/altermo/ultimate-autopair.nvim/issues/74
 				cond = {
 					cond = {
 						function(fn, o)
@@ -38,10 +38,10 @@ return {
 							end
 							-- snippets
 							if
-								(vim.tbl_contains({ "markdown", "tex" }, ft) and line:sub(col - 5, col):match("\\left"))
-								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, ft) and
+								(vim.tbl_contains({ "markdown", "tex" }, fn.get_ft()) and line:sub(col - 5, col):match("\\left"))
+								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, fn.get_ft()) and
 								   (line:sub(1, col - 1):match("if%s+$") or line:sub(1, col - 1):match("while%s+$")))
-								or (o.key == "(" and ft == "cpp" and line:sub(col - 4, col):match("%Wall"))
+								or (o.key == "(" and fn.get_ft() == "cpp" and line:sub(col - 4, col):match("%Wall"))
 							then
 								return false
 							end
@@ -51,7 +51,6 @@ return {
 					},
 				},
 			},
-			-- { "\\[", "\\]", newline = true, ft = "tex" },
 			{ "<", ">", disable_start = true, disable_end = true },
 			-- comments
 			{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
@@ -59,6 +58,7 @@ return {
 			{ "[==[", "]==]", ft = { "lua" } },
 			{ "[===[", "]===]", ft = { "lua" } },
 			-- filetype-specific
+			{ "\\[", "\\]", newline = true, ft = { "tex" } },
 			{ "$", "$", ft = { "tex", "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
 			{ "*", "*", ft = { "markdown" } },
@@ -67,21 +67,6 @@ return {
 			{ "```", "```", ft = { "markdown" }, newline = true },
 			{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
 			{ "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
-			-- LaTeX
-			{
-				"\\begin{bmatrix}",
-				"\\end{bmatrix}",
-				newline = true,
-				space = true,
-				ft = { "markdown", "tex" },
-			},
-			{
-				"\\begin{pmatrix}",
-				"\\end{pmatrix}",
-				newline = true,
-				space = true,
-				ft = { "markdown", "tex" },
-			},
 		},
 	},
 	{

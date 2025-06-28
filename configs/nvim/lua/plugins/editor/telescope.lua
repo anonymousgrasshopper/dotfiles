@@ -47,8 +47,8 @@ local live_grep = function(opts)
 end
 
 return {
-	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	"anonymousgrasshopper/telescope.nvim",
+	-- branch = "0.1.x",
 	dependencies = {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		-- nvim-lua/plenary.nvim

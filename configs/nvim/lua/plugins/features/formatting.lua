@@ -71,6 +71,7 @@ return {
 			local disabled_paths = {
 				"nvim/lua/config/options.lua",
 				"nvim/lua/plugins/editor/telescope.lua",
+				"nvim/lua/plugins/coding/autopairs.lua",
 				"nvim/lua/plugins/coding/telescope.lua",
 				"nvim/lua/plugins/features/debugging.lua",
 				"nvim/lua/plugins/lang/markdown.lua",

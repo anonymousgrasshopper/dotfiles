@@ -1,5 +1,5 @@
 return {
-	"mikavilpas/yazi.nvim",
+	"anonymousgrasshopper/yazi.nvim",
 	keys = {
 		{
 			"<leader>ya",

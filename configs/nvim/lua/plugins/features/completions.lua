@@ -164,7 +164,16 @@ return {
 					tex = { "lsp", "path", "snippets", "buffer", "dictionary" },
 				},
 			},
-			signature = { enabled = true },
+			signature = {
+				enabled = true,
+				window = {
+					border = "rounded",
+					winblend = vim.o.pumblend,
+					winhighlight = "Normal:CmpMenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
+					direction_priority = { "s", "n" },
+					show_documentation = true,
+				},
+			},
 		},
 	},
 	{

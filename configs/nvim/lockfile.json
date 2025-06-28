@@ -66,8 +66,8 @@
   "tabout.nvim": { "branch": "master", "commit": "9a3499480a8e53dcaa665e2836f287e3b7764009" },
   "telepath.nvim": { "branch": "master", "commit": "2879da05463db7bdc8824b13cccd8e8920c62a55" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "1f08ed60cafc8f6168b72b80be2b2ea149813e55" },
-  "telescope.nvim": { "branch": "0.1.x", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
-  "tiny-code-action.nvim": { "branch": "main", "commit": "6971da8b006831618f5783563c6c1e8ba76ed442" },
+  "telescope.nvim": { "branch": "master", "commit": "a090e1852d2708cf48e0f2c9876331ae941fffbc" },
+  "tiny-code-action.nvim": { "branch": "main", "commit": "22eed7d3d296e0ae35cb883446de1277a875bc8b" },
   "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "d52d70780ca6497ed28ad1b11bb1e981f666f62a" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "treesj": { "branch": "main", "commit": "3b4a2bc42738a63de17e7485d4cc5e49970ddbcc" },
@@ -86,6 +86,6 @@
   "vimtex": { "branch": "master", "commit": "1081af7e0cf298964d0bf08311276788ecb92085" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "yanky.nvim": { "branch": "main", "commit": "04775cc6e10ef038c397c407bc17f00a2f52b378" },
-  "yazi.nvim": { "branch": "main", "commit": "267f5fe500d239b7cc3e36187fa03e0eea9d866e" },
+  "yazi.nvim": { "branch": "main", "commit": "1fa3ae636bba92482a6a738f0e2cf7e19e25665a" },
   "zoxide.vim": { "branch": "master", "commit": "b1e70b6fc1682a83929aee63680d2b43456fe9a5" }
 }

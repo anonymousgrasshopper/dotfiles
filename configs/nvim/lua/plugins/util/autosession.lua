@@ -1,5 +1,5 @@
 return {
-	"rmagatti/auto-session",
+	"anonymousgrasshopper/auto-session",
 	lazy = false,
 	keys = {
 		{ "<leader>rs", "<Cmd>SessionRestore<CR>", desc = "Restore session for cwd" },
