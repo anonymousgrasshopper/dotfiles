@@ -21,7 +21,7 @@ local not_in_string_comment = make_condition(function() return check_not_in_node
 return {
 	s(
 		{ trig = "([^%w_])all%(", regTrig = true, wordTrig = false, dscr = "iterator range", snippetType = "autosnippet" },
-		fmt("<><>.begin(), <>.end(", {
+		fmt("<><>.begin(), <>.end()", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			rep(1),
@@ -36,7 +36,7 @@ return {
 			dscr = "reverse iterator range",
 			snippetType = "autosnippet",
 		},
-		fmt("<><>.rbegin(), <>.rend(", {
+		fmt("<><>.rbegin(), <>.rend()", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			rep(1),

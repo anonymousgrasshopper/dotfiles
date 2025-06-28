@@ -65,6 +65,11 @@ return {
 		messages = {
 			view_search = false, -- view for search count messages. "virtualtext" or 'false' to disable
 		},
+		lsp = {
+			signature = {
+				enabled = false,
+			},
+		},
 		views = {
 			cmdline_popup = {
 				border = {

@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 			"undotree",
 			"yazi",
 		}
-		if vim.tbl_contains(enabled_filetypes, vim.bo[event.buf].filetype) or vim.g.undotree_settargetfocus then
+		if vim.tbl_contains(enabled_filetypes, vim.bo[event.buf].filetype) then
 			vim.cmd("hi Cursor blend=100")
 		else
 			vim.cmd("hi Cursor blend=0")
@@ -167,10 +167,3 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 		end
 	end,
 })
-
--- restore the padding of the terminal emulator
-if vim.env.TERM:match("kitty") then
-	vim.api.nvim_create_autocmd("VimLeave", {
-		callback = function() vim.cmd("silent !kitty @ set-spacing margin=20") end,
-	})
-end

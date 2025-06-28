@@ -12,10 +12,8 @@ kitty_remove_spacing() {
 kitty_set_spacing
 
 nvim() {
-	kitty_remove_spacing >/dev/null
-	export NVIM_PADDING_REMOVED=true
+	kitty_remove_spacing
 	/bin/nvim "$@"
-	unset NVIM_PADDING_REMOVED
 	kitty_set_spacing
 }
 tmux() {

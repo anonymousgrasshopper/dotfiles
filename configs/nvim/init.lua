@@ -2,11 +2,6 @@
 --------------------------------------------- INIT.LUA  -------------------------------------------
 ---------------------------------------------------------------------------------------------------
 
--- remove the terminal padding
-if not vim.env.TERM.NVIM_PADDING_REMOVED and vim.env.TERM:match("kitty") then
-	vim.fn.system({ "kitty", "@set-spacing", "padding=0", "margin=0" })
-end
-
 require("config.autocmds")
 require("config.filetypes")
 require("config.keymaps")

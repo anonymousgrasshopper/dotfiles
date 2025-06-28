@@ -220,7 +220,7 @@ return {
 		i(1),
 		t("\\right"),
 		f(function(arg)
-			if arg[1][1] == "{" then
+			if arg[1][1] == "{" or arg[1][1] == "\\{" then
 				return "\\}"
 			elseif arg[1][1] == "(" then
 				return ")"
@@ -234,5 +234,5 @@ return {
 				return arg[1][1]
 			end
 		end, 1),
-	}),
+	}, { condition = tex.in_mathzone }),
 }

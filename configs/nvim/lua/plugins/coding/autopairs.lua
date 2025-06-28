@@ -22,11 +22,10 @@ return {
 				cond = {
 					cond = {
 						function(fn, o)
-							if fn.get_mode == "R" then -- disable in replace mode
+							if fn.get_mode() == "R" then -- disable in replace mode
 								return false
 							end
-							local line = vim.api.nvim_get_current_line()
-							local col = vim.api.nvim_win_get_cursor(0)[2]
+							local line, col, ft = o.line, o.col, fn.get_ft()
 							if o.key == vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
 								if
 									vim.tbl_contains(
@@ -39,13 +38,10 @@ return {
 							end
 							-- snippets
 							if
-								(vim.tbl_contains({ "markdown", "tex" }, vim.bo.filetype)
-								and line:sub(col - 5, col):match("\\left"))
-								or
-								(o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, vim.bo.filetype)
-								and (line:sub(1, col):match("if%s+$") or line:sub(1, col):match("while%s+$")))
-								or
-								(o.key == "(" and vim.bo.filetype == "cpp" and line:sub(col - 4, col):match("%Wall"))
+								(vim.tbl_contains({ "markdown", "tex" }, ft) and line:sub(col - 5, col):match("\\left"))
+								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, ft) and
+								   (line:sub(1, col - 1):match("if%s+$") or line:sub(1, col - 1):match("while%s+$")))
+								or (o.key == "(" and ft == "cpp" and line:sub(col - 4, col):match("%Wall"))
 							then
 								return false
 							end

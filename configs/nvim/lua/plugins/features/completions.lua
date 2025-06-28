@@ -3,6 +3,9 @@ return {
 		"saghen/blink.cmp",
 		version = "*",
 		event = { "InsertEnter", "CmdlineEnter" },
+		dependencies = {
+			"archie-judd/blink-cmp-words",
+		},
 		opts = {
 			keymap = {
 				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
@@ -123,7 +126,7 @@ return {
 					},
 				},
 				documentation = {
-					auto_show = true,
+					auto_show = false,
 					auto_show_delay_ms = 0,
 					window = {
 						border = "rounded",
@@ -140,9 +143,29 @@ return {
 
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
+				providers = {
+					dictionary = {
+						name = "blink-cmp-words",
+						module = "blink-cmp-words.dictionary",
+						opts = {
+							dictionary_search_threshold = 3, -- number of characters required to trigger completion (lower will hinder performance)
+							pointer_symbols = { "!", "&", "^" },
+							score_offset = -2, -- less priority
+						},
+					},
+				},
+				per_filetype = {
+					text = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					markdown = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					mail = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					plaintex = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					typst = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					gitcommit = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					tex = { "lsp", "path", "snippets", "buffer", "dictionary" },
+				},
 			},
+			signature = { enabled = true },
 		},
-		oxts_extend = { "sources.default" },
 	},
 	{
 		"L3MON4D3/LuaSnip",
