@@ -119,8 +119,13 @@ return {
 		t('" })'),
 	}, { condition = not_in_string_comment * line_begin }),
 	s({ trig = "vni", dscr = "Inspect", snippetType = "autosnippet" }, {
-		t('vim.notify(vim.inspect('),
+		t("vim.notify(vim.inspect("),
 		i(1),
-		t('))'),
+		t("))"),
+	}, { condition = not_in_string_comment }),
+	s({ trig = "vsf", dscr = "Schedule", snippetType = "autosnippet" }, {
+		t("vim.schedule(function() "),
+		i(1),
+		t(" end)"),
 	}, { condition = not_in_string_comment * line_begin }),
 }

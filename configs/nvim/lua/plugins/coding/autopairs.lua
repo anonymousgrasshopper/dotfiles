@@ -30,7 +30,7 @@ return {
 								if
 									vim.tbl_contains(
 										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
-										line:sub(col - 1, col)
+										line:sub(col - 2, col - 1)
 									) -- if the two characters before the cursor are paired, don't remove them
 								then
 									return false
@@ -38,10 +38,10 @@ return {
 							end
 							-- snippets
 							if
-								(vim.tbl_contains({ "markdown", "tex" }, fn.get_ft()) and line:sub(col - 5, col):match("\\left"))
-								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, fn.get_ft()) and
+								(vim.tbl_contains({ "markdown", "tex" }, ft) and line:sub(col - 6, col - 1):match("\\left"))
+								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, ft) and
 								   (line:sub(1, col - 1):match("if%s+$") or line:sub(1, col - 1):match("while%s+$")))
-								or (o.key == "(" and fn.get_ft() == "cpp" and line:sub(col - 4, col):match("%Wall"))
+								or (o.key == "(" and ft == "cpp" and line:sub(col - 5, col - 1):match("%Wall"))
 							then
 								return false
 							end
