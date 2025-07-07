@@ -60,9 +60,9 @@
 		}
 	},
 	"push_front": {
-		"prefix": ".pb(",
+		"prefix": ".pf(",
 		"body": [
-			".push_back($1"
+			".push_front($1"
 		],
 		"luasnip": {
 			"autotrigger": true,
@@ -85,33 +85,6 @@
 			"${1:type}* ${2:name} = new ${1:type}[${3:size}];\nfor (int i=0;i<${3:size};i++) cin >> ${2:name}[i];"
 		],
 		"desciption": "Dynamic array"
-	},
-	"vector<int>": {
-		"prefix": "vi ",
-		"body": [
-			"vector<int> ${1:name}(${2:size});"
-		],
-		"luasnip": {
-			"autotrigger": true
-		}
-	},
-	"vector<vector<int>>": {
-		"prefix": "vvi ",
-		"body": [
-			"vector<vector<int>> ${1:name}(${2:size});"
-		],
-		"luasnip": {
-			"autotrigger": true
-		}
-	},
-	"vector<pair<int,int>>": {
-		"prefix": "vii ",
-		"body": [
-			"vector<pair<int,int>> ${1:name}(${2:size});"
-		],
-		"luasnip": {
-			"autotrigger": true
-		}
 	},
 	"builtin": {
 		"prefix": "bltn",

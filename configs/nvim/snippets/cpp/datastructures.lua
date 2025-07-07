@@ -81,4 +81,21 @@ return {
 	s({ trig = "i:", dscr = "private access specifier", snippetType = "autosnippet" }, {
 		t({ "private:", "" }),
 	}, { condition = not_in_string_comment }),
+	s({ trig = "vi ", dscr = "vector<int>", snippetType = "autosnippet" }, {
+		t("vector<int> "),
+		i(1, "name"),
+		t("("),
+		i(2, "size"),
+		t(")"),
+	}, { condition = not_in_string_comment }),
+	s({ trig = "vii ", dscr = "vector<pair<int, int>>", snippetType = "autosnippet" }, {
+		t("vector<pair<int, int>> "),
+		i(1, "name"),
+		t("("),
+		i(2, "size"),
+		t(")"),
+	}, { condition = not_in_string_comment }),
+	s({ trig = "pi ", dscr = "pair<int, int>", snippetType = "autosnippet" }, {
+		t("pair<int, int> "),
+	}, { condition = not_in_string_comment }),
 }

@@ -36,6 +36,7 @@
 
 /* hide stuff */
 .titlebar-button,
+.urlbarView-row::before,
 button[title="Tridactyl sidebar"],
 button[title="Customize sidebar"] {
 	display: none;
