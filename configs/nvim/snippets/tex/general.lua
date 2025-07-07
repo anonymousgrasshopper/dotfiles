@@ -15,18 +15,19 @@ return {
 		{ trig = "tmp", dscr = "template", snippetType = "autosnippet" },
 		fmt(
 			[[
-        \documentclass{<>}
+        \documentclass[<>]{<>}
+
+        \begin{document}
         \title{<>}
         \author{<>}
         \date{\today}
-
-        \begin{document}
         \maketitle
         <>
         \end{document}
       ]],
 			{
 				i(3, "article"),
+				i(4, "11pt"),
 				i(1),
 				i(2),
 				i(0),
