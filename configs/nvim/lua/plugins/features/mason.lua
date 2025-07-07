@@ -1,6 +1,6 @@
 return {
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		cmd = { "Mason", "MasonInstall", "MasonUpdate", "MasonLog", "MasonUninstallAl" },
 		config = function()
 			local mason = require("mason")
@@ -21,7 +21,7 @@ return {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = {
-			"williamboman/mason.nvim",
+			"mason-org/mason.nvim",
 		},
 		cmd = {
 			"MasonToolsInstall",

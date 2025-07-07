@@ -243,6 +243,21 @@ return {
 			},
 		}
 
+		local undotree = {
+			filetypes = { "undotree" },
+			sections = {
+				lualine_a = {
+					function() return "Undotree" end,
+				},
+				lualine_y = {
+					function() return "󱁊 " end,
+				},
+				lualine_z = {
+					function() return " " .. os.date("%R") end,
+				},
+			},
+		}
+
 		local yazi = {
 			filetypes = { "yazi" },
 			sections = {
@@ -361,6 +376,7 @@ return {
 				nvim_dap_ui,
 				telescope,
 				toggleterm,
+				undotree,
 				yazi,
 			},
 		})

@@ -1,12 +1,29 @@
 return {
-	"lukas-reineke/indent-blankline.nvim",
+	"saghen/blink.indent",
 	event = { "BufReadPre", "BufNewFile" },
-	main = "ibl",
 	opts = {
-		indent = { char = "┊" }, -- │
-		exclude = {
-			filetypes = {
-				"undotree",
+		blocked = {
+			buftypes = { "nofile", "help" },
+			filetypes = { "undotree" },
+		},
+		static = {
+			enabled = true,
+			char = "│", -- ┊
+			highlights = {
+				"Indent",
+			},
+		},
+		scope = {
+			enabled = true,
+			char = "│",
+			highlights = {
+				"IndentScope",
+			},
+		},
+		underline = {
+			enabled = false,
+			highlights = {
+				"IndentScope",
 			},
 		},
 	},

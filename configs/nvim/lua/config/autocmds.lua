@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 	end,
 })
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "alpha",
+	pattern = { "alpha", "undotree" },
 	callback = function() vim.cmd("hi Cursor blend=100") end,
 })
 vim.api.nvim_create_autocmd("InsertEnter", {
@@ -47,7 +47,9 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 })
 vim.api.nvim_create_autocmd("CmdlineEnter", {
 	callback = function()
-		vim.schedule(function() vim.cmd("hi Cursor blend=0") end)
+		if vim.fn.getcmdscreenpos() == 2 then
+			vim.schedule(function() vim.cmd("hi Cursor blend=0") end)
+		end
 	end,
 })
 
@@ -129,31 +131,5 @@ vim.api.nvim_create_autocmd("FileType", {
 			"<c-g>u<Esc>[szg`]a<c-g>u",
 			{ desc = "Add last word marked as misspelled to dictionnary", buffer = true }
 		)
-	end,
-})
-
--- type 's ' in the command line to substitute with very magic mode
-vim.api.nvim_create_autocmd("CmdlineChanged", {
-	pattern = "*",
-	callback = function()
-		local cmd_type = vim.fn.getcmdtype()
-		local cmd_text = vim.fn.getcmdline()
-
-		if cmd_type == ":" then
-			if cmd_text == "s " then
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>%s@\\v@<Left>", true, true, true), "n", false)
-			elseif cmd_text == "'<,'>s " then
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-u>'<,'>s@\\v@<Left>", true, true, true), "n", false)
-			else
-				local match = cmd_text:match("(%d+,%s*%d+%s*s) ")
-				if match then
-					vim.api.nvim_feedkeys(
-						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "@\\v@<Left>", true, true, true),
-						"n",
-						false
-					)
-				end
-			end
-		end
 	end,
 })

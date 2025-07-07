@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 local libs = {
 	"nvim-lua/plenary.nvim",

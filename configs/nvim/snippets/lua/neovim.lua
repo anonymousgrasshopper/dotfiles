@@ -104,8 +104,6 @@ return {
 		snippetType = "autosnippet",
 	}, {
 		t("<Cmd>"),
-		d(1, get_visual),
-		t("<CR>"),
 	}),
 	s({ trig = "vks", dscr = "Create a keymap", snippetType = "autosnippet" }, {
 		t('vim.keymap.set("'),

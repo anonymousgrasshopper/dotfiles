@@ -24,7 +24,10 @@ local vim_enter_early_redraw = function()
 		vim.opt.statusline = "%#StatusLineBlue# NORMAL %* %F %#StatusLineIconColor#%{g:statusline_filetype_icon}%="
 			.. '%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
-		if not (lang and pcall(vim.treesitter.start, buf, lang)) then
+		if
+			not vim.tbl_contains({ "tex", "markdown", "zsh" }, ft)
+			and not (lang and pcall(vim.treesitter.start, buf, lang))
+		then
 			vim.bo[buf].syntax = ft
 		end
 
@@ -70,6 +73,9 @@ return {
 
 					NormalDark = { bg = palette.sumiInk1 },
 					TerminalBackground = { bg = palette.sumiInk0 },
+
+					Indent = { fg = palette.sumiInk6 },
+					IndentScope = { fg = palette.springViolet2 },
 
 					-- plugins
 					markdownH1 = { fg = "#ff5d62" },

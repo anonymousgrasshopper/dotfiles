@@ -30,7 +30,6 @@ vim.opt.scrolloff      = 5      -- have at least this number of lines above and 
 vim.opt.sidescrolloff  = 10     -- have at least this number of columns around your cursor when possible
 vim.opt.smoothscroll   = true   -- smooth scroll with wraped lines
 vim.opt.cursorline     = true   -- highlight the current line
--- vim.opt.statuscolumn   = "%@SignCb@%s%=%T%@NumCb@%l│%T"
 
 -- line wrapping and auto-commenting
 vim.opt.wrap           = false  -- enable/disable line wrapping
@@ -83,7 +82,8 @@ vim.opt.mouse          = "nvi"  -- disable the mouse in command mode
 
 -- search settings
 vim.opt.gdefault       = true   -- substitute globally (in the whole line) by default
-vim.opt.smartcase      = true   -- if mixed cases are used, then the search is case-sensitive
+vim.opt.ignorecase     = true   -- ignore case when searching
+vim.opt.smartcase      = true   -- override ignorecase if mixed cases are used
 
 -- colors
 vim.opt.termguicolors  = true   -- requires a true colors terminal emulator

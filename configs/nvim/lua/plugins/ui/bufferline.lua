@@ -32,7 +32,7 @@ return {
 					},
 					{
 						filetype = "undotree",
-						text = "UNDOTREE",
+						text = "Undotree",
 						highlight = "PanelHeading",
 						separator = "▐",
 					},

@@ -13,5 +13,12 @@ return {
 			sections = { enabled = 1 },
 			envs = { enabled = 1 },
 		}
+
+		vim.api.nvim_create_autocmd("Filetype", {
+			pattern = "tex",
+			callback = function()
+				vim.keymap.set("n", "<leader>K", "<Plug>(vimtex-doc-package)", { desc = "Hover documentation", buffer = true })
+			end,
+		})
 	end,
 }

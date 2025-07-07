@@ -61,16 +61,8 @@ return {
 		{ "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
 		{ "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
 
-		{
-			"<leader>ff",
-			function() require("telescope.builtin").find_files({ hidden = true }) end,
-			desc = "Find files in cwd",
-		},
-		{
-			"<leader>fr",
-			function() require("telescope.builtin").oldfiles({ hidden = true }) end,
-			desc = "Find recent files",
-		},
+		{ "<leader>ff", function() require("telescope.builtin").find_files({ hidden = true }) end, desc = "Find files in cwd" },
+		{ "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden = true }) end, desc = "Find recent files" },
 
 		{ "<leader>sj", function() require("telescope.builtin").jumplist() end, desc = "Jumplist" },
 		{ "<leader>sm", function() require("telescope.builtin").marks() end, desc = "Search Marks" },
@@ -79,45 +71,17 @@ return {
 		{ "<leader>sr", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
 		{ "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Search open Buffers" },
 		{ "<leader>sg", live_grep, desc = "Search with Grep in cwd" },
-		{
-			"<leader>sw",
-			function() require("telescope.builtin").grep_string() end,
-			desc = "Search Word under cursor in cwd",
-		},
-		{
-			"<leader>sd",
-			function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end,
-			desc = "Search buffer's diagnostics",
-		},
+		{ "<leader>sw", function() require("telescope.builtin").grep_string() end, desc = "Search Word under cursor in cwd" },
+		{ "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search buffer's diagnostics" },
 		{ "<leader>sl", function() require("telescope.builtin").lsp_references() end, desc = "Search LSP references" },
 
 		{ "<localleader>sr", function() require("telescope.builtin").lsp_references() end, desc = "Search references" },
-		{
-			"<localleader>si",
-			function() require("telescope.builtin").lsp_incoming_calls() end,
-			desc = "search incoming calls",
-		},
-		{
-			"<localleader>so",
-			function() require("telescope.builtin").lsp_outgoing_calls() end,
-			desc = "Search outgoing calls",
-		},
-		{
-			"<localleader>ss",
-			function() require("telescope.builtin").lsp_document_symbols() end,
-			desc = "Search document symbols",
-		},
+		{ "<localleader>si", function() require("telescope.builtin").lsp_incoming_calls() end, desc = "search incoming calls" },
+		{ "<localleader>so", function() require("telescope.builtin").lsp_outgoing_calls() end, desc = "Search outgoing calls" },
+		{ "<localleader>ss", function() require("telescope.builtin").lsp_document_symbols() end, desc = "Search document symbols" },
 		{ "<localleader>sd", function() require("telescope.builtin").lsp_diagnostics() end, desc = "Search diagnostics" },
-		{
-			"<localleader>sw",
-			function() require("telescope.builtin").lsp_workspace_symbols() end,
-			desc = "Search workspace symbols",
-		},
-		{
-			"<localleader>sW",
-			function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end,
-			desc = "Search dynamic workspace symbols",
-		},
+		{ "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
+		{ "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
 
 		{ "<leader>gfc", function() require("telescope.builtin").git_commits() end, desc = "Search git commits" },
 		{ "<leader>gfB", function() require("telescope.builtin").git_bcommits() end, desc = "Search git bcommits" },

@@ -66,7 +66,7 @@ return {
 			{ "~~", "~~", ft = { "markdown" } },
 			{ "```", "```", ft = { "markdown" }, newline = true },
 			{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
-			{ "<Cmd>", "<CR>", ft = { "lua" }, disable_start = true, disable_end = true },
+			{ "<Cmd>", "<CR>", ft = { "lua" } },
 		},
 	},
 	{
