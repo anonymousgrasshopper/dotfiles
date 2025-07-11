@@ -8,7 +8,7 @@ syn region markdownMath start="\\\@<!\$" end="\$" skip="\\\$" contains=@tex,@NoS
 syn region markdownMath start="\\\@<!\$\$" end="\$\$" skip="\\\$" contains=@tex,@NoSpell keepend
 
 " %% comment
-syn region markdownComment start="\\\@<!%%" end="%%" skip="\\%" contains=@Comment keepend
+syn region markdownComment start="\\\@<!%%" end="%%" skip="\\%" contains=@Comment,@Spell keepend
 highlight link markdownComment Comment
 
 let b:current_syntax = 'markdown'
