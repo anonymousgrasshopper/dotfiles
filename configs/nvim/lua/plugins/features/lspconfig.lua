@@ -42,7 +42,6 @@ return {
 					"mason-org/mason.nvim",
 				},
 			},
-			{ "rachartier/tiny-inline-diagnostic.nvim", opts = {} },
 		},
 		config = function()
 			local mason_lspconfig = require("mason-lspconfig")
@@ -52,6 +51,12 @@ return {
 					textDocument = {
 						completionItem = {
 							snippetSupprt = true,
+						},
+					},
+					workspace = {
+						fileOperations = {
+							didRename = true,
+							willRename = true,
 						},
 					},
 				},
@@ -149,6 +154,11 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "LspAttach",
+		opts = {},
 	},
 	{
 		"rmagatti/goto-preview",

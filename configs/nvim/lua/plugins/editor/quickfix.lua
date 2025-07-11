@@ -6,6 +6,9 @@ return {
 			auto_resize_height = true,
 			preview = {
 				win_height = 9,
+				show_title = false,
+				show_scroll_bar = false,
+				buf_label = false,
 			},
 			filter = {
 				fzf = {
@@ -23,10 +26,10 @@ return {
 			{ "]Q", "<Plug>(qf_loc_next)zz", desc = "Next location list entry" },
 			{ "[Q", "<Plug>(qf_loc_previous)zz", desc = "Previous location list entry" },
 			{ "<leader>qs", "<Plug>(qf_qf_switch)", desc = "Jump to and from location/quickfix windows" },
-			{ "<leader>qt", "<Plug>(qf_qf_toggle)", desc = "Toggle the quickfix window" },
-			{ "<leader>qT", "<Plug>(qf_qf_toggle_stay)", desc = "Toggle the quickfix window without moving" },
-			{ "<leader>ql", "<Plug>(qf_loc_toggle", desc = "Toggle current location window" },
-			{ "<leader>qL", "<Plug>(qf_loc_toggle_stay)", desc = "Toggle current location window without moving" },
+			-- { "<leader>qt", "<Plug>(qf_qf_toggle)", desc = "Toggle the quickfix window" },
+			-- { "<leader>qT", "<Plug>(qf_qf_toggle_stay)", desc = "Toggle the quickfix window without moving" },
+			-- { "<leader>ql", "<Plug>(qf_loc_toggle", desc = "Toggle current location window" },
+			-- { "<leader>qL", "<Plug>(qf_loc_toggle_stay)", desc = "Toggle current location window without moving" },
 			{ "<leader>q]", "<Plug>(qf_newer)", desc = "Navigate to a newer list" },
 			{ "<leader>q[", "<Plug>(qf_older)", desc = "Navigate to an older list" },
 			{ "<leader>qf", "<Plug>(qf_previous_file)", desc = "Next file" },

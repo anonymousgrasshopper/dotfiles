@@ -82,7 +82,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		"help",
 		"lspinfo",
 		"notify",
-		"qf",
 		"tutor",
 	},
 	callback = function(event)

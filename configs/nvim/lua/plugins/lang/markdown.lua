@@ -1,5 +1,5 @@
 local obsidian_vaults = {
-	["Mathématiques"] = { vim.env.HOME .. "/Notes/Mathématiques", "Solutions et Notes/Compétitions" },
+	["Mathématiques"] = { vim.env.HOME .. "/Mathématiques/Mathématiques", "Solutions et Notes/Compétitions" },
 }
 local workspaces = {}
 for vault, path in pairs(obsidian_vaults) do

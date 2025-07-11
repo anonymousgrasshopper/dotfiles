@@ -6,7 +6,7 @@ return {
 	--     bash = { "shellcheck" },
 	--     html = { "htmlhint" },
 	--   }
-	--   vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePost", "InsertLeave", "TextChanged" }, {
+	--   vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave", "TextChanged" }, {
 	--     callback = function() require("lint").try_lint() end,
 	--   })
 	-- end,

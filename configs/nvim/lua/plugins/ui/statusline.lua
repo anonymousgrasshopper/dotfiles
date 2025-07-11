@@ -68,6 +68,25 @@ return {
 			},
 		}
 
+		local checkhealth = {
+			filetypes = { "checkhealth" },
+			sections = {
+				lualine_a = {
+					function() return "Health" end,
+				},
+				lualine_b = {
+					function() return "󰓙 " end,
+				},
+				lualine_y = {
+					{ "progress", separator = " ", padding = { left = 1, right = 0 } },
+					{ "location", padding = { left = 0, right = 1 } },
+				},
+				lualine_z = {
+					function() return " " .. os.date("%R") end,
+				},
+			},
+		}
+
 		local competitest = {
 			filetypes = { "CompetiTest" },
 			sections = {
@@ -365,6 +384,7 @@ return {
 			},
 			extensions = {
 				aerial,
+				checkhealth,
 				competitest,
 				diffview,
 				"fugitive",

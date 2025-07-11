@@ -33,7 +33,7 @@ end
 
 local check_then_not_expanded = make_condition(function() return check_not_expanded("%s+then") end)
 local check_do_not_expanded = make_condition(function() return check_not_expanded("%s+do") end)
-local check_func_not_expanded = make_condition(function() return check_not_expanded("function%s*()") end)
+local check_func_not_expanded = make_condition(function() return check_not_expanded("function%s*%(%)") end)
 
 return {
 	s(
@@ -77,7 +77,7 @@ return {
 		{ condition = not_in_string_comment }
 	),
 	s(
-		{ trig = "([^%w_])function", dscr = "function", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
+		{ trig = "function", dscr = "function", wordTrig = true, snippetType = "autosnippet" },
 		fmt(
 			[[
         <>function(<>)
@@ -94,7 +94,7 @@ return {
 		{ condition = not_in_string_comment * check_func_not_expanded }
 	),
 	s(
-		{ trig = "([^%w_])func ", dscr = "function", regTrig = true, wordTrig = false, snippetType = "autosnippet" },
+		{ trig = "func ", dscr = "function", wordTrig = true, snippetType = "autosnippet" },
 		fmt("<>function(<>) <> end<>", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
