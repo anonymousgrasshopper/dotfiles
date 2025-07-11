@@ -3,20 +3,26 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		branch = "main",
 		build = ":TSUpdate",
-		-- event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(event)
+					local buf = event.buf
 					local disabled_filetypes = {
 						"tex",
-						"markdown",
 						"checkhealth",
 						"zsh",
 					}
-					if not vim.tbl_contains(disabled_filetypes, vim.bo[event.buf].filetype) then
+					local regex_highlighting = {
+						"markdown",
+					}
+					if not vim.tbl_contains(disabled_filetypes, vim.bo[buf].filetype) then
 						if pcall(vim.treesitter.start) then
 							vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-							vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+							vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+							if vim.tbl_contains(regex_highlighting, vim.bo[buf].filetype) then
+								vim.bo[buf].syntax = "ON"
+							end
 						end
 					end
 				end,
@@ -152,7 +158,7 @@ return {
 				repeatable = {
 					motions = {
 						[";"] = { callback = ts_repeat_move.repeat_last_move, desc = "repeat" },
-						["<M-;>"] = { callback = ts_repeat_move.repeat_last_move_opposite, desc = "repeat" },
+						["<M-;>"] = { callback = ts_repeat_move.repeat_last_move_previous, desc = "repeat" },
 						["f"] = { callback = ts_repeat_move.builtin_f_expr, desc = "repeat" },
 						["F"] = { callback = ts_repeat_move.builtin_F_expr, desc = "repeat" },
 						["t"] = { callback = ts_repeat_move.builtin_t_expr, desc = "repeat" },
