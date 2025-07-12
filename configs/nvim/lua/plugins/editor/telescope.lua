@@ -122,6 +122,8 @@ return {
 						["<C-f>"] = actions.preview_scrolling_down,
 						["<C-b>"] = actions.preview_scrolling_up,
 						["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+						["<M-i>"] = function() vim.api.nvim_win_set_cursor(0, {1, 0}) end,
+						["<M-a>"] = function() vim.api.nvim_win_set_cursor(0, {1, #vim.api.nvim_get_current_line()}) end,
 					},
 					n = {
 						["q"] = actions.close,

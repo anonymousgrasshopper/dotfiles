@@ -33,7 +33,7 @@ return {
 			win_options = {
 				conceallevel = {
 					default = vim.o.conceallevel,
-					rendered = 3,
+					rendered = 2,
 				},
 				concealcursor = {
 					default = vim.o.concealcursor,
