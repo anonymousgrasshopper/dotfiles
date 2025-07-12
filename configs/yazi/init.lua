@@ -23,10 +23,11 @@ require("yatline"):setup({
 		fg = "#1f1f28",
 		bg_mode = {
 			normal = "#7e9cd8",
-			select = "957FB8",
+			select = "#957FB8",
 			un_set = "#dca561",
 		},
 	},
+
 	style_b = { bg = "#54546d", fg = "#9cabca" },
 	style_c = { bg = "#1f1f28", fg = "#9cabca" },
 
@@ -82,26 +83,4 @@ require("yatline"):setup({
 			},
 		},
 	},
-
-	-- header_line = {
-	--   left = {
-	--     section_a = {
-	--       {type = "line", custom = false, name = "tabs", params = {"left"}},
-	--     },
-	--     section_b = {
-	--     },
-	--     section_c = {
-	--     }
-	--   },
-	--   right = {
-	--     section_a = {
-	--       {type = "string", custom = false, name = "date", params = {"%A, %d %B %Y"}},
-	--     },
-	--     section_b = {
-	--       {type = "string", custom = false, name = "date", params = {"%X"}},
-	--     },
-	--     section_c = {
-	--     }
-	--   }
-	-- },
 })

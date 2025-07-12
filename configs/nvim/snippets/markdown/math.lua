@@ -16,6 +16,14 @@ local get_visual = function(_, parent)
 	end
 end
 
+local check_not_expanded = function(regexp)
+	local line = vim.api.nvim_get_current_line()
+	return not line:match(regexp)
+end
+
+local check_floor_not_expanded = make_condition(function() return check_not_expanded("\\rfloo") end)
+local check_ceil_not_expanded = make_condition(function() return check_not_expanded("\\rcei") end)
+
 local tex = {}
 tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
 tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
@@ -62,14 +70,14 @@ return {
 		fmt("\\left\\lfloor <> \\right\\rfloor", {
 			d(1, get_visual),
 		}),
-		{ condition = tex.in_mathzone }
+		{ condition = tex.in_mathzone * check_floor_not_expanded }
 	),
 	s(
 		{ trig = "ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
 		fmt("\\left\\lceil <> \\right\\rceil", {
 			d(1, get_visual),
 		}),
-		{ condition = tex.in_mathzone }
+		{ condition = tex.in_mathzone * check_ceil_not_expanded }
 	),
 	s(
 		{ trig = "set", dscr = "curly braces", wordTrig = false, snippetType = "autosnippet" },
