@@ -18,6 +18,7 @@ return {
 					}
 					if not vim.tbl_contains(disabled_filetypes, vim.bo[buf].filetype) then
 						if pcall(vim.treesitter.start) then
+							vim.wo.foldmethod = "expr"
 							vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 							vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 							if vim.tbl_contains(regex_highlighting, vim.bo[buf].filetype) then

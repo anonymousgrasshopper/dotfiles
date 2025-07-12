@@ -16,7 +16,8 @@ require("git"):setup()
 
 require("yatline"):setup({
 	section_separator = { open = "", close = "" },
-	part_separator = { open = "", close = "" },
+	-- part_separator = { open = "", close = "" },
+	part_separator = { open = "", close = "" },
 	inverse_separator = { open = "", close = "" },
 
 	style_a = {
@@ -29,7 +30,7 @@ require("yatline"):setup({
 	},
 
 	style_b = { bg = "#54546d", fg = "#9cabca" },
-	style_c = { bg = "#1f1f28", fg = "#9cabca" },
+	style_c = { bg = "#2a2a37", fg = "#9cabca" },
 
 	permissions_t_fg = "#98bb6c",
 	permissions_r_fg = "#e6c384",
@@ -37,18 +38,20 @@ require("yatline"):setup({
 	permissions_x_fg = "#7aa89f",
 	permissions_s_fg = "#957fb8",
 
-	tab_width = 20,
-	tab_use_inverse = false,
-
 	selected = { icon = "󰻭", fg = "#ffa066" },
 	copied = { icon = "", fg = "#98bb6c" },
 	cut = { icon = "", fg = "#e46876" },
+	files = { icon = "", fg = "#7e9cd8" },
+	filtereds = { icon = "", fg = "#957fb8" },
 
 	total = { icon = "󰮍", fg = "#ff9e3b" },
 	succ = { icon = "", fg = "#7aa89f" },
 	fail = { icon = "", fg = "#e82424" },
 	found = { icon = "󰮕", fg = "#7e9cd8" },
 	processed = { icon = "󰐍", fg = "#6A9598" },
+
+	tab_width = 20,
+	tab_use_inverse = false,
 
 	show_background = true,
 
@@ -63,22 +66,23 @@ require("yatline"):setup({
 				{ type = "string", custom = false, name = "tab_mode" },
 			},
 			section_b = {
-				{ type = "string", custom = false, name = "hovered_size" },
+				-- { type = "string", custom = false, name = "hovered_size" },
 			},
 			section_c = {
-				-- {type = "string", custom = false, name = "hovered_path"},
+				-- { type = "string", custom = false, name = "hovered_path" },
 				{ type = "coloreds", custom = false, name = "count" },
 			},
 		},
 		right = {
 			section_a = {
-				{ type = "string", custom = false, name = "cursor_position" },
+				{ type = "string", custom = false, name = "date", params = { "%R" } },
+				{ type = "string", custom = true, name = "" },
 			},
 			section_b = {
+				{ type = "string", custom = false, name = "cursor_position" },
 				{ type = "string", custom = false, name = "cursor_percentage" },
 			},
 			section_c = {
-				-- {type = "string", custom = false, name = "hovered_file_extension", params = {true}},
 				{ type = "coloreds", custom = false, name = "permissions" },
 			},
 		},

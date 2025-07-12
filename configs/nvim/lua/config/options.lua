@@ -17,7 +17,7 @@ opt.fillchars = {
 -- folding
 opt.foldlevel      = 99     -- only close folds with at least 100 lines
 opt.foldlevelstart = 99     -- no folds closed upon entering buffer
-opt.foldmethod     = "syntax"
+opt.foldmethod     = "indent"
 opt.foldcolumn     = "0"    --size of column for folding indications
 opt.foldlevelstart = 99
 opt.conceallevel   = 2      -- replace concealed text by predefined fillchars
@@ -39,6 +39,7 @@ opt.breakindentopt = { "min:30", "shift:-1" }
 opt.linebreak      = true   --
 opt.breakat        = " "    --
 opt.formatoptions  = "jcqlnt2"
+vim.cmd([[autocmd BufEnter * set formatoptions=jcqlnt2]])
 
 -- writing, undo & backup
 opt.autowrite      = false  -- enable/disable autowrite
@@ -61,12 +62,12 @@ opt.splitkeep      = "screen"
 opt.splitright     = true   -- split vertical window to the right
 opt.splitbelow     = true   -- split horizontal window to the bottom
 opt.winminwidth    = 5      -- minimum window width
-opt.winwidth         = 10
-opt.equalalways      = false
+opt.winwidth       = 10
+opt.equalalways    = false
 
 -- popup windows
-opt.timeout          = true -- enable timeout for mapped sequences to complete 
-opt.timeoutlen       = 500  -- time in milliseconds to wait for a mapped sequence to complete 
+opt.timeout        = true -- enable timeout for mapped sequences to complete
+opt.timeoutlen     = 500  -- time in milliseconds to wait for a mapped sequence to complete
 opt.pumblend       = 20   -- transparency of the window
 opt.pumheight      = 10   -- Maximum number of entries in a popup
 opt.updatetime     = 250  -- delay for LSP pop-up windows to appear
@@ -97,7 +98,7 @@ opt.guicursor      = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:Cursor/lCursor
 opt.backspace      = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
 -- command-line completion
-opt.wildmode = "longest:full,full"
+opt.wildmode       = "longest:full,full"
 
 -- prompts
 opt.shortmess      = "tToOcCFI"

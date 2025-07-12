@@ -1,28 +1,3 @@
-vim.diagnostic.config({
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "󰅚",
-			[vim.diagnostic.severity.WARN] = "󰀪",
-			[vim.diagnostic.severity.HINT] = "",
-			[vim.diagnostic.severity.INFO] = "",
-		},
-		texthl = {
-			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-		},
-		numhl = {
-			[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-			[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-			[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-			[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-		},
-	},
-	virtual_text = false,
-	severity_sort = true,
-})
-
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 ---@diagnostic disable-next-line: duplicate-set-field
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
@@ -41,6 +16,10 @@ return {
 				dependencies = {
 					"mason-org/mason.nvim",
 				},
+			},
+			{
+				"rachartier/tiny-inline-diagnostic.nvim",
+				opts = {},
 			},
 		},
 		config = function()
@@ -154,11 +133,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"rachartier/tiny-inline-diagnostic.nvim",
-		event = "LspAttach",
-		opts = {},
 	},
 	{
 		"rmagatti/goto-preview",

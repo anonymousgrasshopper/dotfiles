@@ -533,7 +533,7 @@ function Yatline.string.get:cursor_position()
 	local length = #cx.active.current.files
 
 	if length ~= 0 then
-		return string.format(" %2d/%-2d", cursor + 1, length)
+		return string.format("%2d/%-2d", cursor + 1, length):sub(2)
 	else
 		return "0"
 	end
@@ -550,11 +550,11 @@ function Yatline.string.get:cursor_percentage()
 	end
 
 	if percentage == 0 then
-		return " Top "
+		return "Top"
 	elseif percentage == 100 then
-		return " Bot "
+		return "Bot"
 	else
-		return string.format("%3d%% ", percentage)
+		return string.format("%3d%%", percentage):sub(2)
 	end
 end
 

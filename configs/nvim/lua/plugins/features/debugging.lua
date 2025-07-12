@@ -49,23 +49,6 @@ return {
 		local dapui = require("dapui")
 		local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")
 
-		-- icons
-		local signs = {
-			Stopped = { "󰁕", "DiagnosticWarn", "DapStoppedLine" },
-			Breakpoint = { "" },
-			BreakpointCondition = { "" },
-			BreakpointRejected = { "", "DiagnosticError" },
-			LogPoint = { ".>" },
-		}
-		for name, sign in pairs(signs) do
-			vim.fn.sign_define("Dap" .. name, {
-				text = sign[1],
-				texthl = sign[2] or "DiagnosticInfo",
-				linehl = sign[3],
-				numhl = sign[3],
-			})
-		end
-
 		-- setup dapui
 		dap.listeners.before.attach.dapui_config = function() dapui.open() end
 		dap.listeners.before.launch.dapui_config = function() dapui.open() end

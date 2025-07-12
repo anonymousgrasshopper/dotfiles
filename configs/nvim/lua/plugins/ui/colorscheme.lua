@@ -59,17 +59,16 @@ return {
 					PmenuSbar = { bg = theme.ui.bg_m1 },
 					PmenuThumb = { bg = theme.ui.bg_p2 },
 
-					Search = { fg = palette.oldWhite, bg = palette.waveBlue2 },
-
-					WinSeparator = { fg = palette.sumiInk6 },
-
-					PanelHeading = { fg = palette.autumnYellow, bg = palette.sumiInk4 },
-
 					StatusLine = { fg = palette.springViolet2, bg = palette.sumiInk4 },
 					StatusLineBlue = { fg = palette.sumiInk4, bg = palette.crystalBlue },
 					StatusLineGray = { fg = palette.springViolet2, bg = palette.sumiInk6 },
 					StatusLineSeparatorBlue = { fg = palette.crystalBlue, bg = palette.sumiInk6 },
 					StatusLineSeparatorGray = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
+
+					Search = { fg = palette.oldWhite, bg = palette.waveBlue2 },
+					Folded = { fg = palette.springViolet1, bg = palette.sumiInk3 },
+					WinSeparator = { fg = palette.sumiInk6 },
+					PanelHeading = { fg = palette.autumnYellow, bg = palette.sumiInk4 },
 
 					NormalDark = { bg = palette.sumiInk1 },
 					TerminalBackground = { bg = palette.sumiInk0 },
