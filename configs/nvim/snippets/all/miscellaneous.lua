@@ -1,13 +1,7 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local f = ls.function_node
-local make_condition = require("luasnip.extras.conditions").make_condition
-
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
-local first_line = make_condition(function() return vim.api.nvim_win_get_cursor(0)[1] == 1 end)
+local ls = require("snippet/luasnip")
+local s, t, i, f = ls.s, ls.t, ls.i, ls.f
+local helpers = require("snippet/helpers")
+local first_line, line_begin = helpers.first_line, helpers.line_begin
 
 local update_filetype = function(index)
 	return f(function(arg)
@@ -22,9 +16,18 @@ local update_filetype = function(index)
 end
 
 return {
-	s({ trig = "#!", dscr = "shebang", snippetType = "autosnippet", hidden = true }, {
-		t("#!/bin/"),
-		i(1, "bash"),
-		update_filetype(1),
-	}, { condition = first_line * line_begin }),
+	s(
+		{
+			trig = "#!",
+			dscr = "shebang",
+			snippetType = "autosnippet",
+			hidden = true,
+			condition = first_line * line_begin,
+		},
+		{
+			t("#!/bin/"),
+			i(1, "bash"),
+			update_filetype(1),
+		}
+	),
 }

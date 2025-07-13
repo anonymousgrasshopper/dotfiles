@@ -1,24 +1,18 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local f = ls.function_node
-local fmt = require("luasnip.extras.fmt").fmta
-local make_condition = require("luasnip.extras.conditions").make_condition
-
-local check_not_in_node = function(ignored_nodes)
-	local pos = vim.api.nvim_win_get_cursor(0)
-	local row, col = pos[1] - 1, pos[2] - 1
-	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
-	return not vim.tbl_contains(ignored_nodes, node_type)
-end
-
-local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
+local ls = require("snippet/luasnip")
+local s, t, i, c, f, fmt = ls.s, ls.t, ls.i, ls.c, ls.f, ls.fmt
+local helpers = require("snippet/helpers")
+local check_not_expanded = helpers.check_not_expanded
+local not_in_string_comment = helpers.not_in_string_comment
 
 return {
 	s(
-		{ trig = "class%s+([%w_]+)%s", regTrig = true, dscr = "class template", snippetType = "autosnippet" },
+		{
+			trig = "class%s+([%w_]+)%s",
+			regTrig = true,
+			dscr = "class template",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
 		fmt(
 			[[
         class <> <><>
@@ -34,11 +28,16 @@ return {
 				}),
 				i(0),
 			}
-		),
-		{ condition = not_in_string_comment }
+		)
 	),
 	s(
-		{ trig = "struct%s+([%w_]+)%s", regTrig = true, dscr = "struct template", snippetType = "autosnippet" },
+		{
+			trig = "struct%s+([%w_]+)%s",
+			regTrig = true,
+			dscr = "struct template",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
 		fmt(
 			[[
         struct <> <><>
@@ -54,11 +53,16 @@ return {
 				}),
 				i(0),
 			}
-		),
-		{ condition = not_in_string_comment }
+		)
 	),
 	s(
-		{ trig = "union%s+([%w_]+)%s", regTrig = true, dscr = "union template", snippetType = "autosnippet" },
+		{
+			trig = "union%s+([%w_]+)%s",
+			regTrig = true,
+			dscr = "union template",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
 		fmt(
 			[[
         union <> {
@@ -69,33 +73,72 @@ return {
 				f(function(_, snip) return snip.captures[1] end),
 				i(1),
 			}
-		),
-		{ condition = not_in_string_comment }
+		)
 	),
-	s({ trig = "u:", dscr = "public access specifier", snippetType = "autosnippet" }, {
-		t({ "public:", "" }),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "o:", dscr = "protected access specifier", snippetType = "autosnippet" }, {
-		t({ "protected:", "" }),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "i:", dscr = "private access specifier", snippetType = "autosnippet" }, {
-		t({ "private:", "" }),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "vi ", dscr = "vector<int>", snippetType = "autosnippet" }, {
-		t("vector<int> "),
-		i(1, "name"),
-		t("("),
-		i(2, "size"),
-		t(")"),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "vii ", dscr = "vector<pair<int, int>>", snippetType = "autosnippet" }, {
-		t("vector<pair<int, int>> "),
-		i(1, "name"),
-		t("("),
-		i(2, "size"),
-		t(")"),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "pi ", dscr = "pair<int, int>", snippetType = "autosnippet" }, {
-		t("pair<int, int> "),
-	}, { condition = not_in_string_comment }),
+	s(
+		{
+			trig = "u:",
+			dscr = "public access specifier",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		t({ "public:", "" })
+	),
+	s(
+		{
+			trig = "o:",
+			dscr = "protected access specifier",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+			t({ "protected:", "" })
+	),
+	s(
+		{
+			trig = "i:",
+			dscr = "private access specifier",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+			t({ "private:", "" })
+	),
+	s(
+		{
+			trig = "vi ",
+			dscr = "vector<int>",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		{
+			t("vector<int> "),
+			i(1, "name"),
+			t("("),
+			i(2, "size"),
+			t(")"),
+		}
+	),
+	s(
+		{
+			trig = "vii ",
+			dscr = "vector<pair<int, int>>",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		{
+			t("vector<pair<int, int>> "),
+			i(1, "name"),
+			t("("),
+			i(2, "size"),
+			t(")"),
+		}
+	),
+	s(
+		{
+			trig = "pi ",
+			dscr = "pair<int, int>",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		t("pair<int, int> ")
+	),
 }

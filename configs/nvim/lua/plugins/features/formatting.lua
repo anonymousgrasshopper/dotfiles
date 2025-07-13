@@ -1,9 +1,9 @@
 vim.api.nvim_create_user_command("FormatDisable", function(args)
 	if args.bang then
-		-- FormatDisable! will disable formatting just for this buffer
-		vim.b.disable_autoformat = true
-	else
+		-- FormatDisable! will disable formatting for all buffers
 		vim.g.disable_autoformat = true
+	else
+		vim.b.disable_autoformat = true
 	end
 end, {
 	desc = "Disable autoformat-on-save",
@@ -77,6 +77,8 @@ return {
 				"nvim/lua/plugins/lang/markdown.lua",
 				"nvim/lua/plugins/util/browsing.lua",
 				"nvim/lua/plugins/util/unix.lua",
+				"nvim/lua/snippet/",
+				"nvim/snippets/",
 			}
 			for _, path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(path) then

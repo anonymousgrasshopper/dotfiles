@@ -1,38 +1,20 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local d = ls.dynamic_node
-local sn = ls.snippet_node
-local fmt = require("luasnip.extras.fmt").fmta
-local make_condition = require("luasnip.extras.conditions").make_condition
-
-local get_visual = function(_, parent)
-	if #parent.snippet.env.LS_SELECT_RAW > 0 then
-		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
-	else -- If LS_SELECT_RAW is empty, return a blank insert node
-		return sn(nil, i(1))
-	end
-end
-
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
-local check_not_in_node = function(ignored_nodes)
-	if not require("nvim-treesitter.parsers").has_parser() then
-		return true
-	end
-	local pos = vim.api.nvim_win_get_cursor(0)
-	local row, col = pos[1] - 1, pos[2] - 1
-	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
-	return not vim.tbl_contains(ignored_nodes, node_type)
-end
-
-local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
+local ls = require("snippet/luasnip")
+local s, t, i, c, d, sn, fmt =
+      ls.s, ls.t, ls.i, ls.c, ls.d, ls.sn, ls.fmt
+local helpers = require("snippet/helpers")
+local line_begin = helpers.line_begin
+local get_visual = helpers.get_visual
+local not_in_string_comment = helpers.not_in_string_comment
 
 return {
 	s(
-		{ trig = "autocmd ", dscr = "Neovim API autocmd", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "autocmd ",
+			dscr = "Neovim API autocmd",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * line_begin,
+		},
 		fmt(
 			[[
         vim.api.nvim_create_autocmd(<>, {<>
@@ -53,11 +35,15 @@ return {
 				}),
 				d(3, get_visual),
 			}
-		),
-		{ condition = not_in_string_comment * line_begin }
+		)
 	),
 	s(
-		{ trig = "snp", dscr = "LuaSnip lua snippet template", snippetType = "autosnippet" },
+		{
+			trig = "snp",
+			dscr = "LuaSnip lua snippet template",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * line_begin,
+		},
 		fmt(
 			[=[
         s({ trig = "<>", dscr = "<>"<><><> },
@@ -93,37 +79,61 @@ return {
 					sn(nil, { t({ "{", '\t\tt("' }), i(1), t({ '")', "\t}" }) }),
 				}),
 			}
-		),
-		{ condition = not_in_string_comment * line_begin }
+		)
 	),
-	s({
-		trig = "<[cC][mM][dD]>",
-		dscr = "Neovim keymap command",
-		wordTrig = false,
-		regTrig = true,
-		snippetType = "autosnippet",
-	}, {
-		t("<Cmd>"),
-	}),
-	s({ trig = "vks", dscr = "Create a keymap", snippetType = "autosnippet" }, {
-		t('vim.keymap.set("'),
-		i(1, "n"),
-		t('", "'),
-		i(2, "LHS"),
-		t('", '),
-		i(3, '"RHS"'),
-		t(', { desc = "'),
-		i(4),
-		t('" })'),
-	}, { condition = not_in_string_comment * line_begin }),
-	s({ trig = "vni", dscr = "Inspect", snippetType = "autosnippet" }, {
-		t("vim.notify(vim.inspect("),
-		i(1),
-		t("))"),
-	}, { condition = not_in_string_comment }),
-	s({ trig = "vsf", dscr = "Schedule", snippetType = "autosnippet" }, {
-		t("vim.schedule(function() "),
-		i(1),
-		t(" end)"),
-	}, { condition = not_in_string_comment * line_begin }),
+	s(
+		{
+			trig = "<[cC][mM][dD]>",
+			dscr = "Neovim keymap command",
+			wordTrig = false,
+			regTrig = true,
+			snippetType = "autosnippet",
+		},
+		t("<Cmd>")
+	),
+	s(
+		{
+			trig = "vks",
+			dscr = "Create a keymap",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * line_begin,
+		},
+		{
+			t('vim.keymap.set("'),
+			i(1, "n"),
+			t('", "'),
+			i(2, "LHS"),
+			t('", '),
+			i(3, '"RHS"'),
+			t(', { desc = "'),
+			i(4),
+			t('" })'),
+		}
+	),
+	s(
+		{
+			trig = "vni",
+			dscr = "Inspect",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		{
+			t("vim.notify(vim.inspect("),
+			i(1),
+			t("))"),
+		}
+	),
+	s(
+		{
+			trig = "vsf",
+			dscr = "Schedule",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * line_begin,
+		},
+		{
+			t("vim.schedule(function() "),
+			i(1),
+			t(" end)"),
+		}
+	),
 }

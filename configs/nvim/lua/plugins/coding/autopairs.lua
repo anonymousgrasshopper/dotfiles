@@ -42,6 +42,7 @@ return {
 								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, ft) and
 								   (line:sub(1, col - 1):match("if%s+$") or line:sub(1, col - 1):match("while%s+$")))
 								or (o.key == "(" and ft == "cpp" and line:sub(col - 5, col - 1):match("%Wall"))
+								or (o.key == "(" and ft == "lua" and line:sub(col - 9, col - 1) == "function")
 							then
 								return false
 							end

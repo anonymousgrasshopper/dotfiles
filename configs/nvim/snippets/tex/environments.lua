@@ -1,48 +1,32 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local d = ls.dynamic_node
-local sn = ls.snippet_node
-local rep = require("luasnip.extras").rep
-local fmt = require("luasnip.extras.fmt").fmta
+local ls = require("snippet/luasnip")
+local s, t, i, c, d, sn, rep, fmt =
+      ls.s, ls.t, ls.i, ls.c, ls.d, ls.sn, ls.rep, ls.fmt
+local helpers = require("snippet/helpers")
+local line_begin = helpers.line_begin
+local tex = require("snippet/tex_utils")
 
 local rec_item
 rec_item = function()
-	return sn(
-		nil,
+	return sn(nil,
 		c(1, {
 			t(""),
-			sn(nil, { t({ "", "\t\\item " }), i(1), d(2, rec_item, {}) }),
+			sn(nil, {
+				t({ "", "\t\\item " }),
+				i(1),
+				d(2, rec_item, {}),
+			}),
 		})
 	)
 end
 
-local tex = {}
-tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
-
-local line_begin = require("luasnip.extras.expand_conditions").line_begin
-
 return {
 	s(
-		{ trig = "beg", dscr = "Environment", snippetType = "autosnippet" },
-		fmt(
-			[[
-        \begin{<>}
-          <>
-        \end{<>}
-      ]],
-			{
-				i(1),
-				i(2),
-				rep(1),
-			}
-		),
-		{ condition = line_begin }
-	),
-	s(
-		{ trig = "\\beg", dscr = "Environment", snippetType = "autosnippet" },
+		{
+			trig = "beg",
+			dscr = "environment",
+			snippetType = "autosnippet",
+			condition = line_begin,
+		},
 		fmt(
 			[[
         \begin{<>}
@@ -57,7 +41,33 @@ return {
 		)
 	),
 	s(
-		{ trig = "\\?se", dscr = "section", regTrig = true, snippetType = "autosnippet" },
+		{
+			trig = "\\beg",
+			dscr = "Environment",
+			wordTrig = false,
+			snippetType = "autosnippet"
+		},
+		fmt(
+			[[
+        \begin{<>}
+          <>
+        \end{<>}
+      ]],
+			{
+				i(1),
+				i(2),
+				rep(1),
+			}
+		)
+	),
+	s(
+		{
+			trig = "\\?se",
+			dscr = "section",
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_text * line_begin,
+		},
 		fmt(
 			[[
         \section<>{<>}
@@ -66,11 +76,16 @@ return {
 				i(2),
 				i(1),
 			}
-		),
-		{ condition = tex.in_text * line_begin }
+		)
 	),
 	s(
-		{ trig = "\\?sb", dscr = "section", regTrig = true, snippetType = "autosnippet" },
+		{
+			trig = "\\?sb",
+			dscr = "section",
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_text * line_begin,
+		},
 		fmt(
 			[[
         \subsection<>{<>}
@@ -79,29 +94,42 @@ return {
 				i(2),
 				i(1),
 			}
-		),
-		{ condition = tex.in_text * line_begin }
+		)
 	),
-	s({ trig = "\\?ls", dscr = "unordered list", regTrig = true, snippetType = "autosnippet" }, {
-		t({ "\\begin{itemize}", "\t\\item " }),
-		i(1),
-		d(2, rec_item, {}),
-		t({ "", "\\end{itemize}" }),
-	}, { condition = tex.in_text * line_begin }),
 	s(
-		{ trig = "\\?enn", dscr = "orderdered list", regTrig = true, snippetType = "autosnippet" },
+		{
+			trig = "\\?ls",
+			dscr = "unordered list",
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_text * line_begin,
+		},
+		{
+			t({ "\\begin{itemize}", "\t\\item " }),
+			i(1),
+			d(2, rec_item, {}),
+			t({ "", "\\end{itemize}" }),
+		}
+	),
+	s(
+		{
+			trig = "\\?enn",
+			dscr = "orderdered list",
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_text * line_begin,
+		},
 		fmt(
 			[[
-      \begin{enumerate}
+				\begin{enumerate}
 
-          \item <>
+						\item <>
 
-      \end{enumerate}
-    ]],
+				\end{enumerate}
+			]],
 			{
 				i(0),
 			}
-		),
-		{ condition = tex.in_text * line_begin }
-	),
+		)
+	)
 }

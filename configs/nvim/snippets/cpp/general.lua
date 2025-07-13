@@ -1,36 +1,10 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local d = ls.dynamic_node
-local f = ls.function_node
-local sn = ls.snippet_node
-local rep = require("luasnip.extras").rep
-local fmt = require("luasnip.extras.fmt").fmta
-local make_condition = require("luasnip.extras.conditions").make_condition
-
-local get_visual = function(_, parent)
-	if #parent.snippet.env.LS_SELECT_RAW > 0 then
-		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
-	else -- If LS_SELECT_RAW is empty, return a blank insert node
-		return sn(nil, i(1))
-	end
-end
-
-local check_not_in_node = function(ignored_nodes)
-	local pos = vim.api.nvim_win_get_cursor(0)
-	local row, col = pos[1] - 1, pos[2] - 1
-	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
-	return not vim.tbl_contains(ignored_nodes, node_type)
-end
-
-local not_in_string_comment = make_condition(function() return check_not_in_node({ "string_content", "comment" }) end)
-
-local check_not_expanded = make_condition(function()
-	local line = vim.api.nvim_get_current_line()
-	return not line:match("%(.*%)")
-end)
+local ls = require("snippet/luasnip")
+local s, t, i, c, d, f, sn, rep, fmt =
+      ls.s, ls.t, ls.i, ls.c, ls.d, ls.f, ls.sn, ls.rep, ls.fmt
+local helpers = require("snippet/helpers")
+local get_visual = helpers.get_visual
+local check_not_expanded = helpers.check_not_expanded
+local not_in_string_comment = helpers.not_in_string_comment
 
 local rec_switch
 rec_switch = function()
@@ -56,33 +30,50 @@ local SNIP_CAPTURES_1
 
 return {
 	s(
-		{ trig = "if ", dscr = "conditional statement", snippetType = "autosnippet" },
+		{
+			trig = "if ",
+			dscr = "conditional statement",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
+		},
 		fmt("if (<>) {\n\t<>\n}<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
-		}),
-		{ condition = not_in_string_comment * check_not_expanded }
+		})
 	),
 	s(
-		{ trig = "else ", dscr = "else statement", snippetType = "autosnippet" },
+		{
+			trig = "else ",
+			dscr = "else statement",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("else%s*{$"),
+		},
 		fmt("else {\n\t<>\n}<>", {
 			d(1, get_visual),
 			i(0),
-		}),
-		{ condition = not_in_string_comment * check_not_expanded }
+		})
 	),
 	s(
-		{ trig = "elif ", dscr = "else if statement", snippetType = "autosnippet" },
+		{
+			trig = "elif ",
+			dscr = "else if statement",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
+		},
 		fmt("else if (<>) {\n\t<>\n}<>", {
 			i(1),
 			d(2, get_visual),
 			i(0),
-		}),
-		{ condition = not_in_string_comment * check_not_expanded }
+		})
 	),
 	s(
-		{ trig = "for ", dscr = "for loop", snippetType = "autosnippet" },
+		{
+			trig = "for ",
+			dscr = "for loop",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
+		},
 		fmt(
 			[[
         for (<>) {
@@ -98,11 +89,15 @@ return {
 				d(2, get_visual),
 				i(0),
 			}
-		),
-		{ condition = not_in_string_comment * check_not_expanded }
+		)
 	),
 	s(
-		{ trig = "while ", dscr = "while loop", snippetType = "autosnippet" },
+		{
+			trig = "while ",
+			dscr = "while loop",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
+		},
 		fmt(
 			[[
         while (<>) {
@@ -114,11 +109,15 @@ return {
 				d(2, get_visual),
 				i(0),
 			}
-		),
-		{ condition = not_in_string_comment * check_not_expanded }
+		)
 	),
 	s(
-		{ trig = "do ", dscr = "do while loop", snippetType = "autosnippet" },
+		{
+			trig = "do ",
+			dscr = "do while loop",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
 		fmt(
 			[[
         do {
@@ -129,11 +128,16 @@ return {
 				d(1, get_visual),
 				i(2),
 			}
-		),
-		{ condition = not_in_string_comment }
+		)
 	),
 	s(
-		{ trig = "switch ", dscr = "switch statement", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "switch ",
+			dscr = "switch statement",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
 		fmt(
 			[[
         switch (<>) {<>
@@ -143,37 +147,49 @@ return {
 				i(1),
 				d(2, rec_switch, {}),
 			}
-		),
-		{ condition = not_in_string_comment * check_not_expanded }
+		)
 	),
-	s({ trig = "namespace%s+([%w_]+)%s", regTrig = true, dscr = "namespace template", snippetType = "autosnippet" }, {
-		t("namespace "),
-		f(function(_, snip) return snip.captures[1] end),
-		t({ " {", "\t" }),
-		i(0),
-		t({ "", "}" }),
-	}, { condition = not_in_string_comment }),
-	s({
-		trig = "([%a_][%w_ <>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)",
-		dscr = "allocate memory using new",
-		regTrig = true,
-		wordTrig = false,
-		snippetType = "autosnippet",
-	}, {
-		f(function(_, snip) return snip.captures[1] end),
-		f(function(_, snip) return snip.captures[2] end),
-		f(function(_, snip)
-			SNIP_CAPTURES_1 = snip.captures[1]
-			return " "
-		end),
-		c(1, {
-			{
-				f(function() return SNIP_CAPTURES_1 end),
-				i(1),
-			},
-			{
-				i(1),
-			},
-		}),
-	}, { condition = not_in_string_comment }),
+	s(
+		{
+			trig = "namespace%s+([%w_]+)%s",
+			regTrig = true,
+			dscr = "namespace template",
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$"),
+		},
+		{
+			t("namespace "),
+			f(function(_, snip) return snip.captures[1] end),
+			t({ " {", "\t" }),
+			i(0),
+			t({ "", "}" }),
+		}
+	),
+	s(
+		{
+			trig = "([%a_][%w_ <>]+)(%s*%*%s*[%w_]+%s*[%({=]%s*new%s*)",
+			dscr = "allocate memory using new",
+			regTrig = true,
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = not_in_string_comment,
+		},
+		{
+			f(function(_, snip) return snip.captures[1] end),
+			f(function(_, snip) return snip.captures[2] end),
+			f(function(_, snip)
+				SNIP_CAPTURES_1 = snip.captures[1]
+				return " "
+			end),
+			c(1, {
+				{
+					f(function() return SNIP_CAPTURES_1 end),
+					i(1),
+				},
+				{
+					i(1),
+				},
+			}),
+		}
+	),
 }

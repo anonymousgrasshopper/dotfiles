@@ -1,36 +1,22 @@
-local ls = require("luasnip")
-local t = ls.text_node
-local s = ls.snippet
-local sn = ls.snippet_node
-local i = ls.insert_node
-local f = ls.function_node
-local d = ls.dynamic_node
-local fmt = require("luasnip.extras.fmt").fmta
-local make_condition = require("luasnip.extras.conditions").make_condition
+local ls = require("snippet/luasnip")
+local s, t, i, d, f, fmt, make_cond =
+      ls.s, ls.t, ls.i, ls.d, ls.f, ls.fmt, ls.make_cond
+local helpers = require("snippet/helpers")
+local get_visual = helpers.get_visual
+local tex = require("snippet/tex_utils")
 
-local get_visual = function(_, parent)
-	if #parent.snippet.env.LS_SELECT_RAW > 0 then
-		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
-	else -- If LS_SELECT_RAW is empty, return a blank insert node
-		return sn(nil, i(1))
-	end
-end
-
-local check_not_expanded = function(regexp)
-	local line = vim.api.nvim_get_current_line()
-	return not line:match(regexp)
-end
-
-local check_floor_not_expanded = make_condition(function() return check_not_expanded("\\rfloo") end)
-local check_ceil_not_expanded = make_condition(function() return check_not_expanded("\\rcei") end)
-
-local tex = {}
-tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
-tex.in_text = function() return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1 end
+local check_floor_not_expanded = make_cond(function() return check_not_expanded("\\rfloo") end)
+local check_ceil_not_expanded = make_cond(function() return check_not_expanded("\\rcei") end)
 
 return {
 	s(
-		{ trig = "sm", dscr = "sum", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "sm",
+			dscr = "sum",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt(
 			[[
         \sum_{<>}^{<>}<>
@@ -40,11 +26,16 @@ return {
 				i(2, "n"),
 				i(0),
 			}
-		),
-		{ condition = tex.in_mathzone }
+		)
 	),
 	s(
-		{ trig = "pd", dscr = "product", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "pd",
+			dscr = "product",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt(
 			[[
         \prod_{<>}^{<>}<>
@@ -54,140 +45,240 @@ return {
 				i(2, "n"),
 				i(0),
 			}
-		),
-		{ condition = tex.in_mathzone }
+		)
 	),
 	s(
-		{ trig = "ff", dscr = "fraction", wordTrig = false, snippetType = "autosnippet" },
-		fmt("\\frac{<>}{<>}", {
-			i(1),
-			i(2),
-		}),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "ff",
+			dscr = "fraction",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		fmt(
+			"\\frac{<>}{<>}",
+			{
+				i(1),
+				i(2),
+			}
+		)
 	),
 	s(
-		{ trig = "floor", dscr = "floor", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "floor",
+			dscr = "floor",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone * check_floor_not_expanded,
+		},
 		fmt("\\left\\lfloor <> \\right\\rfloor", {
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone * check_floor_not_expanded }
+		})
 	),
 	s(
-		{ trig = "ceil", dscr = "ceil", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "ceil",
+			dscr = "ceil",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone * check_ceil_not_expanded,
+		},
 		fmt("\\left\\lceil <> \\right\\rceil", {
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone * check_ceil_not_expanded }
+		})
 	),
 	s(
-		{ trig = "set", dscr = "curly braces", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "set",
+			dscr = "curly braces",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt("\\left\\{ <> \\right\\}", {
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
 	s(
-		{ trig = "abs", dscr = "module", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "abs",
+			dscr = "module",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt("\\left\\lvert <> \\right\\rvert", {
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
 	s(
-		{ trig = "nrm", dscr = "vector norm", wordTrig = false, snippetType = "autosnippet" },
+		{
+			trig = "nrm",
+			dscr = "vector norm",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt("\\left\\lVert <> \\right\\rVert", {
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
 	s(
-		{ trig = "sq", dscr = "square root", wordTrig = false, snippetType = "autosnippet" },
-		fmt("\\sqrt{<>}", {
-			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "sq",
+			dscr = "square root",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		fmt(
+			"\\sqrt{<>}",
+			{
+				d(1, get_visual),
+			}
+		)
 	),
 	s(
-		{ trig = "cbrt", dscr = "cubic root", wordTrig = false, snippetType = "autosnippet" },
-		fmt("\\sqrt[3]{<>}", {
-			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
-	),
-	s({ trig = "tx", dscr = "text", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\text{"),
-		i(1),
-		t("}"),
-		{ condition = tex.in_mathzone },
-	}),
-	s({ trig = "op", dscr = "operatorname", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\operatorname{"),
-		i(1),
-		t("}"),
-		{ condition = tex.in_mathzone },
-	}),
-	s(
-		{ trig = "²", dscr = "square", wordTrig = false, snippetType = "autosnippet" },
-		t("^2"),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "cbrt",
+			dscr = "cubic root",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone
+		},
+		fmt(
+			"\\sqrt[3]{<>}",
+			{
+				d(1, get_visual),
+			}
+		)
 	),
 	s(
-		{ trig = "cd", dscr = "cdot", wordTrig = false, snippetType = "autosnippet" },
-		t("\\cdot"),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "tx",
+			dscr = "text",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		{
+			t("\\text{"),
+			i(1),
+			t("}"),
+		}
 	),
 	s(
-		{ trig = "Bx", dscr = "QED box", wordTrig = false, snippetType = "autosnippet" },
-		t("\\Box"),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "op",
+			dscr = "operatorname",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		{
+			t("\\operatorname{"),
+			i(1),
+			t("}"),
+		}
 	),
-	s({ trig = "ty", dscr = "lemniscate", snippetType = "autosnippet" }, t("\\infty"), { condition = tex.in_mathzone }),
 	s(
-		{ trig = "all ", dscr = "universal quantifier", wordTrig = false, snippetType = "autosnippet" },
-		t("\\forall "),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "²",
+			dscr = "square",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("^2")
 	),
 	s(
-		{ trig = "ex ", dscr = "existensial quantifier", wordTrig = false, snippetType = "autosnippet" },
-		t("\\exists "),
-		{ condition = tex.in_mathzone }
+		{
+			trig = "cd",
+			dscr = "cdot",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\cdot")
 	),
-	s({ trig = "ds", dscr = "displaystyle", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\displaystyle"),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\P ", dscr = "Prime numbers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb P "),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\N ", dscr = "Natural numbers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb N "),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\Z ", dscr = "integers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb Z "),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\Q ", dscr = "Rational numbers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb Q "),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\R ", dscr = "Real numbers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb R "),
-	}, { condition = tex.in_mathzone }),
-	s({ trig = "\\C ", dscr = "Complex numbers set", wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\mathbb C "),
-	}, { condition = tex.in_mathzone }),
 	s(
-		{ trig = "([%w%)%]%}])'", dscr = "superscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
+		{
+			trig = "Bx",
+			dscr = "QED box",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\Box")
+	),
+	s(
+		{
+			trig = "ty",
+			dscr = "lemniscate",
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\infty")
+	),
+	s(
+		{
+			trig = "all ",
+			dscr = "universal quantifier",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\forall ")
+	),
+	s(
+		{
+			trig = "ex ",
+			dscr = "existensial quantifier",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\exists ")
+	),
+	s(
+		{
+			trig = "ds",
+			dscr = "displaystyle",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		{
+			t("\\displaystyle"),
+		}
+	),
+	s(
+		{
+			trig = "([%w%)%]%}])'",
+			dscr = "superscript",
+			wordTrig = false,
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt("<>^{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
 	s(
-		{ trig = "([%w%)%]%}]);", dscr = "subscript", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
+		{
+			trig = "([%w%)%]%}]);",
+			dscr = "subscript",
+			wordTrig = false,
+			regTrig = true,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
 		fmt("<>_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			d(1, get_visual),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
 	s(
 		{
@@ -196,40 +287,50 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
 		},
 		fmt("<>^{<>}_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
 			i(1),
 			i(2),
-		}),
-		{ condition = tex.in_mathzone }
+		})
 	),
-	s({ trig = "(\\?left)", dscr = "pairs", regTrig = true, wordTrig = false, snippetType = "autosnippet" }, {
-		t("\\left"),
-		d(2, get_visual),
-		f(function(arg)
-			if arg[1][1] == "{" then
-				return "\\"
-			else
-				return ""
-			end
-		end, 1),
-		i(1),
-		t("\\right"),
-		f(function(arg)
-			if arg[1][1] == "{" or arg[1][1] == "\\{" then
-				return "\\}"
-			elseif arg[1][1] == "(" then
-				return ")"
-			elseif arg[1][1] == "[" then
-				return "]"
-			elseif arg[1][1]:sub(1, 3) == "\\ll" then
-				return "\\rr" .. arg[1][1]:sub("4", "-1")
-			elseif arg[1][1]:sub(1, 2) == "\\l" then
-				return "\\r" .. arg[1][1]:sub("3", "-1")
-			else
-				return arg[1][1]
-			end
-		end, 1),
-	}, { condition = tex.in_mathzone }),
+	s(
+		{
+			trig = "(\\?left)",
+			dscr = "pairs",
+			regTrig = true,
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		{
+			t("\\left"),
+			d(2, get_visual),
+			f(function(arg)
+				if arg[1][1] == "{" then
+					return "\\"
+				else
+					return ""
+				end
+			end, 1),
+			i(1),
+			t("\\right"),
+			f(function(arg)
+				if arg[1][1] == "{" or arg[1][1] == "\\{" then
+					return "\\}"
+				elseif arg[1][1] == "(" then
+					return ")"
+				elseif arg[1][1] == "[" then
+					return "]"
+				elseif arg[1][1]:sub(1, 3) == "\\ll" then
+					return "\\rr" .. arg[1][1]:sub("4", "-1")
+				elseif arg[1][1]:sub(1, 2) == "\\l" then
+					return "\\r" .. arg[1][1]:sub("3", "-1")
+				else
+					return arg[1][1]
+				end
+			end, 1),
+		}
+	),
 }

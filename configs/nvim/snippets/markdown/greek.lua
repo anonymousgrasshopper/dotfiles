@@ -1,9 +1,6 @@
-local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-
-local tex = {}
-tex.in_mathzone = function() return vim.fn["vimtex#syntax#in_mathzone"]() == 1 end
+local ls = require("snippet/luasnip")
+local s, t = ls.s, ls.t
+local tex = require("snippet/tex_utils")
 
 return {
 	s({ trig = ";a", snippetType = "autosnippet" }, {

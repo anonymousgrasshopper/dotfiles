@@ -49,10 +49,21 @@ return {
 			cmdline = {
 				keymap = {
 					preset = "none",
-					["<C-e>"] = { "hide", "fallback" },
 					["<C-space>"] = { "show", "fallback" },
+					["<C-e>"] = { "hide", "fallback" },
 
 					["<Tab>"] = { "accept", "fallback" },
+
+					["<M-&>"] = { function(cmp) cmp.accept({ index = 1 }) end },
+					["<M-é>"] = { function(cmp) cmp.accept({ index = 2 }) end },
+					['<M-">'] = { function(cmp) cmp.accept({ index = 3 }) end },
+					["<M-'>"] = { function(cmp) cmp.accept({ index = 4 }) end },
+					["<M-(>"] = { function(cmp) cmp.accept({ index = 5 }) end },
+					["<M-->"] = { function(cmp) cmp.accept({ index = 6 }) end },
+					["<M-è>"] = { function(cmp) cmp.accept({ index = 7 }) end },
+					["<M-_>"] = { function(cmp) cmp.accept({ index = 8 }) end },
+					["<M-ç>"] = { function(cmp) cmp.accept({ index = 9 }) end },
+					["<M-à>"] = { function(cmp) cmp.accept({ index = 10 }) end },
 
 					["<C-p>"] = { "select_prev", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
