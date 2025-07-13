@@ -34,7 +34,7 @@ return {
 		},
 		fmt(
 			[[
-        \sum_{<>}^{<>}<>
+        \sum_{<>}^{<>} <>
       ]],
 			{
 				i(1, "i = 0"),
@@ -42,6 +42,26 @@ return {
 				i(0),
 			}
 		)
+	),
+	s(
+		{
+			trig = "cycsm",
+			dscr = "cyclic sum",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\sum_{\\text{cyc}} ")
+	),
+	s(
+		{
+			trig = "symsm",
+			dscr = "symmetric sum",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\sum_{\\text{sym}} ")
 	),
 	s(
 		{
@@ -53,7 +73,7 @@ return {
 		},
 		fmt(
 			[[
-        \prod_{<>}^{<>}<>
+        \prod_{<>}^{<>} <>
       ]],
 			{
 				i(1, "i = 0"),
@@ -61,6 +81,26 @@ return {
 				i(0),
 			}
 		)
+	),
+	s(
+		{
+			trig = "cycpd",
+			dscr = "cyclic prod",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\prod_{\\text{cyc}} ")
+	),
+	s(
+		{
+			trig = "sympd",
+			dscr = "symmetric prod",
+			wordTrig = false,
+			snippetType = "autosnippet",
+			condition = tex.in_mathzone,
+		},
+		t("\\prod_{\\text{sym}} ")
 	),
 	s(
 		{

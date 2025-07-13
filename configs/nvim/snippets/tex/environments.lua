@@ -22,30 +22,11 @@ end
 return {
 	s(
 		{
-			trig = "beg",
+			trig = "\\?beg",
 			dscr = "environment",
+			regTrig = true,
 			snippetType = "autosnippet",
 			condition = line_begin,
-		},
-		fmt(
-			[[
-        \begin{<>}
-          <>
-        \end{<>}
-      ]],
-			{
-				i(1),
-				i(2),
-				rep(1),
-			}
-		)
-	),
-	s(
-		{
-			trig = "\\beg",
-			dscr = "Environment",
-			wordTrig = false,
-			snippetType = "autosnippet"
 		},
 		fmt(
 			[[
@@ -119,17 +100,11 @@ return {
 			snippetType = "autosnippet",
 			condition = tex.in_text * line_begin,
 		},
-		fmt(
-			[[
-				\begin{enumerate}
-
-						\item <>
-
-				\end{enumerate}
-			]],
-			{
-				i(0),
-			}
-		)
+		{
+			t({ "\\begin{enumerate}", "\t\\item " }),
+			i(1),
+			d(2, rec_item, {}),
+			t({ "", "\\end{enumerate}" }),
+		}
 	)
 }
