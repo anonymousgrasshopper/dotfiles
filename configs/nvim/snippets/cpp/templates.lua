@@ -14,30 +14,31 @@ return {
 		},
 		fmt(
 			[[
-        #include <<bits/stdc++.h>>
-        using namespace std;
+				#include <<bits/stdc++.h>>
+				using namespace std;
 
-        #ifdef LOCAL
-        #include "dbg.h"
-        #else
-        #define n(...) 42
-        #define id(...) 42
-        #define dbg(...) 42
-        #define line(...) 42
-        #define dbgarr(...) 42
-        #define dbg_var(...) 42
-        #endif
+				#ifdef LOCAL
+				#include "dbg.h"
+				#else
+				#define n(...) 42
+				#define id(...) 42
+				#define dbg(...) 42
+				#define line(...) 42
+				#define dbgarr(...) 42
+				#define dbg_var(...) 42
+				#endif
 
-        ///////////////////////////////////
-
-
-        ///////////////////////////////////
+				///////////////////////////////////
 
 
-        int main() {
-          ios::sync_with_stdio(false); cin.tie(nullptr);
-          <>
-        }
+				///////////////////////////////////
+
+
+				int main() {
+					ios::sync_with_stdio(false);
+					cin.tie(nullptr);
+					<>
+				}
 			]],
 			{
 				i(0),
@@ -53,35 +54,37 @@ return {
 		},
 		fmt(
 			[[
-        #include <<bits/stdc++.h>>
-        using namespace std;
+				#include <<bits/stdc++.h>>
+				using namespace std;
 
-        #ifdef LOCAL
-        #include "dbg.h"
-        #else
-        #define n(...) 42
-        #define id(...) 42
-        #define dbg(...) 42
-        #define line(...) 42
-        #define dbgarr(...) 42
-        #define dbg_var(...) 42
-        #endif
+				#ifdef LOCAL
+				#include "dbg.h"
+				#else
+				#define n(...) 42
+				#define id(...) 42
+				#define dbg(...) 42
+				#define line(...) 42
+				#define dbgarr(...) 42
+				#define dbg_var(...) 42
+				#endif
 
-        ///////////////////////////////////
+				///////////////////////////////////
 
-        void solve() {
-          <>
-        }
+				void solve() {
+					<>
+				}
 
-        ///////////////////////////////////
+				///////////////////////////////////
 
-        int main(){
-          ios::sync_with_stdio(false); cin.tie(nullptr);
-          int nbTests; cin >>>> nbTests;
-          while (nbTests--){
-            solve();
-          }
-        }
+				int main() {
+					ios::sync_with_stdio(false);
+					cin.tie(nullptr);
+					int nbTests;
+					cin >>>> nbTests;
+					while (nbTests--){
+						solve();
+					}
+				}
       ]],
 			{
 				i(0),

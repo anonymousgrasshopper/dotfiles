@@ -191,7 +191,7 @@ return {
 		},
 	},
 	{
-		"anonymousgrasshopper/tiny-code-action.nvim",
+		"rachartier/tiny-code-action.nvim",
 		-- dependencies:
 		--  nvim-telescope/telescope.nvim
 		--  nvim-lua/plenary.nvim
@@ -209,7 +209,6 @@ return {
 			backend_opts = {
 				delta = {
 					header_lines_to_remove = 5,
-					trailing_newlines_to_add = 10,
 				},
 			},
 			signs = {
