@@ -16,6 +16,20 @@ end, {
 	desc = "Re-enable autoformat-on-save",
 })
 
+local function search_parent_dirs(arg)
+	local dir = vim.fn.expand("%:p:h")
+	while dir ~= "/" and dir ~= "" do
+		for _, fname in ipairs(arg.names) do
+			local candidate = dir .. "/" .. fname
+			if vim.uv.fs_stat(candidate) and vim.uv.fs_stat(candidate).type == "file" then
+				return candidate
+			end
+		end
+		dir = vim.fn.fnamemodify(dir, ":h")
+	end
+	return vim.env.HOME .. "/" .. arg.fallback
+end
+
 return {
 	"stevearc/conform.nvim",
 	event = "BufWritePre",
@@ -47,15 +61,38 @@ return {
 		formatters = {
 			clang_format = {
 				command = "clang-format",
-				args = "--style=file:$HOME/.config/formatters/clang-format",
+				args = function()
+					return "--style=file:"
+						.. search_parent_dirs({
+							names = { ".clang-format" },
+							fallback = ".config/formatters/clang-format",
+						})
+				end,
 			},
 			tex_fmt = {
 				command = "tex-fmt",
-				args = { "--config", vim.env.HOME .. "/.config/formatters/tex-fmt.toml", "--stdin" },
+				args = function()
+					return {
+						"--config",
+						search_parent_dirs({
+							names = { "tex-fmt.toml" },
+							fallback = ".config/formatters/tex-fmt.toml",
+						}),
+						"--stdin",
+					}
+				end,
 			},
 			stylua = {
 				command = "stylua",
-				prepend_args = { "--config-path", vim.env.HOME .. "/.config/formatters/stylua.toml" },
+				prepend_args = function()
+					return {
+						"--config-path",
+						search_parent_dirs({
+							names = { ".stylua.toml", "stylua.toml" },
+							fallback = ".config/formatters/stylua.toml",
+						}),
+					}
+				end,
 			},
 			prettier = {
 				command = "prettier",

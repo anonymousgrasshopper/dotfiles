@@ -1,7 +1,3 @@
----------------------------------------------------------------------------------------------------
---------------------------------------------- AUTOCMDS  -------------------------------------------
----------------------------------------------------------------------------------------------------
-
 -- show the cursorline in the active buffer only, and hide for some filetypes
 vim.api.nvim_create_autocmd("WinLeave", {
 	callback = function() vim.opt_local.cursorline = false end,
