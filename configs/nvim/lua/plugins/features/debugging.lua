@@ -47,7 +47,7 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
-		local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r")
+		local path = vim.fn.expand("%:p:r")
 
 		-- setup dapui
 		dap.listeners.before.attach.dapui_config = function() dapui.open() end
@@ -101,9 +101,9 @@ return {
 				request = "launch",
 				program = function()
 					if vim.b.use_default_executable_path then
-						return vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe"
+						return vim.fn.expand("%:r") .. ".exe"
 					end
-					return vim.fn.input("Path to executable: ", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe", "file")
+					return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".exe", "file")
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,

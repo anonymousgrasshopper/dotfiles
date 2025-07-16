@@ -16,7 +16,7 @@ local vim_enter_early_redraw = function()
 		-- find filetype icon and color
 		require("nvim-web-devicons").setup()
 		local icon, color =
-			require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.fnamemodify(vim.fn.expand("%"), ":e"))
+			require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
 		vim.g.statusline_filetype_icon = icon or " "
 		vim.cmd("hi StatusLineIconColor guifg=" .. (color or "#6D8086"))
 

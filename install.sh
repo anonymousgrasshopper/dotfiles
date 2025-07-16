@@ -104,7 +104,7 @@ if program pacman; then
 			if cd /tmp/yay; then
 				makepkg -si
 				rm -rf /tmp/yay
-				cd "$SCRIPT_DIR"
+				cd "$SCRIPT_DIR" || exit
 			else
 				echo "${RED} Cloning yay failed. Check your internet connection and try again."
 			fi
@@ -120,6 +120,12 @@ if program pacman; then
 	fi
 	echo -en "${BLUE}Would you like to synchronize the required packages with ${package_manager##* } ? (y/n) ${WHITE}"
 	if get_answer; then
+		if ! program pdflatex; then
+			echo -en "${BLUE}Do you also want to install the TexLive LaTeX distribution ? (y/n) ${WHITE}"
+			if get_answer; then
+				packages+=("texlive")
+			fi
+		fi
 		$package_manager -S --needed "${packages[@]}"
 	else
 		echo -e "${GREEN}Make sure the following packages are installed :"
@@ -162,6 +168,11 @@ if program pacman; then
 else
 	echo -e "${GREEN}Make sure the following packages are installed :"
 	echo -e "${WHITE}${packages[*]}"
+	# TexLive
+	if ! program pdflatex; then
+		echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
+		printf '\n'
+	fi
 fi
 printf '\n'
 
@@ -250,12 +261,6 @@ ${RED}Enter a number (default 3) :${WHITE} "
 	done
 	printf '\n'
 )
-
-# TexLive
-if ! program pdflatex; then
-	echo -e "${WHITE}Follow instructions at ${BLUE}https://www.tug.org/texlive/quickinstall.html${BLUE} to install TexLive."
-	printf '\n'
-fi
 
 # setup rust toolchain
 if program rustup && ! program cargo; then

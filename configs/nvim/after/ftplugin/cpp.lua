@@ -56,7 +56,7 @@ local open_floating_window = function(filepath)
 		once = true,
 	})
 end
-local input_filename = vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".in"
+local input_filename = vim.fn.expand("%:r") .. ".in"
 vim.keymap.set(
 	"n",
 	"<localleader>di",
@@ -75,7 +75,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		"--debug",
 		vim.fn.expand("%"),
 		"-o",
-		vim.fn.fnamemodify(vim.fn.expand("%"), ":r") .. ".exe",
+		vim.fn.expand("%:r") .. ".exe",
 	}, {}, function(obj)
 		if obj.stderr ~= nil then
 			if obj.stderr:match("error[^\n]*\n$") then
@@ -123,7 +123,7 @@ end, { buffer = true })
 vim.keymap.set(
 	"n",
 	"<localleader>rm",
-	function() vim.system({ "remove_codelldb_stdio_redirection", vim.fn.fnamemodify(vim.fn.expand("%"), ":r") }) end,
+	function() vim.system({ "remove_codelldb_stdio_redirection", vim.fn.expand("%:r") }) end,
 	{ buffer = true }
 )
 
@@ -131,6 +131,6 @@ vim.keymap.set(
 vim.keymap.set(
 	"n",
 	"<localleader>sf",
-	function() vim.system({ "compile_sfml", vim.fn.fnamemodify(vim.fn.expand("%"), ":p:r") }, { text = true }) end,
+	function() vim.system({ "compile_sfml", vim.fn.expand("%:p:r") }, { text = true }) end,
 	{ expr = true, buffer = true }
 )

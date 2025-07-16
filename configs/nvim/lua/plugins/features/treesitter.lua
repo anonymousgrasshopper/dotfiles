@@ -9,12 +9,11 @@ return {
 				callback = function(event)
 					local buf = event.buf
 					local disabled_filetypes = {
-						"tex",
 						"checkhealth",
-						"zsh",
 					}
 					local regex_highlighting = {
 						"markdown",
+						"tex",
 					}
 					if not vim.tbl_contains(disabled_filetypes, vim.bo[buf].filetype) then
 						if pcall(vim.treesitter.start) then

@@ -28,7 +28,7 @@ return {
 				icon = function()
 					local icon, _ = require("nvim-web-devicons").get_icon_color(
 						vim.fn.expand("%"),
-						vim.fn.fnamemodify(vim.fn.expand("%"), ":e")
+						vim.fn.expand("%:e")
 					)
 					return { icon = icon, color = "blue" } -- unfortunately we can't use a hex color code
 				end,
