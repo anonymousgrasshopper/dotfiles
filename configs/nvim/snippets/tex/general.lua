@@ -15,6 +15,7 @@ return {
 		fmt(
 			[[
         \documentclass[<>]{<>}
+				\usepackage[<>]{antoine}
 
         \begin{document}
         \title{<>}
@@ -25,8 +26,9 @@ return {
         \end{document}
       ]],
 			{
-				i(3, "article"),
 				i(4, "11pt"),
+				i(3, "article"),
+				i(5),
 				i(1),
 				i(2),
 				i(0),

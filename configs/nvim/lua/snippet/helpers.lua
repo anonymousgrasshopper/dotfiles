@@ -20,11 +20,13 @@ function helpers.check_not_in_node(ignored_nodes)
 	local buf = vim.api.nvim_get_current_buf()
 	local highlighter = require("vim.treesitter.highlighter")
 	if not highlighter.active[buf] then
+		vim.schedule(function() vim.notify(vim.inspect("oiznfeoizoei")) end)
 		return true
 	end
 	local pos = vim.api.nvim_win_get_cursor(0)
-	local row, col = pos[1] - 1, pos[2]
+	local row, col = pos[1] - 1, pos[2] - 1
 	local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
+	vim.schedule(function() vim.notify(vim.inspect(node_type)) end)
 	return not vim.tbl_contains(ignored_nodes, node_type)
 end
 

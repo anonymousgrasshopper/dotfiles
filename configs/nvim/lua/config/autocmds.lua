@@ -4,8 +4,8 @@ vim.api.nvim_create_autocmd("WinLeave", {
 })
 vim.api.nvim_create_autocmd("WinEnter", {
 	callback = function(event)
-		local excluded_filetypes = { "alpha", "neo-tree-popup" }
-		if not vim.tbl_contains(excluded_filetypes, vim.bo[event.buf].filetype) then
+		local exclude = { "alpha", "neo-tree-popup" }
+		if not vim.tbl_contains(exclude, vim.bo[event.buf].filetype) then
 			vim.opt_local.cursorline = true
 		end
 	end,
@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- hide the cursor in chosen filetypes
 vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 	callback = function(event)
-		local enabled_filetypes = {
+		local enable = {
 			"aerial",
 			"alpha",
 			"dap-float",
@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CmdlineLeave" }, {
 			"undotree",
 			"yazi",
 		}
-		if vim.tbl_contains(enabled_filetypes, vim.bo[event.buf].filetype) then
+		if vim.tbl_contains(enable, vim.bo[event.buf].filetype) then
 			vim.cmd("hi Cursor blend=100")
 		else
 			vim.cmd("hi Cursor blend=0")
@@ -105,8 +105,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 		vim.b[buf].last_loc = true
 		local mark = vim.api.nvim_buf_get_mark(buf, '"')
-		local lcount = vim.api.nvim_buf_line_count(buf)
-		if mark[1] > 0 and mark[1] <= lcount then
+		if mark[1] > 0 then
 			pcall(vim.api.nvim_win_set_cursor, 0, mark)
 		end
 	end,

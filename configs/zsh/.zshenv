@@ -20,6 +20,7 @@ export MBSYNCRC="$HOME/.config/isync/mbsyncrc"
 export CARGO_HOME="$HOME/.local/share/cargo"
 export GNUPGHOME="$HOME/.local/share/gnupg"
 export WGETRC="$HOME/.config/wget/wgetrc"
+export TEXMFHOME="$HOME/.config/texmf"
 export GOPATH="$HOME/.local/share/go"
 export MANPAGER="nvim +Man!"
 

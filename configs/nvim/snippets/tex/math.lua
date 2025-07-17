@@ -12,7 +12,8 @@ return {
 			dscr = "math mode",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_text * make_cond(function()
+			condition = tex.in_text * tex.in_document *
+				make_cond(function()
 				local col = vim.api.nvim_win_get_cursor(0)[2]
 				local line = vim.api.nvim_get_current_line()
 				return (col == 0) or line:sub(col, col) ~= "\\"

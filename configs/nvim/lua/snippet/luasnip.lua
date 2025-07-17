@@ -1,5 +1,5 @@
-local extras = require("luasnip.extras")
 local ls = require("luasnip")
+local extras = require("luasnip.extras")
 
 local fmt = require("luasnip.extras.fmt").fmta
 local make_condition = require("luasnip.extras.conditions").make_condition

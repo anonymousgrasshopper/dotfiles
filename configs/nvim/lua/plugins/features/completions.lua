@@ -73,18 +73,11 @@ return {
 					ghost_text = { enabled = false },
 				},
 				sources = function()
-					-- avoid cmdline freezing when typing an external command
-					local text = vim.fn.getcmdline()
-					if text:match("!") then
-						return { "path" }
-					end
-
 					local type = vim.fn.getcmdtype()
 					if type == "/" or type == "?" then
 						return { "buffer" }
-					end
-					if type == ":" or type == "@" then
-						return { "cmdline" }
+					elseif type == ":" or type == "@" then
+						return { "cmdline", "buffer" } -- for :s and :g
 					end
 					return {}
 				end,
@@ -155,6 +148,11 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 				providers = {
+					buffer = {
+						opts = {
+							enable_in_ex_commands = true,
+						},
+					},
 					dictionary = {
 						name = "blink-cmp-words",
 						module = "blink-cmp-words.dictionary",
@@ -166,13 +164,13 @@ return {
 					},
 				},
 				per_filetype = {
-					text = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					markdown = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					mail = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					plaintex = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					typst = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					gitcommit = { "lsp", "path", "snippets", "buffer", "dictionary" },
-					tex = { "lsp", "path", "snippets", "buffer", "dictionary" },
+					text = { inherit_defaults = true, "dictionary" },
+					markdown = { inherit_defaults = true, "dictionary" },
+					mail = { inherit_defaults = true, "dictionary" },
+					plaintex = { inherit_defaults = true, "dictionary" },
+					typst = { inherit_defaults = true, "dictionary" },
+					gitcommit = { inherit_defaults = true, "dictionary" },
+					tex = { inherit_defaults = true, "dictionary" },
 				},
 			},
 			signature = {
