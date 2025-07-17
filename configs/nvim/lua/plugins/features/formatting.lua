@@ -100,7 +100,6 @@ return {
 			},
 		},
 		format_on_save = function(bufnr)
-			-- Disable with a global or buffer-local variable
 			if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 				return
 			end
@@ -116,6 +115,8 @@ return {
 				"nvim/lua/plugins/util/unix.lua",
 				"nvim/lua/snippet/",
 				"nvim/snippets/",
+
+				"texmf/tex/latex",
 			}
 			for _, path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(path) then
@@ -123,7 +124,7 @@ return {
 				end
 			end
 
-			return { timeout_ms = 1000, lsp_format = "fallback" }
+			return { timeout_ms = 500, lsp_format = "fallback" }
 		end,
 	},
 }

@@ -108,7 +108,6 @@ return {
 					event = "notify",
 					kind = "warn",
 					cond = function(message)
-						-- vim.schedule(function() vim.notify(vim.inspect(message)) end)
 						return message.opts.title == "telescope.nvim" --[[ and message.content():match("Nothing currently selected") ]]
 					end,
 				},
