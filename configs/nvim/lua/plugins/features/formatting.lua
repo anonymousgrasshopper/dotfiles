@@ -16,8 +16,8 @@ end, {
 	desc = "Re-enable autoformat-on-save",
 })
 
-local function search_parent_dirs(arg)
-	local dir = vim.fn.expand("%:p:h")
+local function search_parent_dirs(bufnr, arg)
+	local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), "%:p:h")
 	while dir ~= "/" and dir ~= "" do
 		for _, fname in ipairs(arg.names) do
 			local candidate = dir .. "/" .. fname
@@ -27,7 +27,17 @@ local function search_parent_dirs(arg)
 		end
 		dir = vim.fn.fnamemodify(dir, ":h")
 	end
-	return vim.env.HOME .. "/" .. arg.fallback
+	if arg.fallback then
+		return arg.fallback
+	else
+		local config_file = arg.names[1]
+		if config_file:sub(1, 1) == "." then
+			config_file = config_file:sub(2, #config_file)
+		end
+		return (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config"))
+			.. "/formatters/"
+			.. config_file
+	end
 end
 
 return {
@@ -49,34 +59,35 @@ return {
 	opts = {
 		formatters_by_ft = {
 			cpp = { "clang_format" },
-			tex = { "tex_fmt" },
 			lua = { "stylua" },
 			bash = { "shfmt" },
 			sh = { "shfmt" },
 			css = { "prettier" },
 			js = { "prettier" },
+			tex = function(bufnr)
+				require("formatters.tex").format(bufnr)
+				return { "tex_fmt" }
+			end,
 
 			["*"] = { "trim_whitespace", "trim_newlines" },
 		},
 		formatters = {
 			clang_format = {
 				command = "clang-format",
-				args = function()
+				prepend_args = function()
 					return "--style=file:"
-						.. search_parent_dirs({
+						.. search_parent_dirs(vim.api.nvim_get_current_buf(), {
 							names = { ".clang-format" },
-							fallback = ".config/formatters/clang-format",
 						})
 				end,
 			},
 			tex_fmt = {
 				command = "tex-fmt",
-				args = function()
+				prepend_args = function()
 					return {
 						"--config",
-						search_parent_dirs({
+						search_parent_dirs(vim.api.nvim_get_current_buf(), {
 							names = { "tex-fmt.toml" },
-							fallback = ".config/formatters/tex-fmt.toml",
 						}),
 						"--stdin",
 					}
@@ -87,9 +98,8 @@ return {
 				prepend_args = function()
 					return {
 						"--config-path",
-						search_parent_dirs({
+						search_parent_dirs(vim.api.nvim_get_current_buf(), {
 							names = { ".stylua.toml", "stylua.toml" },
-							fallback = ".config/formatters/stylua.toml",
 						}),
 					}
 				end,
@@ -105,18 +115,19 @@ return {
 			end
 
 			local disabled_paths = {
-				"nvim/lua/config/options.lua",
-				"nvim/lua/plugins/editor/telescope.lua",
-				"nvim/lua/plugins/coding/autopairs.lua",
-				"nvim/lua/plugins/coding/telescope.lua",
-				"nvim/lua/plugins/features/debugging.lua",
-				"nvim/lua/plugins/lang/markdown.lua",
-				"nvim/lua/plugins/util/browsing.lua",
-				"nvim/lua/plugins/util/unix.lua",
-				"nvim/lua/snippet/",
-				"nvim/snippets/",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/config/options.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/editor/telescope.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/coding/autopairs.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/coding/telescope.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/features/debugging.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/features/completions.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/lang/markdown.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/util/browsing.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/util/unix.lua",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/snippet/",
+				"^" .. vim.fn.stdpath("config") .. "/nvim/snippets/",
 
-				"texmf/tex/latex",
+				"^" .. (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/texmf/tex/latex",
 			}
 			for _, path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(path) then

@@ -1,5 +1,5 @@
 wrap = true        # wether to wrap long lines or not
-wraplen = 80       # line length limit
+wraplen = 100      # line length limit
 tabsize = 1        # number of characters to use for indentation
 tabchar = "tab"    # use tabs instead of spaces
 verbosity = "warn" # show warnings
