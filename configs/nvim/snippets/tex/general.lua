@@ -14,17 +14,17 @@ return {
 		},
 		fmt(
 			[[
-        \documentclass[<>]{<>}
+				\documentclass[<>]{<>}
 				\usepackage[<>]{antoine}
-
-        \begin{document}
-        \title{<>}
-        \author{<>}
-        \date{\today}
-        \maketitle
-        <>
-        \end{document}
-      ]],
+				
+				\begin{document}
+				\title{<>}
+				\author{<>}
+				\date{\today}
+				\maketitle
+				<>
+				\end{document}
+			]],
 			{
 				i(4, "11pt"),
 				i(3, "article"),
@@ -44,9 +44,9 @@ return {
 		},
 		fmt(
 			[[
-        \tablofcontents
-        <>
-      ]],
+				\tablofcontents
+				<>
+			]],
 			{
 				i(0),
 			}
@@ -73,22 +73,19 @@ return {
 		},
 		fmt(
 			[[
-        \usepackage[T1]{fontenc}
-        \usepackage[french]{babel}
-      ]],
+				\usepackage[T1]{fontenc}
+				\usepackage[french]{babel}
+			]],
 			{}
 		)
 	),
-	s(
-		{
-			trig = "...",
-			dscr = "dots",
-			wordTrig = false,
-			snippetType = "autosnippet",
-			condition = tex.in_text,
-		},
-		{
-			t("\\dots"),
-		}
-	),
+	s({
+		trig = "...",
+		dscr = "dots",
+		wordTrig = false,
+		snippetType = "autosnippet",
+		condition = tex.in_text,
+	}, {
+		t("\\dots"),
+	}),
 }

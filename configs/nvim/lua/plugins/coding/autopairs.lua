@@ -26,25 +26,32 @@ return {
 								return false
 							end
 							local line, col, ft = o.line, o.col, fn.get_ft()
-							if o.key == vim.api.nvim_replace_termcodes("<bs>", true, true, true) then
-								if
-									vim.tbl_contains(
-										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
-										line:sub(col - 2, col - 1)
-									) -- if the two characters before the cursor are paired, don't remove them
-								then
-									return false
+							local function table_convert(arg) return type(arg) == "table" and arg or { arg } end
+							local conds = {
+								{
+									vim.api.nvim_replace_termcodes("<bs>", true, true, true),
+									"*",
+									col - 2,
+									{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
+								}, -- if the two characters before the cursor are paired, don't remove them
+								-- snippets
+								{ "*", { "markdown", "tex" }, col - 6, "\\left" },
+								{ "[", { "bash", "zsh", "sh" }, 1, { "if%s+$", "while%s+$" }, regex = true },
+								{ "(", "cpp", col - 5, "%Wall", regex = true },
+								{ "(", "lua", col - 9, "function" },
+							}
+							for _, cond in ipairs(conds) do
+								if cond[1] == "*" or cond[1] == o.key then
+									if cond[2] == "*" or vim.tbl_contains(table_convert(cond[2]), ft) then
+										local text = line:sub(cond[3], col - 1)
+										local patterns = table_convert(cond[4])
+										for _, pattern in ipairs(patterns) do
+											if cond.regex and text == pattern or text:match(pattern) then
+												return false
+											end
+										end
+									end
 								end
-							end
-							-- snippets
-							if
-								(vim.tbl_contains({ "markdown", "tex" }, ft) and line:sub(col - 6, col - 1):match("\\left"))
-								or (o.key == "[" and vim.tbl_contains({ "bash", "zsh", "sh" }, ft) and
-								   (line:sub(1, col - 1):match("if%s+$") or line:sub(1, col - 1):match("while%s+$")))
-								or (o.key == "(" and ft == "cpp" and line:sub(col - 5, col - 1):match("%Wall"))
-								or (o.key == "(" and ft == "lua" and line:sub(col - 9, col - 1) == "function")
-							then
-								return false
 							end
 
 							return true
@@ -60,7 +67,8 @@ return {
 			{ "[===[", "]===]", ft = { "lua" } },
 			-- filetype-specific
 			{ "\\[", "\\]", newline = true, ft = { "tex" } },
-			{ "$", "$", ft = { "tex", "markdown" } },
+			{ "\\(", "\\)", newline = true, ft = { "tex" } },
+			{ "$", "$", ft = { "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
 			{ "*", "*", ft = { "markdown" } },
 			{ "**", "**", ft = { "markdown" } },

@@ -10,7 +10,8 @@ return {
 			trig = "tmp",
 			dscr = "CP template",
 			snippetType = "autosnippet",
-			condition = first_line, not_in_string_comment,
+			condition = first_line,
+			not_in_string_comment,
 		},
 		fmt(
 			[[
@@ -27,13 +28,13 @@ return {
 				#define dbgarr(...) 42
 				#define dbg_var(...) 42
 				#endif
-
+				
 				///////////////////////////////////
-
-
+				
+				
+				
 				///////////////////////////////////
-
-
+				
 				int main() {
 					ios::sync_with_stdio(false);
 					cin.tie(nullptr);
@@ -50,13 +51,14 @@ return {
 			trig = "cf",
 			dscr = "Codeforces template",
 			snippetType = "autosnippet",
-			condition = first_line, not_in_string_comment,
+			condition = first_line,
+			not_in_string_comment,
 		},
 		fmt(
 			[[
 				#include <<bits/stdc++.h>>
 				using namespace std;
-
+				
 				#ifdef LOCAL
 				#include "dbg.h"
 				#else
@@ -67,15 +69,15 @@ return {
 				#define dbgarr(...) 42
 				#define dbg_var(...) 42
 				#endif
-
+				
 				///////////////////////////////////
-
+				
 				void solve() {
 					<>
 				}
-
+				
 				///////////////////////////////////
-
+				
 				int main() {
 					ios::sync_with_stdio(false);
 					cin.tie(nullptr);
@@ -85,7 +87,7 @@ return {
 						solve();
 					}
 				}
-      ]],
+			]],
 			{
 				i(0),
 			}
@@ -96,17 +98,18 @@ return {
 			trig = "io ",
 			dscr = "input/output from file",
 			snippetType = "autosnippet",
-			condition = line_begin, not_in_string_comment,
+			condition = line_begin,
+			not_in_string_comment,
 		},
 		fmt(
 			[[
-        void setIO(string name = "<>") {
-          if ( name != "" ) {
-            freopen((name + ".in").c_str(), "r", stdin);
-            freopen((name + ".out").c_str(), "w", stdout);
-          }
-        }
-      ]],
+				void setIO(std::string name = "<>") {
+					if ( name != "" ) {
+						std::freopen((name + ".in").c_str(), "r", stdin);
+						std::freopen((name + ".out").c_str(), "w", stdout);
+					}
+				}
+			]],
 			{
 				i(1),
 			}

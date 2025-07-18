@@ -1,6 +1,6 @@
 vim.cmd([[
 	aunmenu   PopUp
-  autocmd!  nvim.popupmenu
+	autocmd!  nvim.popupmenu
 	anoremenu PopUp.Inspect     <Cmd>Inspect<CR>
 	amenu     PopUp.-1-         <NOP>
 	anoremenu PopUp.Definition  <Cmd>lua vim.lsp.buf.definition()<CR>

@@ -115,17 +115,17 @@ return {
 			end
 
 			local disabled_paths = {
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/config/options.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/editor/telescope.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/coding/autopairs.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/coding/telescope.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/features/debugging.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/features/completions.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/lang/markdown.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/util/browsing.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/plugins/util/unix.lua",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/lua/snippet/",
-				"^" .. vim.fn.stdpath("config") .. "/nvim/snippets/",
+				"^" .. vim.fn.stdpath("config") .. "/lua/config/options.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/editor/telescope.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/coding/autopairs.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/coding/telescope.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/features/debugging.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/features/completions.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/lang/markdown.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/util/browsing.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/util/unix.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/snippet/",
+				"^" .. vim.fn.stdpath("config") .. "/snippets/",
 
 				"^" .. (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/texmf/tex/latex",
 			}

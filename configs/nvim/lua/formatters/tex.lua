@@ -24,9 +24,9 @@ return {
 		local query = ts_query.parse(
 			lang,
 			[[
-      (inline_formula) @inline
-      (displayed_equation) @display
-    ]]
+				(inline_formula) @inline
+				(displayed_equation) @display
+			]]
 		)
 
 		local replacements = {}

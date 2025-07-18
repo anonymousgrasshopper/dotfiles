@@ -30,9 +30,7 @@ return {
 		})
 	end,
 	opts = function()
-		local function on_move(data)
-			Snacks.rename.on_rename_file(data.source, data.destination)
-		end
+		local function on_move(data) Snacks.rename.on_rename_file(data.source, data.destination) end
 
 		vim.api.nvim_create_autocmd("Filetype", {
 			pattern = "neo-tree",
@@ -57,12 +55,12 @@ return {
 			sort_case_insensitive = false,
 			sort_function = nil,
 			-- sort_function = function (a,b)
-			--       if a.type == b.type then
-			--           return a.path > b.path
-			--       else
-			--           return a.type > b.type
-			--       end
-			--   end , -- this sorts files and directories descendantly
+			--			 if a.type == b.type then
+			--					 return a.path > b.path
+			--			 else
+			--					 return a.type > b.type
+			--			 end
+			--	 end , -- this sorts files and directories descendantly
 			default_component_configs = {
 				container = {
 					enable_character_fade = true,
@@ -246,7 +244,11 @@ return {
 						["[g"] = "prev_git_modified",
 						["]g"] = "next_git_modified",
 						["O"] = "system_open",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["og"] = { "order_by_git_status", nowait = false },
@@ -329,7 +331,11 @@ return {
 						["bd"] = "buffer_delete",
 						["<bs>"] = "navigate_up",
 						["."] = "set_root",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["om"] = { "order_by_modified", nowait = false },
@@ -350,7 +356,11 @@ return {
 						["gc"] = "git_commit",
 						["gp"] = "git_push",
 						["gg"] = "git_commit_and_push",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = {
+							"show_help",
+							nowait = false,
+							config = { title = "Order by", prefix_key = "o" },
+						},
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["om"] = { "order_by_modified", nowait = false },
@@ -417,8 +427,8 @@ return {
 					handler = function(_) vim.cmd("hi Cursor blend=100") end,
 				},
 				-- {
-				--   event = "file_open_requested",
-				--   handler = function() require("neo-tree.command").execute({ action = "close" }) end,
+				--	 event = "file_open_requested",
+				--	 handler = function() require("neo-tree.command").execute({ action = "close" }) end,
 				-- },
 			},
 		}

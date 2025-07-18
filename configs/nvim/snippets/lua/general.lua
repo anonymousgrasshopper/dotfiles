@@ -30,10 +30,10 @@ return {
 		},
 		fmt(
 			[[
-        for <> do
-          <>
-        end<>
-      ]],
+				for <> do
+					<>
+				end<>
+			]],
 			{
 				i(1),
 				d(2, get_visual),
@@ -50,10 +50,10 @@ return {
 		},
 		fmt(
 			[[
-        repeat
-          <>
-        until <>
-      ]],
+				repeat
+					<>
+				until <>
+			]],
 			{
 				d(1, get_visual),
 				i(2),
@@ -70,10 +70,10 @@ return {
 		},
 		fmt(
 			[[
-        function <>(<>)
-          <>
-        end<>
-      ]],
+				function <>(<>)
+					<>
+				end<>
+			]],
 			{
 				i(1),
 				i(2),
@@ -94,10 +94,10 @@ return {
 		},
 		fmt(
 			[[
-        function(<>)
-          <>
-        end<>
-      ]],
+				function(<>)
+					<>
+				end<>
+			]],
 			{
 				i(1),
 				d(2, get_visual),

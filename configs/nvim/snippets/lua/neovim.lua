@@ -17,12 +17,12 @@ return {
 		},
 		fmt(
 			[[
-        vim.api.nvim_create_autocmd(<>, {<>
-          callback = function()
-            <>
-          end
-        })
-      ]],
+				vim.api.nvim_create_autocmd(<>, {<>
+					callback = function()
+						<>
+					end
+				})
+			]],
 			{
 				c(1, {
 					{ t('{ "'), i(1), t('" }') },
@@ -46,10 +46,10 @@ return {
 		},
 		fmt(
 			[=[
-        s({ trig = "<>", dscr = "<>"<><><> },
-          <>
-        ),
-      ]=],
+				s({ trig = "<>", dscr = "<>"<><><> },
+					<>
+				),
+			]=],
 			{
 				i(1),
 				i(2),
@@ -61,15 +61,15 @@ return {
 						nil,
 						fmt(
 							[=[
-              fmta(
-                  [[
-                    <>
-                  ]],
-                  {
-                    <>
-                  }
-                )
-            ]=],
+							fmta(
+									[[
+										<>
+									]],
+									{
+										<>
+									}
+								)
+						]=],
 							{
 								i(1),
 								i(2),

@@ -1,13 +1,13 @@
 local opt = vim.opt
 
 opt.fillchars = {
-  foldopen  = "",
-  foldclose = "",
-  fold      = "•",
-  foldsep   = " ",
-  diff      = "╱",
-  eob       = " ",
-  lastline  = " ",
+	foldopen  = "",
+	foldclose = "",
+	fold      = "•",
+	foldsep   = " ",
+	diff      = "╱",
+	eob       = " ",
+	lastline  = " ",
 }
 
 -- folding

@@ -117,10 +117,10 @@ return {
 				link_folds_to_tree = true,
 				link_tree_to_folds = true,
 				guides = {
-					mid_item = "├╴",
-					last_item = "└╴",
+					mid_item = "├ ",
+					last_item = "└ ",
 					nested_top = "│ ",
-					whitespace = "  ",
+					whitespace = "	",
 				},
 				ignore = {
 					filetypes = { "alpha", "neo-tree", "CompetiTest", "toggleterm", "undotree" },
@@ -135,7 +135,12 @@ return {
 		opts = function()
 			local dropbar_api = require("dropbar.api")
 			vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-			vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
+			vim.keymap.set(
+				"n",
+				"[;",
+				dropbar_api.goto_context_start,
+				{ desc = "Go to start of current context" }
+			)
 			vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
 
 			return {

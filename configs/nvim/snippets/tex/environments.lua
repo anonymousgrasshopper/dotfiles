@@ -30,10 +30,10 @@ return {
 		},
 		fmt(
 			[[
-        \begin{<>}
-          <>
-        \end{<>}
-      ]],
+				\begin{<>}
+					<>
+				\end{<>}
+			]],
 			{
 				i(1),
 				i(2),
@@ -51,8 +51,8 @@ return {
 		},
 		fmt(
 			[[
-        \section<>{<>}
-      ]],
+				\section<>{<>}
+			]],
 			{
 				i(2),
 				i(1),
@@ -69,8 +69,8 @@ return {
 		},
 		fmt(
 			[[
-        \subsection<>{<>}
-      ]],
+				\subsection<>{<>}
+			]],
 			{
 				i(2),
 				i(1),

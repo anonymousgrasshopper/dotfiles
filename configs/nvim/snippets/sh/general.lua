@@ -48,10 +48,10 @@ return {
 		},
 		fmt(
 			[[
-        for <> in <>; do
-          <>
-        done<>
-      ]],
+				for <> in <>; do
+					<>
+				done<>
+			]],
 			{
 				i(1),
 				i(2),
@@ -69,10 +69,10 @@ return {
 		},
 		fmt(
 			[[
-        while <>; do
-          <>
-        done <>
-      ]],
+				while <>; do
+					<>
+				done <>
+			]],
 			{
 				i(1),
 				d(2, get_visual),
@@ -89,10 +89,10 @@ return {
 		},
 		fmt(
 			[[
-        until <>; do
-          <>
-        done <>
-      ]],
+				until <>; do
+					<>
+				done <>
+			]],
 			{
 				i(1),
 				d(2, get_visual),
@@ -109,10 +109,10 @@ return {
 		},
 		fmt(
 			[[
-        select <> in <>; do
-          <>
-        done <>
-      ]],
+				select <> in <>; do
+					<>
+				done <>
+			]],
 			{
 				i(1),
 				i(2),
@@ -156,10 +156,10 @@ return {
 		},
 		fmt(
 			[[
-        function <> {
-          <>
-        }
-      ]],
+				function <> {
+					<>
+				}
+			]],
 			{
 				i(1),
 				i(0),
@@ -176,9 +176,9 @@ return {
 		},
 		fmt(
 			[[
-        case <> in<>
-        esac
-      ]],
+				case <> in<>
+				esac
+			]],
 			{
 				i(1),
 				d(2, rec_switch, {}),

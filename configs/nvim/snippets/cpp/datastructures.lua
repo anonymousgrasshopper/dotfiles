@@ -15,9 +15,9 @@ return {
 		},
 		fmt(
 			[[
-        class <> <><>
-        };
-      ]],
+				class <> <><>
+				};
+			]],
 			{
 				f(function(_, snip) return snip.captures[1] end),
 				c(1, {
@@ -40,9 +40,9 @@ return {
 		},
 		fmt(
 			[[
-        struct <> <><>
-        };
-      ]],
+				struct <> <><>
+				};
+			]],
 			{
 				f(function(_, snip) return snip.captures[1] end),
 				c(1, {
@@ -65,10 +65,10 @@ return {
 		},
 		fmt(
 			[[
-        union <> {
-          <>
-        };
-      ]],
+				union <> {
+					<>
+				};
+			]],
 			{
 				f(function(_, snip) return snip.captures[1] end),
 				i(1),

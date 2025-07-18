@@ -118,7 +118,12 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
 
-		vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
+		vim.keymap.set(
+			"i",
+			"<C-l>",
+			"<c-g>u<Esc>[s1z=`]a<c-g>u",
+			{ desc = "Correct last spelling mistake", buffer = true }
+		)
 		vim.keymap.set(
 			"i",
 			"<C-r>",
@@ -127,3 +132,20 @@ vim.api.nvim_create_autocmd("FileType", {
 		)
 	end,
 })
+
+-- Zen mode
+vim.api.nvim_create_user_command("Zen", function()
+	if vim.api.nvim_get_option_value("laststatus", {}) ~= 0 then
+		vim.cmd([=[
+			set laststatus=0
+			set showtabline=0
+			silent ![[ -n $TMUX ]] && tmux set -g status off
+		]=])
+	else
+		vim.cmd([=[
+			set laststatus=3
+			set showtabline=2
+			silent ![[ -n $TMUX ]] && tmux set -g status on
+		]=])
+	end
+end, {})
