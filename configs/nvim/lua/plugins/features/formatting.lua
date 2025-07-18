@@ -74,7 +74,7 @@ return {
 		formatters = {
 			clang_format = {
 				command = "clang-format",
-				prepend_args = function()
+				args = function()
 					return "--style=file:"
 						.. search_parent_dirs(vim.api.nvim_get_current_buf(), {
 							names = { ".clang-format" },
@@ -83,7 +83,7 @@ return {
 			},
 			tex_fmt = {
 				command = "tex-fmt",
-				prepend_args = function()
+				args = function()
 					return {
 						"--config",
 						search_parent_dirs(vim.api.nvim_get_current_buf(), {
