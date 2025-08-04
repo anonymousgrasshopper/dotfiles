@@ -19,30 +19,33 @@ return {
 		},
 	},
 	cmd = { "DapContinue", "DapToggleBreakpoint" },
-	keys = {
-		{ "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
-		{ "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
-		{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-		{ "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
-		{ "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
-		{ "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
-		{ "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
-		{ "<leader>dg", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-		{ "<leader>dG", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
-		{ "<leader>dj", function() require("dap").down() end, desc = "Down" },
-		{ "<leader>dk", function() require("dap").up() end, desc = "Up" },
-		{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle repl" },
-		{ "<leader>ds", function() require("dap").session() end, desc = "Debugging session" },
-		{ "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-		{ "<leader>dW", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
-		{ "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
-		{ "<leader>df", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.frames) end },
-		{ "<leader>ds", function() local widgets = require("dap.ui.widgets") widgets.centered_float(widgets.scopes) end },
-		{ "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
-		{ "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
-		{ "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
-		{ "<leader>dT", function() require("dap").terminate() end, desc = "Terminate" },
-	},
+	keys = function()
+		local dap = require("dap")
+		return {
+			{ "<leader>dc", dap.continue, desc = "Continue" },
+			{ "<leader>dp", dap.pause, desc = "Pause" },
+			{ "<leader>db", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
+			{ "<leader>dB", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
+			{ "<leader>di", dap.step_into, desc = "Step Into" },
+			{ "<leader>do", dap.step_out, desc = "Step Out" },
+			{ "<leader>dO", dap.step_over, desc = "Step Over" },
+			{ "<leader>dg", dap.run_to_cursor, desc = "Run to Cursor" },
+			{ "<leader>dG", dap.goto_, desc = "Go to Line (No Execute)" },
+			{ "<leader>dj", dap.down, desc = "Down" },
+			{ "<leader>dk", dap.up, desc = "Up" },
+			{ "<leader>dr", dap.repl.toggle, desc = "Toggle repl" },
+			{ "<leader>ds", dap.session, desc = "Debugging session" },
+			{ "<leader>dw", require("dap.ui.widgets").hover, desc = "Widgets" },
+			{ "<leader>dW", require("dap.ui.widgets").preview, desc = "Preview widgets" },
+			{ "<leader>du", require("dapui").toggle, desc = "Toggle ui", silent = false },
+			{ "<leader>df", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end },
+			{ "<leader>ds", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end },
+			{ "<leader>dR", dap.restart, desc = "Restart", silent = false },
+			{ "<leader>de", require("dapui").eval, desc = "Eval line", silent = false },
+			{ "<leader>dl", dap.run_last, desc = "Run last", silent = false },
+			{ "<leader>dT", dap.terminate, desc = "Terminate" },
+		}
+	end,
 
 	config = function()
 		local dap = require("dap")
@@ -58,7 +61,7 @@ return {
 
 		-- keymaps
 		local debugging_keymaps = {
-			["t"] = function() require("dap").toggle_breakpoint() end,
+			["b"] = function() dap.toggle_breakpoint() end,
 			["i"] = function()
 				require("dap.ui.widgets").hover()
 				vim.cmd("hi Cursor blend=100")

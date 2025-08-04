@@ -62,6 +62,7 @@ return {
 					"markdownH6",
 				},
 			},
+			-- stylua: ignore
 			callout = {
 				note      = { raw = "[!NOTE]",      rendered = "󰋽 Note",      highlight = "MarkdownInfo",    category = "github"   },
 				tip       = { raw = "[!TIP]",       rendered = "󰌶 Tip",       highlight = "MarkdownSuccess", category = "github"   },

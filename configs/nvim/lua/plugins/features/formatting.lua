@@ -34,9 +34,7 @@ local function search_parent_dirs(bufnr, arg)
 		if config_file:sub(1, 1) == "." then
 			config_file = config_file:sub(2, #config_file)
 		end
-		return (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config"))
-			.. "/formatters/"
-			.. config_file
+		return (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/formatters/" .. config_file
 	end
 end
 
@@ -116,18 +114,10 @@ return {
 
 			local disabled_paths = {
 				"^" .. vim.fn.stdpath("config") .. "/lua/config/options.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/editor/telescope.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/coding/autopairs.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/coding/telescope.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/features/debugging.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/features/completions.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/lang/markdown.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/util/browsing.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/util/unix.lua",
 				"^" .. vim.fn.stdpath("config") .. "/lua/snippet/",
 				"^" .. vim.fn.stdpath("config") .. "/snippets/",
 
-				"^" .. (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/texmf/tex/latex",
+				"^" .. (vim.env.TEXMFHOME or vim.env.HOME) .. "/texmf/tex/latex",
 			}
 			for _, path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(path) then

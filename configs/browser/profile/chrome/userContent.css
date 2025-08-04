@@ -3,12 +3,6 @@
   .wallpaper-attribution, .logo, .wordmark, img[role="presentation"] {
     display: none !important;
   }
-  .personalize-button {
-    background: transparent !important;
-    border: none !important;
-    font-size: 0 !important;
-    cursor: pointer;
-  }
 }
 
 /* dark mode for pdf.js */

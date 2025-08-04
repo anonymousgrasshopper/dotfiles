@@ -2,7 +2,12 @@ return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
 	keys = {
-		{ "<A-x>", "<Cmd>Noice dismiss<CR>", mode = { "n", "i", "c", "v" }, desc = "Dismiss all notifications" },
+		{
+			"<A-x>",
+			"<Cmd>Noice dismiss<CR>",
+			mode = { "n", "i", "c", "v" },
+			desc = "Dismiss all notifications",
+		},
 	},
 	dependencies = {
 		"MunifTanjim/nui.nvim",
@@ -25,22 +30,6 @@ return {
 			command_palette = true, -- position the cmdline and popupmenu together
 			long_message_to_split = true, -- long messages will be sent to a split
 			lsp_doc_border = true, -- add a border to hover docs and signature help
-			inc_rename = {
-				cmdline = {
-					format = {
-						Rename = {
-							pattern = "^:%s*Rename%s+",
-							icon = " ",
-							conceal = true,
-							opts = {
-								relative = "cursor",
-								size = { min_width = 20 },
-								position = { row = -3, col = 0 },
-							},
-						},
-					},
-				},
-			}, -- enables an input dialog for inc-rename.nvim
 		},
 		cmdline = {
 			format = {

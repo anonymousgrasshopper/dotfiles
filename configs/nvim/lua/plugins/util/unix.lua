@@ -1,5 +1,6 @@
 return {
 	"tpope/vim-eunuch",
+	-- stylua: ignore
 	cmd = {
 		"Remove",    -- Delete a file on disk without E211: File no longer available.
 		"Delete",    -- Delete a file on disk and the buffer too.

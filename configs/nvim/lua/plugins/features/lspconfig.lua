@@ -114,10 +114,12 @@ return {
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function()
+					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 					vim.keymap.set("n", "<leader>doc", vim.lsp.buf.hover, { desc = "Hover documentation", buffer = true })
 					vim.keymap.set("n", "<leader>def", vim.lsp.buf.definition, { desc = "Go to definition", buffer = true })
 					vim.keymap.set("n", "<leader>dec", vim.lsp.buf.declaration, { desc = "Go to declaration", buffer = true })
 					vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = true })
+					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = true })
 					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = true })
 					-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = true })
 				end,
@@ -137,41 +139,13 @@ return {
 	{
 		"rmagatti/goto-preview",
 		keys = {
-			{
-				"gpd",
-				function() require("goto-preview").goto_preview_definition() end,
-				desc = "Preview definition",
-			},
-			{
-				"gpc",
-				function() require("goto-preview").goto_preview_declaration() end,
-				desc = "Preview declaration",
-			},
-			{
-				"gpi",
-				function() require("goto-preview").goto_preview_implementation() end,
-				desc = "Preview implementation",
-			},
-			{
-				"gpr",
-				function() require("goto-preview").goto_preview_references() end,
-				desc = "Preview references",
-			},
-			{
-				"gpt",
-				function() require("goto-preview").goto_preview_type_definition() end,
-				desc = "Preview type definition",
-			},
-			{
-				"gpx",
-				function() require("goto-preview").close_all_win() end,
-				desc = "Close all previews",
-			},
-			{
-				"gpX",
-				function() require("goto-preview").close_all_win({ skip_curr_window = true }) end,
-				desc = "Close other previews",
-			},
+			{ "gpd", function() require("goto-preview").goto_preview_definition() end, desc = "Preview definition" },
+			{ "gpc", function() require("goto-preview").goto_preview_declaration() end, desc = "Preview declaration" },
+			{ "gpi", function() require("goto-preview").goto_preview_implementation() end, desc = "Preview implementation" },
+			{ "gpr", function() require("goto-preview").goto_preview_references() end, desc = "Preview references" },
+			{ "gpt", function() require("goto-preview").goto_preview_type_definition() end, desc = "Preview type definition" },
+			{ "gpx", function() require("goto-preview").close_all_win() end, desc = "Close all previews" },
+			{ "gpX", function() require("goto-preview").close_all_win({ skip_curr_window = true }) end, desc = "Close other previews" },
 		},
 		opts = {
 			width = 120, -- Width of the floating window
@@ -220,7 +194,7 @@ return {
 				["source.organizeImports"] = { "", { link = "DiagnosticWarning" } },
 				["source.fixAll"] = { "󰃢", { link = "DiagnosticError" } },
 				["source"] = { "", { link = "DiagnosticError" } },
-				["rename"] = { "󰑕", { link = "DiagnosticWarning" } },
+				["rename"] = { "", { link = "DiagnosticWarning" } },
 				["codeAction"] = { "", { link = "DiagnosticWarning" } },
 			},
 		},
@@ -235,7 +209,12 @@ return {
 			code_lenses = true,
 			sign = { enabled = true, text = " ", lens_text = " " },
 			virtual_text = { enabled = false, text = " ", lens_text = " ", pos = "eol" },
-			float = { enabled = false, text = " ", lens_text = " ", win_opts = { focusable = false } },
+			float = {
+				enabled = false,
+				text = " ",
+				lens_text = " ",
+				win_opts = { focusable = false },
+			},
 			status_text = { enabled = true, text = " ", lens_text = " ", text_unavailable = "" },
 			number = { enabled = false },
 			line = { enabled = false },

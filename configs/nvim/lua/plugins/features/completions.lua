@@ -154,10 +154,11 @@ return {
 						},
 					},
 					cmdline = {
+						-- stylua: ignore
 						enabled = function()
 							return
 								vim.fn.getcmdtype() ~= ":" or
-								not vim.fn.getcmdline():match("^[%%0-9,'<>%-:]*!")
+								not vim.fn.getcmdline():match("^[%%0-9,'<>%-:]*!") -- disable when typing an external command
 						end,
 					},
 					dictionary = {
