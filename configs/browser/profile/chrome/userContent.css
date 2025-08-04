@@ -1,6 +1,6 @@
 /* hide things on firefox home page */
 @-moz-document url("about:newtab"), url("about:home") {
-  .wallpaper-attribution {
+  .wallpaper-attribution, .logo, .wordmark, img[role="presentation"] {
     display: none !important;
   }
   .personalize-button {

@@ -27,7 +27,7 @@ function copy_file {
 		echo -en "${BLUE}Would you like to delete your current ${GREEN}$1${BLUE} to replace it with the one in this repo ? (y/n) ${WHITE}"
 		read -r answer
 		case "$answer" in
-			[yY][eE][sS] | [yY])
+		[yY][eE][sS] | [yY])
 			$sudo cp "$1" "$2/" 2>/dev/null || echo -e "${RED} ${WHITE}You need to manually move ${GREEN}$1${WHITE} to ${GREEN}$2${WHITE}"
 			;;
 		esac
@@ -44,7 +44,7 @@ eval type picom >/dev/null 2>&1 && copy_file picom.conf /etc/xdg
 [[ -f /usr/bin/neomutt ]] && copy_file neomutt.png /usr/share/icons/hicolor/325x325/apps
 
 # Windows and WSL specific files
-if [[ -n "$WINDOWS" ]]; then
+if [[ -n "$WSLENV" ]]; then
 	# get the Windows username
 	while true; do
 		echo -en "${BLUE}What is your Windows username ? ${WHITE}"
@@ -73,10 +73,10 @@ if [[ -n "$WINDOWS" ]]; then
 			wsl_scripts["$script"]="/mnt/c/Program Files/VcXsrv/"
 		done
 
-	# move each file to their destination
-	for i in "${!wsl_scripts[@]}"; do
-		copy_file "$i" "${wsl_scripts[$i]}"
-	done
+		# move each file to their destination
+		for i in "${!wsl_scripts[@]}"; do
+			copy_file "$i" "${wsl_scripts[$i]}"
+		done
 	)
 fi
 

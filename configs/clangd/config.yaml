@@ -7,6 +7,9 @@ Completion:
 Hover:
   ShowAKA: true
 
+Diagnostics:
+  Suppress: [ unused-parameter ]
+
 ---
 If:
   PathMatch: .*\.(cpp|hpp|h)$

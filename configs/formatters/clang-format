@@ -4,7 +4,6 @@ TabWidth: 2
 IndentWidth: 2
 
 ColumnLimit: 0
-
 ---
 Language: Cpp
 BasedOnStyle: google
@@ -14,3 +13,7 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 
 AllowShortFunctionsOnASingleLine: Empty
+
+UseTab: Always
+TabWidth: 2
+IndentWidth: 2

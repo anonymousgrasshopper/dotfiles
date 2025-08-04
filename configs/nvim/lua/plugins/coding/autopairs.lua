@@ -46,7 +46,7 @@ return {
 										local text = line:sub(cond[3], col - 1)
 										local patterns = table_convert(cond[4])
 										for _, pattern in ipairs(patterns) do
-											if cond.regex and text == pattern or text:match(pattern) then
+											if cond.regex and text:match(pattern) or text == pattern then
 												return false
 											end
 										end

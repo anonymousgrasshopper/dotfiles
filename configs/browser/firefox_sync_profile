@@ -1,11 +1,30 @@
 #!/bin/bash
 
 # colors
-RED='\x1b[38;2;232;36;36m' #e82424
+RED='\x1b[38;2;232;36;36m'     #e82424
+BLUE='\x1b[38;2;126;156;216m'  #7e9cd8
+WHITE='\x1b[38;2;220;215;186m' #dcd7ba
 
-# check there is at least one directory in ~/.mozilla/firefox
+# find the firefox proile dir
+FIREFOX_PROFILES_DIR=~/.mozilla/firefox
+if [[ -n "$WSLENV" ]]; then
+	# get the Windows username
+	while true; do
+		echo -en "${BLUE}What is your Windows username ? ${WHITE}"
+		read -r win_username
+		if [[ -n "$win_username" && -d "/mnt/c/Users/$win_username" ]]; then
+			break
+		else
+			echo -e "${RED}Home directory not found. Try again..."
+		fi
+	done
+
+	FIREFOX_PROFILES_DIR=/mnt/c/Users/"$win_username"/AppData/Roaming/Mozilla/Firefox/Profiles/
+fi
+
+# check there is at least one directory in $FIREFOX_PROFILES_DIR
 exists_profile=false
-for item in ~/.mozilla/firefox/*; do
+for item in "$FIREFOX_PROFILES_DIR"/*; do
 	if [[ -d "$item" ]]; then
 		exists_profile=true
 		break
@@ -18,7 +37,7 @@ $exists_profile || {
 
 # let the user select a profile through fzf
 FIREFOX_PROFILE_DIR=$(
-	fd --hidden --max-depth 1 -td . ~/.mozilla/firefox |
+	fd --hidden --max-depth 1 -td . "$FIREFOX_PROFILES_DIR" |
 		grep -v "Crash Reports" |
 		grep -v "Pending Pings" |
 		fzf --select-1 --preview='eza -1alh --group-directories-first --color=always --icons {}'
@@ -28,10 +47,20 @@ if [[ -z "$FIREFOX_PROFILE_DIR" ]]; then
 	exit 1
 fi
 
-# create symbolic links
-for item in ~/.config/browser/profile/*; do
-	stripped="${item%/}" # strip trailing slash (if any)
-	name="${stripped##*/}"
-	[[ -e "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
-	ln -s "$item" "$FIREFOX_PROFILE_DIR/$name"
-done
+if [[ -z "$WSLENV" ]]; then
+	# create symbolic links
+	for item in ~/.config/browser/profile/*; do
+		stripped="${item%/}" # strip trailing slash (if any)
+		name="${stripped##*/}"
+		[[ -e "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
+		ln -s "$item" "$FIREFOX_PROFILE_DIR/$name"
+	done
+else
+	# copy everything
+	for item in ~/.config/browser/profile/*; do
+		stripped="${item%/}" # strip trailing slash (if any)
+		name="${stripped##*/}"
+		[[ -e "$FIREFOX_PROFILE_DIR/$name" ]] && rm -rf "${FIREFOX_PROFILE_DIR:?}/$name"
+		cp -r "$item" "$FIREFOX_PROFILE_DIR/$name" # use rsync instead ?
+	done
+fi
