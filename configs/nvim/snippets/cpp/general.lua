@@ -160,7 +160,7 @@ return {
 		{
 			t("namespace "),
 			f(function(_, snip) return snip.captures[1] end),
-			t({ " {", "\t" }),
+			t({ " {", "" }),
 			i(0),
 			t({ "", "}" }),
 		}
