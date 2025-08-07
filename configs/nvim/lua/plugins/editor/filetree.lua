@@ -206,7 +206,6 @@ return {
 					},
 					hide_by_pattern = { -- uses glob style patterns
 						"*.log",
-						"*.out",
 					},
 					always_show = {}, -- remains visible even if other settings would normally hide it
 					always_show_by_pattern = {}, -- uses glob style patterns

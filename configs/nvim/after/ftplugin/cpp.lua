@@ -75,7 +75,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		"--debug",
 		vim.fn.expand("%"),
 		"-o",
-		vim.fn.expand("%:r") .. ".exe",
+		vim.fn.expand("%:r") .. ".out",
 	}, {}, function(obj)
 		if obj.stderr ~= nil then
 			if obj.stderr:match("error[^\n]*\n$") then

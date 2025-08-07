@@ -8,12 +8,12 @@ local function highlight_metadata()
 	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
 
 	local valid_keywords = {
+		source = true,
 		desc = true,
 		author = true,
-		source = true,
-		url = true,
 		tags = true,
 		hardness = true,
+		url = true,
 	}
 
 	for lnum, line in ipairs(lines) do

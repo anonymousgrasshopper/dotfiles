@@ -25,7 +25,11 @@ return {
 			{ "<leader>dc", dap.continue, desc = "Continue" },
 			{ "<leader>dp", dap.pause, desc = "Pause" },
 			{ "<leader>db", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
-			{ "<leader>dB", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, desc = "Breakpoint Condition" },
+			{
+				"<leader>dB",
+				function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+				desc = "Breakpoint Condition",
+			},
 			{ "<leader>di", dap.step_into, desc = "Step Into" },
 			{ "<leader>do", dap.step_out, desc = "Step Out" },
 			{ "<leader>dO", dap.step_over, desc = "Step Over" },
@@ -104,9 +108,9 @@ return {
 				request = "launch",
 				program = function()
 					if vim.b.use_default_executable_path then
-						return vim.fn.expand("%:r") .. ".exe"
+						return vim.fn.expand("%:r") .. ".out"
 					end
-					return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".exe", "file")
+					return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".out", "file")
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
