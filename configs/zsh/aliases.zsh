@@ -109,7 +109,7 @@ alias eza="LS_COLORS= eza" # prevent eza from reading LS_COLORS instead of ~/.co
 alias ls="eza --icons=always --group-directories-first --no-quotes"
 alias l="eza --icons=always --group-directories-first --no-quotes -a"
 alias ll="eza --icons=always --group-directories-first --no-quotes -alh"
-alias llg="eza --icons=always --group-directories-first --no-quotes -lh --git"
+alias llg="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 

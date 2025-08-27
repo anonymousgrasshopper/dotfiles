@@ -223,7 +223,7 @@ fi
 			cp -r "$item" "$HOME/.config/"
 		else
 			difference=false
-			while read -r -d ''; do                                                                            # check wether the version in the repo and in ~/.config differ or not
+			while read -r -d ''; do # check wether the version in the repo and in ~/.config differ or not
 				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore obfuscated e-mail adresses
 					difference=true
 					break

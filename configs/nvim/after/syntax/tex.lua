@@ -12,7 +12,7 @@ local function highlight_metadata()
 		desc = true,
 		author = true,
 		tags = true,
-		hardness = true,
+		difficulty = true,
 		url = true,
 	}
 
@@ -93,16 +93,22 @@ local function highlight_hrule()
 	end
 end
 
-if vim.fn.expand("%:p"):match("^" .. vim.env.HOME .. "/Mathématiques/Solutions") then
-	highlight_metadata()
-	highlight_hrule()
+local directories = {
+	"^/tmp/oly",
+	"^" .. vim.env.HOME .. "/Mathématiques/Solutions",
+}
+for _, directory in pairs(directories) do
+	if vim.fn.expand("%:p"):match(directory) then
+		highlight_metadata()
+		highlight_hrule()
 
-	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-		callback = function(event)
-			if event.buf == buf then
-				highlight_metadata()
-				highlight_hrule()
-			end
-		end,
-	})
+		vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+			callback = function(event)
+				if event.buf == buf then
+					highlight_metadata()
+					highlight_hrule()
+				end
+			end,
+		})
+	end
 end

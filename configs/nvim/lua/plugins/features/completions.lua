@@ -166,7 +166,6 @@ return {
 						module = "blink-cmp-words.dictionary",
 						opts = {
 							dictionary_search_threshold = 3, -- number of characters required to trigger completion (lower will hinder performance)
-							pointer_symbols = { "!", "&", "^" },
 							score_offset = -2, -- less priority
 						},
 					},

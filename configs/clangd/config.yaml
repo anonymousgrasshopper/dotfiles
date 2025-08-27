@@ -8,7 +8,7 @@ Hover:
   ShowAKA: true
 
 Diagnostics:
-  Suppress: [ unused-parameter ]
+  Suppress: [unused-parameter]
 
 ---
 If:
