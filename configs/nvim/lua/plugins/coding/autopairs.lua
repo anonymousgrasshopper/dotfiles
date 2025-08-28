@@ -59,7 +59,7 @@ return {
 					},
 				},
 			},
-			{ "<", ">", disable_start = true, disable_end = true },
+			{ "<", ">", disable_start = true },
 			-- comments
 			{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
 			{ "[=[", "]=]", ft = { "lua" } },

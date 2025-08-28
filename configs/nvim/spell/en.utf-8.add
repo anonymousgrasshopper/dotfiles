@@ -90,3 +90,8 @@ subcommand
 olympiad
 CLI
 oly
+nonnegative
+USAMO
+fakesolve
+CMake
+lua

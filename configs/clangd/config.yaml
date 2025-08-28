@@ -12,12 +12,12 @@ Diagnostics:
 
 ---
 If:
-  PathMatch: .*\.(cpp|hpp|h)$
+  PathMatch: .*\.(cpp|hpp)$
 CompileFlags:
-  Add: [-std=c++23]
+  Add: [-std=c++23,-Wno-c23-extensions]
 
 ---
 If:
-  PathMatch: .*\.c
+  PathMatch: .*\.(c|h)
 CompileFlags:
   Add: [-std=c17]

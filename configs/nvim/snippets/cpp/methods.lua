@@ -1,6 +1,6 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local s, i, f, rep, fmt = ls.s, ls.i, ls.f, ls.rep, ls.fmt
-local helpers = require("snippet/helpers")
+local helpers = require("snippets.helpers")
 local not_in_string_comment = helpers.not_in_string_comment
 
 return {

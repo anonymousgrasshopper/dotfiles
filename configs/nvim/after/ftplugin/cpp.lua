@@ -1,3 +1,6 @@
+--CMake
+vim.opt_local.makeprg = "cmake --build build"
+
 -- debugging
 vim.b.codelldb_stdio_redirection = nil
 vim.keymap.set(

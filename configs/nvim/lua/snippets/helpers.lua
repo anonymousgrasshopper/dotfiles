@@ -1,4 +1,4 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local i, sn, make_cond = ls.i, ls.sn, ls.make_cond
 
 local helpers = {}

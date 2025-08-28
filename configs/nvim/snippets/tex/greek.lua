@@ -1,4 +1,4 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local s, t = ls.s, ls.t
 local tex = require("snippet/tex_utils")
 

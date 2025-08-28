@@ -1,7 +1,7 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local s, t, i, d, f, fmt, make_cond =
       ls.s, ls.t, ls.i, ls.d, ls.f, ls.fmt, ls.make_cond
-local helpers = require("snippet/helpers")
+local helpers = require("snippets.helpers")
 local get_visual = helpers.get_visual
 local tex = require("snippet/tex_utils")
 

@@ -118,12 +118,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
 
-		vim.keymap.set(
-			"i",
-			"<C-l>",
-			"<c-g>u<Esc>[s1z=`]a<c-g>u",
-			{ desc = "Correct last spelling mistake", buffer = true }
-		)
+		vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
 		vim.keymap.set(
 			"i",
 			"<C-r>",

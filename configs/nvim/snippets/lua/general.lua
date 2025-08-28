@@ -1,6 +1,6 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local s, i, d, f, fmt = ls.s, ls.i, ls.d, ls.f, ls.fmt
-local helpers = require("snippet/helpers")
+local helpers = require("snippets.helpers")
 local line_begin = helpers.line_begin
 local get_visual = helpers.get_visual
 local line_not_match = helpers.line_not_match

@@ -114,9 +114,7 @@ return {
 							if type == "/" or type == "?" then
 								return { pos[1] - 1, pos[2] }
 							end
-							if type == ":" then
-								return { pos[1], pos[2] }
-							end
+							return { pos[1], pos[2] }
 						end
 						local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
 						return { vim.o.lines - height, 0 }

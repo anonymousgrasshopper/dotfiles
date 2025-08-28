@@ -64,43 +64,42 @@ return {
 	cmd = {
 		"Telescope",
 	},
-	keys = function()
-		local builtin = require("telescope.builtin")
-		return {
-			{ "<leader>rr", builtin.resume, desc = "Resume last Search" },
-			{ "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
+	keys = {
+		-- stylua: ignore start
+		{ "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
+		{ "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
 
-			{ "<leader>ff", function() builtin.find_files({ hidden = true }) end, desc = "Find files in cwd" },
-			{ "<leader>fr", function() builtin.oldfiles({ hidden = true }) end, desc = "Find recent files" },
+		{ "<leader>ff", function() require("telescope.builtin").find_files({ hidden = true }) end, desc = "Find files in cwd" },
+		{ "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden = true }) end, desc = "Find recent files" },
 
-			{ "<leader>sj", builtin.jumplist, desc = "Jumplist" },
-			{ "<leader>sm", builtin.marks, desc = "Search Marks" },
-			{ "<leader>sk", builtin.keymaps, desc = "Search Keymaps" },
-			{ "<leader>sc", builtin.commands, desc = "Search Commands" },
-			{ "<leader>sr", builtin.registers, desc = "Search Registers" },
-			{ "<leader>sb", builtin.buffers, desc = "Search open Buffers" },
-			{ "<leader>sg", live_grep, desc = "Search with Grep in cwd" },
-			{ "<leader>sw", builtin.grep_string, desc = "Search Word under cursor in cwd" },
-			{ "<leader>sd", function() builtin.diagnostics({ bufnr = 0 }) end, desc = "Search buffer's diagnostics" },
-			{ "<leader>sl", builtin.lsp_references, desc = "Search LSP references" },
+		{ "<leader>sj", function() require("telescope.builtin").jumplist() end, desc = "Jumplist" },
+		{ "<leader>sm", function() require("telescope.builtin").marks() end, desc = "Search Marks" },
+		{ "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Search Keymaps" },
+		{ "<leader>sc", function() require("telescope.builtin").commands() end, desc = "Search Commands" },
+		{ "<leader>sr", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
+		{ "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Search open Buffers" },
+		{ "<leader>sg", live_grep, desc = "Search with Grep in cwd" },
+		{ "<leader>sw", function() require("telescope.builtin").grep_string() end, desc = "Search Word under cursor in cwd" },
+		{ "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search buffer's diagnostics" },
+		{ "<leader>sl", function() require("telescope.builtin").lsp_references() end, desc = "Search LSP references" },
 
-			{ "<localleader>sr", builtin.lsp_references, desc = "Search references" },
-			{ "<localleader>si", builtin.lsp_incoming_calls, desc = "search incoming calls" },
-			{ "<localleader>so", builtin.lsp_outgoing_calls, desc = "Search outgoing calls" },
-			{ "<localleader>ss", builtin.lsp_document_symbols, desc = "Search document symbols" },
-			{ "<localleader>sd", builtin.lsp_diagnostics, desc = "Search diagnostics" },
-			{ "<localleader>sw", builtin.lsp_workspace_symbols, desc = "Search workspace symbols" },
-			{ "<localleader>sW", builtin.lsp_dynamic_workspace_symbols, desc = "Search dynamic workspace symbols" },
+		{ "<localleader>sr", function() require("telescope.builtin").lsp_references() end, desc = "Search references" },
+		{ "<localleader>si", function() require("telescope.builtin").lsp_incoming_calls() end, desc = "search incoming calls" },
+		{ "<localleader>so", function() require("telescope.builtin").lsp_outgoing_calls() end, desc = "Search outgoing calls" },
+		{ "<localleader>ss", function() require("telescope.builtin").lsp_document_symbols() end, desc = "Search document symbols" },
+		{ "<localleader>sd", function() require("telescope.builtin").lsp_diagnostics() end, desc = "Search diagnostics" },
+		{ "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
+		{ "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
 
-			{ "<leader>gfc", builtin.git_commits, desc = "Search git commits" },
-			{ "<leader>gfB", builtin.git_bcommits, desc = "Search git bcommits" },
-			{ "<leader>gfb", builtin.git_branches, desc = "Search git branches" },
-			{ "<leader>gfs", builtin.git_status, desc = "Search git status" },
-			{ "<leader>gfS", builtin.git_stash, desc = "Search git stash items" },
+		{ "<leader>gfc", function() require("telescope.builtin").git_commits() end, desc = "Search git commits" },
+		{ "<leader>gfB", function() require("telescope.builtin").git_bcommits() end, desc = "Search git bcommits" },
+		{ "<leader>gfb", function() require("telescope.builtin").git_branches() end, desc = "Search git branches" },
+		{ "<leader>gfs", function() require("telescope.builtin").git_status() end, desc = "Search git status" },
+		{ "<leader>gfS", function() require("telescope.builtin").git_stash() end, desc = "Search git stash items" },
 
-			{ "<leader>sn", require("telescope").extensions.notify.notify, desc = "Search notifications" },
-		}
-	end,
+		{ "<leader>sn", function() require("telescope").extensions.notify.notify() end, desc = "Search notifications" },
+		-- stylua: ignore end
+	},
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")

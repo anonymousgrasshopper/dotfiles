@@ -5,51 +5,46 @@ return {
 		{
 			"theHamsta/nvim-dap-virtual-text",
 			opts = {
-				enabled = true, -- enable this plugin (the default)
-				enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
-				highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-				highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-				show_stop_reason = true, -- show stop reason when stopped for exceptions
-				commented = false, -- prefix virtual text with comment string
-				only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-				all_references = false, -- show virtual text on all all references of the variable (not only definitions)
-				clear_on_continue = false, -- clear virtual text on "continue" (might cause flickering when stepping)
+				highlight_changed_variables = true,
+				highlight_new_as_changed = false,
+				show_stop_reason = true,
+				commented = false,
+				only_first_definition = true,
+				all_references = false,
+				clear_on_continue = false,
 				virt_text_pos = "eol", -- "inline" or "eol"
 			},
 		},
 	},
 	cmd = { "DapContinue", "DapToggleBreakpoint" },
-	keys = function()
-		local dap = require("dap")
-		return {
-			{ "<leader>dc", dap.continue, desc = "Continue" },
-			{ "<leader>dp", dap.pause, desc = "Pause" },
-			{ "<leader>db", dap.toggle_breakpoint, desc = "Toggle Breakpoint" },
-			{
-				"<leader>dB",
-				function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
-				desc = "Breakpoint Condition",
-			},
-			{ "<leader>di", dap.step_into, desc = "Step Into" },
-			{ "<leader>do", dap.step_out, desc = "Step Out" },
-			{ "<leader>dO", dap.step_over, desc = "Step Over" },
-			{ "<leader>dg", dap.run_to_cursor, desc = "Run to Cursor" },
-			{ "<leader>dG", dap.goto_, desc = "Go to Line (No Execute)" },
-			{ "<leader>dj", dap.down, desc = "Down" },
-			{ "<leader>dk", dap.up, desc = "Up" },
-			{ "<leader>dr", dap.repl.toggle, desc = "Toggle repl" },
-			{ "<leader>ds", dap.session, desc = "Debugging session" },
-			{ "<leader>dw", require("dap.ui.widgets").hover, desc = "Widgets" },
-			{ "<leader>dW", require("dap.ui.widgets").preview, desc = "Preview widgets" },
-			{ "<leader>du", require("dapui").toggle, desc = "Toggle ui", silent = false },
-			{ "<leader>df", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end },
-			{ "<leader>ds", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end },
-			{ "<leader>dR", dap.restart, desc = "Restart", silent = false },
-			{ "<leader>de", require("dapui").eval, desc = "Eval line", silent = false },
-			{ "<leader>dl", dap.run_last, desc = "Run last", silent = false },
-			{ "<leader>dT", dap.terminate, desc = "Terminate" },
-		}
-	end,
+	keys = {
+		{ "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+		{ "<leader>dp", function() require("dap").pause() end, desc = "Pause" },
+		{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+		{
+			"<leader>dB",
+			function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+			desc = "Breakpoint Condition",
+		},
+		{ "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
+		{ "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
+		{ "<leader>dO", function() require("dap").step_over() end, desc = "Step Over" },
+		{ "<leader>dg", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
+		{ "<leader>dG", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
+		{ "<leader>dj", function() require("dap").down() end, desc = "Down" },
+		{ "<leader>dk", function() require("dap").up() end, desc = "Up" },
+		{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle repl" },
+		{ "<leader>ds", function() require("dap").session() end, desc = "Debugging session" },
+		{ "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
+		{ "<leader>dW", function() require("dap.ui.widgets").preview() end, desc = "Preview widgets" },
+		{ "<leader>du", function() require("dapui").toggle() end, desc = "Toggle ui", silent = false },
+		{ "<leader>df", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").frames) end },
+		{ "<leader>ds", function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").scopes) end },
+		{ "<leader>dR", function() require("dap").restart() end, desc = "Restart", silent = false },
+		{ "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
+		{ "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
+		{ "<leader>dT", function() require("dap").terminate() end, desc = "Terminate" },
+	},
 
 	config = function()
 		local dap = require("dap")
@@ -78,21 +73,61 @@ return {
 			["G"] = function() require("dap").run_to_cursor() end,
 			["q"] = function() require("dap").terminate() end,
 		}
-		local buf
 		dap.listeners.after["event_initialized"]["me"] = function()
-			buf = vim.fn.bufnr()
 			for key, callback in pairs(debugging_keymaps) do
-				vim.keymap.set("n", key, callback, { buffer = buf })
+				vim.keymap.set("n", key, callback)
 			end
 		end
 		dap.listeners.after["event_terminated"]["me"] = function()
 			for key, _ in pairs(debugging_keymaps) do
-				vim.keymap.del("n", key, { buffer = buf })
+				vim.keymap.del("n", key)
 			end
 		end
 
+		local telescope_find_executable = function()
+			local pickers = require("telescope.pickers")
+			local finders = require("telescope.finders")
+			local conf = require("telescope.config").values
+			local actions = require("telescope.actions")
+			local action_state = require("telescope.actions.state")
+
+			return coroutine.create(function(coro)
+				local opts = {}
+				pickers
+					.new(opts, {
+						prompt_title = "Path to executable",
+						finder = finders.new_oneshot_job({ "fd", "--hidden", "--no-ignore", "--type", "x" }, {}),
+						sorter = conf.generic_sorter(opts),
+						attach_mappings = function(buffer_number)
+							actions.select_default:replace(function()
+								actions.close(buffer_number)
+								coroutine.resume(coro, action_state.get_selected_entry()[1])
+							end)
+							return true
+						end,
+					})
+					:find()
+			end)
+		end
+
+		-- run with args
+		vim.api.nvim_create_user_command("RunWithArgs", function(obj)
+			local args = require("utils").shell_split(vim.fn.expand(obj.args))
+			dap.run({
+				type = vim.bo.filetype,
+				request = "launch",
+				name = "Launch file with custom arguments (adhoc)",
+				program = telescope_find_executable(),
+				args = args,
+			})
+		end, {
+			complete = "file",
+			nargs = "*",
+		})
+		vim.keymap.set("n", "<leader>R", ":RunWithArgs ")
+
 		-- C++
-		dap.adapters.codelldb = {
+		dap.adapters.cpp = {
 			type = "server",
 			port = "${port}",
 			executable = {
@@ -104,13 +139,14 @@ return {
 		dap.configurations.cpp = {
 			{
 				name = "Launch file",
-				type = "codelldb",
+				type = "cpp",
 				request = "launch",
 				program = function()
 					if vim.b.use_default_executable_path then
 						return vim.fn.expand("%:r") .. ".out"
 					end
-					return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".out", "file")
+					return telescope_find_executable()
+					-- return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".out", "file")
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,

@@ -15,14 +15,13 @@ local vim_enter_early_redraw = function()
 
 		-- find filetype icon and color
 		require("nvim-web-devicons").setup()
-		local icon, color =
-			require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
+		local icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
 		vim.g.statusline_filetype_icon = icon or " "
 		vim.cmd("hi StatusLineIconColor guifg=" .. (color or "#6D8086"))
 
 		-- setup mock statusline
 		vim.opt.statusline = "%#StatusLineBlue# NORMAL %* %F %#StatusLineIconColor#%{g:statusline_filetype_icon}%="
-			.. '%#StatusLineSeparatorGray#%#StatusLineGray# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
+			.. '%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
 		if
 			not vim.tbl_contains({ "tex", "markdown", "zsh" }, ft)
@@ -61,9 +60,9 @@ return {
 
 					StatusLine = { fg = palette.springViolet2, bg = palette.sumiInk4 },
 					StatusLineBlue = { fg = palette.sumiInk4, bg = palette.crystalBlue },
-					StatusLineGray = { fg = palette.springViolet2, bg = palette.sumiInk6 },
+					StatusLineGrey = { fg = palette.springViolet2, bg = palette.sumiInk6 },
 					StatusLineSeparatorBlue = { fg = palette.crystalBlue, bg = palette.sumiInk6 },
-					StatusLineSeparatorGray = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
+					StatusLineSeparatorGrey = { fg = palette.sumiInk6, bg = palette.sumiInk4 },
 
 					Search = { fg = palette.oldWhite, bg = palette.waveBlue2 },
 					Folded = { fg = palette.springViolet1, bg = palette.sumiInk3 },

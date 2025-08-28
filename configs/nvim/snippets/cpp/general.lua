@@ -1,7 +1,7 @@
-local ls = require("snippet/luasnip")
+local ls = require("snippets.luasnip")
 local s, t, i, c, d, f, sn, rep, fmt =
       ls.s, ls.t, ls.i, ls.c, ls.d, ls.f, ls.sn, ls.rep, ls.fmt
-local helpers = require("snippet/helpers")
+local helpers = require("snippets.helpers")
 local get_visual = helpers.get_visual
 local check_not_expanded = helpers.check_not_expanded
 local not_in_string_comment = helpers.not_in_string_comment
@@ -33,7 +33,6 @@ return {
 		{
 			trig = "if ",
 			dscr = "conditional statement",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt("if (<>) {\n\t<>\n}<>", {
@@ -46,7 +45,6 @@ return {
 		{
 			trig = "else ",
 			dscr = "else statement",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("else%s*{$"),
 		},
 		fmt("else {\n\t<>\n}<>", {
@@ -58,7 +56,6 @@ return {
 		{
 			trig = "elif ",
 			dscr = "else if statement",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt("else if (<>) {\n\t<>\n}<>", {
@@ -71,7 +68,6 @@ return {
 		{
 			trig = "for ",
 			dscr = "for loop",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt(
@@ -95,7 +91,6 @@ return {
 		{
 			trig = "while ",
 			dscr = "while loop",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt(
@@ -115,7 +110,6 @@ return {
 		{
 			trig = "do ",
 			dscr = "do while loop",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("{$"),
 		},
 		fmt(
@@ -135,7 +129,6 @@ return {
 			trig = "switch ",
 			dscr = "switch statement",
 			wordTrig = false,
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("{$"),
 		},
 		fmt(
@@ -154,7 +147,6 @@ return {
 			trig = "namespace%s+([%w_]+)%s",
 			regTrig = true,
 			dscr = "namespace template",
-			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("{$"),
 		},
 		{
@@ -171,7 +163,6 @@ return {
 			dscr = "allocate memory using new",
 			regTrig = true,
 			wordTrig = false,
-			snippetType = "autosnippet",
 			condition = not_in_string_comment,
 		},
 		{
