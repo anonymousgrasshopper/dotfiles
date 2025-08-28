@@ -114,7 +114,7 @@ return {
 
 			local disabled_paths = {
 				"^" .. vim.fn.stdpath("config") .. "/lua/config/options.lua",
-				"^" .. vim.fn.stdpath("config") .. "/lua/snippet/",
+				"^" .. vim.fn.stdpath("config") .. "/lua/snippets/",
 				"^" .. vim.fn.stdpath("config") .. "/snippets/",
 
 				"^" .. (vim.env.TEXMFHOME or vim.env.HOME) .. "/texmf/tex/latex",

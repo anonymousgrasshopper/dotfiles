@@ -3,7 +3,7 @@ local s, t, i, c, d, sn, rep, fmt =
       ls.s, ls.t, ls.i, ls.c, ls.d, ls.sn, ls.rep, ls.fmt
 local helpers = require("snippets.helpers")
 local line_begin = helpers.line_begin
-local tex = require("snippet/tex_utils")
+local tex = require("snippets.tex_utils")
 
 local rec_item
 rec_item = function()

@@ -1,6 +1,6 @@
 local ls = require("snippets.luasnip")
 local s, t = ls.s, ls.t
-local tex = require("snippet/tex_utils")
+local tex = require("snippets.tex_utils")
 
 return {
 	s({ trig = ";a", snippetType = "autosnippet" }, {

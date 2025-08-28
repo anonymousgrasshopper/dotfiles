@@ -1,17 +1,14 @@
 local components = require("statusline.components")
 
--- Dynamic mode highlight
-local function mode_hl(self) return { fg = "bg", bg = self.mode_color, bold = true } end
-
--- Initialize mode color
-local function init_mode(self)
-	self.mode = vim.fn.mode(1)
-	self.mode_color = self.mode_colors[self.mode:sub(1, 1)] or "grey"
-end
-
 local SectionA = {
-	init = init_mode,
-	hl = mode_hl,
+	init = function(self) self.mode = vim.fn.mode(1) end,
+	hl = function(self)
+		return {
+			fg = "bg",
+			bg = self:mode_color(),
+			bold = true,
+		}
+	end,
 	static = {
 		separator_color = "grey",
 	},
@@ -52,9 +49,12 @@ local Align = { provider = "%=" }
 
 local SectionX = {
 	hl = { bg = "bg", fg = "fg" },
-	components.Overseer,
-	components.Space,
 	components.Macro,
+	components.Space,
+	components.Debugger,
+	components.Space,
+	components.Space,
+	components.Overseer,
 	components.Space,
 	components.Space,
 	components.Diagnostics,
@@ -76,8 +76,14 @@ local SectionY = {
 }
 
 local SectionZ = {
-	init = init_mode,
-	hl = mode_hl,
+	init = function(self) self.mode = vim.fn.mode(1) end,
+	hl = function(self)
+		return {
+			fg = "bg",
+			bg = self:mode_color(),
+			bold = true,
+		}
+	end,
 	static = {
 		separator_color = "grey",
 	},

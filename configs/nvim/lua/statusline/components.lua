@@ -54,11 +54,6 @@ M.ViMode = {
 		},
 	},
 	provider = function(self) return self.mode_names[self.mode] end,
-	update = {
-		"ModeChanged",
-		pattern = "*:*",
-		callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
-	},
 }
 
 M.Git = {
@@ -110,7 +105,7 @@ local FileName = {
 		if filename == "" then
 			return "[No Name]"
 		end
-		if not conditions.width_percent_below(#filename, 0.25) then
+		if not conditions.width_percent_below(#filename, 0.30) then
 			filename = vim.fn.pathshorten(filename)
 		end
 		return filename
@@ -166,6 +161,16 @@ M.FileNameBlock = utils.insert(
 	{ provider = "%<" } -- this means that the statusline is cut here when there's not enough space
 )
 
+M.Macro = {
+	condition = function() return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0 end,
+	provider = function() return " " .. vim.fn.reg_recording() .. "  " end,
+	hl = { fg = "orange", bold = true },
+	update = {
+		"RecordingEnter",
+		"RecordingLeave",
+	},
+}
+
 local function OverseerTasksForStatus(status)
 	return {
 		condition = function(self) return self.tasks[status] end,
@@ -201,22 +206,15 @@ M.Overseer = {
 
 M.Debugger = {
 	condition = function()
-		local session = require("dap").session()
-		return session ~= nil
+		if package.loaded.dap then
+			local session = require("dap").session()
+			return session ~= nil
+		end
+		return false
 	end,
 	provider = function() return " " .. require("dap").status() end,
 	hl = "Debug",
 	-- see Click-it! section for clickable actions
-}
-
-M.Macro = {
-	condition = function() return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0 end,
-	provider = function() return " " .. vim.fn.reg_recording() .. "  " end,
-	hl = { fg = "orange", bold = true },
-	update = {
-		"RecordingEnter",
-		"RecordingLeave",
-	},
 }
 
 M.Diagnostics = {
@@ -260,14 +258,10 @@ M.Ruler = {
 }
 
 M.Time = {
-	init = function(self) self.mode = vim.fn.mode(1) end,
 	provider = function() return " " .. os.date("%R") end,
-	update = {
-		"ModeChanged",
-		pattern = "*:*",
-		callback = vim.schedule_wrap(function() vim.cmd("redrawstatus") end),
-	},
 }
+
+local function is_loclist() return vim.fn.getloclist(0, { filewinid = 1 }).filewinid ~= 0 end
 
 local extension_filetypes = {
 	"aerial",
@@ -283,8 +277,10 @@ local extension_filetypes = {
 	"fugitive",
 	"git",
 	"lazy",
+	"man",
 	"mason",
 	"neo-tree",
+	"qf",
 	"toggleterm",
 	"TelescopePrompt",
 	"yazi",
@@ -309,8 +305,10 @@ M.ExtensionA = {
 			["fugitive"] = function() return " " .. (vim.b.gitsigns_status_dict.head or " ") end,
 			["git"] = function() return " " .. (vim.b.gitsigns_status_dict.head or " ") end,
 			["lazy"] = function() return "Lazy" end,
+			["man"] = function() return "MAN" end,
 			["mason"] = function() return "Mason" end,
 			["neo-tree"] = function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end,
+			["qf"] = function() return is_loclist() and "Location List" or "Quickfix List" end,
 			["TelescopePrompt"] = function() return "Telescope" end,
 			["toggleterm"] = function() return "Terminal #" .. vim.b.toggle_number end,
 			["yazi"] = function() return "Yazi" end,
@@ -328,6 +326,7 @@ M.ExtensionB = {
 		self.extension_left = {
 			["checkhealth"] = function() return "󰓙 " end,
 			["lazy"] = function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
+			["man"] = function() return vim.fn.expand("%"):sub(7) end,
 			["mason"] = function()
 				return "Installed: "
 					.. #require("mason-registry").get_installed_packages()
@@ -337,6 +336,12 @@ M.ExtensionB = {
 			["diffview"] = git_root,
 			["fugitive"] = git_root,
 			["git"] = git_root,
+			["qf"] = function()
+				if is_loclist() then
+					return vim.fn.getloclist(0, { title = 0 }).title
+				end
+				return vim.fn.getqflist({ title = 0 }).title
+			end,
 		}
 	end,
 	condition = function()
@@ -346,7 +351,9 @@ M.ExtensionB = {
 			"fugitive",
 			"git",
 			"lazy",
+			"man",
 			"mason",
+			"qf",
 		}
 		return vim.tbl_contains(filetypes, vim.bo.filetype)
 	end,
@@ -385,22 +392,24 @@ M.ExtensionY = {
 	init = function(self)
 		self.ft = vim.bo.filetype
 		self.extension_icons = {
-			["aerial"] = "󱏒 ",
-			["CompetiTest"] = " ",
-			["dap-repl"] = " ",
-			["dapui_scopes"] = " ",
-			["dapui_stacks"] = " ",
-			["dapui_watches"] = " ",
-			["dapui_console"] = " ",
-			["dapui_breakpoints"] = " ",
-			["DiffviewFiles"] = "󰊢 ",
-			["lazy"] = "󰒲 ",
-			["mason"] = " ",
-			["neo-tree"] = "󰙅 ",
-			["TelescopePrompt"] = "󰭎 ",
-			["toggleterm"] = " ",
-			["undotree"] = "󱁊 ",
-			["yazi"] = "󰇥 ",
+			["aerial"] = "󱏒",
+			["CompetiTest"] = "",
+			["dap-repl"] = "",
+			["dapui_scopes"] = "",
+			["dapui_stacks"] = "",
+			["dapui_watches"] = "",
+			["dapui_console"] = "",
+			["dapui_breakpoints"] = "",
+			["DiffviewFiles"] = "󰊢",
+			["lazy"] = "󰒲",
+			["man"] = "󱚊",
+			["mason"] = "",
+			["neo-tree"] = "󰙅",
+			["qf"] = "",
+			["TelescopePrompt"] = "󰭎",
+			["toggleterm"] = "",
+			["undotree"] = "󱁊",
+			["yazi"] = "󰇥",
 		}
 	end,
 	provider = function(self) return self.extension_icons[vim.bo.filetype] end,

@@ -1,4 +1,4 @@
-local make_cond = require("snippet/luasnip").make_cond
+local make_cond = require("snippets.luasnip").make_cond
 
 local tex_utils = {}
 

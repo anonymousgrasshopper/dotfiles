@@ -1,11 +1,5 @@
 return {
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		opts = {},
-	},
-	{
 		"olimorris/codecompanion.nvim",
 		cmd = {
 			"CodeCompanion",

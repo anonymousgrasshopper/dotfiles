@@ -3,7 +3,8 @@ local s, t, i, d, f, fmt, make_cond =
       ls.s, ls.t, ls.i, ls.d, ls.f, ls.fmt, ls.make_cond
 local helpers = require("snippets.helpers")
 local get_visual = helpers.get_visual
-local tex = require("snippet/tex_utils")
+local check_not_expanded = helpers.check_not_expanded
+local tex = require("snippets.tex_utils")
 
 local check_floor_not_expanded = make_cond(function() return check_not_expanded("\\rfloo") end)
 local check_ceil_not_expanded = make_cond(function() return check_not_expanded("\\rcei") end)

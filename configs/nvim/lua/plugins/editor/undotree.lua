@@ -7,7 +7,7 @@ return {
 	},
 	config = function()
 		vim.g.undotree_HelpLine = 0
-		vim.g.undotree_HideCursor = 1
+		vim.g.undotree_StatusLine = 0
 		vim.g.undotree_SplitWidth = 30
 		vim.g.undotree_SetFocusWhenToggle = 1
 		vim.g.undotree_HighlightChangedText = 0

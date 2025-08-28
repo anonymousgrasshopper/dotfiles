@@ -92,11 +92,21 @@ return {
 			local action_state = require("telescope.actions.state")
 
 			return coroutine.create(function(coro)
-				local opts = {}
+				local opts = require("telescope.themes").get_dropdown({})
+				local exclude = {
+					".git/*",
+					"build/_deps",
+					"CMakeFiles",
+				}
+				local cmd = { "fd", "--hidden", "--no-ignore", "--type", "x" }
+				for _, pattern in pairs(exclude) do
+					table.insert(cmd, "--exclude")
+					table.insert(cmd, pattern)
+				end
 				pickers
 					.new(opts, {
 						prompt_title = "Path to executable",
-						finder = finders.new_oneshot_job({ "fd", "--hidden", "--no-ignore", "--type", "x" }, {}),
+						finder = finders.new_oneshot_job(cmd, {}),
 						sorter = conf.generic_sorter(opts),
 						attach_mappings = function(buffer_number)
 							actions.select_default:replace(function()

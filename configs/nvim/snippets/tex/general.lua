@@ -2,7 +2,7 @@ local ls = require("snippets.luasnip")
 local s, t, i, fmt = ls.s, ls.t, ls.i, ls.fmt
 local helpers = require("snippets.helpers")
 local first_line, line_begin = helpers.first_line, helpers.line_begin
-local tex = require("snippet/tex_utils")
+local tex = require("snippets.tex_utils")
 
 return {
 	s(
