@@ -21,6 +21,9 @@ local live_grep = function(opts)
 			end
 
 			if pieces[2] then
+				if not pieces[2]:match("*") then
+					pieces[2] = "*\\." .. pieces[2]
+				end
 				table.insert(args, "-g")
 				table.insert(args, pieces[2])
 			end
