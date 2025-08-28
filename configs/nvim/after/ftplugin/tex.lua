@@ -1,0 +1,1 @@
+-- vim.opt_local.formatoptions = (vim.opt.formatoptions .. "tco/q")
