@@ -12,12 +12,12 @@ SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 cd "$SCRIPT_DIR" || exit
 
 # parse arguments
-while true; do
+while [[ $# -ge 1 ]]; do
 	if [[ "$1" == "--overwrite" || "$1" == "-o" ]]; then
 		OVERWRITE=1
-		shift 1
-	else
 		break
+	else
+		shift 1
 	fi
 done
 
@@ -223,7 +223,7 @@ fi
 			cp -r "$item" "$HOME/.config/"
 		else
 			difference=false
-			while read -r -d ''; do # check wether the version in the repo and in ~/.config differ or not
+			while read -r -d ''; do                                                                            # check wether the version in the repo and in ~/.config differ or not
 				if ! diff --ignore-matching-lines='\S*@\S*' "$REPLY" "$HOME/.config/$REPLY" >/dev/null 2>&1; then # ignore obfuscated e-mail adresses
 					difference=true
 					break

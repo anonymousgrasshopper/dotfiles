@@ -76,6 +76,7 @@ M.Git = {
 		provider = function(self) return " " .. self.status_dict.head end,
 		hl = { bold = true },
 	},
+	M.Space,
 	{
 		provider = function(self)
 			local count = self.status_dict.added or 0
@@ -97,7 +98,6 @@ M.Git = {
 		end,
 		hl = "GitSignsDelete",
 	},
-	M.Space,
 }
 
 local FileNameBlock = {
