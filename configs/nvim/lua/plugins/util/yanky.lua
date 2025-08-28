@@ -24,10 +24,10 @@ return {
 		{ "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
 		{ "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 	},
-	opts = function()
+	config = function()
 		if package.loaded["telescope"] then
 			require("telescope").load_extension("yank_history")
 		end
-		return {}
+		require("yanky").setup()
 	end,
 }

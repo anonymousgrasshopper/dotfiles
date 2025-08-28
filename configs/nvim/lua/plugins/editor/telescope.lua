@@ -166,6 +166,7 @@ return {
 		local extensions = {
 			["notify"] = "notify",
 			["yanky"] = "yank_history",
+			["nerdy"] = "nerdy",
 		}
 		for _, extension in ipairs(extensions) do
 			if package.loaded[extension] then

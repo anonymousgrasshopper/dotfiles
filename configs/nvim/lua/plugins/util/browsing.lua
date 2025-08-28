@@ -7,7 +7,7 @@ return {
 		vim.g.netrw_nogx = 1 -- disable netrw gx
 	end,
 	opts = {
-		open_browser_app = "firefox",
+		open_browser_app = vim.env.BROWSER,
 		open_browser_args = {}, -- specify any arguments for the browser executable
 		handlers = {
 			plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)

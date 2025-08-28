@@ -4,7 +4,7 @@ return {
 	main = "ibl",
 	opts = {
 		indent = {
-			char = "│", -- ┊
+			char = "│",
 			highlight = "Indent",
 		},
 		scope = {

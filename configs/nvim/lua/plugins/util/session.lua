@@ -7,10 +7,6 @@ return {
 		{ "<leader>sa", "<Cmd>SessionToggleAutoSave<CR>", desc = "Toggle session autosave" },
 	},
 	cmd = {
-		"SessionRestore",
-		"SessionSearch",
-		"SessionDelete",
-		"SessionSave",
 		"Autosession",
 	},
 	opts = {

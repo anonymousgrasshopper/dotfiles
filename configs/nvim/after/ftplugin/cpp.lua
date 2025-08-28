@@ -113,7 +113,6 @@ vim.keymap.set("n", "<localleader>dbg", function()
 			vim.b[buf].codelldb_stdio_redirection = true
 			open_floating_window(input_filename)
 		else
-			vim.notify("hey")
 			vim.b[buf].codelldb_stdio_redirection = false
 			vim.b[buf].stdio_completed = true
 			if vim.b[buf].compilation_completed then
