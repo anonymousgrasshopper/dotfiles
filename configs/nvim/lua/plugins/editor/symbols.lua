@@ -1,80 +1,3 @@
-local icons = {
-	Array = "󰅪 ",
-	Boolean = "󰨙 ",
-	BreakStatement = "󰙧 ",
-	CaseStatement = "󱃙 ",
-	Call = "󰃷 ",
-	Class = " ",
-	Codeium = "󰘦 ",
-	Color = "󰏘 ",
-	ContinueStatement = "→ ",
-	Control = " ",
-	Collapsed = " ",
-	Constant = "󰏿 ",
-	Constructor = " ",
-	Declaration = "󰙠 ",
-	DoStatement = "󰑖 ",
-	Delete = "󰩺 ",
-	Enum = " ",
-	EnumMember = "󰒻 ",
-	Event = " ",
-	Field = " ",
-	File = "󰈙 ",
-	Folder = " ",
-	ForStatement = "󰑖 ",
-	H1Marker = "󰉫 ",
-	H2Marker = "󰉬 ",
-	H3Marker = "󰉭 ",
-	H4Marker = "󰉮 ",
-	H5Marker = "󰉯 ",
-	H6Marker = "󰉰 ",
-	Function = "󰊕 ",
-	Identifier = "󰀫 ",
-	IfStatement = "󰇉 ",
-	Interface = " ",
-	Key = "󰌋 ",
-	Keyword = " ",
-	List = "󰅪 ",
-	Log = "󰦪 ",
-	Lsp = " ",
-	Macro = "󰁌 ",
-	MarkdownH1 = "󰉫 ",
-	MarkdownH2 = "󰉬 ",
-	MarkdownH3 = "󰉭 ",
-	MarkdownH4 = "󰉮 ",
-	MarkdownH5 = "󰉯 ",
-	MarkdownH6 = "󰉰 ",
-	Method = " ",
-	Module = "󰏗 ",
-	Namespace = " ",
-	Null = "󰟢 ",
-	Number = "󰎠 ",
-	Object = "󰅩 ",
-	Operator = " ",
-	Package = "󰏖 ",
-	Pair = "󰕘 ",
-	Property = " ",
-	Reference = " ",
-	Regex = " ",
-	Repeat = "󰑖 ",
-	Scope = "󰅩 ",
-	Specifier = " ",
-	Statement = " ",
-	Snippet = "󰩫 ",
-	String = "󰉾 ",
-	Struct = "󰌗 ",
-	SwitchStatement = "󰺟 ",
-	Table = "󰅩 ",
-	Terminal = " ",
-	Text = " ",
-	Type = " ",
-	TypeParameter = "󰆩 ",
-	Unit = " ",
-	Value = "󰎠 ",
-	Variable = "󰀫 ",
-	WhileStatement = "󰑖 ",
-}
-
 return {
 	{
 		"stevearc/aerial.nvim",
@@ -95,6 +18,7 @@ return {
 			"AerialNavClose",
 		},
 		opts = function()
+			local icons = require("config.icons").symbols
 			icons.lua = { Package = icons.Control }
 
 			local opts = {
@@ -134,13 +58,9 @@ return {
 		lazy = false, -- this plugin lazy loads itself
 		opts = function()
 			local dropbar_api = require("dropbar.api")
+
 			vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-			vim.keymap.set(
-				"n",
-				"[;",
-				dropbar_api.goto_context_start,
-				{ desc = "Go to start of current context" }
-			)
+			vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
 			vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
 
 			return {
@@ -167,7 +87,7 @@ return {
 				},
 				icons = {
 					kinds = {
-						symbols = icons,
+						symbols = require("config.icons").symbols,
 					},
 					ui = {
 						menu = {

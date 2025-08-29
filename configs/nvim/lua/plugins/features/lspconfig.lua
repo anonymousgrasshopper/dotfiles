@@ -12,19 +12,11 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{
-				"mason-org/mason-lspconfig.nvim",
-				dependencies = {
-					"mason-org/mason.nvim",
-				},
-			},
-			{
 				"rachartier/tiny-inline-diagnostic.nvim",
 				opts = {},
 			},
 		},
 		config = function()
-			local mason_lspconfig = require("mason-lspconfig")
-
 			vim.lsp.config("*", {
 				capabilities = {
 					textDocument = {
@@ -42,6 +34,35 @@ return {
 			})
 
 			local lspconfigs = {
+				["asm-lsp"] = {},
+
+				["bashls"] = {
+					filetypes = { "bash", "sh", "zsh" },
+				},
+
+				["clangd"] = {},
+
+				["cmake"] = {},
+
+				["cssls"] = {
+					filetypes = { "html", "css", "scss" },
+				},
+
+				["jsonls"] = {
+					settings = {
+						json = {
+							schemas = function()
+								local has_schemastore = pcall(require("schemastore"))
+								if has_schemastore then
+									return require("schemastore").json.schemas()
+								end
+								return nil
+							end,
+							validate = { enable = true },
+						},
+					},
+				},
+
 				["lua_ls"] = {
 					on_init = function(client)
 						if client.workspace_folders then
@@ -75,19 +96,6 @@ return {
 					},
 				},
 
-				["bashls"] = {
-					filetypes = { "bash", "sh", "zsh" },
-				},
-
-				["jsonls"] = {
-					settings = {
-						json = {
-							schemas = require("schemastore").json.schemas(),
-							validate = { enable = true },
-						},
-					},
-				},
-
 				["yamlls"] = {
 					settings = {
 						yaml = {
@@ -98,18 +106,24 @@ return {
 								-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
 								url = "",
 							},
-							schemas = require("schemastore").yaml.schemas(),
+							schemas = function()
+								local has_schemastore = pcall(require("schemastore"))
+								if has_schemastore then
+									return require("schemastore").json.schemas()
+								end
+								return nil
+							end,
 						},
 					},
-				},
-
-				["cssls"] = {
-					filetypes = { "html", "css", "scss" },
 				},
 			}
 
 			for server, config in pairs(lspconfigs) do
 				vim.lsp.config(server, config)
+				vim.api.nvim_create_autocmd("Filetype", {
+					pattern = vim.lsp.config[server].filetypes,
+					callback = function() vim.lsp.enable(server) end,
+				})
 			end
 
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -124,16 +138,6 @@ return {
 					-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = true })
 				end,
 			})
-
-			mason_lspconfig.setup({
-				ensure_installed = {
-					"clangd",
-					"lua_ls",
-					"bashls",
-					"texlab",
-					"asm_lsp",
-				},
-			})
 		end,
 	},
 	{
@@ -143,9 +147,17 @@ return {
 			{ "gpc", function() require("goto-preview").goto_preview_declaration() end, desc = "Preview declaration" },
 			{ "gpi", function() require("goto-preview").goto_preview_implementation() end, desc = "Preview implementation" },
 			{ "gpr", function() require("goto-preview").goto_preview_references() end, desc = "Preview references" },
-			{ "gpt", function() require("goto-preview").goto_preview_type_definition() end, desc = "Preview type definition" },
+			{
+				"gpt",
+				function() require("goto-preview").goto_preview_type_definition() end,
+				desc = "Preview type definition",
+			},
 			{ "gpx", function() require("goto-preview").close_all_win() end, desc = "Close all previews" },
-			{ "gpX", function() require("goto-preview").close_all_win({ skip_curr_window = true }) end, desc = "Close other previews" },
+			{
+				"gpX",
+				function() require("goto-preview").close_all_win({ skip_curr_window = true }) end,
+				desc = "Close other previews",
+			},
 		},
 		opts = {
 			width = 120, -- Width of the floating window

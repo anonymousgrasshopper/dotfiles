@@ -106,7 +106,7 @@ local FileName = {
 			return "[No Name]"
 		end
 		if not conditions.width_percent_below(#filename, 0.30) then
-			filename = vim.fn.pathshorten(filename)
+			filename = vim.fn.pathshorten(filename, 3)
 		end
 		return filename
 	end,
@@ -278,7 +278,6 @@ local extension_filetypes = {
 	"git",
 	"lazy",
 	"man",
-	"mason",
 	"neo-tree",
 	"qf",
 	"toggleterm",
@@ -306,7 +305,6 @@ M.ExtensionA = {
 			["git"] = function() return " " .. (vim.b.gitsigns_status_dict.head or " ") end,
 			["lazy"] = function() return "Lazy" end,
 			["man"] = function() return "MAN" end,
-			["mason"] = function() return "Mason" end,
 			["neo-tree"] = function() return vim.fn.fnamemodify(vim.fn.getcwd(), ":~") end,
 			["qf"] = function() return is_loclist() and "Location List" or "Quickfix List" end,
 			["TelescopePrompt"] = function() return "Telescope" end,
@@ -327,12 +325,6 @@ M.ExtensionB = {
 			["checkhealth"] = function() return "󰓙 " end,
 			["lazy"] = function() return "loaded: " .. require("lazy").stats().loaded .. "/" .. require("lazy").stats().count end,
 			["man"] = function() return vim.fn.expand("%"):sub(7) end,
-			["mason"] = function()
-				return "Installed: "
-					.. #require("mason-registry").get_installed_packages()
-					.. "/"
-					.. #require("mason-registry").get_all_package_specs()
-			end,
 			["diffview"] = git_root,
 			["fugitive"] = git_root,
 			["git"] = git_root,
@@ -352,7 +344,6 @@ M.ExtensionB = {
 			"git",
 			"lazy",
 			"man",
-			"mason",
 			"qf",
 		}
 		return vim.tbl_contains(filetypes, vim.bo.filetype)
@@ -380,18 +371,10 @@ M.ExtensionC = {
 }
 
 M.ExtensionY = {
-	condition = function()
-		local excluded_filetypes = {
-			"checkhealth",
-			"git",
-			"fugitive",
-		}
-		return not vim.tbl_contains(excluded_filetypes, vim.bo.filetype)
-			and vim.tbl_contains(extension_filetypes, vim.bo.filetype)
-	end,
-	init = function(self)
-		self.ft = vim.bo.filetype
-		self.extension_icons = {
+	condition = function(self) return self.extension_icons[vim.bo.filetype] end,
+	init = function(self) self.ft = vim.bo.filetype end,
+	static = {
+		extension_icons = {
 			["aerial"] = "󱏒",
 			["CompetiTest"] = "",
 			["dap-repl"] = "",
@@ -403,15 +386,13 @@ M.ExtensionY = {
 			["DiffviewFiles"] = "󰊢",
 			["lazy"] = "󰒲",
 			["man"] = "󱚊",
-			["mason"] = "",
 			["neo-tree"] = "󰙅",
-			["qf"] = "",
 			["TelescopePrompt"] = "󰭎",
-			["toggleterm"] = "",
+			["toggleterm"] = " ",
 			["undotree"] = "󱁊",
 			["yazi"] = "󰇥",
-		}
-	end,
+		},
+	},
 	provider = function(self) return self.extension_icons[vim.bo.filetype] end,
 }
 

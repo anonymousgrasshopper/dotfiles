@@ -34,8 +34,8 @@ opt.breakindent    = true
 opt.breakindentopt = { "min:30", "shift:-1" }
 opt.linebreak      = true
 opt.breakat        = " "
-opt.formatoptions  = "jcqlnt2"
-vim.cmd([[autocmd BufEnter * set formatoptions=jcqlnt2]])
+opt.formatoptions  = "t,c,o,/,q,w,a,q,2,j"
+vim.cmd([[autocmd BufEnter * set formatoptions=t,c,o,/,q,w,a,q,2,j]])
 
 -- writing, undo & backup
 opt.autowrite      = false

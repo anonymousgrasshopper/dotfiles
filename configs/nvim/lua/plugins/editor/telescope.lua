@@ -63,6 +63,7 @@ return {
 	-- branch = "0.1.x",
 	dependencies = {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "nvim-telescope/telescope-ui-select.nvim" },
 		-- nvim-lua/plenary.nvim
 		-- nvim-tree/nvim-web-devicons
 	},
@@ -77,16 +78,16 @@ return {
 		{ "<leader>ff", function() require("telescope.builtin").find_files({ hidden = true }) end, desc = "Find files in cwd" },
 		{ "<leader>fr", function() require("telescope.builtin").oldfiles({ hidden = true }) end, desc = "Find recent files" },
 
-		{ "<leader>sj", function() require("telescope.builtin").jumplist() end, desc = "Jumplist" },
+		{ "<leader>sj", function() require("telescope.builtin").jumplist() end, desc = "Search Jumplist" },
 		{ "<leader>sm", function() require("telescope.builtin").marks() end, desc = "Search Marks" },
 		{ "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Search Keymaps" },
 		{ "<leader>sc", function() require("telescope.builtin").commands() end, desc = "Search Commands" },
-		{ "<leader>sr", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
+		{ "<leader>sR", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
+		{ "<leader>sh", function() require("telescope.builtin").highlights() end, desc = "Search Highlight groups" },
 		{ "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Search open Buffers" },
 		{ "<leader>sg", live_grep, desc = "Search with Grep in cwd" },
 		{ "<leader>sw", function() require("telescope.builtin").grep_string() end, desc = "Search Word under cursor in cwd" },
 		{ "<leader>sd", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end, desc = "Search buffer's diagnostics" },
-		{ "<leader>sl", function() require("telescope.builtin").lsp_references() end, desc = "Search LSP references" },
 
 		{ "<localleader>sr", function() require("telescope.builtin").lsp_references() end, desc = "Search references" },
 		{ "<localleader>si", function() require("telescope.builtin").lsp_incoming_calls() end, desc = "search incoming calls" },
@@ -96,15 +97,16 @@ return {
 		{ "<localleader>sw", function() require("telescope.builtin").lsp_workspace_symbols() end, desc = "Search workspace symbols" },
 		{ "<localleader>sW", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Search dynamic workspace symbols" },
 
-		{ "<leader>gfc", function() require("telescope.builtin").git_commits() end, desc = "Search git commits" },
-		{ "<leader>gfB", function() require("telescope.builtin").git_bcommits() end, desc = "Search git bcommits" },
-		{ "<leader>gfb", function() require("telescope.builtin").git_branches() end, desc = "Search git branches" },
-		{ "<leader>gfs", function() require("telescope.builtin").git_status() end, desc = "Search git status" },
-		{ "<leader>gfS", function() require("telescope.builtin").git_stash() end, desc = "Search git stash items" },
+		{ "<leader>gsc", function() require("telescope.builtin").git_commits() end, desc = "Search git commits" },
+		{ "<leader>gsB", function() require("telescope.builtin").git_bcommits() end, desc = "Search git bcommits" },
+		{ "<leader>gsb", function() require("telescope.builtin").git_branches() end, desc = "Search git branches" },
+		{ "<leader>gss", function() require("telescope.builtin").git_status() end, desc = "Search git status" },
+		{ "<leader>gsS", function() require("telescope.builtin").git_stash() end, desc = "Search git stash items" },
 
 		{ "<leader>sn", function() require("telescope").extensions.notify.notify() end, desc = "Search notifications" },
 		-- stylua: ignore end
 	},
+	lazy = false, -- needs to load before we call vim.ui.select for the first time
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
@@ -158,11 +160,14 @@ return {
 				},
 			},
 			extensions = {
-				fzf = {},
+				["fzf"] = {},
+				["ui-select"] = { require("telescope.themes").get_dropdown({}) },
 			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("ui-select")
+
 		local extensions = {
 			["notify"] = "notify",
 			["yanky"] = "yank_history",

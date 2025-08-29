@@ -158,13 +158,33 @@ return {
 						{ "n", "]x", actions.next_conflict, { desc = "Merge-tool: jump to the next conflict" } },
 						{ "n", "gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
 						{ "n", "<leader>co", actions.conflict_choose("ours"), { desc = "Choose the OURS version of a conflict" } },
-						{ "n", "<leader>ct", actions.conflict_choose("theirs"), { desc = "Choose the THEIRS version of a conflict" } },
+						{
+							"n",
+							"<leader>ct",
+							actions.conflict_choose("theirs"),
+							{ desc = "Choose the THEIRS version of a conflict" },
+						},
 						{ "n", "<leader>cb", actions.conflict_choose("base"), { desc = "Choose the BASE version of a conflict" } },
 						{ "n", "<leader>ca", actions.conflict_choose("all"), { desc = "Choose all the versions of a conflict" } },
 						{ "n", "<leader>cn", actions.conflict_choose("none"), { desc = "Delete the conflict region" } },
-						{ "n", "<leader>cO", actions.conflict_choose_all("ours"), { desc = "Choose the OURS version of a conflict for the whole file" } },
-						{ "n", "<leader>cT", actions.conflict_choose_all("theirs"), { desc = "Choose the THEIRS version of a conflict for the whole file" } },
-						{ "n", "<leader>cB", actions.conflict_choose_all("base"), { desc = "Choose the BASE version of a conflict for the whole file" } },
+						{
+							"n",
+							"<leader>cO",
+							actions.conflict_choose_all("ours"),
+							{ desc = "Choose the OURS version of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cT",
+							actions.conflict_choose_all("theirs"),
+							{ desc = "Choose the THEIRS version of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cB",
+							actions.conflict_choose_all("base"),
+							{ desc = "Choose the BASE version of a conflict for the whole file" },
+						},
 						unpack(actions.compat.fold_cmds),
 					},
 					diff2 = {
@@ -196,11 +216,36 @@ return {
 						{ "n", "[x", actions.prev_conflict, { desc = "Go to the previous conflict" } },
 						{ "n", "]x", actions.next_conflict, { desc = "Go to the next conflict" } },
 						{ "n", "?", actions.help("file_panel"), { desc = "Open the help panel" } },
-						{ "n", "<leader>cO", actions.conflict_choose_all("ours"), { desc = "Choose the OURS version of a conflict for the whole file" } },
-						{ "n", "<leader>cT", actions.conflict_choose_all("theirs"), { desc = "Choose the THEIRS version of a conflict for the whole file" } },
-						{ "n", "<leader>cB", actions.conflict_choose_all("base"), { desc = "Choose the BASE version of a conflict for the whole file" } },
-						{ "n", "<leader>cA", actions.conflict_choose_all("all"), { desc = "Choose all the versions of a conflict for the whole file" } },
-						{ "n", "<leader>cD", actions.conflict_choose_all("none"), { desc = "Delete the conflict region for the whole file" } },
+						{
+							"n",
+							"<leader>cO",
+							actions.conflict_choose_all("ours"),
+							{ desc = "Choose the OURS version of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cT",
+							actions.conflict_choose_all("theirs"),
+							{ desc = "Choose the THEIRS version of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cB",
+							actions.conflict_choose_all("base"),
+							{ desc = "Choose the BASE version of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cA",
+							actions.conflict_choose_all("all"),
+							{ desc = "Choose all the versions of a conflict for the whole file" },
+						},
+						{
+							"n",
+							"<leader>cD",
+							actions.conflict_choose_all("none"),
+							{ desc = "Delete the conflict region for the whole file" },
+						},
 					},
 					file_history_panel = {
 						{ "n", "!", actions.options, { desc = "Open the option panel" } },
@@ -233,20 +278,6 @@ return {
 					},
 				},
 			}
-		end,
-	},
-	{
-		"rhysd/conflict-marker.vim",
-		event = { "BufEnter" },
-		config = function()
-			vim.keymap.set("n", "<leader>co", "<Cmd>ConflictMarkerOurselves<CR>", { desc = "Choose ours" })
-			vim.keymap.set("n", "<leader>ct", "<Cmd>ConflictMarkerThemselves<CR>", { desc = "Choose theirs" })
-			vim.keymap.set("n", "<leader>cb", "<Cmd>ConflictMarkerBoth<CR>", { desc = "Choose both" })
-			vim.keymap.set("n", "<leader>cn", "<Cmd>ConflictMarkerNone<CR>", { desc = "Choose none" })
-			vim.keymap.set("n", "<leader>cB", "<Cmd>ConflictMarkerBoth!<CR>", { desc = "Choose both in reverse order" })
-			vim.g.conflict_marker_highlight_group = ""
-			vim.g.conflict_marker_enable_mappings = 1 -- [x and ]x mappings
-			vim.g.conflict_marker_enable_matchit = 1 -- use % to jump within a conflict marker
 		end,
 	},
 }

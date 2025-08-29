@@ -141,7 +141,7 @@ return {
 			type = "server",
 			port = "${port}",
 			executable = {
-				command = vim.env.HOME .. "/.local/share/nvim/mason/bin/codelldb",
+				command = "/usr/bin/codelldb",
 				args = { "--port", "${port}" },
 			},
 		}
