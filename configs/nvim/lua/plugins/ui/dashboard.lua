@@ -54,9 +54,13 @@ return {
 
 		alpha.setup(dashboard.opts)
 
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = { "alpha" },
+		vim.api.nvim_create_autocmd("User", {
+			pattern = { "AlphaReady" },
 			callback = function() vim.opt_local.laststatus = 0 end,
+		})
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "AlphaClosed",
+			callback = function() vim.opt_local.laststatus = 3 end,
 		})
 	end,
 }

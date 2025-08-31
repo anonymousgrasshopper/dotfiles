@@ -14,14 +14,16 @@ local vim_enter_early_redraw = function()
 		local lang = vim.treesitter.language.get_lang(ft)
 
 		-- find filetype icon and color
-		require("nvim-web-devicons").setup()
-		local icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
-		vim.g.statusline_filetype_icon = icon or " "
-		vim.cmd("hi StatusLineIconColor guifg=" .. (color or "#6D8086"))
+		local icon, color = " ", "#6D8086"
+		if pcall(require("nvim-web-devicons").setup) then
+			icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
+		end
+		vim.cmd("hi StatusLineIconColor guifg=" .. color)
 
 		-- setup mock statusline
-		vim.opt.statusline = "%#StatusLineBlue# NORMAL %* %F %#StatusLineIconColor#%{g:statusline_filetype_icon}%="
-			.. '%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
+		vim.opt.statusline = "%#StatusLineBlue# NORMAL %#StatusLineSeparatorBlue#%#StatusLineSeparatorGrey#%* %F %#StatusLineIconColor#"
+			.. icon
+			.. '%=%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
 		if
 			not vim.tbl_contains({ "tex", "markdown", "zsh" }, ft)
@@ -96,7 +98,6 @@ return {
 					IlluminatedWordRead = { bold = true },
 					IlluminatedWordWrite = { bold = true },
 
-					NeoTreeWinSeparator = { fg = palette.sumiInk3 },
 					NeoTreePopupWinSeparator = { fg = palette.sumiInk6, bg = palette.sumiInk3 },
 					NeoTreeFileIcon = { fg = palette.oldWhite },
 

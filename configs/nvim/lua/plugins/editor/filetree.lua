@@ -389,25 +389,21 @@ return {
 				{
 					event = "neo_tree_buffer_enter",
 					handler = function()
-						vim.cmd([[
-								hi Cursor blend=100
-								setlocal winhighlight=Normal:NormalDark,WinSeparator:NeotreeWinSeparator
-								setlocal sidescrolloff=0
-							]])
+						vim.wo.fillchars = "vert: ,horizup:─,horizdown:─,vertleft:│,vertright:│,verthoriz:┬"
+						vim.opt_local.sidescrolloff = 0
+						vim.wo.winhighlight = "Normal:NormalDark"
+						vim.cmd("hi Cursor blend=100")
 					end,
 				},
 				{
 					event = "neo_tree_popup_buffer_enter",
 					handler = function()
 						if vim.api.nvim_get_mode()["mode"] == "i" then
-							vim.cmd([[
-									hi Cursor blend=0
-								]])
+							vim.cmd("hi Cursor blend=0")
 						else
-							vim.cmd([[
-									hi Cursor blend=100
-									setlocal sidescrolloff=0
-								]])
+							vim.opt_local.sidescrolloff = 0
+							vim.wo.winhighlight = "WinSeparator:NeoTreePopupWinSeparator"
+							vim.cmd("hi Cursor blend=100")
 						end
 					end,
 				},

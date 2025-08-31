@@ -95,3 +95,5 @@ USAMO
 fakesolve
 CMake
 lua
+tmp
+tex
