@@ -82,7 +82,7 @@ return {
 		{ "<leader>sm", function() require("telescope.builtin").marks() end, desc = "Search Marks" },
 		{ "<leader>sk", function() require("telescope.builtin").keymaps() end, desc = "Search Keymaps" },
 		{ "<leader>sc", function() require("telescope.builtin").commands() end, desc = "Search Commands" },
-		{ "<leader>sR", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
+		{ "<leader>sr", function() require("telescope.builtin").registers() end, desc = "Search Registers" },
 		{ "<leader>sh", function() require("telescope.builtin").highlights() end, desc = "Search Highlight groups" },
 		{ "<leader>sb", function() require("telescope.builtin").buffers() end, desc = "Search open Buffers" },
 		{ "<leader>sg", live_grep, desc = "Search with Grep in cwd" },

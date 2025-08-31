@@ -329,7 +329,7 @@ return {
 				elseif arg[1][1]:sub(1, 2) == "\\l" then
 					return "\\r" .. arg[1][1]:sub("3", "-1")
 				else
-					return arg[1][1]
+					return arg[1][1]:sub(1,1)
 				end
 			end, 1),
 		}

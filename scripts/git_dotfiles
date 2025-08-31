@@ -23,7 +23,7 @@ function copy {
 
 # list of configs and scripts to copy
 configs=("bat" "btop" "browser" "clangd" "eza" "fastfetch" "formatters" "git" "i3" "kitty"
-	"lazygit" "mutt" "ncdu" "npm" "nvim" "rofi" "thundery" "tmux" "wallpapers" "wget"
+	"lazygit" "mutt" "ncdu" "npm" "nvim" "oly" "rofi" "thundery" "tmux" "wallpapers" "wget"
 	"yazi" "zathura" "zsh" "fzf.conf" "mimeapps.list" "ripgrep.conf" "shellcheckrc")
 scripts=("assemble" "compile_sfml" "fix_corrupt_history"
 	"fzf_preview_wrapper" "git_dotfiles" "remove_codelldb_stdio_redirection")

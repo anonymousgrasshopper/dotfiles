@@ -14,8 +14,9 @@ return {
 		"OverseerQuickAction",
 		"OverseerTaskAction",
 		"OverseerClearCache",
-		"Make",
 		"Grep",
+		"Make",
+		"CMake",
 	},
 	opts = {
 		strategy = {
@@ -23,7 +24,7 @@ return {
 			use_shell = false,
 			auto_scroll = false,
 			close_on_exit = false,
-			quit_on_exit = "never",
+			quit_on_exit = "always",
 			open_on_start = false,
 		},
 		templates = { "builtin" },
@@ -253,6 +254,10 @@ return {
 		end, { nargs = "*", bang = true, bar = true, complete = "file" })
 
 		vim.api.nvim_create_user_command("Make", function(params)
+			-- set the makeprg to CMake if CMakeLists.txt is found
+			if vim.uv.fs_access("CMakeLists.txt", "R") then
+				vim.o.makeprg = "cmake --build build"
+			end
 			-- Insert args at the '$*' in the makeprg
 			local cmd, num_subs = vim.o.makeprg:gsub("%$%*", params.args)
 			if num_subs == 0 then
@@ -274,7 +279,7 @@ return {
 		})
 
 		vim.api.nvim_create_user_command("CMake", function(params)
-			local cmd = "cmake -DCMAKE_BUILD_TYPE=" .. params.args[1] .. " build"
+			local cmd = "cmake -DCMAKE_BUILD_TYPE=" .. params.args .. " build"
 			local task = require("overseer").new_task({
 				cmd = vim.fn.expandcmd(cmd),
 				components = {

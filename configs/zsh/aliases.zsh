@@ -62,7 +62,7 @@ alias rm=rm_confirm_nonempty
 rm_confirm_nonempty() {
 	local args=()
 	local items=()
-	while (("$#")); do
+	while (($#)); do
 		if [[ "$1" =~ ^- ]]; then
 			args+=("$1")
 		else
@@ -71,10 +71,10 @@ rm_confirm_nonempty() {
 		shift
 	done
 	for element ("$items[@]"); do
-		if [[ -e "$element" && ! -s "$element" ]]; then
-			command rm -f "${args[@]}" "$element"
+	if [[ (-e "$element" && ! -s "$element") || ${#items[@]} == 1 ]]; then
+			echo rm -f "${args[@]}" "$element"
 		else
-			command rm -i "${args[@]}" "$element"
+			echo rm -i "${args[@]}" "$element"
 		fi
 	done
 }

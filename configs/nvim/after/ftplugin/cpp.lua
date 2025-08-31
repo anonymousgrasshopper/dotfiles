@@ -1,5 +1,6 @@
---CMake
-vim.opt_local.makeprg = "cmake --build build"
+-- Switch to header files using gf
+vim.opt_local.suffixesadd:append({ ".h", ".hpp", ".cppm" })
+vim.opt.path:append({ "include" })
 
 -- debugging
 vim.b.codelldb_stdio_redirection = nil

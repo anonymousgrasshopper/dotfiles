@@ -41,11 +41,17 @@ function helpers.line_not_match(pattern)
 	end)
 end
 
-function helpers.check_not_expanded(pattern)
+function helpers.check_not_expanded(...)
+	local arg = {...}
 	return make_cond(function()
 		local line = vim.api.nvim_get_current_line()
 		local col = vim.api.nvim_win_get_cursor(0)[2]
-		return not line:sub(col, #line):match(pattern)
+		for _, pattern in ipairs(arg) do
+			if line:sub(col, #line):match(pattern) then
+				return false
+			end
+		end
+		return true
 	end)
 end
 

@@ -77,30 +77,33 @@ return {
 	),
 	s(
 		{
-			trig = "u:",
+			trig = "%s*u:",
 			dscr = "public access specifier",
+			regTrig = true,
 			snippetType = "autosnippet",
 			condition = not_in_string_comment,
 		},
-		t({ "public:", "" })
+		t({ "public:", "\t" })
 	),
 	s(
 		{
-			trig = "o:",
+			trig = "%s*o:",
 			dscr = "protected access specifier",
+			regTrig = true,
 			snippetType = "autosnippet",
 			condition = not_in_string_comment,
 		},
-			t({ "protected:", "" })
+			t({ "protected:", "\t" })
 	),
 	s(
 		{
-			trig = "i:",
+			trig = "%s*i:",
 			dscr = "private access specifier",
+			regTrig = true,
 			snippetType = "autosnippet",
 			condition = not_in_string_comment,
 		},
-			t({ "private:", "" })
+			t({ "private:", "\t" })
 	),
 	s(
 		{

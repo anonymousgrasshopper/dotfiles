@@ -1,0 +1,16 @@
+###################################################################################
+# This is oly's configuration file.                                               #
+# Please edit the following values.                                               #
+#                                                                                 #
+# A list of all possible configuration options and their defaults can be found at #
+# https://github.com/anonymousgrasshopper/oly/blob/main/src/config.cpp#L47-#L75   #
+###################################################################################
+
+# The author's name in the LaTeX preview
+author: "Antoine Saez Dumas"
+
+# The base path where solutions are stored
+base_path: "~/Mathématiques/Solutions/"
+
+# The pdf viewer used for 'oly gen <files>'
+pdf_viewer: "zathura"

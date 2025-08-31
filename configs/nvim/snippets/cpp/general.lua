@@ -33,10 +33,14 @@ return {
 		{
 			trig = "if ",
 			dscr = "conditional statement",
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
-		fmt("if (<>) {\n\t<>\n}<>", {
-			i(1),
+		fmt("if <>) {\n\t<>\n}<>", {
+				c(1, {
+					{ t("("), i(1) },
+					{ t("constexpr ("), i(1) },
+				}),
 			d(2, get_visual),
 			i(0),
 		})
@@ -45,7 +49,8 @@ return {
 		{
 			trig = "else ",
 			dscr = "else statement",
-			condition = not_in_string_comment * check_not_expanded("else%s*{$"),
+			snippetType = "autosnippet",
+			condition = not_in_string_comment * check_not_expanded("{$", "%sif"),
 		},
 		fmt("else {\n\t<>\n}<>", {
 			d(1, get_visual),
@@ -56,6 +61,7 @@ return {
 		{
 			trig = "elif ",
 			dscr = "else if statement",
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt("else if (<>) {\n\t<>\n}<>", {
@@ -68,6 +74,7 @@ return {
 		{
 			trig = "for ",
 			dscr = "for loop",
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt(
@@ -78,6 +85,7 @@ return {
 			]],
 			{
 				c(1, {
+					{ t("") },
 					{ t("int "), i(1, "i"), t(" = 0; "), rep(1), t(" != "), i(2, "N"), t("; "), t("++"), rep(1) },
 					{ i(3, "auto"), t(" "), i(1, "x"), t(" : "), i(2, "array") },
 					{ i(1), t("; "), i(2), t("; "), i(3) },
@@ -91,6 +99,7 @@ return {
 		{
 			trig = "while ",
 			dscr = "while loop",
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt(
@@ -110,6 +119,7 @@ return {
 		{
 			trig = "do ",
 			dscr = "do while loop",
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("{$"),
 		},
 		fmt(
@@ -129,6 +139,7 @@ return {
 			trig = "switch ",
 			dscr = "switch statement",
 			wordTrig = false,
+			snippetType = "autosnippet",
 			condition = not_in_string_comment * check_not_expanded("{$"),
 		},
 		fmt(
@@ -163,6 +174,7 @@ return {
 			dscr = "allocate memory using new",
 			regTrig = true,
 			wordTrig = false,
+			snippetType = "autosnippet",
 			condition = not_in_string_comment,
 		},
 		{

@@ -83,7 +83,7 @@ local function highlight_hrule()
 	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
 
 	for lnum, line in ipairs(lines) do
-		if line:match("^%-%-%-%s*$") then
+		if line:match("^\\hrulebar%s*$") then
 			vim.api.nvim_buf_set_extmark(buf, ns_hrule, lnum - 1, 0, {
 				virt_text = { { string.rep("─", 80), "Indent" } },
 				virt_text_pos = "overlay",

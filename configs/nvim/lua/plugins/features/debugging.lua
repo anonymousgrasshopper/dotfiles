@@ -44,6 +44,8 @@ return {
 		{ "<leader>de", function() require("dapui").eval() end, desc = "Eval line", silent = false },
 		{ "<leader>dl", function() require("dap").run_last() end, desc = "Run last", silent = false },
 		{ "<leader>dT", function() require("dap").terminate() end, desc = "Terminate" },
+
+		{ "<leader>R", ":RunWithArgs ", desc = "Run an executable in the debugger " },
 	},
 
 	config = function()
@@ -60,22 +62,25 @@ return {
 
 		-- keymaps
 		local debugging_keymaps = {
-			["b"] = function() dap.toggle_breakpoint() end,
-			["i"] = function()
-				require("dap.ui.widgets").hover()
-				vim.cmd("hi Cursor blend=100")
-			end,
-			["c"] = function() require("dap").continue() end,
-			["H"] = function() require("dap").step_out() end,
-			["J"] = function() require("dap").step_over() end,
-			["K"] = function() require("dap").step_back() end,
-			["L"] = function() require("dap").step_into() end,
-			["G"] = function() require("dap").run_to_cursor() end,
-			["q"] = function() require("dap").terminate() end,
+			["b"] = { function() dap.toggle_breakpoint() end, "Debug mode: toggle breakpoint" },
+			["i"] = {
+				function()
+					require("dap.ui.widgets").hover()
+					vim.cmd("hi Cursor blend=100")
+				end,
+				"Debug mode: inspect variable under cursor",
+			},
+			["c"] = { function() require("dap").continue() end, "Debug mode: continue" },
+			["H"] = { function() require("dap").step_out() end, "Debug mode: step out" },
+			["J"] = { function() require("dap").step_over() end, "Debug mode: step over" },
+			["K"] = { function() require("dap").step_back() end, "Debug mode: step back" },
+			["L"] = { function() require("dap").step_into() end, "Debug mode: step into" },
+			["G"] = { function() require("dap").run_to_cursor() end, "Debug mode: run to cursor" },
+			["q"] = { function() require("dap").terminate() end, "Debug mode: terminate" },
 		}
 		dap.listeners.after["event_initialized"]["me"] = function()
 			for key, callback in pairs(debugging_keymaps) do
-				vim.keymap.set("n", key, callback)
+				vim.keymap.set("n", key, callback[1], { desc = callback[2] })
 			end
 		end
 		dap.listeners.after["event_terminated"]["me"] = function()
@@ -134,7 +139,6 @@ return {
 			complete = "file",
 			nargs = "*",
 		})
-		vim.keymap.set("n", "<leader>R", ":RunWithArgs ")
 
 		-- C++
 		dap.adapters.cpp = {

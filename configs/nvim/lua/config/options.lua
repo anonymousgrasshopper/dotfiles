@@ -23,7 +23,7 @@ opt.concealcursor  = "nc"
 opt.number         = true
 opt.relativenumber = true
 opt.signcolumn     = "yes"
-opt.scrolloff      = 5
+opt.scrolloff      = 999
 opt.sidescrolloff  = 10
 opt.smoothscroll   = true
 opt.cursorline     = true
@@ -34,8 +34,7 @@ opt.breakindent    = true
 opt.breakindentopt = { "min:30", "shift:-1" }
 opt.linebreak      = true
 opt.breakat        = " "
-opt.formatoptions  = "t,c,o,/,q,w,a,q,2,j"
-vim.cmd([[autocmd BufEnter * set formatoptions=t,c,o,/,q,w,a,q,2,j]])
+opt.formatoptions  = "c,o,/,q,w,a,q,2,j"
 
 -- writing, undo & backup
 opt.autowrite      = false

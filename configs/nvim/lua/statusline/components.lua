@@ -192,7 +192,7 @@ M.Overseer = {
 	static = {
 		symbols = {
 			["CANCELED"] = " ",
-			["FAILURE"] = "󰅚 ",
+			["FAILURE"] = " ",
 			["SUCCESS"] = "󰄴 ",
 			["RUNNING"] = "󰑮 ",
 		},
