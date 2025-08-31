@@ -72,9 +72,9 @@ rm_confirm_nonempty() {
 	done
 	for element ("$items[@]"); do
 	if [[ (-e "$element" && ! -s "$element") || ${#items[@]} == 1 ]]; then
-			echo rm -f "${args[@]}" "$element"
+			command rm -f "${args[@]}" "$element"
 		else
-			echo rm -i "${args[@]}" "$element"
+			commmand rm -i "${args[@]}" "$element"
 		fi
 	done
 }
