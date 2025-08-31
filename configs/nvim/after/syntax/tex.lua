@@ -17,11 +17,11 @@ local function highlight_metadata()
 	}
 
 	for lnum, line in ipairs(lines) do
-		if lnum > 20 then
+		if lnum > 10 then
 			break
 		end -- max scan depth
 
-		if line:match("^%s*$") then
+		if line:match("^%s*$") or line:match("^%%") then
 			goto continue
 		end
 
