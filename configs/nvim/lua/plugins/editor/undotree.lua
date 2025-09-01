@@ -1,5 +1,5 @@
 return {
-	"anonymousgrasshopper/undotree",
+	"mbbill/undotree",
 	event = { "BufReadPre", "BufNewFile" },
 	cmd = { "Undotree" },
 	keys = {

@@ -1,57 +1,57 @@
 KITTY_SOCKET=$(echo $KITTY_LISTEN_ON)
 
-kitty_set_spacing() {
+function kitty_set_spacing() {
 	[[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] &&
 		kitty @ --to $KITTY_SOCKET set-spacing padding=20 margin=0
 }
-kitty_remove_spacing() {
+function kitty_remove_spacing() {
 	[[ -z "$NVIM" && -z "$TMUX" && -n "$KITTY_SOCKET" ]] &&
 		kitty @ --to $KITTY_SOCKET set-spacing padding=0 margin=0
 }
 
 kitty_set_spacing
 
-nvim() {
+function nvim() {
 	kitty_remove_spacing
 	/bin/nvim "$@"
 	kitty_set_spacing
 }
-tmux() {
+function tmux() {
 	kitty_remove_spacing
 	/bin/tmux "$@"
 	kitty_set_spacing
 }
-yazi() {
+function yazi() {
 	kitty_remove_spacing
 	/bin/yazi "$@"
 	kitty_set_spacing
 }
-lazygit() {
+function lazygit() {
 	kitty_remove_spacing
 	/bin/lazygit "$@"
 	kitty_set_spacing
 }
-btop() {
+function btop() {
 	kitty_remove_spacing
 	/bin/btop "$@"
 	kitty_set_spacing
 }
-man() {
+function man() {
 	kitty_remove_spacing
 	/bin/man "$@"
 	kitty_set_spacing
 }
-ncdu() {
+function ncdu() {
 	kitty_remove_spacing
 	/bin/ncdu "$@"
 	kitty_set_spacing
 }
-neomutt() {
+function neomutt() {
 	kitty_remove_spacing
 	TERM=xterm-direct /bin/neomutt "$@"
 	kitty_set_spacing
 }
-cxxmatrix() {
+function cxxmatrix() {
 	kitty_remove_spacing
 	/bin/cxxmatrix "$@"
 	kitty_set_spacing

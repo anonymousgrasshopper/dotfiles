@@ -5,6 +5,6 @@ return {
 		bigfile = {},
 		bufdelete = {},
 		rename = {},
-		scroll = {},
+		-- scroll = {}, -- BUG: flickers on tabs
 	},
 }

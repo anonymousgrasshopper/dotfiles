@@ -120,7 +120,7 @@ function zle-keymap-select() {
 }
 zle -N zle-keymap-select
 
-_set_cursor_beam() {
+function _set_cursor_beam() {
 	echo -ne '\e[6 q'
 }
 precmd_functions+=(_set_cursor_beam)

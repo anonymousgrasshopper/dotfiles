@@ -93,22 +93,17 @@ local function highlight_hrule()
 	end
 end
 
-local directories = {
-	"^/tmp/oly",
-	"^" .. vim.env.HOME .. "/Mathématiques/Solutions",
-}
-for _, directory in pairs(directories) do
-	if vim.fn.expand("%:p"):match(directory) then
-		highlight_metadata()
-		highlight_hrule()
+if vim.env.OLY and not vim.b[buf].oly_highlight then
+	vim.b[buf].oly_highlight = true
 
-		vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-			callback = function(event)
-				if event.buf == buf then
-					highlight_metadata()
-					highlight_hrule()
-				end
-			end,
-		})
-	end
+	highlight_metadata()
+	highlight_hrule()
+
+	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+		callback = function()
+			highlight_metadata()
+			highlight_hrule()
+		end,
+		buffer = buf,
+	})
 end

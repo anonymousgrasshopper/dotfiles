@@ -19,16 +19,16 @@ for i in {1..7}; do
 done
 
 # miscellaneous
-cfd() {
+function cfd() {
 	cd "$(fd . -td | fzf --no-multi --query="$1")"
 }
-mkcd() {
+function mkcd() {
 	[[ $# ==  0 ]] && echo "mkcd: missing operand"
 	[[ $# -ge 2 ]] && echo "mkcd: too many operands"
 	[[ $# -ne 1 ]] && return 1
 	mkdir -p "$1"  && cd "$1"
 }
-run() {
+function run() {
 	[[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
 	while (("$#")); do
 		command="$1"
@@ -36,7 +36,7 @@ run() {
 		shift
 	done
 }
-compile() {
+function compile() {
 	local file_extension="$1:e"
 	local ouput_filename="$1:r"
 	case "$file_extension" in
@@ -59,7 +59,7 @@ alias path='echo -e ${PATH//:/\\n}' # human-readable path
 
 # rm that only asks for confirmation for nonempty files
 alias rm=rm_confirm_nonempty
-rm_confirm_nonempty() {
+function rm_confirm_nonempty() {
 	local args=()
 	local items=()
 	while (($#)); do
@@ -74,18 +74,18 @@ rm_confirm_nonempty() {
 	if [[ (-e "$element" && ! -s "$element") || ${#items[@]} == 1 ]]; then
 			command rm -f "${args[@]}" "$element"
 		else
-			commmand rm -i "${args[@]}" "$element"
+			command rm -i "${args[@]}" "$element"
 		fi
 	done
 }
 
 # help command using bat
-help() {
+function help() {
 	$@ --help 2>/dev/null | bat --plain --language=help --paging=always
 }
 
 # find and replace
-far() {
+function far() {
 	[[ ! -d "$1" ]] && echo "Usage: far /path/to/directory/ regexp replacement"
 	sed -i -e "s@$2@$3@g" "$(rg "$2" "$1" -l --fixed-strings)"
 }
@@ -114,7 +114,7 @@ alias llag="eza --icons=always --group-directories-first --no-quotes -alh --git"
 alias tree="eza --icons=always --group-directories-first --no-quotes --tree"
 
 # git
-clone() {
+function clone() {
 	[[ $# == 0 ]] && { echo "clone: missing operand"; return 1 }
 	[[ ! "$1" =~ ^https?:// ]] && 1="https://github.com/$1" # default domain
 	dir="${2:-$HOME/Téléchargements/git/${1:t}}"
@@ -146,13 +146,18 @@ gitdot() {
 }
 
 # neovim
-nfd() {
+function nfd() {
 	local lines=()
 	if [[ $# == 0 ]]; then
-	   lines+=( ${(f)"$(fzf --multi --select-1)"} )
+	   lines+=( ${(f)"$(fd . --print0 --type f | fzf --read0 --multi --select-1 )"} )
 	fi
 	for arg in $@ ; do
-	   lines+=( ${(f)"$(fzf --multi --select-1 --query=$arg)"} )
+	  lines+=(
+			${(f)"$(
+				fd . --print0 --strip-cwd-prefix=always --type=f |
+				fzf --read0 --multi --select-1 --query=$arg
+			)"}
+		)
 	done
 	if [[ ${#lines} != 0 ]]; then
 		nvim $lines
@@ -171,14 +176,14 @@ alias pacmanclean='sudo pacman -Rns $(pacman -Qtdq)'
 alias tls="tmux list-session"
 alias trs="tmux rename-session"
 alias trw="tmux rename-window"
-tns() {
+function tns() {
 	if [[ $# == 0 ]]; then
 		tmux new-session
 	else
 		tmux new-session -s"$1"
 	fi
 }
-tas() {
+function tas() {
 	if [[ -n "$TMUX" ]]; then
 		command="switch-client"
 	elif ! /bin/tmux run 2>/dev/null; then
@@ -189,7 +194,7 @@ tas() {
 	fi
 	tmux $command -t"$(/bin/tmux list-session | fzf --preview='' --select-1 --query="$1" | sed 's/:.*//')"
 }
-tmux_choose_pane() {
+function tmux_choose_pane() {
 	local panes current_window current_pane target target_window target_pane
 	panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
 	current_pane=$(tmux display-message -p '#I:#P')

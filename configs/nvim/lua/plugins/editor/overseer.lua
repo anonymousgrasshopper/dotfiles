@@ -21,11 +21,8 @@ return {
 	opts = {
 		strategy = {
 			"toggleterm",
-			use_shell = false,
-			auto_scroll = false,
-			close_on_exit = false,
-			quit_on_exit = "always",
 			open_on_start = false,
+			close_on_exit = true,
 		},
 		templates = { "builtin" },
 		template_dirs = { "overseer.template" },
@@ -283,7 +280,6 @@ return {
 			local task = require("overseer").new_task({
 				cmd = vim.fn.expandcmd(cmd),
 				components = {
-					{ "on_output_quickfix", open = not params.bang, open_height = 8 },
 					"unique",
 					"default",
 				},
@@ -292,7 +288,6 @@ return {
 		end, {
 			desc = "Change the CMake build type",
 			nargs = "*",
-			bang = true,
 		})
 	end,
 }
