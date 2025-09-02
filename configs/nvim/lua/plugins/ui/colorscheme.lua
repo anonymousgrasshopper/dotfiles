@@ -14,15 +14,15 @@ local vim_enter_early_redraw = function()
 		local lang = vim.treesitter.language.get_lang(ft)
 
 		-- find filetype icon and color
-		local icon, color = " ", "#6D8086"
+		local icon, color
 		if pcall(require("nvim-web-devicons").setup) then
 			icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
 		end
-		vim.cmd("hi StatusLineIconColor guifg=" .. color)
+		vim.cmd("hi StatusLineIconColor guifg=" .. (color or "#6d8086"))
 
 		-- setup mock statusline
 		vim.opt.statusline = "%#StatusLineBlue# NORMAL %#StatusLineSeparatorBlue#%#StatusLineSeparatorGrey#%* %F %#StatusLineIconColor#"
-			.. icon
+			.. (icon or " ")
 			.. '%=%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
 		if

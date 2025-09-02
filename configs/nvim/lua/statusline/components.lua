@@ -1,20 +1,20 @@
-local M = {}
+local components = {}
 
 local conditions = require("heirline.conditions")
 local utils = require("heirline.utils")
 
-M.Space = { provider = " " }
+components.Space = { provider = " " }
 
-M.LeftSeparator = {
+components.LeftSeparator = {
 	provider = "",
 	hl = function(self) return { fg = self.separator_color } end,
 }
-M.RightSeparator = {
+components.RightSeparator = {
 	provider = "",
 	hl = function(self) return { fg = self.separator_color } end,
 }
 
-M.ViMode = {
+components.ViMode = {
 	static = {
 		mode_names = {
 			n = "NORMAL",
@@ -56,7 +56,7 @@ M.ViMode = {
 	provider = function(self) return self.mode_names[self.mode] end,
 }
 
-M.Git = {
+components.Git = {
 	condition = conditions.is_git_repo,
 
 	init = function(self)
@@ -66,12 +66,12 @@ M.Git = {
 
 	hl = { fg = "fg" },
 
-	M.Space,
+	components.Space,
 	{ -- git branch name
 		provider = function(self) return " " .. self.status_dict.head end,
 		hl = { bold = true },
 	},
-	M.Space,
+	components.Space,
 	{
 		provider = function(self)
 			local count = self.status_dict.added or 0
@@ -151,17 +151,17 @@ local FileFlags = {
 	},
 }
 
-M.FileNameBlock = utils.insert(
+components.FileNameBlock = utils.insert(
 	FileNameBlock,
 	FileName,
-	M.Space,
+	components.Space,
 	FileIcon,
-	M.Space,
+	components.Space,
 	FileFlags,
 	{ provider = "%<" } -- this means that the statusline is cut here when there's not enough space
 )
 
-M.Macro = {
+components.Macro = {
 	condition = function() return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0 end,
 	provider = function() return " " .. vim.fn.reg_recording() .. "  " end,
 	hl = { fg = "orange", bold = true },
@@ -182,7 +182,7 @@ local function OverseerTasksForStatus(status)
 		end,
 	}
 end
-M.Overseer = {
+components.Overseer = {
 	condition = function() return package.loaded.overseer end,
 	init = function(self)
 		local tasks = require("overseer.task_list").list_tasks({ unique = true })
@@ -204,7 +204,7 @@ M.Overseer = {
 	OverseerTasksForStatus("FAILURE"),
 }
 
-M.Debugger = {
+components.Debugger = {
 	condition = function()
 		if package.loaded.dap then
 			local session = require("dap").session()
@@ -217,7 +217,7 @@ M.Debugger = {
 	-- see Click-it! section for clickable actions
 }
 
-M.Diagnostics = {
+components.Diagnostics = {
 	condition = conditions.has_diagnostics,
 
 	init = function(self)
@@ -252,12 +252,12 @@ M.Diagnostics = {
 	},
 }
 
-M.Ruler = {
+components.Ruler = {
 	provider = "%P %5(%l:%c%)",
 	hl = { fg = "fg", bg = "grey" },
 }
 
-M.Time = {
+components.Time = {
 	provider = function() return " " .. os.date("%R") end,
 }
 
@@ -286,7 +286,7 @@ local extension_filetypes = {
 	"undotree",
 }
 
-M.ExtensionA = {
+components.ExtensionA = {
 	condition = function() return vim.tbl_contains(extension_filetypes, vim.bo.filetype) end,
 	init = function(self)
 		self.ft = vim.bo.filetype
@@ -316,7 +316,7 @@ M.ExtensionA = {
 	provider = function(self) return self.extension_names[vim.bo.filetype]() end,
 }
 
-M.ExtensionB = {
+components.ExtensionB = {
 	init = function(self)
 		local git_root = require("utils").git_root
 
@@ -348,16 +348,16 @@ M.ExtensionB = {
 		}
 		return vim.tbl_contains(filetypes, vim.bo.filetype)
 	end,
-	M.Space,
+	components.Space,
 	{
 		provider = function(self) return self.extension_left[vim.bo.filetype]() end,
 	},
-	M.Space,
+	components.Space,
 }
 
-M.ExtensionC = {
+components.ExtensionC = {
 	condition = function() return vim.tbl_contains(extension_filetypes, vim.bo.filetype) end,
-	M.Space,
+	components.Space,
 	{
 		provider = function()
 			if vim.bo.filetype == "lazy" then
@@ -367,10 +367,10 @@ M.ExtensionC = {
 			end
 		end,
 	},
-	M.Space,
+	components.Space,
 }
 
-M.ExtensionY = {
+components.ExtensionY = {
 	condition = function(self) return self.extension_icons[vim.bo.filetype] end,
 	init = function(self) self.ft = vim.bo.filetype end,
 	static = {
@@ -396,4 +396,4 @@ M.ExtensionY = {
 	provider = function(self) return self.extension_icons[vim.bo.filetype] end,
 }
 
-return M
+return components

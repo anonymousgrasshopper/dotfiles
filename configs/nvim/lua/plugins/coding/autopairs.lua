@@ -34,6 +34,12 @@ return {
 									col - 2,
 									{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
 								}, -- if the two characters before the cursor are paired, don't remove them
+								{
+									vim.api.nvim_replace_termcodes("<bs>", true, true, true),
+									"tex",
+									col - 4,
+									{ "\\(\\)", "\\[\\]" },
+								}, -- if the two characters before the cursor are paired, don't remove them
 								-- snippets
 								{ "*", { "markdown", "tex" }, col - 6, "\\left" },
 								{ "[", { "bash", "zsh", "sh" }, 1, { "if%s+$", "while%s+$" }, regex = true },
@@ -66,8 +72,8 @@ return {
 			{ "[==[", "]==]", ft = { "lua" } },
 			{ "[===[", "]===]", ft = { "lua" } },
 			-- filetype-specific
-			{ "\\[", "\\]", newline = true, ft = { "tex" } },
-			{ "\\(", "\\)", newline = true, ft = { "tex" } },
+			{ "\\[", "\\]", disable_end = true, newline = true, ft = { "tex" } },
+			{ "\\(", "\\)", disable_end = true, newline = true, ft = { "tex" } },
 			{ "$", "$", ft = { "markdown" } },
 			{ "$$", "$$", ft = { "markdown" } },
 			{ "*", "*", ft = { "markdown" } },

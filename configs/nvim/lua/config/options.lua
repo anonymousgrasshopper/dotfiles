@@ -17,7 +17,7 @@ opt.foldmethod     = "indent"
 opt.foldcolumn     = "0"
 opt.foldlevelstart = 99
 opt.conceallevel   = 2
-opt.concealcursor  = "nc"
+opt.concealcursor  = ""
 
 -- lines & statuscolumn
 opt.number         = true

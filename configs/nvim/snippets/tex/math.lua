@@ -12,7 +12,7 @@ return {
 			dscr = "inline math mode",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone * tex.in_document * -- we actually have to use in_mathzone instead
+			condition = tex.in_math * tex.in_document * -- we actually have to use in_math instead
 			make_cond(function()                            -- of in_text because the dollar sign negates it
 				local col = vim.api.nvim_win_get_cursor(0)[2]
 				local line = vim.api.nvim_get_current_line()
@@ -50,7 +50,7 @@ return {
 			dscr = "sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			[[
@@ -69,7 +69,7 @@ return {
 			dscr = "cyclic sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\sum_{\\text{cyc}} ")
 	),
@@ -79,7 +79,7 @@ return {
 			dscr = "symmetric sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\sum_{\\text{sym}} ")
 	),
@@ -89,7 +89,7 @@ return {
 			dscr = "product",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			[[
@@ -108,7 +108,7 @@ return {
 			dscr = "cyclic prod",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\prod_{\\text{cyc}} ")
 	),
@@ -118,7 +118,7 @@ return {
 			dscr = "symmetric prod",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\prod_{\\text{sym}} ")
 	),
@@ -128,7 +128,7 @@ return {
 			dscr = "fraction",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			"\\frac{<>}{<>}",
@@ -144,7 +144,7 @@ return {
 			dscr = "square root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			"\\sqrt{<>}",
@@ -159,7 +159,7 @@ return {
 			dscr = "cubic root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone
+			condition = tex.in_math
 		},
 		fmt(
 			"\\sqrt[3]{<>}",
@@ -174,7 +174,7 @@ return {
 			dscr = "text",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\text{"),
@@ -188,7 +188,7 @@ return {
 			dscr = "operatorname",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\operatorname{"),
@@ -202,7 +202,7 @@ return {
 			dscr = "square",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("^2")
 	),
@@ -212,7 +212,7 @@ return {
 			dscr = "cdot",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\cdot")
 	),
@@ -222,7 +222,7 @@ return {
 			dscr = "QED box",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\Box")
 	),
@@ -231,7 +231,7 @@ return {
 			trig = "ty",
 			dscr = "lemniscate",
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\infty")
 	),
@@ -241,7 +241,7 @@ return {
 			dscr = "universal quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\forall ")
 	),
@@ -251,7 +251,7 @@ return {
 			dscr = "existensial quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\exists ")
 	),
@@ -261,7 +261,7 @@ return {
 			dscr = "displaystyle",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\displaystyle"),
@@ -274,7 +274,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>^{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -288,7 +288,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -302,7 +302,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>^{<>}_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -317,7 +317,7 @@ return {
 			regTrig = true,
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\left"),

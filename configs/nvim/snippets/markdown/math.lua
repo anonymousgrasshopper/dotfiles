@@ -16,7 +16,7 @@ return {
 			dscr = "sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			[[
@@ -35,7 +35,7 @@ return {
 			dscr = "product",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			[[
@@ -54,7 +54,7 @@ return {
 			dscr = "fraction",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			"\\frac{<>}{<>}",
@@ -70,7 +70,7 @@ return {
 			dscr = "floor",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone * check_floor_not_expanded,
+			condition = tex.in_math * check_floor_not_expanded,
 		},
 		fmt("\\left\\lfloor <> \\right\\rfloor", {
 			d(1, get_visual),
@@ -82,7 +82,7 @@ return {
 			dscr = "ceil",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone * check_ceil_not_expanded,
+			condition = tex.in_math * check_ceil_not_expanded,
 		},
 		fmt("\\left\\lceil <> \\right\\rceil", {
 			d(1, get_visual),
@@ -94,7 +94,7 @@ return {
 			dscr = "curly braces",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("\\left\\{ <> \\right\\}", {
 			d(1, get_visual),
@@ -106,7 +106,7 @@ return {
 			dscr = "module",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("\\left\\lvert <> \\right\\rvert", {
 			d(1, get_visual),
@@ -118,7 +118,7 @@ return {
 			dscr = "vector norm",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("\\left\\lVert <> \\right\\rVert", {
 			d(1, get_visual),
@@ -130,7 +130,7 @@ return {
 			dscr = "square root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt(
 			"\\sqrt{<>}",
@@ -145,7 +145,7 @@ return {
 			dscr = "cubic root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone
+			condition = tex.in_math
 		},
 		fmt(
 			"\\sqrt[3]{<>}",
@@ -160,7 +160,7 @@ return {
 			dscr = "text",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\text{"),
@@ -174,7 +174,7 @@ return {
 			dscr = "operatorname",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\operatorname{"),
@@ -188,7 +188,7 @@ return {
 			dscr = "square",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("^2")
 	),
@@ -198,7 +198,7 @@ return {
 			dscr = "cdot",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\cdot")
 	),
@@ -208,7 +208,7 @@ return {
 			dscr = "QED box",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\Box")
 	),
@@ -217,7 +217,7 @@ return {
 			trig = "ty",
 			dscr = "lemniscate",
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\infty")
 	),
@@ -227,7 +227,7 @@ return {
 			dscr = "universal quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\forall ")
 	),
@@ -237,7 +237,7 @@ return {
 			dscr = "existensial quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		t("\\exists ")
 	),
@@ -247,7 +247,7 @@ return {
 			dscr = "displaystyle",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\displaystyle"),
@@ -260,7 +260,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>^{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -274,7 +274,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -288,7 +288,7 @@ return {
 			wordTrig = false,
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		fmt("<>^{<>}_{<>}", {
 			f(function(_, snip) return snip.captures[1] end),
@@ -303,7 +303,7 @@ return {
 			regTrig = true,
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_mathzone,
+			condition = tex.in_math,
 		},
 		{
 			t("\\left"),

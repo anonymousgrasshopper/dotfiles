@@ -47,7 +47,7 @@ return {
 			dscr = "section",
 			regTrig = true,
 			snippetType = "autosnippet",
-			condition = tex.in_text * line_begin,
+			condition = tex.in_text * line_begin, -- pernicieux quand textwidth -> line_begin
 		},
 		fmt(
 			[[

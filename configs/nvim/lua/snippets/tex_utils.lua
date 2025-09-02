@@ -2,8 +2,23 @@ local make_cond = require("snippets.luasnip").make_cond
 
 local tex_utils = {}
 
-tex_utils.in_mathzone = make_cond(function()
-	return vim.fn["vimtex#syntax#in_mathzone"]() == 1
+tex_utils.in_math = make_cond(function()
+		-- First check if we're in math mode at all
+  if vim.fn["vimtex#syntax#in_mathzone"]() == 0 then
+    return false
+  end
+
+  -- Get syntax stack at cursor
+  local stack = vim.fn.synstack(vim.fn.line("."), vim.fn.col("."))
+  for _, id in ipairs(stack) do
+    local name = vim.fn.synIDattr(id, "name")
+    -- If inside \text{} or similar, math highlighting group changes
+    if name:match("texMathText") then
+      return false
+    end
+  end
+
+  return true
 end)
 tex_utils.in_text = make_cond(function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1
