@@ -26,7 +26,7 @@ return {
 		},
 		templates = { "builtin" },
 		template_dirs = { "overseer.template" },
-		dap = true,
+		dap = false,
 		task_list = {
 			default_detail = 1, -- Default detail level for tasks. Can be 1-3.
 			-- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)

@@ -115,7 +115,11 @@ return {
 	},
 	{
 		"bullets-vim/bullets.vim",
-		ft = "markdown",
+		keys = {
+			{ "<CR>", "<Cmd>InsertNewBullet<CR>", mode = { "i" }, ft = "markdown", desc = "Insert new bullet" },
+			{ "<localleader>x", "<Cmd>ToggleCheckbox<CR>", ft = "markdown", desc = "Toggle Bullet" },
+		},
+		config = function() vim.g.bullets_set_mapping = 0 end,
 	},
 	{
 		"obsidian-nvim/obsidian.nvim",

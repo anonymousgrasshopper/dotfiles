@@ -8,11 +8,13 @@ return {
 			{
 				"<localleader>ctst",
 				"<Cmd>CompetiTest receive contest<CR>",
+				ft = { "alpha", "c", "cpp", "asm" },
 				desc = "Receive contest",
 			},
 			{
 				"<localleader>pb",
 				"<Cmd>CompetiTest receive problem<CR>",
+				ft = { "alpha", "c", "cpp", "asm" },
 				desc = "Receive problem",
 			},
 			{

@@ -3,14 +3,21 @@
 # Please edit the following values.                                               #
 #                                                                                 #
 # A list of all possible configuration options and their defaults can be found at #
-# https://github.com/anonymousgrasshopper/oly/blob/main/src/config.cpp#L47-#L75   #
+# https://github.com/anonymousgrasshopper/oly/blob/main/src/config.cpp#L50-#L84   #
 ###################################################################################
 
 # The author's name in the LaTeX preview
-author: "Antoine Saez Dumas"
+author: Antoine Saez Dumas
 
 # The base path where solutions are stored
-base_path: "~/Mathématiques/Solutions/"
+base_path: ~/Mathématiques/Solutions
 
-# The pdf viewer used for 'oly gen <files>'
-pdf_viewer: "zathura"
+# The pdf viewer used for 'oly gen'
+pdf_viewer: zathura
+
+# wether to confirm deletion or not in 'oly rm'
+confirm: true
+
+# map contest names to other ones
+abbreviations:
+  Shortlist: ISL

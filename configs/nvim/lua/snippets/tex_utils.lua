@@ -1,4 +1,5 @@
 local make_cond = require("snippets.luasnip").make_cond
+local trigger_not_preceded_by = require("luasnip.extras.expand_conditions").trigger_not_preceded_by
 
 local tex_utils = {}
 
@@ -49,5 +50,7 @@ end)
 tex_utils.in_tikz = make_cond(function()
 	return in_environment("tikzpicture")
 end)
+
+tex_utils.not_in_cmd = trigger_not_preceded_by("[%a\\]")
 
 return tex_utils

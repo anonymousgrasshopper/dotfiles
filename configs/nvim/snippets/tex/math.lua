@@ -50,7 +50,7 @@ return {
 			dscr = "sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		fmt(
 			[[
@@ -69,7 +69,7 @@ return {
 			dscr = "cyclic sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\sum_{\\text{cyc}} ")
 	),
@@ -79,7 +79,7 @@ return {
 			dscr = "symmetric sum",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\sum_{\\text{sym}} ")
 	),
@@ -89,7 +89,7 @@ return {
 			dscr = "product",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		fmt(
 			[[
@@ -108,7 +108,7 @@ return {
 			dscr = "cyclic prod",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\prod_{\\text{cyc}} ")
 	),
@@ -118,7 +118,7 @@ return {
 			dscr = "symmetric prod",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\prod_{\\text{sym}} ")
 	),
@@ -128,7 +128,7 @@ return {
 			dscr = "fraction",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		fmt(
 			"\\frac{<>}{<>}",
@@ -144,7 +144,7 @@ return {
 			dscr = "square root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		fmt(
 			"\\sqrt{<>}",
@@ -159,7 +159,7 @@ return {
 			dscr = "cubic root",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		fmt(
 			"\\sqrt[3]{<>}",
@@ -174,7 +174,7 @@ return {
 			dscr = "text",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		{
 			t("\\text{"),
@@ -188,7 +188,7 @@ return {
 			dscr = "operatorname",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		{
 			t("\\operatorname{"),
@@ -212,7 +212,7 @@ return {
 			dscr = "cdot",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\cdot")
 	),
@@ -222,7 +222,7 @@ return {
 			dscr = "QED box",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\Box")
 	),
@@ -231,41 +231,29 @@ return {
 			trig = "ty",
 			dscr = "lemniscate",
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
 		t("\\infty")
 	),
 	s(
 		{
-			trig = "all ",
+			trig = "all",
 			dscr = "universal quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
-		t("\\forall ")
+		t("\\forall")
 	),
 	s(
 		{
-			trig = "ex ",
+			trig = "ex",
 			dscr = "existensial quantifier",
 			wordTrig = false,
 			snippetType = "autosnippet",
-			condition = tex.in_math,
+			condition = tex.in_math * tex.not_in_cmd,
 		},
-		t("\\exists ")
-	),
-	s(
-		{
-			trig = "ds",
-			dscr = "displaystyle",
-			wordTrig = false,
-			snippetType = "autosnippet",
-			condition = tex.in_math,
-		},
-		{
-			t("\\displaystyle"),
-		}
+		t("\\exists")
 	),
 	s(
 		{

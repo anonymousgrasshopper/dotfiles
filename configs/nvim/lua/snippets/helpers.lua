@@ -8,6 +8,8 @@ helpers.first_line = make_cond(function() return vim.api.nvim_win_get_cursor(0)[
 helpers.word_trig_condition = require("luasnip.extras.expand_conditions").word_trig_condition
 helpers.trigger_not_preceded_by = require("luasnip.extras.expand_conditions").trigger_not_preceded_by
 
+helpers.not_in_word = helpers.trigger_not_preceded_by("%a")
+
 function helpers.get_visual(_, parent)
 	if #parent.snippet.env.LS_SELECT_RAW > 0 then
 		return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
@@ -47,6 +49,8 @@ function helpers.check_not_expanded(...)
 		local line = vim.api.nvim_get_current_line()
 		local col = vim.api.nvim_win_get_cursor(0)[2]
 		for _, pattern in ipairs(arg) do
+			vim.schedule(function() vim.notify(vim.inspect(pattern)) end)
+			vim.schedule(function() vim.notify(vim.inspect(line:sub(col, #line))) end)
 			if line:sub(col, #line):match(pattern) then
 				return false
 			end
@@ -55,4 +59,6 @@ function helpers.check_not_expanded(...)
 	end)
 end
 
+
+helpers.check_not_expanded("hello", "wworld", "again")
 return helpers

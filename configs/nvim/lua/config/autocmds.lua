@@ -139,7 +139,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Reset terminal mode when quitting Neovim
-vim.api.nvim_create_autocmd("VimLeave", {
+vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function() vim.fn.jobstart({ "reset" }) end,
 })
 
