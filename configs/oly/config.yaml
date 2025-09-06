@@ -21,3 +21,8 @@ confirm: true
 # map contest names to other ones
 abbreviations:
   Shortlist: ISL
+
+# added right after \documentclass in the preview file
+packages: '\usepackage[french]{antoine}
+
+\usepackage[sexy,diagrams]{evan}'

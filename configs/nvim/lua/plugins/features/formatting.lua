@@ -117,7 +117,7 @@ return {
 				"^" .. vim.fn.stdpath("config") .. "/lua/snippets/",
 				"^" .. vim.fn.stdpath("config") .. "/snippets/",
 
-				"^" .. (vim.env.TEXMFHOME or vim.env.HOME) .. "/texmf/tex/latex",
+				"^" .. (vim.env.TEXMFHOME or vim.env.HOME) .. "/tex/latex",
 			}
 			for _, path in ipairs(disabled_paths) do
 				if vim.api.nvim_buf_get_name(0):match(path) then

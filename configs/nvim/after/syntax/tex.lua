@@ -9,11 +9,12 @@ local function highlight_metadata()
 
 	local valid_keywords = {
 		source = true,
+		topic = true,
+		tags = true,
+		url = true,
 		desc = true,
 		author = true,
-		tags = true,
 		difficulty = true,
-		url = true,
 	}
 
 	for lnum, line in ipairs(lines) do

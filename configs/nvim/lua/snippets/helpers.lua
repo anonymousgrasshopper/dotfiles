@@ -49,8 +49,6 @@ function helpers.check_not_expanded(...)
 		local line = vim.api.nvim_get_current_line()
 		local col = vim.api.nvim_win_get_cursor(0)[2]
 		for _, pattern in ipairs(arg) do
-			vim.schedule(function() vim.notify(vim.inspect(pattern)) end)
-			vim.schedule(function() vim.notify(vim.inspect(line:sub(col, #line))) end)
 			if line:sub(col, #line):match(pattern) then
 				return false
 			end
