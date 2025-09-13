@@ -9,7 +9,7 @@ function M.in_node(ignored_nodes)
 	row = row - 1
 
 	-- Parse the tree and get its root
-	local parser = vim.treesitter.get_parser(0, "typst")
+	local parser = vim.treesitter.get_parser(0, vim.bo.filetype)
 	if not parser then return nil end
 	local tree = parser:parse()[1]
 	local root = tree:root()
