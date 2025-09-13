@@ -96,15 +96,6 @@ return {
 					},
 				},
 
-				["tinymist"] = {
-					settings = {
-						exportPdf = "onType",
-						lint = {
-							enabled = true,
-						},
-					},
-				},
-
 				["yamlls"] = {
 					settings = {
 						yaml = {

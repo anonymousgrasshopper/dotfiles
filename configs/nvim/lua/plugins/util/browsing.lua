@@ -1,6 +1,7 @@
 return {
 	"chrishrb/gx.nvim",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	-- dependencies:
+	--  nvim-lua/plenary.nvim
 	cmd = { "Browse" },
 	keys = { { "gx", "<Cmd>Browse<CR>", mode = { "n", "x" } } },
 	init = function()

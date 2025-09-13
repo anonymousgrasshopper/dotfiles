@@ -32,7 +32,7 @@ return {
 	opts = function()
 		local function on_move(data) Snacks.rename.on_rename_file(data.source, data.destination) end
 
-		vim.api.nvim_create_autocmd("Filetype", {
+		vim.api.nvim_create_autocmd("FileType", {
 			pattern = "neo-tree",
 			callback = function()
 				vim.keymap.set("n", "J", "5j", { desc = "Scroll 5 lines down", buffer = true })

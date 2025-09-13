@@ -19,100 +19,171 @@ end
 
 return {
 	{
-		"MeanderingProgrammer/render-markdown.nvim",
-		ft = { "markdown", "codecompanion" },
-		cmd = "RenderMarkdown",
+		"OXY2DEV/markview.nvim",
+		ft = { "markdown", "typst" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			-- nvim-tree/nvim-web-devicons
 		},
 		opts = {
-			render_modes = { "n", "c", "t" },
-			completions = { blink = { enabled = true } },
-			anti_conceal = { enabled = false },
-			win_options = {
-				conceallevel = {
-					default = vim.o.conceallevel,
-					rendered = 2,
+			preview = {
+				callbacks = { -- prevent the plugin from doing nonsense with concealcursor and conceallevel
+					on_attach = function() end,
+					on_detach = function() end,
+					on_enable = function() end,
+					on_disable = function() end,
+					on_hybrid_enable = function() end,
+					on_hybrid_disable = function() end,
+					on_mode_change = function() end,
+					on_splitview_open = function() end,
 				},
-				concealcursor = {
-					default = vim.o.concealcursor,
-					rendered = "nc",
+				icon_provider = "devicons",
+				modes = { "n", "no", "c", "i" },
+				hybrid_modes = { "n", "no", "c", "i" },
+				debounce = 50,
+			},
+			markdown = {
+				headings = {
+					shift_width = 0,
+					heading_1 = { icon = "󰼏 ", sign = "", hl = "markdownH1" },
+					heading_2 = { icon = "󰼐 ", sign = "", hl = "markdownH2" },
+					heading_3 = { icon = "󰼑 ", sign = "", hl = "markdownH3" },
+					heading_4 = { icon = "󰼒 ", sign = "", hl = "markdownH4" },
+					heading_5 = { icon = "󰼓 ", sign = "", hl = "markdownH5" },
+					heading_6 = { icon = "󰼔 ", sign = "", hl = "markdownH6" },
+				},
+				list_items = {
+					shift_width = function(buffer, item)
+						local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
+						return item.indent * (1 / (parent_indnet * 2))
+					end,
+					marker_minus = {
+						add_padding = function(_, item) return item.indent > 1 end,
+					},
 				},
 			},
-
-			heading = {
-				position = "inline",
-				icons = { "󰼏 ", "󰼐 ", "󰼑 ", "󰼒 ", "󰼓 ", "󰼔 " },
-				sign = false,
-				backgrounds = {
-					"markdownH1",
-					"markdownH2",
-					"markdownH3",
-					"markdownH4",
-					"markdownH5",
-					"markdownH6",
-				},
-				foregrounds = {
-					"markdownH1",
-					"markdownH2",
-					"markdownH3",
-					"markdownH4",
-					"markdownH5",
-					"markdownH6",
+			markdown_inline = {
+				checkboxes = {
+					checked = { text = "󰄲", hl = "MarkviewCheckboxChecked", scope_hl = "MarkviewCheckboxChecked" },
+					unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = "MarkviewCheckboxUnchecked" },
 				},
 			},
-			-- stylua: ignore
-			callout = {
-				note      = { raw = "[!NOTE]",      rendered = "󰋽 Note",      highlight = "MarkdownInfo",    category = "github"   },
-				tip       = { raw = "[!TIP]",       rendered = "󰌶 Tip",       highlight = "MarkdownSuccess", category = "github"   },
-				important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "MarkdownHint",    category = "github"   },
-				warning   = { raw = "[!WARNING]",   rendered = "󰀪 Warning",   highlight = "MarkdownWarn",    category = "github"   },
-				caution   = { raw = "[!CAUTION]",   rendered = "󰳦 Caution",   highlight = "MarkdownError",   category = "github"   },
-				abstract  = { raw = "[!ABSTRACT]",  rendered = "󰨸 Abstract",  highlight = "MarkdownInfo",    category = "obsidian" },
-				summary   = { raw = "[!SUMMARY]",   rendered = "󰨸 Summary",   highlight = "MarkdownInfo",    category = "obsidian" },
-				tldr      = { raw = "[!TLDR]",      rendered = "󰨸 Tldr",      highlight = "MarkdownInfo",    category = "obsidian" },
-				info      = { raw = "[!INFO]",      rendered = "󰋽 Info",      highlight = "MarkdownInfo",    category = "obsidian" },
-				todo      = { raw = "[!TODO]",      rendered = "󰗡 Todo",      highlight = "MarkdownInfo",    category = "obsidian" },
-				hint      = { raw = "[!HINT]",      rendered = "󰌶 Hint",      highlight = "MarkdownSuccess", category = "obsidian" },
-				success   = { raw = "[!SUCCESS]",   rendered = "󰄬 Success",   highlight = "MarkdownSuccess", category = "obsidian" },
-				check     = { raw = "[!CHECK]",     rendered = "󰄬 Check",     highlight = "MarkdownSuccess", category = "obsidian" },
-				done      = { raw = "[!DONE]",      rendered = "󰄬 Done",      highlight = "MarkdownSuccess", category = "obsidian" },
-				question  = { raw = "[!QUESTION]",  rendered = "󰘥 Question",  highlight = "MarkdownWarn",    category = "obsidian" },
-				help      = { raw = "[!HELP]",      rendered = "󰘥 Help",      highlight = "MarkdownWarn",    category = "obsidian" },
-				faq       = { raw = "[!FAQ]",       rendered = "󰘥 Faq",       highlight = "MarkdownWarn",    category = "obsidian" },
-				attention = { raw = "[!ATTENTION]", rendered = "󰀪 Attention", highlight = "MarkdownWarn",    category = "obsidian" },
-				failure   = { raw = "[!FAILURE]",   rendered = "󰅖 Failure",   highlight = "MarkdownError",   category = "obsidian" },
-				fail      = { raw = "[!FAIL]",      rendered = "󰅖 Fail",      highlight = "MarkdownError",   category = "obsidian" },
-				missing   = { raw = "[!MISSING]",   rendered = "󰅖 Missing",   highlight = "MarkdownError",   category = "obsidian" },
-				danger    = { raw = "[!DANGER]",    rendered = "󱐌 Danger",    highlight = "MarkdownError",   category = "obsidian" },
-				error     = { raw = "[!ERROR]",     rendered = "󱐌 Error",     highlight = "MarkdownError",   category = "obsidian" },
-				bug       = { raw = "[!BUG]",       rendered = "󰨰 Bug",       highlight = "MarkdownError",   category = "obsidian" },
-				example   = { raw = "[!EXAMPLE]",   rendered = "󰉹 Example",   highlight = "MarkdownHint" ,   category = "obsidian" },
-				quote     = { raw = "[!QUOTE]",     rendered = "󱆨 Quote",     highlight = "MarkdownQuote",   category = "obsidian" },
-				cite      = { raw = "[!CITE]",      rendered = "󱆨 Cite",      highlight = "MarkdownQuote",   category = "obsidian" },
+			latex = {
+				enable = false, -- overrides vimtex's conceal, but disabling it results in the latex being hidden
 			},
-			code = {
-				sign = false,
-				border = "thin",
-				position = "right",
-				width = "block",
-				left_pad = 1,
-				right_pad = 1,
-				highlight = "TerminalBackground",
-				highlight_border = "TerminalBackground",
-				highlight_fallback = "TerminalBackground",
-				highlight_inline = "TerminalBackground",
+			typst = {
+				headings = {
+					shift_width = 0,
+					heading_1 = { icon = "󰼏 ", sign = "", hl = "markdownH1" },
+					heading_2 = { icon = "󰼐 ", sign = "", hl = "markdownH2" },
+					heading_3 = { icon = "󰼑 ", sign = "", hl = "markdownH3" },
+					heading_4 = { icon = "󰼒 ", sign = "", hl = "markdownH4" },
+					heading_5 = { icon = "󰼓 ", sign = "", hl = "markdownH5" },
+					heading_6 = { icon = "󰼔 ", sign = "", hl = "markdownH6" },
+				},
+				code_spans = { enable = false },
+				code_blocks = { enable = false },
+				math_blocks = { enable = false },
+				math_spans = { enable = false },
+				symbols = { enable = true }, -- do it myself
 			},
-			pipe_table = {
-				alignment_indicator = "─",
-				head = "MarkdownTable",
-				row = "MarkdownTable",
-				filler = "MarkdownTable",
-			},
-			latex = { enabled = false },
 		},
 	},
+	-- {
+	-- 	"MeanderingProgrammer/render-markdown.nvim",
+	-- 	ft = { "markdown", "codecompanion" },
+	-- 	cmd = "RenderMarkdown",
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		-- nvim-tree/nvim-web-devicons
+	-- 	},
+	-- 	opts = {
+	-- 		render_modes = { "n", "c", "t" },
+	-- 		completions = { blink = { enabled = true } },
+	-- 		anti_conceal = { enabled = false },
+	-- 		win_options = {
+	-- 			conceallevel = {
+	-- 				default = vim.o.conceallevel,
+	-- 				rendered = 2,
+	-- 			},
+	-- 			concealcursor = {
+	-- 				default = vim.o.concealcursor,
+	-- 				rendered = "nc",
+	-- 			},
+	-- 		},
+
+	-- 		heading = {
+	-- 			position = "inline",
+	-- 			icons = { "󰼏 ", "󰼐 ", "󰼑 ", "󰼒 ", "󰼓 ", "󰼔 " },
+	-- 			sign = false,
+	-- 			backgrounds = {
+	-- 				"markdownH1",
+	-- 				"markdownH2",
+	-- 				"markdownH3",
+	-- 				"markdownH4",
+	-- 				"markdownH5",
+	-- 				"markdownH6",
+	-- 			},
+	-- 			foregrounds = {
+	-- 				"markdownH1",
+	-- 				"markdownH2",
+	-- 				"markdownH3",
+	-- 				"markdownH4",
+	-- 				"markdownH5",
+	-- 				"markdownH6",
+	-- 			},
+	-- 		},
+	-- 		-- stylua: ignore
+	-- 		callout = {
+	-- 			note      = { raw = "[!NOTE]",      rendered = "󰋽 Note",      highlight = "MarkdownInfo",    category = "github"   },
+	-- 			tip       = { raw = "[!TIP]",       rendered = "󰌶 Tip",       highlight = "MarkdownSuccess", category = "github"   },
+	-- 			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "MarkdownHint",    category = "github"   },
+	-- 			warning   = { raw = "[!WARNING]",   rendered = "󰀪 Warning",   highlight = "MarkdownWarn",    category = "github"   },
+	-- 			caution   = { raw = "[!CAUTION]",   rendered = "󰳦 Caution",   highlight = "MarkdownError",   category = "github"   },
+	-- 			abstract  = { raw = "[!ABSTRACT]",  rendered = "󰨸 Abstract",  highlight = "MarkdownInfo",    category = "obsidian" },
+	-- 			summary   = { raw = "[!SUMMARY]",   rendered = "󰨸 Summary",   highlight = "MarkdownInfo",    category = "obsidian" },
+	-- 			tldr      = { raw = "[!TLDR]",      rendered = "󰨸 Tldr",      highlight = "MarkdownInfo",    category = "obsidian" },
+	-- 			info      = { raw = "[!INFO]",      rendered = "󰋽 Info",      highlight = "MarkdownInfo",    category = "obsidian" },
+	-- 			todo      = { raw = "[!TODO]",      rendered = "󰗡 Todo",      highlight = "MarkdownInfo",    category = "obsidian" },
+	-- 			hint      = { raw = "[!HINT]",      rendered = "󰌶 Hint",      highlight = "MarkdownSuccess", category = "obsidian" },
+	-- 			success   = { raw = "[!SUCCESS]",   rendered = "󰄬 Success",   highlight = "MarkdownSuccess", category = "obsidian" },
+	-- 			check     = { raw = "[!CHECK]",     rendered = "󰄬 Check",     highlight = "MarkdownSuccess", category = "obsidian" },
+	-- 			done      = { raw = "[!DONE]",      rendered = "󰄬 Done",      highlight = "MarkdownSuccess", category = "obsidian" },
+	-- 			question  = { raw = "[!QUESTION]",  rendered = "󰘥 Question",  highlight = "MarkdownWarn",    category = "obsidian" },
+	-- 			help      = { raw = "[!HELP]",      rendered = "󰘥 Help",      highlight = "MarkdownWarn",    category = "obsidian" },
+	-- 			faq       = { raw = "[!FAQ]",       rendered = "󰘥 Faq",       highlight = "MarkdownWarn",    category = "obsidian" },
+	-- 			attention = { raw = "[!ATTENTION]", rendered = "󰀪 Attention", highlight = "MarkdownWarn",    category = "obsidian" },
+	-- 			failure   = { raw = "[!FAILURE]",   rendered = "󰅖 Failure",   highlight = "MarkdownError",   category = "obsidian" },
+	-- 			fail      = { raw = "[!FAIL]",      rendered = "󰅖 Fail",      highlight = "MarkdownError",   category = "obsidian" },
+	-- 			missing   = { raw = "[!MISSING]",   rendered = "󰅖 Missing",   highlight = "MarkdownError",   category = "obsidian" },
+	-- 			danger    = { raw = "[!DANGER]",    rendered = "󱐌 Danger",    highlight = "MarkdownError",   category = "obsidian" },
+	-- 			error     = { raw = "[!ERROR]",     rendered = "󱐌 Error",     highlight = "MarkdownError",   category = "obsidian" },
+	-- 			bug       = { raw = "[!BUG]",       rendered = "󰨰 Bug",       highlight = "MarkdownError",   category = "obsidian" },
+	-- 			example   = { raw = "[!EXAMPLE]",   rendered = "󰉹 Example",   highlight = "MarkdownHint" ,   category = "obsidian" },
+	-- 			quote     = { raw = "[!QUOTE]",     rendered = "󱆨 Quote",     highlight = "MarkdownQuote",   category = "obsidian" },
+	-- 			cite      = { raw = "[!CITE]",      rendered = "󱆨 Cite",      highlight = "MarkdownQuote",   category = "obsidian" },
+	-- 		},
+	-- 		code = {
+	-- 			sign = false,
+	-- 			border = "thin",
+	-- 			position = "right",
+	-- 			width = "block",
+	-- 			left_pad = 1,
+	-- 			right_pad = 1,
+	-- 			highlight = "TerminalBackground",
+	-- 			highlight_border = "TerminalBackground",
+	-- 			highlight_fallback = "TerminalBackground",
+	-- 			highlight_inline = "TerminalBackground",
+	-- 		},
+	-- 		pipe_table = {
+	-- 			alignment_indicator = "─",
+	-- 			head = "MarkdownTable",
+	-- 			row = "MarkdownTable",
+	-- 			filler = "MarkdownTable",
+	-- 		},
+	-- 		latex = { enabled = false },
+	-- 	},
+	-- },
 	{
 		"bullets-vim/bullets.vim",
 		keys = {

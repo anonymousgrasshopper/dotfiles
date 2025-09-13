@@ -85,6 +85,23 @@ return {
 					markdownH5 = { fg = "#7fb4ca" },
 					markdownH6 = { fg = "#957fb8" },
 
+					MarkviewHeading1 = { link = "markdownH1" },
+					MarkviewHeading2 = { link = "markdownH2" },
+					MarkviewHeading3 = { link = "markdownH3" },
+					MarkviewHeading4 = { link = "markdownH4" },
+					MarkviewHeading5 = { link = "markdownH5" },
+					MarkviewHeading6 = { link = "markdownH6" },
+
+					MarkviewBlockQuoteDefault = { fg = "#7e9cd8" },
+					MarkviewBlockQuoteError = { fg = "#e82424" },
+					MarkviewBlockQuoteNote = { fg = "#6a9589" },
+					MarkviewBlockQuoteOk = { fg = "#98bb6c" },
+					MarkviewBlockQuoteSpecial = { fg = "#957fb8" },
+					MarkviewBlockQuoteWarn = { fg = "#ff9e3b" },
+
+					MarkviewCheckboxChecked = { fg = "#98bb6c" },
+					MarkviewCheckboxUnchecked = { fg = "#727169" },
+
 					MarkdownInfo = { fg = "#7e9cd8" },
 					MarkdownSuccess = { fg = "#98bb6c" },
 					MarkdownWarn = { fg = "#ff9e3b" },

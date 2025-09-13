@@ -1,5 +1,5 @@
 -- assembles and links the current file
-vim.api.nvim_create_user_command("Assemble", function()
+vim.api.nvim_buf_create_user_command(0, "Assemble", function()
 	local filename = vim.fn.expand("%:r")
 	vim.system({ "nasm", "-f", "elf64", "-o", filename .. ".o", vim.fn.expand("%") }, { text = true }, function(obj)
 		print(obj.stderr)
@@ -12,7 +12,7 @@ vim.api.nvim_create_user_command("Assemble", function()
 			vim.system(
 				{ "rm", filename .. ".o" },
 				{},
-				function(_) vim.notify("Assembling completed", vim.log.levels.INFO, { title = "Assembling", icon = " " }) end
+				function(_) vim.notify("Assembling completed", "Info", { title = "Assembling", icon = " " }) end
 			)
 		end
 	end)

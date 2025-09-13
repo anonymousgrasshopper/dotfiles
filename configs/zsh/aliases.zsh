@@ -30,11 +30,9 @@ function mkcd() {
 }
 function run() {
 	[[ $# == 0 ]] && { echo "run: missing operand"; return 1 }
-	while (("$#")); do
-		command="$1"
-		nohup "$command" $@ >/dev/null 2>&1 &
-		shift
-	done
+	command="$1"
+	shift
+	nohup "$command" $@ >/dev/null 2>&1 &
 }
 function compile() {
 	local file_extension="$1:e"
@@ -96,7 +94,6 @@ alias diff="diff --color=auto"
 alias fzf="fzf --preview='~/.local/bin/fzf_preview_wrapper {}'"
 
 # programs
-alias cat="bat"
 alias top="btop"
 alias fetch="fastfetch"
 alias lg="lazygit"

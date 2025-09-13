@@ -83,13 +83,13 @@ vim.keymap.set("n", "<localleader>dbg", function()
 	}, {}, function(obj)
 		if obj.stderr ~= nil then
 			if obj.stderr:match("error[^\n]*\n$") then
-				vim.notify(obj.stderr, vim.log.levels.ERROR, { title = "Compiler", icon = "" })
+				vim.notify(obj.stderr, "Error", { title = "Compiler", icon = "" })
 			elseif obj.stderr ~= "" then
-				vim.notify(obj.stderr, vim.log.levels.WARN, { title = "Compiler", icon = "" })
+				vim.notify(obj.stderr, "Warn", { title = "Compiler", icon = "" })
 			end
 		end
 		if obj.code == 0 then
-			vim.notify("Compilation completed", vim.log.levels.INFO, { title = "Debugging", icon = "" })
+			vim.notify("Compilation completed", "Info", { title = "Debugging", icon = "" })
 			vim.b[buf].compilation_completed = true
 			vim.b[buf].use_default_executable_path = true
 			if vim.b[buf].stdio_completed then
@@ -98,7 +98,11 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		end
 	end)
 
-	if vim.uv.fs_stat(input_filename) then
+	local function file_exists(path)
+		local f = io.open(path, "r")
+		return f and io.close(f)
+	end
+	if file_exists(input_filename) then
 		vim.b[buf].codelldb_stdio_redirection = true
 		vim.b[buf].stdio_completed = true
 		if vim.b[buf].compilation_completed then
@@ -119,17 +123,12 @@ vim.keymap.set("n", "<localleader>dbg", function()
 	end
 end, { buffer = true })
 
-vim.keymap.set("n", "<localleader>rm", function()
-	for _, ext in ipairs({ "in", "out", "err" }) do
-		local filename = vim.fn.expand("%:r") .. "." .. ext
-		if vim.uv.fs_stat(filename) then
-			local ok, err = vim.uv.fs_unlink(filename)
-			if not ok then
-				vim.notify(("Failed to remove %s: %s"):format(filename, err), vim.log.levels.ERROR)
-			end
-		end
-	end
-end, { buffer = true })
+vim.keymap.set(
+	"n",
+	"<localleader>rm",
+	function() vim.system({ "remove_codelldb_stdio_redirection", vim.fn.expand("%:r") }) end,
+	{ buffer = true }
+)
 
 -- compile and run SFML programs
 vim.keymap.set(
