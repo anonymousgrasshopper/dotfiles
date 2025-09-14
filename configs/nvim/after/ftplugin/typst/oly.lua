@@ -97,6 +97,10 @@ end
 if vim.env.OLY and not vim.b[buf].oly_highlight then
 	vim.b[buf].oly_highlight = true
 
+	if vim.uv.fs_stat(vim.fn.expand("%:p:h") .. "/preview.typ") then
+		vim.b[buf].typst_root = vim.fn.expand("%:p:h") .. "/preview.typ"
+	end
+
 	highlight_metadata()
 	highlight_hrule()
 
