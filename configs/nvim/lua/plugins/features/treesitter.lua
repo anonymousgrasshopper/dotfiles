@@ -29,6 +29,7 @@ return {
 			})
 
 			vim.treesitter.language.register("bash", "zsh") -- for conditional autosnippet expansion
+
 			require("nvim-treesitter").install({
 				"asm",
 				"bash",
@@ -158,11 +159,11 @@ return {
 				repeatable = {
 					motions = {
 						[";"] = { callback = ts_repeat_move.repeat_last_move, desc = "repeat" },
-						["<M-;>"] = { callback = ts_repeat_move.repeat_last_move_previous, desc = "repeat" },
-						["f"] = { callback = ts_repeat_move.builtin_f_expr, desc = "repeat" },
-						["F"] = { callback = ts_repeat_move.builtin_F_expr, desc = "repeat" },
-						["t"] = { callback = ts_repeat_move.builtin_t_expr, desc = "repeat" },
-						["T"] = { callback = ts_repeat_move.builtin_T_expr, desc = "repeat" },
+						["<M-;>"] = { callback = ts_repeat_move.repeat_last_move_opposite, desc = "repeat in the opposite sense" },
+						["f"] = { callback = ts_repeat_move.builtin_f_expr, desc = "find", expr = true },
+						["F"] = { callback = ts_repeat_move.builtin_F_expr, desc = "backwards find", expr = true },
+						["t"] = { callback = ts_repeat_move.builtin_t_expr, desc = "to", expr = true },
+						["T"] = { callback = ts_repeat_move.builtin_T_expr, desc = "backwards to", expr = true },
 					},
 				},
 			}
@@ -202,7 +203,6 @@ return {
 				},
 				repeatable = {
 					modes = { "n", "x", "o" },
-					expr = true,
 				},
 			}
 
@@ -213,7 +213,7 @@ return {
 							treesitter[textobject]["modes"],
 							keymap,
 							opts.callback and opts.callback or function() treesitter[textobject][action](opts) end,
-							{ desc = opts.desc, expr = treesitter[textobject]["expr"] or false }
+							{ desc = opts.desc or "", expr = opts.expr or false }
 						)
 					end
 				end

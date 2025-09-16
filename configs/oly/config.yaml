@@ -12,7 +12,7 @@ author: Antoine Saez Dumas
 # The base path where solutions are stored
 base_path: ~/Mathématiques/Solutions
 
-language: typst
+language: latex
 
 # The pdf viewer used for 'oly gen'
 pdf_viewer: zathura

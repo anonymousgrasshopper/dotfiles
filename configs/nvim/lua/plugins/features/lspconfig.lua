@@ -129,9 +129,10 @@ return {
 
 			for server, config in pairs(lspconfigs) do
 				vim.lsp.config(server, config)
-				vim.api.nvim_create_autocmd("Filetype", {
+				vim.api.nvim_create_autocmd("FileType", {
 					pattern = vim.lsp.config[server].filetypes,
 					callback = function() vim.lsp.enable(server) end,
+					once = true,
 				})
 			end
 

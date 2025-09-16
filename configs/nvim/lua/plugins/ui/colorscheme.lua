@@ -77,6 +77,8 @@ return {
 					Indent = { fg = palette.sumiInk6 },
 					IndentScope = { fg = palette.springViolet2 },
 
+					Text = { fg = palette.fujiWhite },
+
 					-- plugins
 					markdownH1 = { fg = "#ff5d62" },
 					markdownH2 = { fg = "#ffa066" },

@@ -1,6 +1,6 @@
 local buf = vim.api.nvim_get_current_buf()
 
-local symbols = require("data.lang.typst.symbols_conceal")
+local symbols = require("static.lang.typst.symbols_conceal")
 local ns_conceal = vim.api.nvim_create_namespace("typst_conceal")
 
 local query = vim.treesitter.query.parse("typst", [[ (ident) @id ]])
