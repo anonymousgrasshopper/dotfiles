@@ -83,7 +83,7 @@ return {
 				vim.keymap.set("n", key, callback[1], { desc = callback[2] })
 			end
 		end
-		dap.listeners.after["event_terminated"]["me"] = function()
+		dap.listeners.after["event_exited"]["me"] = function()
 			for key, _ in pairs(debugging_keymaps) do
 				vim.keymap.del("n", key)
 			end
@@ -157,10 +157,10 @@ return {
 				request = "launch",
 				program = function()
 					if vim.b.use_default_executable_path then
-						return vim.fn.expand("%:r") .. ".out"
+						return vim.fn.expand("%:r")
 					end
 					return telescope_find_executable()
-					-- return vim.fn.input("Path to executable: ", vim.fn.expand("%:r") .. ".out", "file")
+					-- return vim.fn.input("Path to executable: ", vim.fn.expand("%:r"), "file")
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,

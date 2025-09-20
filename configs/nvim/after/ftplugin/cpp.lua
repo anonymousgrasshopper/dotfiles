@@ -48,7 +48,7 @@ local open_floating_window = function(filepath)
 	vim.wo[win_id].relativenumber = false
 	vim.wo[win_id].cursorline = true
 
-	-- Set an autocommand to detect when the window is closed
+	-- try to start debugging when closing the window
 	vim.api.nvim_create_autocmd("WinClosed", {
 		pattern = tostring(win_id),
 		callback = function()
@@ -79,7 +79,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		"--debug",
 		vim.fn.expand("%"),
 		"-o",
-		vim.fn.expand("%:r") .. ".out",
+		vim.fn.expand("%:r"),
 	}, {}, function(obj)
 		if obj.stderr ~= nil then
 			if obj.stderr:match("error[^\n]*\n$") then
