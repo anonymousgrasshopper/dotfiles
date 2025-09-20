@@ -10,7 +10,7 @@ return {
 	s(
 		{
 			trig = "autocmd ",
-			dscr = "Neovim API autocmd",
+			dscr = "Neovim autocmd",
 			wordTrig = false,
 			snippetType = "autosnippet",
 			condition = not_in_string_comment * line_begin,
@@ -20,7 +20,7 @@ return {
 				vim.api.nvim_create_autocmd(<>, {<>
 					callback = function()
 						<>
-					end
+					end,
 				})
 			]],
 			{

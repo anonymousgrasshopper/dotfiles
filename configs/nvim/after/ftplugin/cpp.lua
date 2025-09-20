@@ -125,7 +125,11 @@ vim.keymap.set("n", "<localleader>rm", function()
 		if vim.uv.fs_stat(filename) then
 			local ok, err = vim.uv.fs_unlink(filename)
 			if not ok then
-				vim.notify(("Failed to remove %s: %s"):format(filename, err), vim.log.levels.ERROR)
+				vim.notify(
+					("Failed to remove %s: %s"):format(filename, err),
+					vim.log.levels.ERROR,
+					{ title = "Debugging", icon = "" }
+				)
 			end
 		end
 	end

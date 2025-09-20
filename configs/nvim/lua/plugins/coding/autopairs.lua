@@ -5,7 +5,7 @@ return {
 		branch = "v0.6",
 		opts = function()
 			local typst = {}
-			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck" }) end
+			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string" }) end
 
 			return {
 				filetype = {
@@ -80,6 +80,7 @@ return {
 				{ "\\(", "\\)", disable_end = true, newline = true, ft = { "tex" } },
 				-- typst
 				{ "$", "$", ft = { "typst" }, cond = typst.in_text, space = true },
+				{ "/*", "*/", ft = { "typst" }, cond = typst.in_text },
 				{ "*", "*", ft = { "typst" }, cond = typst.in_text },
 				{ "_", "_", ft = { "typst" }, cond = typst.in_text },
 				{ "`", "`", ft = { "typst" }, cond = typst.in_text, space = true },

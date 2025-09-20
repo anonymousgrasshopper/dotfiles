@@ -113,6 +113,9 @@ return {
 
 					MarkdownTable = { fg = "#54546d" },
 
+					MarkviewSubscript = { fg = palette.springViolet1 },
+					MarkviewSuperscript = { fg = palette.springViolet1 },
+
 					IlluminatedWordText = { bold = true },
 					IlluminatedWordRead = { bold = true },
 					IlluminatedWordWrite = { bold = true },

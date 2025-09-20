@@ -77,48 +77,18 @@ keymap.set("n", "]w", diagnostic_jump(1, "WARN"), { desc = "Next Warning" })
 keymap.set("n", "[w", diagnostic_jump(-1, "WARN"), { desc = "Previous Warning" })
 
 -- better up and down motions
-keymap.set(
-	{ "n", "x" },
-	"j",
-	"v:count == 0 ? 'gj' : 'j'",
-	{ desc = "Down", expr = true, silent = true }
-)
-keymap.set(
-	{ "n", "x" },
-	"<Down>",
-	"v:count == 0 ? 'gj' : 'j'",
-	{ desc = "Down", expr = true, silent = true }
-)
-keymap.set(
-	{ "n", "x" },
-	"k",
-	"v:count == 0 ? 'gk' : 'k'",
-	{ desc = "Up", expr = true, silent = true }
-)
-keymap.set(
-	{ "n", "x" },
-	"<Up>",
-	"v:count == 0 ? 'gk' : 'k'",
-	{ desc = "Up", expr = true, silent = true }
-)
+keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+keymap.set({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+keymap.set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
 -- yanking and pasting
 keymap.set("n", "<localleader>p", '"_diwP', { desc = "replace word under cursor" })
 keymap.set("x", "<leader>r", '"_dP')
 keymap.set("n", "<leader>P", "i<C-R><C-P>+<ESC>", { desc = 'Paste "+ content before cursor' })
-keymap.set(
-	{ "n", "v" },
-	"<C-M-y>",
-	"<Cmd>%y+<CR>",
-	{ desc = "Yank buffer content into the + register" }
-)
+keymap.set({ "n", "v" }, "<C-M-y>", "<Cmd>%y+<CR>", { desc = "Yank buffer content into the + register" })
 keymap.set("v", "<C-z>", '"+y', { desc = 'Yank selected text into "+' })
-keymap.set(
-	"n",
-	"<leader>cwd",
-	'<Cmd>let @+=expand("%")<CR>',
-	{ desc = 'Copy absolute path to the "+' }
-)
+keymap.set("n", "<leader>cwd", '<Cmd>let @+=expand("%")<CR>', { desc = 'Copy absolute path to the "+' })
 
 -- indenting
 keymap.set({ "n", "v" }, "<leader>i", "=G", { desc = "Indent file" })
@@ -126,6 +96,7 @@ keymap.set("v", ">", ">gv")
 keymap.set("v", "<", "<gv")
 
 -- command line keymaps
+keymap.set("c", "vni", "lua vim.notify(vim.inspect())<Left><Left>", { desc = "Inspect" })
 keymap.set("c", "<M-a>", "<C-e>", { desc = "Go to end" })
 keymap.set("c", "<M-i>", "<C-b>", { desc = "Go to beginning" })
 

@@ -66,6 +66,7 @@ return {
 				require("formatters.tex").format(bufnr)
 				return { "tex_fmt" }
 			end,
+			typst = { "typstyle" },
 
 			["*"] = { "trim_whitespace", "trim_newlines" },
 		},

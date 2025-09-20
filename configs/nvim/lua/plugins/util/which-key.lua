@@ -26,10 +26,7 @@ return {
 			{
 				"<localleader>",
 				icon = function()
-					local icon, _ = require("nvim-web-devicons").get_icon_color(
-						vim.fn.expand("%"),
-						vim.fn.expand("%:e")
-					)
+					local icon, _ = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
 					return { icon = icon, color = "blue" } -- unfortunately we can't use a hex color code
 				end,
 			},
@@ -122,6 +119,8 @@ return {
 					{ pattern = "split.+join", icon = "󰤻 ", color = "azure" },
 					{ pattern = "symbols in winbar", icon = " ", color = "orange" },
 					{ pattern = "highlight", icon = " ", color = "orange" },
+					{ pattern = "substitute", icon = " ", color = "orange" },
+					{ pattern = "replace", icon = " ", color = "orange" },
 				},
 			},
 		}

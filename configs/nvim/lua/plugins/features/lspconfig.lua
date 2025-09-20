@@ -52,11 +52,12 @@ return {
 					settings = {
 						json = {
 							schemas = function()
-								local has_schemastore = pcall(require("schemastore"))
-								if has_schemastore then
-									return require("schemastore").json.schemas()
+								local ok, schemas = pcall(require("schemastore").json.schemas())
+								if ok then
+									return schemas
+								else
+									return nil
 								end
-								return nil
 							end,
 							validate = { enable = true },
 						},
@@ -98,7 +99,7 @@ return {
 
 				["tinymist"] = {
 					settings = {
-						exportPdf = "onType",
+						exportPdf = "onDocumentHasTitle",
 						lint = {
 							enabled = true,
 						},
@@ -109,18 +110,16 @@ return {
 					settings = {
 						yaml = {
 							schemaStore = {
-								-- You must disable built-in schemaStore support if you want to use
-								-- this plugin and its advanced options like `ignore`.
 								enable = false,
-								-- Avoid TypeError: Cannot read properties of undefined (reading 'length')
 								url = "",
 							},
 							schemas = function()
-								local has_schemastore = pcall(require("schemastore"))
-								if has_schemastore then
-									return require("schemastore").json.schemas()
+								local ok, schemas = pcall(require("schemastore").json.schemas())
+								if ok then
+									return schemas
+								else
+									return nil
 								end
-								return nil
 							end,
 						},
 					},
@@ -132,7 +131,6 @@ return {
 				vim.api.nvim_create_autocmd("FileType", {
 					pattern = vim.lsp.config[server].filetypes,
 					callback = function() vim.lsp.enable(server) end,
-					once = true,
 				})
 			end
 
@@ -207,8 +205,8 @@ return {
 				},
 			},
 			signs = {
-				quickfix = { "", { link = "DiagnosticWarning" } },
-				others = { "", { link = "DiagnosticWarning" } },
+				quickfix = { "", { link = "DiagnosticWarning" } },
+				others = { "", { link = "DiagnosticWarning" } },
 				refactor = { "", { link = "DiagnosticInfo" } },
 				["refactor.move"] = { "󰪹", { link = "DiagnosticInfo" } },
 				["refactor.extract"] = { "", { link = "DiagnosticError" } },
@@ -216,7 +214,7 @@ return {
 				["source.fixAll"] = { "󰃢", { link = "DiagnosticError" } },
 				["source"] = { "", { link = "DiagnosticError" } },
 				["rename"] = { "", { link = "DiagnosticWarning" } },
-				["codeAction"] = { "", { link = "DiagnosticWarning" } },
+				["codeAction"] = { "", { link = "DiagnosticWarning" } },
 			},
 		},
 	},

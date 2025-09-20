@@ -12,7 +12,6 @@ return {
 						"checkhealth",
 					}
 					local regex_highlighting = {
-						"markdown",
 						"tex",
 					}
 					if not vim.tbl_contains(disabled_filetypes, vim.bo[buf].filetype) then

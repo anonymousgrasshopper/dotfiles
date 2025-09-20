@@ -12,7 +12,9 @@ vim.api.nvim_buf_create_user_command(0, "Assemble", function()
 			vim.system(
 				{ "rm", filename .. ".o" },
 				{},
-				function(_) vim.notify("Assembling completed", vim.log.levels.INFO, { title = "Assembling", icon = " " }) end
+				function(_)
+					vim.notify("Assembling completed", vim.log.levels.INFO, { title = "Assembling", icon = " " })
+				end
 			)
 		end
 	end)

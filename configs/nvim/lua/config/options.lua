@@ -34,7 +34,7 @@ opt.breakindent    = true
 opt.breakindentopt = { "min:30", "shift:-1" }
 opt.linebreak      = true
 opt.breakat        = " "
-opt.formatoptions  = "c,o,/,q,w,a,q,2,j"
+opt.formatoptions  = "c,o,/,q,n,2,j"
 
 -- writing, undo & backup
 opt.autowrite      = false

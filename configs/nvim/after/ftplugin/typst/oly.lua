@@ -35,8 +35,6 @@ local function highlight_metadata()
 			break
 		end
 
-		vim.notify(vim.inspect({ whitespace = whitespace, keyword = keyword }))
-
 		-- Highlight full line
 		vim.api.nvim_buf_set_extmark(buf, ns_metadata, lnum - 1, #whitespace + #keyword + 1, {
 			end_col = #line,
