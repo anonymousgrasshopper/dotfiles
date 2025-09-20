@@ -142,7 +142,7 @@ return {
 			save_all_files = false,
 			compile_directory = ".",
 			compile_command = {
-				c = { exec = "gcc", args = { "-g", "-Wall", "$(FNAME)", "-o", "$(FNOEXT).out" } },
+				c = { exec = "gcc", args = { "-g", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
 				cpp = {
 					exec = "g++",
 					args = {
@@ -167,7 +167,7 @@ return {
 						"-fstack-protector",
 						"$(FNAME)",
 						"-o",
-						"$(FNOEXT).out",
+						"$(FNOEXT)",
 					},
 				},
 				asm = { exec = "assemble", args = { "$(FNAME)" } },
@@ -176,8 +176,8 @@ return {
 			},
 			running_directory = ".",
 			run_command = {
-				c = { exec = "./$(FNOEXT).out" },
-				cpp = { exec = "./$(FNOEXT).out" },
+				c = { exec = "./$(FNOEXT)" },
+				cpp = { exec = "./$(FNOEXT)" },
 				asm = { exec = "./$(FNOEXT).out" },
 				rust = { exec = "./$(FNOEXT)" },
 				python = { exec = "python", args = { "$(FNAME)" } },
