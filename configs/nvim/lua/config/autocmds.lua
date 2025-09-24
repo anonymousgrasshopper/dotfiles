@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
-		vim.opt_local.formatoptions = "t,c,o,/,q,n,2,j"
+		vim.opt_local.formatoptions = "t,c,q,n,2,j"
 
 		vim.keymap.set("i", "<C-l>", "<c-g>u<Esc>[s1z=`]a<c-g>u", { desc = "Correct last spelling mistake", buffer = true })
 		vim.keymap.set(
@@ -133,7 +133,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		local exclude = { "mail", "text", "plaintex", "typst", "gitcommit", "markdown", "tex" }
 		if not vim.tbl_contains(exclude, vim.bo.filetype) then
-			vim.opt.formatoptions = "c,o,/,q,n,2,j"
+			vim.opt.formatoptions = "c,q,n,2,j"
 		end
 	end,
 })

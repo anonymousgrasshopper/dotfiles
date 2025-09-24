@@ -197,6 +197,11 @@ return {
 			},
 			nesting_rules = {},
 			filesystem = {
+				components = {
+					custom_icon = function(config, node, state)
+						return require("static.plugins.filetree").get_icon(config, node, state)
+					end,
+				},
 				filtered_items = {
 					visible = false, -- when true, they will just be displayed differently than normal items
 					hide_dotfiles = true,
@@ -290,33 +295,33 @@ return {
 						vim.fn.jobstart({ "xdg-open", path }, { detach = true })
 					end,
 				},
-				components = {
-					harpoon_index = function(config, node, _)
-						local harpoon_list = require("harpoon"):list()
-						local path = node:get_id()
-						local harpoon_key = vim.uv.cwd()
+				-- components = {
+				-- harpoon_index = function(config, node, _)
+				-- 	local harpoon_list = require("harpoon"):list()
+				-- 	local path = node:get_id()
+				-- 	local harpoon_key = vim.uv.cwd()
 
-						for i, item in ipairs(harpoon_list.items) do
-							local value = item.value
-							if string.sub(item.value, 1, 1) ~= "/" then
-								value = harpoon_key .. "/" .. item.value
-							end
+				-- 	for i, item in ipairs(harpoon_list.items) do
+				-- 		local value = item.value
+				-- 		if string.sub(item.value, 1, 1) ~= "/" then
+				-- 			value = harpoon_key .. "/" .. item.value
+				-- 		end
 
-							if value == path then
-								return {
-									text = string.format(" ⥤ %d", i),
-									highlight = config.highlight or "NeoTreeDirectoryIcon",
-								}
-							end
-						end
-						return {}
-					end,
-				},
+				-- 		if value == path then
+				-- 			return {
+				-- 				text = string.format(" ⥤ %d", i),
+				-- 				highlight = config.highlight or "NeoTreeDirectoryIcon",
+				-- 			}
+				-- 		end
+				-- 	end
+				-- 	return {}
+				-- end,
+				-- },
 				renderers = {
 					file = {
-						{ "icon" },
+						{ "custom_icon" },
 						{ "name", use_git_status_colors = true },
-						{ "harpoon_index" },
+						-- { "harpoon_index" },
 						{ "diagnostics" },
 						{ "git_status", highlight = "NeoTreeDimText" },
 					},

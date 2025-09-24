@@ -14,7 +14,7 @@ Diagnostics:
 If:
   PathMatch: .*\.(cpp|hpp)$
 CompileFlags:
-  Add: [-std=c++23,-Wno-c23-extensions]
+  Add: [-std=c++26,-Wno-c23-extensions]
 
 ---
 If:

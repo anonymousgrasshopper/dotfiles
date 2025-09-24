@@ -53,6 +53,15 @@ return {
 		local dapui = require("dapui")
 		local path = vim.fn.expand("%:p:r")
 
+		local function close_dap_float()
+			for _, win in pairs(vim.api.nvim_list_wins()) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				if vim.bo[buf].filetype == "dap-float" then
+					vim.api.nvim_win_close(win, true)
+				end
+			end
+		end
+
 		-- setup dapui
 		dap.listeners.before.attach.dapui_config = function() dapui.open() end
 		dap.listeners.before.launch.dapui_config = function() dapui.open() end
@@ -77,16 +86,18 @@ return {
 			["L"] = { function() require("dap").step_into() end, "Debug mode: step into" },
 			["G"] = { function() require("dap").run_to_cursor() end, "Debug mode: run to cursor" },
 			["q"] = { function() require("dap").terminate() end, "Debug mode: terminate" },
+			["C"] = { close_dap_float, "Remove DAP floating windows" },
 		}
-		dap.listeners.after["event_initialized"]["me"] = function()
+		dap.listeners.after.event_initialized.me = function()
 			for key, callback in pairs(debugging_keymaps) do
 				vim.keymap.set("n", key, callback[1], { desc = callback[2] })
 			end
 		end
-		dap.listeners.after["event_exited"]["me"] = function()
+		dap.listeners.after.event_exited.me = function()
 			for key, _ in pairs(debugging_keymaps) do
 				vim.keymap.del("n", key)
 			end
+			close_dap_float()
 		end
 
 		local telescope_find_executable = function()
@@ -174,11 +185,19 @@ return {
 			},
 		}
 
-		-- automatically add a breakpoint at the beginning of main in C and C++
+		-- automatically add a breakpoint at the beginning of main function
 		dap.listeners.before.event_initialized["auto-main-breakpoint"] = function()
+			local pattern
 			if vim.tbl_contains({ "c", "cpp" }, vim.bo.filetype) then
+				if vim.api.nvim_buf_get_name(0):match("Codeforces") then
+					pattern = "^[%w_]*%s+solve%s*%("
+				else
+					pattern = "^[%w_]*%s+main%s*%("
+				end
+			end
+			if pattern then
 				for lnum = 1, vim.fn.line("$") do
-					if vim.fn.getline(lnum):match("^[%w_]*%s+main%s*%(") then
+					if vim.fn.getline(lnum):match(pattern) then
 						vim.api.nvim_win_set_cursor(0, { lnum, 0 })
 						require("dap").set_breakpoint()
 						return
