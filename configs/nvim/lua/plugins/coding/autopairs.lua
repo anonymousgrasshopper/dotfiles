@@ -6,6 +6,7 @@ return {
 		opts = function()
 			local typst = {}
 			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string" }) end
+			typst.not_import = function(a, b, c, d) return not b.line:match("^%s*#import") end
 
 			return {
 				filetype = {
@@ -81,7 +82,12 @@ return {
 				-- typst
 				{ "$", "$", ft = { "typst" }, cond = typst.in_text, space = true },
 				{ "/*", "*/", ft = { "typst" }, cond = typst.in_text },
-				{ "*", "*", ft = { "typst" }, cond = typst.in_text },
+				{
+					"*",
+					"*",
+					ft = { "typst" },
+					cond = function(a, b, c, d) return typst.in_text(a) and typst.not_import(a, b, c, d) end,
+				},
 				{ "_", "_", ft = { "typst" }, cond = typst.in_text },
 				{ "`", "`", ft = { "typst" }, cond = typst.in_text, space = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
