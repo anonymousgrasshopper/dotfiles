@@ -146,11 +146,6 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 				providers = {
-					buffer = {
-						opts = {
-							enable_in_ex_commands = true,
-						},
-					},
 					cmdline = {
 						-- stylua: ignore
 						enabled = function()

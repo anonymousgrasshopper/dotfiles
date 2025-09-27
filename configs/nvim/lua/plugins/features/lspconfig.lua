@@ -93,7 +93,9 @@ return {
 						})
 					end,
 					settings = {
-						Lua = {},
+						Lua = {
+							semantic = { enabled = false },
+						},
 					},
 				},
 

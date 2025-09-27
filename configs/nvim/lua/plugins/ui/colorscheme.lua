@@ -80,12 +80,12 @@ return {
 					Text = { fg = palette.fujiWhite },
 
 					-- plugins
-					markdownH1 = { fg = "#ff5d62" },
-					markdownH2 = { fg = "#ffa066" },
-					markdownH3 = { fg = "#e6c384" },
-					markdownH4 = { fg = "#98bb6c" },
-					markdownH5 = { fg = "#7fb4ca" },
-					markdownH6 = { fg = "#957fb8" },
+					markdownH1 = { fg = palette.peachRed },
+					markdownH2 = { fg = palette.surimiOrange },
+					markdownH3 = { fg = palette.carpYellow },
+					markdownH4 = { fg = palette.springGreen },
+					markdownH5 = { fg = palette.springBlue },
+					markdownH6 = { fg = palette.oniViolet },
 
 					MarkviewHeading1 = { link = "markdownH1" },
 					MarkviewHeading2 = { link = "markdownH2" },
@@ -94,22 +94,22 @@ return {
 					MarkviewHeading5 = { link = "markdownH5" },
 					MarkviewHeading6 = { link = "markdownH6" },
 
-					MarkviewBlockQuoteDefault = { fg = "#7e9cd8" },
-					MarkviewBlockQuoteError = { fg = "#e82424" },
+					MarkviewBlockQuoteDefault = { fg = palette.crystalBlue },
+					MarkviewBlockQuoteError = { fg = palette.samuraiRed },
 					MarkviewBlockQuoteNote = { fg = "#6a9589" },
-					MarkviewBlockQuoteOk = { fg = "#98bb6c" },
-					MarkviewBlockQuoteSpecial = { fg = "#957fb8" },
-					MarkviewBlockQuoteWarn = { fg = "#ff9e3b" },
+					MarkviewBlockQuoteOk = { fg = palette.springGreen },
+					MarkviewBlockQuoteSpecial = { fg = palette.oniViolet },
+					MarkviewBlockQuoteWarn = { fg = palette.roninYellow },
 
-					MarkviewCheckboxChecked = { fg = "#98bb6c" },
-					MarkviewCheckboxUnchecked = { fg = "#727169" },
+					MarkviewCheckboxChecked = { fg = palette.springGreen },
+					MarkviewCheckboxUnchecked = { fg = palette.fujiGray },
 
-					MarkdownInfo = { fg = "#7e9cd8" },
-					MarkdownSuccess = { fg = "#98bb6c" },
-					MarkdownWarn = { fg = "#ff9e3b" },
-					MarkdownError = { fg = "#e82424" },
+					MarkdownInfo = { fg = palette.crystalBlue },
+					MarkdownSuccess = { fg = palette.springGreen },
+					MarkdownWarn = { fg = palette.roninYellow },
+					MarkdownError = { fg = palette.samuraiRed },
 					MarkdownHint = { fg = "#6a9589" },
-					MarkdownQuote = { fg = "#957fb8" },
+					MarkdownQuote = { fg = palette.oniViolet },
 
 					MarkdownTable = { fg = "#54546d" },
 
