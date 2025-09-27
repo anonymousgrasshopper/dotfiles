@@ -138,7 +138,7 @@ return {
 
 		-- run with args
 		vim.api.nvim_create_user_command("RunWithArgs", function(obj)
-			local args = require("utils").shell_split(vim.fn.expand(obj.args))
+			local args = require("utils.argparse").shell_split(vim.fn.expand(obj.args))
 			dap.run({
 				type = vim.bo.filetype,
 				request = "launch",

@@ -318,7 +318,7 @@ components.ExtensionA = {
 
 components.ExtensionB = {
 	init = function(self)
-		local git_root = require("utils").git_root
+		local git_root = require("utils.git").git_root
 
 		self.ft = vim.bo.filetype
 		self.extension_left = {

@@ -199,7 +199,7 @@ return {
 			filesystem = {
 				components = {
 					custom_icon = function(config, node, state)
-						return require("static.plugins.filetree").get_icon(config, node, state)
+						return require("utils.plugins.filetree").get_icon(config, node, state)
 					end,
 				},
 				filtered_items = {

@@ -20,13 +20,14 @@ end
 return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
-		ft = { "markdown", "codecompanion" },
+		ft = { "markdown", "Avante" },
 		cmd = "RenderMarkdown",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
 			-- nvim-tree/nvim-web-devicons
 		},
 		opts = {
+			file_types = { "markdown", "Avante" },
 			render_modes = { "n", "c", "t" },
 			completions = { blink = { enabled = true } },
 			anti_conceal = { enabled = false },
