@@ -16,26 +16,20 @@ end, {
 	desc = "Re-enable autoformat-on-save",
 })
 
-local function search_parent_dirs(bufnr, arg)
-	local dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), "%:p:h")
-	while dir ~= "/" and dir ~= "" do
-		for _, fname in ipairs(arg.names) do
-			local candidate = dir .. "/" .. fname
-			if vim.uv.fs_stat(candidate) and vim.uv.fs_stat(candidate).type == "file" then
-				return candidate
-			end
-		end
-		dir = vim.fn.fnamemodify(dir, ":h")
-	end
-	if arg.fallback then
-		return arg.fallback
-	else
-		local config_file = arg.names[1]
+local function find_config_file(...)
+	local arg = { ... }
+	local function default()
+		local config_file = arg[1]
 		if config_file:sub(1, 1) == "." then
 			config_file = config_file:sub(2, #config_file)
 		end
 		return (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. "/.config")) .. "/formatters/" .. config_file
 	end
+	return vim.fs.find(arg, {
+		type = "file",
+		upward = true,
+		path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+	})[1] or default()
 end
 
 return {
@@ -73,21 +67,14 @@ return {
 		formatters = {
 			clang_format = {
 				command = "clang-format",
-				args = function()
-					return "--style=file:"
-						.. search_parent_dirs(vim.api.nvim_get_current_buf(), {
-							names = { ".clang-format" },
-						})
-				end,
+				args = function() return "--style=file:" .. find_config_file(".clang-format") end,
 			},
 			tex_fmt = {
 				command = "tex-fmt",
 				args = function()
 					return {
 						"--config",
-						search_parent_dirs(vim.api.nvim_get_current_buf(), {
-							names = { "tex-fmt.toml" },
-						}),
+						find_config_file("tex-fmt.toml"),
 						"--stdin",
 					}
 				end,
@@ -97,9 +84,7 @@ return {
 				prepend_args = function()
 					return {
 						"--config-path",
-						search_parent_dirs(vim.api.nvim_get_current_buf(), {
-							names = { ".stylua.toml", "stylua.toml" },
-						}),
+						find_config_file(".stylua.toml", "stylua.toml"),
 					}
 				end,
 			},

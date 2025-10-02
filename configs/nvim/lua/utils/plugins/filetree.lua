@@ -47,7 +47,7 @@ function M.get_icon(config, node, state)
 		folder_empty_open = "󰷏",
 		default = "",
 	}
-	local icon = { text = config.default or " ", highlight = config.highlight or highlights.FILE_ICON }
+	local icon = { text = nil, highlight = nil }
 	if node.type == "directory" then
 		icon.highlight = highlights.DIRECTORY_ICON
 		if node.loaded and not node:has_children() then
@@ -58,25 +58,27 @@ function M.get_icon(config, node, state)
 			icon.text = config.folder_closed or "+"
 		end
 	elseif node.type == "file" then
-		local success, web_devicons = pcall(require, "nvim-web-devicons")
-		if success then
-			local devicon, hl = web_devicons.get_icon(node.name, node.ext or "")
-			if devicon then
+		local override = { "out" }
+		if not vim.tbl_contains(override, node.ext) then
+			local success, web_devicons = pcall(require, "nvim-web-devicons")
+			if success then
+				local devicon, hl = web_devicons.get_icon(node.name, node.ext or "")
 				icon.text = devicon
-				icon.highlight = hl or icon.highlight
-			else
-				if vim.uv.fs_access(node.path, "X") then
-					icon.text = ""
-					icon.highlight = "DevIconOut"
-				end
+				icon.highlight = hl
+			end
+		end
+		if not icon.ext then
+			if vim.uv.fs_access(node.path, "X") then
+				icon.text = ""
+				icon.highlight = "DevIconOut"
 			end
 		end
 	end
 
 	local filtered_by = M.filtered_by(config, node, state)
 
-	icon.text = icon.text .. " " -- add padding
-	icon.highlight = filtered_by.highlight or icon.highlight --  prioritize filtered highlighting
+	icon.text = (icon.text or "") .. " " -- add padding
+	icon.highlight = filtered_by.highlight or icon.highlight or highlights.FILE_ICON --  prioritize filtered highlighting
 
 	return icon
 end

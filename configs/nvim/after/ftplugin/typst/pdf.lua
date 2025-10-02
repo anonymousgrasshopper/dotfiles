@@ -1,3 +1,20 @@
+-- export pdf
+vim.api.nvim_buf_create_user_command(0, "ExportPdf", function()
+	local filepath = vim.b.typst_root and vim.b.typst_root or vim.api.nvim_buf_get_name(0)
+	local client = vim.lsp.get_clients({ name = "tinymist" })[1]
+	if client then
+		client:exec_cmd({
+			title = "exportpdf",
+			command = "tinymist.exportPdf",
+			arguments = { filepath },
+		})
+	else
+		vim.notify("Tinymist is not running !", vim.log.levels.ERROR, { title = "Generate PDF", icon = "" })
+	end
+end, {})
+
+vim.keymap.set("n", "<localleader>p", "<Cmd>ExportPdf<CR>", { desc = "Export pdf", buffer = true })
+
 -- open pdf
 vim.api.nvim_buf_create_user_command(0, "OpenPdf", function()
 	local filepath = vim.b.typst_root and vim.b.typst_root or vim.api.nvim_buf_get_name(0)

@@ -276,6 +276,14 @@ return {
 		})
 
 		vim.api.nvim_create_user_command("CMake", function(params)
+			if params.args:lower():match("debug") then
+				params.args = "Debug"
+			elseif params.args:lower():match("release") then
+				params.args = "Release"
+			elseif params.args:lower():match("relwithdebinfo") then
+				params.args = "RelWithDebInfo"
+			end
+
 			local cmd = "cmake -DCMAKE_BUILD_TYPE=" .. params.args .. " build"
 			local task = require("overseer").new_task({
 				cmd = vim.fn.expandcmd(cmd),

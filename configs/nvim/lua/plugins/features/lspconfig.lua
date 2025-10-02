@@ -93,19 +93,49 @@ return {
 						})
 					end,
 					settings = {
-						Lua = {
-							semantic = { enabled = false },
-						},
+						Lua = {},
 					},
 				},
 
 				["tinymist"] = {
+					on_init = function()
+						vim.api.nvim_set_hl(0, "@lsp.type.comment.typst", { fg = "none", bg = "none" })
+					end,
+
 					settings = {
-						exportPdf = "onDocumentHasTitle",
+						exportPdf = "onType",
 						lint = {
 							enabled = true,
 						},
 					},
+					on_attach = function(client, bufnr)
+						require("lspconfig.configs.tinymist").default_config.on_attach(client, bufnr)
+						vim.keymap.set(
+							"n",
+							"<localleader>tp",
+							function()
+								client:exec_cmd({
+									title = "pin",
+									command = "tinymist.pinMain",
+									arguments = { vim.api.nvim_buf_get_name(0) },
+								}, { bufnr = bufnr })
+							end,
+							{ desc = "tinymist pin main" }
+						)
+
+						vim.keymap.set(
+							"n",
+							"<localleader>tu",
+							function()
+								client:exec_cmd({
+									title = "unpin",
+									command = "tinymist.pinMain",
+									arguments = { vim.v.null },
+								}, { bufnr = bufnr })
+							end,
+							{ desc = "tinymist unpin main" }
+						)
+					end,
 				},
 
 				["yamlls"] = {

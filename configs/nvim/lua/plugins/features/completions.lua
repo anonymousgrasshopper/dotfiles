@@ -146,6 +146,9 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 				providers = {
+					lsp = {
+						score_offset = 10,
+					},
 					cmdline = {
 						-- stylua: ignore
 						enabled = function()
