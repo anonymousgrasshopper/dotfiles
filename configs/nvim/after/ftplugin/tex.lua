@@ -2,15 +2,10 @@ local buf = vim.api.nvim_get_current_buf()
 local ns_metadata = vim.api.nvim_create_namespace("metadata")
 local ns_hrule = vim.api.nvim_create_namespace("hrule")
 
-local old_lines = vim.api.nvim_buf_get_lines(buf, 0, 10, false)
+local function highlight_metadata(first, last)
+	vim.api.nvim_buf_clear_namespace(buf, ns_metadata, first, last)
 
-local function highlight_metadata()
-	vim.api.nvim_buf_clear_namespace(buf, ns_metadata, 0, -1)
-
-	local lines = vim.api.nvim_buf_get_lines(buf, 0, 10, false)
-	if lines == old_lines then
-		return
-	end
+	local lines = vim.api.nvim_buf_get_lines(buf, first, last, false)
 
 	local valid_keywords = {
 		source = true,
@@ -23,6 +18,8 @@ local function highlight_metadata()
 	}
 
 	for lnum, line in ipairs(lines) do
+		lnum = lnum + first
+
 		if line:match("^%%?%s*$") then
 			goto continue
 		end
@@ -78,14 +75,14 @@ local function highlight_metadata()
 	end
 end
 
-local function highlight_hrule()
-	vim.api.nvim_buf_clear_namespace(buf, ns_hrule, 0, -1)
+local function highlight_hrule(first, last)
+	vim.api.nvim_buf_clear_namespace(buf, ns_hrule, first, last)
 
-	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+	local lines = vim.api.nvim_buf_get_lines(buf, first, last, false)
 
 	for lnum, line in ipairs(lines) do
 		if line:match("^\\hrulebar%s*$") then
-			vim.api.nvim_buf_set_extmark(buf, ns_hrule, lnum - 1, 0, {
+			vim.api.nvim_buf_set_extmark(buf, ns_hrule, first + lnum - 1, 0, {
 				virt_text = { { string.rep("─", 80), "Indent" } },
 				virt_text_pos = "overlay",
 				hl_mode = "combine",
@@ -97,15 +94,18 @@ end
 if vim.env.OLY and not vim.b[buf].oly_highlight then
 	vim.b[buf].oly_highlight = true
 
-	highlight_metadata()
-	highlight_hrule()
+	vim.opt.autochdir = true
 
-	vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-		callback = function()
-			highlight_metadata()
-			highlight_hrule()
+	highlight_metadata(0, -1)
+	highlight_hrule(0, -1)
+
+	vim.api.nvim_buf_attach(buf, false, {
+		on_lines = function(_, _, _, first, last)
+			if last < 10 then
+				highlight_metadata(first, last)
+			end
+			highlight_hrule(first, last)
 		end,
-		buffer = buf,
 	})
 end
 

@@ -18,6 +18,8 @@ local function highlight_metadata(first, last)
 	}
 
 	for lnum, line in ipairs(lines) do
+		lnum = lnum + first
+
 		if line:match("^%s*$") or line:match("^/%*") then
 			goto continue
 		end

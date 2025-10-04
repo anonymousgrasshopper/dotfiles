@@ -8,6 +8,12 @@ return {
 			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string" }) end
 			typst.not_import = function(a, b, c, d) return not b.line:match("^%s*#import") end
 
+			local markdown = {}
+			markdown.in_text = function(fn)
+				return not fn.in_node({ "code_span", "fenced_code_block" })
+					and not vim.fn["vimtex#syntax#in_mathzone"]()
+			end
+
 			return {
 				filetype = {
 					nft = {
@@ -92,12 +98,12 @@ return {
 				{ "`", "`", ft = { "typst" }, cond = typst.in_text, space = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
 				--markdown
-				{ "$", "$", ft = { "markdown" } },
-				{ "$$", "$$", ft = { "markdown" } },
-				{ "*", "*", ft = { "markdown" } },
-				{ "**", "**", ft = { "markdown" } },
-				{ "~~", "~~", ft = { "markdown" } },
-				{ "```", "```", ft = { "markdown" }, newline = true },
+				{ "$", "$", ft = { "markdown" }, cond = markdown.in_text },
+				{ "$$", "$$", ft = { "markdown" }, cond = markdown.in_text },
+				{ "*", "*", ft = { "markdown" }, cond = markdown.in_text },
+				{ "**", "**", ft = { "markdown" }, cond = markdown.in_text },
+				{ "~~", "~~", ft = { "markdown" }, cond = markdown.in_text },
+				{ "```", "```", ft = { "markdown" }, cond = markdown.in_text, newline = true },
 				-- others
 				{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
 				{ "<Cmd>", "<CR>", ft = { "lua" } },
