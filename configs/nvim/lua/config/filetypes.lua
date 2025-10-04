@@ -9,6 +9,7 @@ vim.filetype.add({
 	},
 	pattern = {
 		["${HOME}/.config/mutt/.+"] = "neomuttrc",
+		["${HOME}/.config/kitty/.*.conf"] = "kitty",
 		["${HOME}/.config/kitty/.*.conf.bak"] = "kitty",
 	},
 })
