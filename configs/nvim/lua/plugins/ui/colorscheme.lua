@@ -132,6 +132,10 @@ return {
 					TelescopePromptPrefix = { fg = palette.autumnYellow, bg = palette.sumiInk3 },
 
 					LightBulbSign = { fg = palette.oldWhite },
+
+					TypstDelimsConceal = { link = "Operator" },
+					TypstSymbolsConceal = { link = "Special" },
+					TypstScriptConceal = { link = "Conceal" },
 				}
 			end,
 			colors = {

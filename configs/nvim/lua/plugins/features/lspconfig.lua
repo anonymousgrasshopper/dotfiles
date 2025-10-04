@@ -98,9 +98,7 @@ return {
 				},
 
 				["tinymist"] = {
-					on_init = function()
-						vim.api.nvim_set_hl(0, "@lsp.type.comment.typst", { fg = "none", bg = "none" })
-					end,
+					on_init = function() vim.api.nvim_set_hl(0, "@lsp.type.comment.typst", { fg = "none", bg = "none" }) end,
 
 					settings = {
 						exportPdf = "onType",
@@ -175,6 +173,17 @@ return {
 					vim.keymap.set("n", "<leader>ref", vim.lsp.buf.references, { desc = "References", buffer = true })
 					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature help", buffer = true })
 					-- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions", buffer = true })
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client:supports_method("textDocument/foldingRange") then
+						local win = vim.api.nvim_get_current_win()
+						vim.wo[win][0].foldmethod = "expr"
+						vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+					end
 				end,
 			})
 		end,

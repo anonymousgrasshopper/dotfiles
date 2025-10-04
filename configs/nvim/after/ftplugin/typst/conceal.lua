@@ -24,11 +24,11 @@ local function conceal_symbol_at(row, col, symbol)
 		end_row = row,
 		end_col = col + 1,
 		conceal = "",
-		hl_group = "Conceal",
+		hl_group = "TypstDelimsConceal",
 	})
 end
 
-local function update()
+local function conceal_delims(first, last)
 	vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
 
 	local parser = vim.treesitter.get_parser(buf, "typst")
@@ -48,7 +48,7 @@ local function update()
 			return
 		end
 
-		for id, node in query:iter_captures(root, buf, vim.fn.line("w0") - 1, vim.fn.line("w$")) do
+		for id, node in query:iter_captures(root, buf, first, last) do
 			if query.captures[id] == capture then
 				local srow, scol, erow, ecol = node:range()
 				conceal_symbol_at(srow, scol, opts.symbol)
@@ -58,17 +58,11 @@ local function update()
 	end
 end
 
-local function reveal_cursor_line_and_update()
-	update()
-	local row = vim.api.nvim_win_get_cursor(0)[1] - 1
-	vim.api.nvim_buf_clear_namespace(buf, ns, row, row + 1)
-end
+vim.api.nvim_buf_attach(buf, false, {
+	on_lines = function(_, _, _, first, last) conceal_delims(first, last) end,
+})
 
-vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, { buffer = buf, callback = update })
-
-vim.api.nvim_create_autocmd("CursorMoved", { buffer = buf, callback = reveal_cursor_line_and_update })
-
-update()
+conceal_delims(0, -1)
 
 -- conceal symbols
 local ns_conceal = vim.api.nvim_create_namespace("typst_conceal")
@@ -97,13 +91,13 @@ local function get_char_positions_in_range(bufnr, sr, sc, er, ec)
 end
 
 -- place covering extmark + per-character extmarks at given positions with given text chars
-local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_ec, positions, text)
+local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_ec, positions, text, hl)
 	-- cover the entire span first (hides underlying text)
 	pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_conceal, cover_sr, cover_sc, {
 		end_row = cover_er,
 		end_col = cover_ec,
 		conceal = "",
-		hl_group = "Conceal",
+		hl_group = hl,
 		priority = 100,
 	})
 
@@ -117,7 +111,7 @@ local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_e
 				end_row = pos.row,
 				end_col = pos.col + #pos.ch,
 				conceal = tch[i],
-				hl_group = "Conceal",
+				hl_group = hl,
 				priority = 101,
 			})
 		end
@@ -275,7 +269,7 @@ local function translate_tokenwise(text, map)
 	return table.concat(out_parts, "")
 end
 
-local function apply_conceal(init)
+local function math_conceal(first, last)
 	local parser_ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
 	if not parser_ok or not parser then
 		return
@@ -285,8 +279,6 @@ local function apply_conceal(init)
 		return
 	end
 	local root = tree:root()
-	local first = init and 0 or vim.api.nvim_win_get_cursor(0)[1] - 1
-	local last = init and -1 or (first + 1)
 
 	-- queries
 	local q_symbols = vim.treesitter.query.parse(
@@ -364,7 +356,7 @@ local function apply_conceal(init)
 			end
 
 			-- conceal: cover from operator start to node end, then place translated chars over inner positions
-			conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated)
+			conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated, "TypstScriptConceal")
 		end
 
 		::continue_script::
@@ -396,16 +388,15 @@ local function apply_conceal(init)
 		if repl then
 			-- conceal entire dotted span from sr,sc to er,ec; map characters across that span
 			local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
-			conceal_at_positions(buf, sr, sc, er, ec, positions, repl)
+			conceal_at_positions(buf, sr, sc, er, ec, positions, repl, "TypstSymbolsConceal")
 		end
 
 		::continue_symbols::
 	end
 end
 
-vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-	callback = apply_conceal,
-	buffer = buf,
+vim.api.nvim_buf_attach(buf, false, {
+	on_lines = function(_, _, _, first, last) math_conceal(first, last) end,
 })
 
-vim.schedule(function() apply_conceal(true) end)
+math_conceal(0, -1)
