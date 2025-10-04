@@ -48,7 +48,7 @@ local function update()
 			return
 		end
 
-		for id, node in query:iter_captures(root, buf, 0, -1) do
+		for id, node in query:iter_captures(root, buf, vim.fn.line("w0") - 1, vim.fn.line("w$")) do
 			if query.captures[id] == capture then
 				local srow, scol, erow, ecol = node:range()
 				conceal_symbol_at(srow, scol, opts.symbol)
@@ -58,18 +58,15 @@ local function update()
 	end
 end
 
-local function reveal_cursor_line()
+local function reveal_cursor_line_and_update()
 	update()
 	local row = vim.api.nvim_win_get_cursor(0)[1] - 1
 	vim.api.nvim_buf_clear_namespace(buf, ns, row, row + 1)
 end
 
-vim.api.nvim_create_autocmd(
-	{ "BufEnter", "BufWritePost", "TextChanged", "TextChangedI" },
-	{ buffer = buf, callback = update }
-)
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, { buffer = buf, callback = update })
 
-vim.api.nvim_create_autocmd("CursorMoved", { buffer = buf, callback = reveal_cursor_line })
+vim.api.nvim_create_autocmd("CursorMoved", { buffer = buf, callback = reveal_cursor_line_and_update })
 
 update()
 
@@ -107,6 +104,7 @@ local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_e
 		end_col = cover_ec,
 		conceal = "",
 		hl_group = "Conceal",
+		priority = 100,
 	})
 
 	-- split translated text into characters
@@ -120,9 +118,22 @@ local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_e
 				end_col = pos.col + #pos.ch,
 				conceal = tch[i],
 				hl_group = "Conceal",
+				priority = 101,
 			})
 		end
 	end
+end
+
+-- check if node is inside a math environment
+local function in_math(node)
+	local p = node:parent()
+	while p do
+		if p:type() == "math" then
+			return true
+		end
+		p = p:parent()
+	end
+	return false
 end
 
 -- determine whether `node` is inside the `sub` or `sup` field of some attach ancestor
@@ -264,9 +275,7 @@ local function translate_tokenwise(text, map)
 	return table.concat(out_parts, "")
 end
 
-local function apply_conceal()
-	vim.api.nvim_buf_clear_namespace(buf, ns_conceal, 0, -1)
-
+local function apply_conceal(init)
 	local parser_ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
 	if not parser_ok or not parser then
 		return
@@ -276,16 +285,17 @@ local function apply_conceal()
 		return
 	end
 	local root = tree:root()
+	local first = init and 0 or vim.api.nvim_win_get_cursor(0)[1] - 1
+	local last = init and -1 or (first + 1)
 
-	-- two queries
+	-- queries
 	local q_symbols = vim.treesitter.query.parse(
 		"typst",
 		[[
-    (ident) @id
-    (field (ident) @id)
-  ]]
+			(ident) @id
+			(field (ident) @id)
+		]]
 	)
-
 	local q_subsup = vim.treesitter.query.parse(
 		"typst",
 		[[
@@ -295,12 +305,12 @@ local function apply_conceal()
 	)
 
 	-- 1) sub/sup first: translate tokenwise and conceal from operator to node end
-	for id, node, _ in q_subsup:iter_captures(root, buf, 0, -1) do
+	for id, node, _ in q_subsup:iter_captures(root, buf, first, last) do
 		local cap = q_subsup.captures[id] -- "sub" or "sup"
 		-- node is the child node (group/number/formula) that holds the sub/sup content
 		local attach = node:parent()
 		if not attach or attach:type() ~= "attach" then
-			goto continue_sub
+			goto continue_script
 		end
 
 		-- find operator node (last child before the sub node)
@@ -357,28 +367,28 @@ local function apply_conceal()
 			conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated)
 		end
 
-		::continue_sub::
+		::continue_script::
 	end
 
 	-- 2) symbols (dotted names). Skip idents that are inside sub/sup.
 	local seen = {}
-	for id, node, _ in q_symbols:iter_captures(root, buf, 0, -1) do
+	for id, node, _ in q_symbols:iter_captures(root, buf, first, last) do
 		if q_symbols.captures[id] ~= "id" then
-			goto continue_id
+			goto continue_symbols
 		end
 
 		-- skip if this ident is inside a sub/sup field
-		if node_is_inside_sub_or_sup(node) then
-			goto continue_id
+		if not in_math(node) or node_is_inside_sub_or_sup(node) then
+			goto continue_symbols
 		end
 
 		-- find the topmost field/root and collect dotted name + range
 		local name, sr, sc, er, ec, top = collect_dotted_parts_and_range(node, buf)
 		if not name or name == "" then
-			goto continue_id
+			goto continue_symbols
 		end
 		if seen[name .. ":" .. sr .. ":" .. sc] then
-			goto continue_id
+			goto continue_symbols
 		end
 		seen[name .. ":" .. sr .. ":" .. sc] = true
 
@@ -389,11 +399,13 @@ local function apply_conceal()
 			conceal_at_positions(buf, sr, sc, er, ec, positions, repl)
 		end
 
-		::continue_id::
+		::continue_symbols::
 	end
 end
 
-vim.api.nvim_create_autocmd({ "BufEnter", "TextChanged", "TextChangedI" }, {
-	callback = function() apply_conceal() end,
+vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+	callback = apply_conceal,
 	buffer = buf,
 })
+
+vim.schedule(function() apply_conceal(true) end)

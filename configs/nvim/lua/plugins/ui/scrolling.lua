@@ -18,7 +18,7 @@ return {
 		performance_mode = false,    -- Disable "Performance Mode" on all buffers.
 		ignored_events = {           -- Events ignored while scrolling
 			"WinScrolled",
-			"CursorMoved",
+			-- "CursorMoved",
 		},
 	},
 }

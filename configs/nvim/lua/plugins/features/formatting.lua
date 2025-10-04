@@ -100,6 +100,7 @@ return {
 
 			local disabled_paths = {
 				"^" .. vim.fn.stdpath("config") .. "/lua/config/options.lua",
+				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/ui/scrolling.lua",
 				"^" .. vim.fn.stdpath("config") .. "/lua/snippets/",
 				"^" .. vim.fn.stdpath("config") .. "/snippets/",
 
