@@ -18,7 +18,7 @@ local vim_enter_early_redraw = function()
 		if pcall(require("nvim-web-devicons").setup) then
 			icon, color = require("nvim-web-devicons").get_icon_color(vim.fn.expand("%"), vim.fn.expand("%:e"))
 		end
-		vim.cmd("hi StatusLineIconColor guifg=" .. (color or "#6d8086"))
+		vim.api.nvim_set_hl(0, "StatusLineIconColor", { fg = color or "#6d8086" })
 
 		-- setup mock statusline
 		vim.opt.statusline = "%#StatusLineBlue# NORMAL %#StatusLineSeparatorBlue#%#StatusLineSeparatorGrey#%* %F %#StatusLineIconColor#"

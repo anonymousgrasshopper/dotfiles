@@ -9,10 +9,7 @@ return {
 			typst.not_import = function(a, b, c, d) return not b.line:match("^%s*#import") end
 
 			local markdown = {}
-			markdown.in_text = function(fn)
-				return not fn.in_node({ "code_span", "fenced_code_block" })
-					and not vim.fn["vimtex#syntax#in_mathzone"]()
-			end
+			markdown.in_text = function(fn) return not fn.in_node({ "code_span", "fenced_code_block", "latex_block" }) end
 
 			return {
 				filetype = {

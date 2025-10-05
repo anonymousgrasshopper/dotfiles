@@ -118,18 +118,6 @@ local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_e
 	end
 end
 
--- check if node is inside a math environment
-local function in_math(node)
-	local p = node:parent()
-	while p do
-		if p:type() == "math" then
-			return true
-		end
-		p = p:parent()
-	end
-	return false
-end
-
 -- determine whether `node` is inside the `sub` or `sup` field of some attach ancestor
 local function node_is_inside_sub_or_sup(node)
 	local cur = node
@@ -284,16 +272,16 @@ local function math_conceal(first, last)
 	local q_symbols = vim.treesitter.query.parse(
 		"typst",
 		[[
-			(ident) @id
-			(field (ident) @id)
+			((ident) @id (#has-ancestor? @id math))
+			(field (ident) @id (#has-ancestor? @id math))
 		]]
 	)
 	local q_subsup = vim.treesitter.query.parse(
 		"typst",
 		[[
-    (attach sub: (_) @sub)
-    (attach sup: (_) @sup)
-  ]]
+			(attach sub: (_) @sub)
+			(attach sup: (_) @sup)
+		]]
 	)
 
 	-- 1) sub/sup first: translate tokenwise and conceal from operator to node end
@@ -370,7 +358,7 @@ local function math_conceal(first, last)
 		end
 
 		-- skip if this ident is inside a sub/sup field
-		if not in_math(node) or node_is_inside_sub_or_sup(node) then
+		if node_is_inside_sub_or_sup(node) then
 			goto continue_symbols
 		end
 
