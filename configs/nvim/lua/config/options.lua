@@ -34,7 +34,9 @@ opt.breakindent    = true
 opt.breakindentopt = { "min:30", "shift:-1" }
 opt.linebreak      = true
 opt.breakat        = " "
+opt.textwidth = 78
 opt.formatoptions  = "c,q,n,2,j"
+opt.formatlistpat  = [[^\s*\%(\d\+[\]\-:.)}\t ]\|[-+]\s\)\s*]]
 
 -- writing, undo & backup
 opt.autowrite      = false

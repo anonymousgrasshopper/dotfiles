@@ -118,97 +118,6 @@ local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_e
 	end
 end
 
--- determine whether `node` is inside the `sub` or `sup` field of some attach ancestor
-local function node_is_inside_sub_or_sup(node)
-	local cur = node
-	while cur do
-		local parent = cur:parent()
-		if not parent then
-			break
-		end
-		if parent:type() == "attach" then
-			local sub = parent:field("sub")[1]
-			if sub then
-				-- is our node descendant of that sub-field?
-				local n = node
-				while n do
-					if n == sub then
-						return true
-					end
-					n = n:parent()
-				end
-			end
-			local sup = parent:field("sup")[1]
-			if sup then
-				local n = node
-				while n do
-					if n == sup then
-						return true
-					end
-					n = n:parent()
-				end
-			end
-		end
-		cur = parent
-	end
-	return false
-end
-
--- Collect dotted symbol parts and also the first/last ident nodes for range
-local function collect_dotted_parts_and_range(start_ident, bufnr)
-	local parts = {}
-	local first_ident = nil
-	local last_ident = nil
-
-	local function collect(n)
-		if not n then
-			return
-		end
-		local t = n:type()
-		if t == "ident" or t == "identifier" then
-			if not first_ident then
-				first_ident = n
-			end
-			last_ident = n
-			table.insert(parts, vim.treesitter.get_node_text(n, bufnr))
-		elseif t == "field" then
-			-- left-hand side is child(0), right hand field named "field"
-			local lhs = n:child(0)
-			collect(lhs)
-			local rhs_list = n:field("field")
-			if rhs_list and #rhs_list > 0 then
-				collect(rhs_list[1])
-			end
-		else
-			-- fallback: traverse children to find idents
-			for i = 0, n:child_count() - 1 do
-				collect(n:child(i))
-			end
-		end
-	end
-
-	-- find the topmost field ancestor (the whole dotted-expression node)
-	local top = start_ident
-	local p = top:parent()
-	while p and p:type() == "field" do
-		top = p
-		p = top:parent()
-	end
-
-	collect(top)
-
-	if not first_ident or not last_ident then
-		-- fallback to just using the original ident
-		first_ident = start_ident
-		last_ident = start_ident
-		parts = { vim.treesitter.get_node_text(start_ident, bufnr) }
-	end
-
-	local sr, sc = first_ident:range()
-	local _, _, er, ec = last_ident:range()
-	return table.concat(parts, "."), sr, sc, er, ec, top
-end
-
 -- token-aware translator (uses symbols table and per-char map)
 local function translate_tokenwise(text, map)
 	if not text or text == "" then
@@ -258,8 +167,8 @@ local function translate_tokenwise(text, map)
 end
 
 local function math_conceal(first, last)
-	local parser_ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
-	if not parser_ok or not parser then
+	local ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
+	if not ok or not parser then
 		return
 	end
 	local tree = parser:parse()[1]
@@ -272,8 +181,30 @@ local function math_conceal(first, last)
 	local q_symbols = vim.treesitter.query.parse(
 		"typst",
 		[[
-			((ident) @id (#has-ancestor? @id math))
-			(field (ident) @id (#has-ancestor? @id math))
+			(
+				(field)
+				@symbol
+				(#lua-match? @symbol "^[a-z.]+$")
+				(#not-has-ancestor? @symbol field )
+			)
+			(
+				(ident)
+				@symbol
+				(#has-ancestor? @symbol math )
+				(#lua-match? @symbol "^[A-Za-z.]+$")
+				(#not-has-ancestor? @symbol field )
+				(#not-has-ancestor? @symbol sub )
+				(#not-has-ancestor? @symbol attach )
+			)
+			(
+				(ident)
+				@symbol
+				(#has-ancestor? @symbol math )
+				(#lua-match? @symbol "^[A-Za-z.]+$")
+				(#not-has-ancestor? @symbol field )
+				(#not-has-ancestor? @symbol sub )
+				(#has-parent? @symbol attach )
+			)
 		]]
 	)
 	local q_subsup = vim.treesitter.query.parse(
@@ -284,9 +215,10 @@ local function math_conceal(first, last)
 		]]
 	)
 
-	-- 1) sub/sup first: translate tokenwise and conceal from operator to node end
+	-- subscripts and superscripts
 	for id, node, _ in q_subsup:iter_captures(root, buf, first, last) do
 		local cap = q_subsup.captures[id] -- "sub" or "sup"
+
 		-- node is the child node (group/number/formula) that holds the sub/sup content
 		local attach = node:parent()
 		if not attach or attach:type() ~= "attach" then
@@ -304,6 +236,7 @@ local function math_conceal(first, last)
 					local cand = attach:child(j)
 					local t = vim.treesitter.get_node_text(cand, buf)
 					if t == "_" or t == "^" then
+						vim.notify(vim.inspect(t))
 						op_node = cand
 						break
 					end
@@ -318,68 +251,45 @@ local function math_conceal(first, last)
 		local map = (cap == "sub") and sub_map or sup_map
 		local translated = translate_tokenwise(inner, map)
 
-		if translated ~= inner then
-			-- compute cover start (operator start if present, else the node start)
-			local srow, scol = nil, nil
-			if op_node then
-				local a, b = op_node:range() -- returns (sr, sc, er, ec), but we only unpack start
-				srow, scol = a, b
-			else
-				local a, b = node:range()
-				srow, scol = a, b
-			end
-			local _, _, erow, ecol = node:range()
-
-			-- gather inner positions (only the inner characters, not the wrapping parentheses)
-			local node_sr, node_sc, node_er, node_ec = node:range()
-			local positions = get_char_positions_in_range(buf, node_sr, node_sc, node_er, node_ec)
-
-			-- if first char '(' and last ')' in positions, strip them
-			local inner_positions = positions
-			if #positions >= 2 and positions[1].ch == "(" and positions[#positions].ch == ")" then
-				inner_positions = {}
-				for i = 2, #positions - 1 do
-					table.insert(inner_positions, positions[i])
-				end
-			end
-
-			-- conceal: cover from operator start to node end, then place translated chars over inner positions
-			conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated, "TypstScriptConceal")
+		-- compute cover start (operator start if present, else the node start)
+		local srow, scol = nil, nil
+		if op_node then
+			local a, b = op_node:range() -- returns (sr, sc, er, ec), but we only unpack start
+			srow, scol = a, b
+		else
+			local a, b = node:range()
+			srow, scol = a, b
 		end
+		local _, _, erow, ecol = node:range()
+
+		-- gather inner positions (only the inner characters, not the wrapping parentheses)
+		local node_sr, node_sc, node_er, node_ec = node:range()
+		local positions = get_char_positions_in_range(buf, node_sr, node_sc, node_er, node_ec)
+
+		-- if first char '(' and last ')' in positions, strip them
+		local inner_positions = positions
+		if #positions >= 2 and positions[1].ch == "(" and positions[#positions].ch == ")" then
+			inner_positions = {}
+			for i = 2, #positions - 1 do
+				table.insert(inner_positions, positions[i])
+			end
+		end
+
+		-- conceal: cover from operator start to node end, then place translated chars over inner positions
+		conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated, "TypstScriptConceal")
 
 		::continue_script::
 	end
 
-	-- 2) symbols (dotted names). Skip idents that are inside sub/sup.
-	local seen = {}
-	for id, node, _ in q_symbols:iter_captures(root, buf, first, last) do
-		if q_symbols.captures[id] ~= "id" then
-			goto continue_symbols
-		end
-
-		-- skip if this ident is inside a sub/sup field
-		if node_is_inside_sub_or_sup(node) then
-			goto continue_symbols
-		end
-
-		-- find the topmost field/root and collect dotted name + range
-		local name, sr, sc, er, ec, top = collect_dotted_parts_and_range(node, buf)
-		if not name or name == "" then
-			goto continue_symbols
-		end
-		if seen[name .. ":" .. sr .. ":" .. sc] then
-			goto continue_symbols
-		end
-		seen[name .. ":" .. sr .. ":" .. sc] = true
-
-		local repl = symbols[name]
+	-- symbols
+	for id, node, metadata, match in q_symbols:iter_captures(root, buf, first, last) do
+		local sr, sc, er, ec = node:range() -- range of the capture
+		local text = vim.treesitter.get_node_text(node, 0, { metadata = metadata })
+		local repl = symbols[text]
 		if repl then
-			-- conceal entire dotted span from sr,sc to er,ec; map characters across that span
 			local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
 			conceal_at_positions(buf, sr, sc, er, ec, positions, repl, "TypstSymbolsConceal")
 		end
-
-		::continue_symbols::
 	end
 end
 

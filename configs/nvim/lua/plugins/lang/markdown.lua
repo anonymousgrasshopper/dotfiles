@@ -117,10 +117,24 @@ return {
 	{
 		"bullets-vim/bullets.vim",
 		keys = {
-			{ "<CR>", "<Cmd>InsertNewBullet<CR>", mode = { "i" }, ft = "markdown", desc = "Insert new bullet" },
-			{ "<localleader>x", "<Cmd>ToggleCheckbox<CR>", ft = "markdown", desc = "Toggle Bullet" },
+			{
+				"<CR>",
+				"<Cmd>InsertNewBullet<CR>",
+				mode = "i",
+				ft = { "markdown", "typst", "text", "gitcommit" },
+				desc = "Insert new bullet",
+			},
+			{
+				"<localleader>x",
+				"<Cmd>ToggleCheckbox<CR>",
+				ft = { "markdown", "typst", "text", "gitcommit" },
+				desc = "Toggle Bullet",
+			},
 		},
-		config = function() vim.g.bullets_set_mapping = 0 end,
+		config = function()
+			vim.g.bullets_enabled_file_types = { "markdown", "typst", "text", "gitcommit" }
+			vim.g.bullets_set_mapping = 0
+		end,
 	},
 	{
 		"obsidian-nvim/obsidian.nvim",
