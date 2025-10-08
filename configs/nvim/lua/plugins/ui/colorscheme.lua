@@ -136,6 +136,7 @@ return {
 					TypstDelimsConceal = { link = "Operator" },
 					TypstSymbolsConceal = { link = "Special" },
 					TypstScriptConceal = { link = "Conceal" },
+					TypstSurroundConceal = { link = "Delimiter" },
 				}
 			end,
 			colors = {

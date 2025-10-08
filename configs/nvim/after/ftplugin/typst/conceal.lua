@@ -29,7 +29,7 @@ local function conceal_symbol_at(row, col, symbol)
 end
 
 local function conceal_delims(first, last)
-	vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+	vim.api.nvim_buf_clear_namespace(buf, ns, first, last)
 
 	local parser = vim.treesitter.get_parser(buf, "typst")
 	if not parser then
@@ -67,8 +67,9 @@ conceal_delims(0, -1)
 -- conceal symbols
 local ns_conceal = vim.api.nvim_create_namespace("typst_conceal")
 
-local sub_map = require("static.lang.typst.subscripts")
-local sup_map = require("static.lang.typst.superscripts")
+local functions = require("static.lang.typst.calls")
+local subscripts = require("static.lang.typst.subscripts")
+local superscripts = require("static.lang.typst.superscripts")
 local symbols = require("static.lang.typst.symbols")
 
 -- returns a list of {row=, col=, ch=} for each character in the buffer span
@@ -91,11 +92,13 @@ local function get_char_positions_in_range(bufnr, sr, sc, er, ec)
 end
 
 -- place covering extmark + per-character extmarks at given positions with given text chars
-local function conceal_at_positions(bufnr, cover_sr, cover_sc, cover_er, cover_ec, positions, text, hl)
+local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
+	local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
+
 	-- cover the entire span first (hides underlying text)
-	pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_conceal, cover_sr, cover_sc, {
-		end_row = cover_er,
-		end_col = cover_ec,
+	pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_conceal, sr, sc, {
+		end_row = er,
+		end_col = ec,
 		conceal = "",
 		hl_group = hl,
 		priority = 100,
@@ -207,6 +210,7 @@ local function math_conceal(first, last)
 			)
 		]]
 	)
+
 	local q_subsup = vim.treesitter.query.parse(
 		"typst",
 		[[
@@ -215,70 +219,34 @@ local function math_conceal(first, last)
 		]]
 	)
 
+	local q_calls = vim.treesitter.query.parse(
+		"typst",
+		[[
+			(
+				(call)
+				@function
+				(#has-ancestor? @function math)
+			)
+		]]
+	)
+
 	-- subscripts and superscripts
 	for id, node, _ in q_subsup:iter_captures(root, buf, first, last) do
 		local cap = q_subsup.captures[id] -- "sub" or "sup"
 
-		-- node is the child node (group/number/formula) that holds the sub/sup content
-		local attach = node:parent()
-		if not attach or attach:type() ~= "attach" then
-			goto continue_script
-		end
-
-		-- find operator node (last child before the sub node)
-		local op_node = nil
-		for i = 0, attach:child_count() - 1 do
-			local ch = attach:child(i)
-			if ch == node then
-				-- found the sub node position; operator should be a previous sibling
-				-- search backwards for a child whose text is "_" or "^"
-				for j = i - 1, 0, -1 do
-					local cand = attach:child(j)
-					local t = vim.treesitter.get_node_text(cand, buf)
-					if t == "_" or t == "^" then
-						vim.notify(vim.inspect(t))
-						op_node = cand
-						break
-					end
-				end
-				break
-			end
-		end
-
 		-- prepare node text and translation (strip one pair of parens around the captured node)
 		local raw = vim.treesitter.get_node_text(node, buf) or ""
 		local inner = raw:gsub("^%s*%((.*)%)%s*$", "%1")
-		local map = (cap == "sub") and sub_map or sup_map
+		local map = (cap == "sub") and subscripts or superscripts
 		local translated = translate_tokenwise(inner, map)
 
-		-- compute cover start (operator start if present, else the node start)
-		local srow, scol = nil, nil
-		if op_node then
-			local a, b = op_node:range() -- returns (sr, sc, er, ec), but we only unpack start
-			srow, scol = a, b
-		else
-			local a, b = node:range()
-			srow, scol = a, b
-		end
-		local _, _, erow, ecol = node:range()
-
-		-- gather inner positions (only the inner characters, not the wrapping parentheses)
-		local node_sr, node_sc, node_er, node_ec = node:range()
-		local positions = get_char_positions_in_range(buf, node_sr, node_sc, node_er, node_ec)
-
-		-- if first char '(' and last ')' in positions, strip them
-		local inner_positions = positions
-		if #positions >= 2 and positions[1].ch == "(" and positions[#positions].ch == ")" then
-			inner_positions = {}
-			for i = 2, #positions - 1 do
-				table.insert(inner_positions, positions[i])
-			end
+		local sr, sc, er, ec = node:range()
+		local char = char_at(sr, sc - 1)
+		if char == "_" or char == "^" then
+			sc = sc - 1
 		end
 
-		-- conceal: cover from operator start to node end, then place translated chars over inner positions
-		conceal_at_positions(buf, srow, scol, erow, ecol, inner_positions, translated, "TypstScriptConceal")
-
-		::continue_script::
+		conceal_at_positions(buf, sr, sc, er, ec, translated, "TypstScriptConceal")
 	end
 
 	-- symbols
@@ -287,8 +255,27 @@ local function math_conceal(first, last)
 		local text = vim.treesitter.get_node_text(node, 0, { metadata = metadata })
 		local repl = symbols[text]
 		if repl then
-			local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
-			conceal_at_positions(buf, sr, sc, er, ec, positions, repl, "TypstSymbolsConceal")
+			conceal_at_positions(buf, sr, sc, er, ec, repl, "TypstSymbolsConceal")
+		end
+	end
+
+	-- function calls
+	for id, node, metadata, match in q_calls:iter_captures(root, buf, first, last) do
+		local sr, sc, er, ec = node:range()
+		local child = node:field("item")[1]
+		if child then
+			local name = vim.treesitter.get_node_text(child, 0, {})
+			local delims = functions[name]
+			if delims then
+				local text = vim.treesitter.get_node_text(node, 0, {})
+				text = text:match("^" .. name .. "%((.*)%)$") or text
+				local child_sr, child_sc, child_er, child_ec = child:range()
+				if char_at(child_er, child_ec) == "(" then
+					child_ec = child_ec + 1
+				end
+				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, delims[1], "TypstSurroundConceal")
+				conceal_at_positions(buf, er, ec - 1, er, ec, delims[2], "TypstSurroundConceal")
+			end
 		end
 	end
 end
