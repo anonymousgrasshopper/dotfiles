@@ -108,9 +108,3 @@ if vim.env.OLY and not vim.b[buf].oly_highlight then
 		end,
 	})
 end
-
--- convert to typst
-vim.keymap.set("n", ",tt", function()
-	require("formatters.tex->typst").format()
-	vim.bo.filetype = "typst"
-end, { desc = "Convert LaTeX to typst" })
