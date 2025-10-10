@@ -5,16 +5,14 @@ local function toggle_telescope(harpoon_files)
 		table.insert(file_paths, item.value)
 	end
 
-	require("telescope.pickers")
-		.new({}, {
-			prompt_title = "Harpoon",
-			finder = require("telescope.finders").new_table({
-				results = file_paths,
-			}),
-			previewer = conf.file_previewer({}),
-			sorter = conf.generic_sorter({}),
-		})
-		:find()
+	require("telescope.pickers").new({}, {
+		prompt_title = "Harpoon",
+		finder = require("telescope.finders").new_table({
+			results = file_paths,
+		}),
+		previewer = conf.file_previewer({}),
+		sorter = conf.generic_sorter({}),
+	}):find()
 end
 
 return {
@@ -34,22 +32,10 @@ return {
 			desc = "Toggle Harpoon ui",
 		},
 
-		{
-			"<M-p>",
-			function() require("harpoon"):list():select(1) end,
-		},
-		{
-			"<M-m>",
-			function() require("harpoon"):list():select(2) end,
-		},
-		{
-			"<M-l>",
-			function() require("harpoon"):list():select(3) end,
-		},
-		{
-			"<M-o>",
-			function() require("harpoon"):list():select(4) end,
-		},
+		{ "<M-p>", function() require("harpoon"):list():select(1) end },
+		{ "<M-m>", function() require("harpoon"):list():select(2) end },
+		{ "<M-l>", function() require("harpoon"):list():select(3) end },
+		{ "<M-o>", function() require("harpoon"):list():select(4) end },
 	},
 	opts = {
 		settings = {

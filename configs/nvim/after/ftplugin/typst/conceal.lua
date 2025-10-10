@@ -10,16 +10,12 @@ local nodes = {
 
 local function char_at(row, col)
 	local line = vim.api.nvim_buf_get_lines(buf, row, row + 1, false)[1]
-	if not line or col < 0 or col >= #line then
-		return nil
-	end
+	if not line or col < 0 or col >= #line then return nil end
 	return line:sub(col + 1, col + 1)
 end
 
 local function conceal_symbol_at(row, col, symbol)
-	if char_at(row, col) ~= symbol then
-		return
-	end
+	if char_at(row, col) ~= symbol then return end
 	vim.api.nvim_buf_set_extmark(buf, ns, row, col, {
 		end_row = row,
 		end_col = col + 1,
@@ -32,13 +28,9 @@ local function conceal_delims(first, last)
 	vim.api.nvim_buf_clear_namespace(buf, ns, first, last)
 
 	local parser = vim.treesitter.get_parser(buf, "typst")
-	if not parser then
-		return
-	end
+	if not parser then return end
 	local tree = parser:parse()[1]
-	if not tree then
-		return
-	end
+	if not tree then return end
 	local root = tree:root()
 
 	for capture, opts in pairs(nodes) do
@@ -59,7 +51,9 @@ local function conceal_delims(first, last)
 end
 
 vim.api.nvim_buf_attach(buf, false, {
-	on_lines = function(_, _, _, first, last) conceal_delims(first, last) end,
+	on_lines = function(_, _, _, first, last)
+		conceal_delims(first, last)
+	end,
 })
 
 conceal_delims(0, -1)
@@ -91,7 +85,7 @@ local function get_char_positions_in_range(bufnr, sr, sc, er, ec)
 	return pos
 end
 
--- place covering extmark + per-character extmarks at given positions with given text chars
+-- apply a per-character extmark on the given range
 local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
 	local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
 
@@ -121,11 +115,9 @@ local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
 	end
 end
 
--- token-aware translator (uses symbols table and per-char map)
+-- returns the concealed text
 local function translate_tokenwise(text, map)
-	if not text or text == "" then
-		return text
-	end
+	if not text or text == "" then return text end
 	local out_parts = {}
 	local pos = 1
 	for token in text:gmatch("%S+") do
@@ -171,13 +163,9 @@ end
 
 local function math_conceal(first, last)
 	local ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
-	if not ok or not parser then
-		return
-	end
+	if not ok or not parser then return end
 	local tree = parser:parse()[1]
-	if not tree then
-		return
-	end
+	if not tree then return end
 	local root = tree:root()
 
 	-- queries
@@ -250,7 +238,7 @@ local function math_conceal(first, last)
 	end
 
 	-- symbols
-	for id, node, metadata, match in q_symbols:iter_captures(root, buf, first, last) do
+	for _, node, metadata, _ in q_symbols:iter_captures(root, buf, first, last) do
 		local sr, sc, er, ec = node:range() -- range of the capture
 		local text = vim.treesitter.get_node_text(node, 0, { metadata = metadata })
 		local repl = symbols[text]
@@ -260,8 +248,8 @@ local function math_conceal(first, last)
 	end
 
 	-- function calls
-	for id, node, metadata, match in q_calls:iter_captures(root, buf, first, last) do
-		local sr, sc, er, ec = node:range()
+	for _, node, _, _ in q_calls:iter_captures(root, buf, first, last) do
+		local _, _, er, ec = node:range()
 		local child = node:field("item")[1]
 		if child then
 			local name = vim.treesitter.get_node_text(child, 0, {})

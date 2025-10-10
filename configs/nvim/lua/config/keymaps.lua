@@ -127,5 +127,5 @@ keymap.set("n", "<leader>nh", "<Cmd>nohl<CR>", { desc = "Clear search highlights
 -- new file
 keymap.set("n", "<leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 
--- lazy
+-- plugin manager
 keymap.set("n", "<leader>L", "<Cmd>Lazy<CR>", { desc = "Open Lazy.nvim ui" })

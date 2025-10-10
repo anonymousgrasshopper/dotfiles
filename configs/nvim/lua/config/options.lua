@@ -53,6 +53,7 @@ opt.expandtab      = false
 opt.autoindent     = true
 opt.shiftround     = true
 opt.smarttab       = true
+opt.smartindent    = true
 
 -- split windows
 opt.splitkeep      = "screen"

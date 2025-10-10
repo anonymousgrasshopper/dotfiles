@@ -265,6 +265,28 @@ ${RED}Enter a number (default 3) :${WHITE} "
 	printf '\n'
 )
 
+# install oly
+if ! program oly; then
+	echo -en "${BLUE}Do you want to install oly (y/n) ? ${WHITE}"
+	if get_answer; then
+		sudo pacman -S --needed git cmake
+		git clone https://github.com/anonymousgrasshopper/oly /tmp/oly_build
+		if cd /tmp/oly_build; then
+			cmake -DCMAKE_BUILD_TYPE=Release build
+			cmake --build build
+			sudo cp build/bin/oly /usr/local/bin/oly
+			cp -r assets/typst ~/.local/
+			[[ -d /usr/local/share/zsh/site-functions ]] || sudo mkdir -p /usr/local/share/zsh/site-functions/
+			sudo cp assets/extras/_oly /usr/local/share/zsh/site-functions/
+			rm -rf /tmp/oly_build
+			printf '\n'
+			cd "$SCRIPT_DIR" || exit
+		else
+			echo "${RED} Cloning oly failed. Check your internet connection and try again."
+		fi
+	fi
+fi
+
 # setup rust toolchain
 if program rustup && ! program cargo; then
 	rustup default stable

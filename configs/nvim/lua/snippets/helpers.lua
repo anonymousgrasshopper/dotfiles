@@ -44,7 +44,7 @@ function helpers.line_not_match(pattern)
 end
 
 function helpers.check_not_expanded(...)
-	local arg = {...}
+	local arg = { ... }
 	return make_cond(function()
 		local line = vim.api.nvim_get_current_line()
 		local col = vim.api.nvim_win_get_cursor(0)[2]
@@ -56,7 +56,6 @@ function helpers.check_not_expanded(...)
 		return true
 	end)
 end
-
 
 helpers.check_not_expanded("hello", "wworld", "again")
 return helpers

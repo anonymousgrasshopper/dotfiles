@@ -70,13 +70,13 @@ return {
 	{
 		"haya14busa/vim-asterisk",
 		keys = {
-			{ "*", "<Plug>(asterisk-z*)zz<Cmd>lua require('hlslens').start()<CR>" },
-			{ "#", "<Plug>(asterisk-z#)zz<Cmd>lua require('hlslens').start()<CR>" },
+			{ "*",  "<Plug>(asterisk-z*)zz<Cmd>lua require('hlslens').start()<CR>" },
+			{ "#",  "<Plug>(asterisk-z#)zz<Cmd>lua require('hlslens').start()<CR>" },
 			{ "g*", "<Plug>(asterisk-gz*)zz<Cmd>lua require('hlslens').start()<CR>" },
 			{ "g#", "<Plug>(asterisk-gz#)zz<Cmd>lua require('hlslens').start()<CR>" },
 
-			{ "*", "<Plug>(asterisk-z*)zz<Cmd>lua require('hlslens').start()<CR>" },
-			{ "#", "<Plug>(asterisk-z#)zz<Cmd>lua require('hlslens').start()<CR>" },
+			{ "*",  "<Plug>(asterisk-z*)zz<Cmd>lua require('hlslens').start()<CR>" },
+			{ "#",  "<Plug>(asterisk-z#)zz<Cmd>lua require('hlslens').start()<CR>" },
 			{ "g*", "<Plug>(asterisk-gz*)zz<Cmd>lua require('hlslens').start()<CR>" },
 			{ "g#", "<Plug>(asterisk-gz#)zz<Cmd>lua require('hlslens').start()<CR>" },
 		},

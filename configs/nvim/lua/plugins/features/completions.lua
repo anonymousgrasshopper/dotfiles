@@ -150,7 +150,6 @@ return {
 						score_offset = 10,
 					},
 					cmdline = {
-						-- stylua: ignore
 						enabled = function()
 							return
 								vim.fn.getcmdtype() ~= ":" or

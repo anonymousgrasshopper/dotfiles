@@ -4,22 +4,22 @@ local trigger_not_preceded_by = require("luasnip.extras.expand_conditions").trig
 local tex_utils = {}
 
 tex_utils.in_math = make_cond(function()
-		-- First check if we're in math mode at all
-  if vim.fn["vimtex#syntax#in_mathzone"]() == 0 then
-    return false
-  end
+	-- First check if we're in math mode at all
+	if vim.fn["vimtex#syntax#in_mathzone"]() == 0 then
+		return false
+	end
 
-  -- Get syntax stack at cursor
-  local stack = vim.fn.synstack(vim.fn.line("."), vim.fn.col("."))
-  for _, id in ipairs(stack) do
-    local name = vim.fn.synIDattr(id, "name")
-    -- If inside \text{} or similar, math highlighting group changes
-    if name:match("texMathText") then
-      return false
-    end
-  end
+	-- Get syntax stack at cursor
+	local stack = vim.fn.synstack(vim.fn.line("."), vim.fn.col("."))
+	for _, id in ipairs(stack) do
+		local name = vim.fn.synIDattr(id, "name")
+		-- If inside \text{} or similar, math highlighting group changes
+		if name:match("texMathText") then
+			return false
+		end
+	end
 
-  return true
+	return true
 end)
 tex_utils.in_text = make_cond(function()
 	return vim.fn["vimtex#syntax#in_mathzone"]() ~= 1
@@ -32,7 +32,7 @@ local function in_environment(name)
 	local is_inside = vim.fn["vimtex#env#is_inside"](name)
 	return (is_inside[1] > 0 and is_inside[2] > 0)
 end
-tex_utils.in_env= make_cond(function(name)
+tex_utils.in_env = make_cond(function(name)
 	return in_environment(name)
 end)
 tex_utils.in_document = make_cond(function()

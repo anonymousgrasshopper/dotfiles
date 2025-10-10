@@ -3,7 +3,7 @@
 # Please edit the following values.                                               #
 #                                                                                 #
 # A list of all possible configuration options and their defaults can be found at #
-# https://github.com/anonymousgrasshopper/oly/blob/main/src/config.cpp#L77-#L136  #
+# https://github.com/anonymousgrasshopper/oly/blob/main/src/config.cpp#L77-#L137  #
 ###################################################################################
 
 # The author's name in the preview and generated pdf
@@ -14,7 +14,11 @@ base_path: ~/Mathématiques/Solutions
 
 # the markup language the solutions are typed in
 # must be one of latex or typst (default latex)
-language: typst
+markup: typst
+
+# you can set a different language to use with
+# the tex and typst preamble files
+language: french
 
 # The pdf viewer used for 'oly gen'
 pdf_viewer: zathura

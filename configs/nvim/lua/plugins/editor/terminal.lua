@@ -10,19 +10,17 @@ return {
 		{
 			"<leader>lg",
 			function()
-				require("toggleterm.terminal").Terminal
-					:new({
-						cmd = "lazygit",
-						dir = "git_dir",
-						hidden = true,
-						direction = "float",
-						display_name = "LazyGit",
-						close_on_exit = true,
-						float_opts = {
-							border = "rounded",
-						},
-					})
-					:toggle()
+				require("toggleterm.terminal").Terminal:new({
+					cmd = "lazygit",
+					dir = "git_dir",
+					hidden = true,
+					direction = "float",
+					display_name = "LazyGit",
+					close_on_exit = true,
+					float_opts = {
+						border = "rounded",
+					},
+				}):toggle()
 			end,
 			desc = "Open LazyGit",
 		},

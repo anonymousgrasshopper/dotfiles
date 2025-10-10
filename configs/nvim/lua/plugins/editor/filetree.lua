@@ -212,9 +212,9 @@ return {
 					hide_by_pattern = { -- uses glob style patterns
 						"*.log",
 					},
-					always_show = {}, -- remains visible even if other settings would normally hide it
+					always_show = {},       -- remains visible even if other settings would normally hide it
 					always_show_by_pattern = {}, -- uses glob style patterns
-					never_show = {}, -- remains hidden even if visible is toggled to true, this overrides always_show
+					never_show = {},        -- remains hidden even if visible is toggled to true, this overrides always_show
 					never_show_by_pattern = { -- uses glob style patterns
 						".git",
 						"*.aux",
@@ -226,13 +226,13 @@ return {
 					},
 				},
 				follow_current_file = {
-					enabled = false, -- This will find and focus the file in the active buffer every time
+					enabled = false,                  -- This will find and focus the file in the active buffer every time
 					-- the current file is changed while the tree is open.
-					leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+					leave_dirs_open = false,          -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 				},
-				group_empty_dirs = false, -- when true, empty folders will be grouped together
+				group_empty_dirs = false,           -- when true, empty folders will be grouped together
 				hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
-				use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+				use_libuv_file_watcher = false,     -- This will use the OS level file watchers to detect changes
 				-- instead of relying on nvim autocmd events.
 				window = {
 					mappings = {
@@ -320,7 +320,7 @@ return {
 				renderers = {
 					file = {
 						{ "custom_icon" },
-						{ "name", use_git_status_colors = true },
+						{ "name",       use_git_status_colors = true },
 						-- { "harpoon_index" },
 						{ "diagnostics" },
 						{ "git_status", highlight = "NeoTreeDimText" },
@@ -412,7 +412,7 @@ return {
 						end
 					end,
 				},
-				{ event = "file_moved", handler = on_move },
+				{ event = "file_moved",   handler = on_move },
 				{ event = "file_renamed", handler = on_move },
 				{
 					event = "file_moved",

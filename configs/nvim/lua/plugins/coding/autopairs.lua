@@ -5,8 +5,8 @@ return {
 		branch = "v0.6",
 		opts = function()
 			local typst = {}
-			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string" }) end
-			typst.not_import = function(a, b, c, d) return not b.line:match("^%s*#import") end
+			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" }) end
+			typst.not_import = function(_, obj) return not obj.line:match("^%s*#import") end
 
 			local markdown = {}
 			markdown.in_text = function(fn) return not fn.in_node({ "code_span", "fenced_code_block", "latex_block" }) end
@@ -75,31 +75,26 @@ return {
 				},
 				{ "<", ">", disable_start = true },
 				-- comments
-				{ "/*", "*/", ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
-				{ "[=[", "]=]", ft = { "lua" } },
-				{ "[==[", "]==]", ft = { "lua" } },
+				{ "/*",    "*/",    ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
+				{ "[=[",   "]=]",   ft = { "lua" } },
+				{ "[==[",  "]==]",  ft = { "lua" } },
 				{ "[===[", "]===]", ft = { "lua" } },
 				-- LaTeX
 				{ "\\[", "\\]", disable_end = true, newline = true, ft = { "tex" } },
 				{ "\\(", "\\)", disable_end = true, newline = true, ft = { "tex" } },
 				-- typst
-				{ "$", "$", ft = { "typst" }, cond = typst.in_text, space = true },
-				{ "/*", "*/", ft = { "typst" }, cond = typst.in_text },
-				{
-					"*",
-					"*",
-					ft = { "typst" },
-					cond = function(a, b, c, d) return typst.in_text(a) and typst.not_import(a, b, c, d) end,
-				},
-				{ "_", "_", ft = { "typst" }, cond = typst.in_text },
-				{ "`", "`", ft = { "typst" }, cond = typst.in_text, space = true },
+				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true },
+				{ "/*", "*/",   ft = { "typst" }, cond = typst.in_text },
+				{ "_", "_",     ft = { "typst" }, cond = typst.in_text },
+				{ "`", "`",     ft = { "typst" }, cond = typst.in_text, space = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
+				{ "*", "*",     ft = { "typst" }, cond = function(fn, obj) return typst.in_text(fn) and typst.not_import(fn, obj) end },
 				--markdown
-				{ "$", "$", ft = { "markdown" }, cond = markdown.in_text },
-				{ "$$", "$$", ft = { "markdown" }, cond = markdown.in_text },
-				{ "*", "*", ft = { "markdown" }, cond = markdown.in_text },
-				{ "**", "**", ft = { "markdown" }, cond = markdown.in_text },
-				{ "~~", "~~", ft = { "markdown" }, cond = markdown.in_text },
+				{ "$", "$",     ft = { "markdown" }, cond = markdown.in_text },
+				{ "$$", "$$",   ft = { "markdown" }, cond = markdown.in_text },
+				{ "*", "*",     ft = { "markdown" }, cond = markdown.in_text },
+				{ "**", "**",   ft = { "markdown" }, cond = markdown.in_text },
+				{ "~~", "~~",   ft = { "markdown" }, cond = markdown.in_text },
 				{ "```", "```", ft = { "markdown" }, cond = markdown.in_text, newline = true },
 				-- others
 				{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },

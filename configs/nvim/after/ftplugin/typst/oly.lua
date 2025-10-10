@@ -93,9 +93,7 @@ end
 
 local function set_typst_root()
 	local root_path = vim.b[buf].typst_root
-	if not root_path then
-		return
-	end
+	if not root_path then return end
 
 	local root_buf = vim.fn.bufadd(root_path)
 	vim.fn.bufload(root_buf)

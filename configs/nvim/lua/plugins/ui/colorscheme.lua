@@ -87,56 +87,35 @@ return {
 					markdownH5 = { fg = palette.springBlue },
 					markdownH6 = { fg = palette.oniViolet },
 
-					MarkviewHeading1 = { link = "markdownH1" },
-					MarkviewHeading2 = { link = "markdownH2" },
-					MarkviewHeading3 = { link = "markdownH3" },
-					MarkviewHeading4 = { link = "markdownH4" },
-					MarkviewHeading5 = { link = "markdownH5" },
-					MarkviewHeading6 = { link = "markdownH6" },
-
-					MarkviewBlockQuoteDefault = { fg = palette.crystalBlue },
-					MarkviewBlockQuoteError = { fg = palette.samuraiRed },
-					MarkviewBlockQuoteNote = { fg = "#6a9589" },
-					MarkviewBlockQuoteOk = { fg = palette.springGreen },
-					MarkviewBlockQuoteSpecial = { fg = palette.oniViolet },
-					MarkviewBlockQuoteWarn = { fg = palette.roninYellow },
-
-					MarkviewCheckboxChecked = { fg = palette.springGreen },
-					MarkviewCheckboxUnchecked = { fg = palette.fujiGray },
-
 					MarkdownInfo = { fg = palette.crystalBlue },
 					MarkdownSuccess = { fg = palette.springGreen },
 					MarkdownWarn = { fg = palette.roninYellow },
 					MarkdownError = { fg = palette.samuraiRed },
 					MarkdownHint = { fg = "#6a9589" },
 					MarkdownQuote = { fg = palette.oniViolet },
-
 					MarkdownTable = { fg = "#54546d" },
-
-					MarkviewSubscript = { fg = palette.springViolet1 },
-					MarkviewSuperscript = { fg = palette.springViolet1 },
-
-					IlluminatedWordText = { bold = true },
-					IlluminatedWordRead = { bold = true },
-					IlluminatedWordWrite = { bold = true },
-
-					NeoTreePopupWinSeparator = { fg = palette.sumiInk6, bg = palette.sumiInk3 },
-					NeoTreeFileIcon = { fg = palette.oldWhite },
-
-					HlSearchLens = { fg = palette.fujiGray, bg = "none" },
-					HlSearchLensNear = { fg = palette.oldWhite, bg = palette.waveBlue2 },
-					HlSearchLensNearReverted = { fg = palette.waveBlue2, bg = "none" },
-
-					LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
-
-					TelescopePromptPrefix = { fg = palette.autumnYellow, bg = palette.sumiInk3 },
-
-					LightBulbSign = { fg = palette.oldWhite },
 
 					TypstDelimsConceal = { link = "Operator" },
 					TypstSymbolsConceal = { link = "Special" },
 					TypstScriptConceal = { link = "Conceal" },
 					TypstSurroundConceal = { link = "Delimiter" },
+
+					IlluminatedWordText = { bold = true },
+					IlluminatedWordRead = { bold = true },
+					IlluminatedWordWrite = { bold = true },
+
+					HlSearchLens = { fg = palette.fujiGray, bg = "none" },
+					HlSearchLensNear = { fg = palette.oldWhite, bg = palette.waveBlue2 },
+					HlSearchLensNearReverted = { fg = palette.waveBlue2, bg = "none" },
+
+					NeoTreePopupWinSeparator = { fg = palette.sumiInk6, bg = palette.sumiInk3 },
+					NeoTreeFileIcon = { fg = palette.oldWhite },
+
+					TelescopePromptPrefix = { fg = palette.autumnYellow, bg = palette.sumiInk3 },
+
+					LightBulbSign = { fg = palette.oldWhite },
+
+					LazyNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m3 },
 				}
 			end,
 			colors = {

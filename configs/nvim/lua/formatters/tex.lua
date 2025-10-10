@@ -6,19 +6,13 @@ return {
 		bufnr = bufnr or vim.api.nvim_get_current_buf()
 
 		local lang = ts.language.get_lang(vim.bo[bufnr].filetype)
-		if lang ~= "latex" then
-			return
-		end
+		if lang ~= "latex" then return end
 
 		local parser = ts.get_parser(bufnr, lang)
-		if not parser then
-			return
-		end
+		if not parser then return end
 
 		local tree = parser:parse()[1]
-		if not tree then
-			return
-		end
+		if not tree then return end
 		local root = tree:root()
 
 		local query = ts_query.parse(

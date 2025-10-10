@@ -8,12 +8,9 @@ return {
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(event)
 					local buf = event.buf
-					local disabled_filetypes = {
-						"checkhealth",
-					}
-					local regex_highlighting = {
-						"tex",
-					}
+					local disabled_filetypes = { "checkhealth" }
+					local regex_highlighting = { "tex" }
+					local no_indentexpr = { "bash", "sh" }
 					if not vim.tbl_contains(disabled_filetypes, vim.bo[buf].filetype) then
 						if pcall(vim.treesitter.start) then
 							local win = vim.api.nvim_get_current_win()
@@ -21,7 +18,9 @@ return {
 								vim.wo[win][0].foldmethod = "expr"
 								vim.wo[win][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
 							end
-							vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+							if not vim.tbl_contains(no_indentexpr, vim.bo[buf].filetype) then
+								vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+							end
 							if vim.tbl_contains(regex_highlighting, vim.bo[buf].filetype) then
 								vim.bo[buf].syntax = "ON"
 							end

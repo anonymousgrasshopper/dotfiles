@@ -28,20 +28,19 @@ local live_grep = function(opts)
 				table.insert(args, pieces[2])
 			end
 
-			return vim
-				.iter({
-					args,
-					{
-						"--color=never",
-						"--no-heading",
-						"--with-filename",
-						"--line-number",
-						"--column",
-						"--smart-case",
-					},
-				})
-				:flatten()
-				:totable()
+			return vim.iter({
+				args,
+				{
+					"--color=never",
+					"--no-heading",
+					"--with-filename",
+					"--line-number",
+					"--column",
+					"--smart-case",
+				},
+			})
+			:flatten()
+			:totable()
 		end,
 		entry_maker = make_entry.gen_from_vimgrep(opts),
 		cwd = opts.cwd,
@@ -71,7 +70,6 @@ return {
 		"Telescope",
 	},
 	keys = {
-		-- stylua: ignore start
 		{ "<leader>rr", function() require("telescope.builtin").resume() end, desc = "Resume last Search" },
 		{ "<C-R>", "<Plug>(TelescopeFuzzyCommandSearch)", mode = "c", desc = "Search Cmdline history" },
 
@@ -104,7 +102,6 @@ return {
 		{ "<leader>gsS", function() require("telescope.builtin").git_stash() end, desc = "Search git stash items" },
 
 		{ "<leader>sn", function() require("telescope").extensions.notify.notify() end, desc = "Search notifications" },
-		-- stylua: ignore end
 	},
 	lazy = false, -- needs to load before we call vim.ui.select for the first time
 	config = function()
