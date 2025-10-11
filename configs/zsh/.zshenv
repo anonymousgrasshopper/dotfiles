@@ -32,8 +32,5 @@ export PATH="$PATH:/usr/local/texlive/2024/bin/x86_64-linux"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DOWNLOAD_DIR="$HOME/Téléchargements"
 
-# API Keys
-export OPENAI_API_KEY="ooops not supposed to show that"
-
 # WSL graphics
-export DISPLAY=:0
+export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0

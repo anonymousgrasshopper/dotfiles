@@ -101,7 +101,7 @@ return {
 				"^" .. vim.fn.stdpath("config") .. "/lua/config/options.lua$",
 				"^" .. vim.fn.stdpath("config") .. "/lua/plugins/coding/autopairs.lua$",
 				"^" .. vim.fn.stdpath("config") .. "/lua/statusline/components.lua$",
-				"^" .. vim.fn.stdpath("config") .. "/after/ftplugin/typst/romponents.lua$",
+				"^" .. vim.fn.stdpath("config") .. "/after/ftplugin/typst/typst.lua$",
 				"^" .. vim.fn.stdpath("config") .. "/snippets/.*%.lua$",
 
 				"^" .. (vim.env.TEXMFHOME or vim.env.HOME) .. "/tex/latex.*%.tex$",

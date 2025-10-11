@@ -93,7 +93,28 @@ return {
 						})
 					end,
 					settings = {
-						Lua = {},
+						Lua = {
+							format = {
+								defaultConfig = {
+									continuation_indent_size = "1",
+									quote_style = "double",
+									continuation_indent = "2", -- match indentwidth
+									max_line_length = "120",
+									table_separator_style = "comma",
+									trailing_table_separator = "smart",
+									call_arg_parentheses = "always",
+									align_function_params = "true",
+									align_continuous_assign_statement = "false",
+									align_continuous_rect_table_field = "false",
+									align_continuous_line_space = "2",
+									align_if_branch = "false",
+									align_array_table = "false",
+									align_continuous_similar_call_args = "false",
+									align_continuous_inline_comment = "true",
+									align_chain_expr = "none",
+								},
+							},
+						},
 					},
 				},
 
