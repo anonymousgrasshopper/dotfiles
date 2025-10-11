@@ -1,6 +1,6 @@
 -- conceal delimiters
 local buf = vim.api.nvim_get_current_buf()
-local ns = vim.api.nvim_create_namespace("typst_delims")
+local ns_delims = vim.api.nvim_create_namespace("typst_delims")
 
 local nodes = {
 	math = { symbol = "$", node = "math" },
@@ -16,7 +16,7 @@ end
 
 local function conceal_symbol_at(row, col, symbol)
 	if char_at(row, col) ~= symbol then return end
-	vim.api.nvim_buf_set_extmark(buf, ns, row, col, {
+	vim.api.nvim_buf_set_extmark(buf, ns_delims, row, col, {
 		end_row = row,
 		end_col = col + 1,
 		conceal = "",
@@ -25,7 +25,7 @@ local function conceal_symbol_at(row, col, symbol)
 end
 
 local function conceal_delims(first, last)
-	vim.api.nvim_buf_clear_namespace(buf, ns, first, last)
+	vim.api.nvim_buf_clear_namespace(buf, ns_delims, first, last)
 
 	local parser = vim.treesitter.get_parser(buf, "typst")
 	if not parser then return end
@@ -59,7 +59,7 @@ vim.api.nvim_buf_attach(buf, false, {
 conceal_delims(0, -1)
 
 -- conceal symbols
-local ns_conceal = vim.api.nvim_create_namespace("typst_conceal")
+local ns_math = vim.api.nvim_create_namespace("typst_math_conceal")
 
 local functions = require("static.lang.typst.calls")
 local subscripts = require("static.lang.typst.subscripts")
@@ -90,7 +90,7 @@ local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
 	local positions = get_char_positions_in_range(buf, sr, sc, er, ec)
 
 	-- cover the entire span first (hides underlying text)
-	pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_conceal, sr, sc, {
+	pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_math, sr, sc, {
 		end_row = er,
 		end_col = ec,
 		conceal = "",
@@ -104,7 +104,7 @@ local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
 	for i = 1, n do
 		local pos = positions[i]
 		if pos then
-			pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_conceal, pos.row, pos.col, {
+			pcall(vim.api.nvim_buf_set_extmark, bufnr, ns_math, pos.row, pos.col, {
 				end_row = pos.row,
 				end_col = pos.col + #pos.ch,
 				conceal = tch[i],
@@ -161,6 +161,56 @@ local function translate_tokenwise(text, map)
 	return table.concat(out_parts, "")
 end
 
+-- queries
+local q_symbols = vim.treesitter.query.parse(
+	"typst",
+	[[
+		(
+			(field)
+			@symbol
+			(#lua-match? @symbol "^[a-z.]+$")
+			(#not-has-ancestor? @symbol field )
+		)
+		(
+			(ident)
+			@symbol
+			(#has-ancestor? @symbol math )
+			(#lua-match? @symbol "^[A-Za-z.]+$")
+			(#not-has-ancestor? @symbol field )
+			(#not-has-ancestor? @symbol sub )
+			(#not-has-ancestor? @symbol attach )
+		)
+		(
+			(ident)
+			@symbol
+			(#has-ancestor? @symbol math )
+			(#lua-match? @symbol "^[A-Za-z.]+$")
+			(#not-has-ancestor? @symbol field )
+			(#not-has-ancestor? @symbol sub )
+			(#has-parent? @symbol attach )
+		)
+	]]
+)
+
+local q_subsup = vim.treesitter.query.parse(
+	"typst",
+	[[
+		(attach sub: (_) @sub)
+		(attach sup: (_) @sup)
+	]]
+)
+
+local q_calls = vim.treesitter.query.parse(
+	"typst",
+	[[
+		(
+			(call)
+			@function
+			(#has-ancestor? @function math)
+		)
+	]]
+)
+
 local function math_conceal(first, last)
 	local ok, parser = pcall(vim.treesitter.get_parser, buf, "typst")
 	if not ok or not parser then return end
@@ -168,55 +218,7 @@ local function math_conceal(first, last)
 	if not tree then return end
 	local root = tree:root()
 
-	-- queries
-	local q_symbols = vim.treesitter.query.parse(
-		"typst",
-		[[
-			(
-				(field)
-				@symbol
-				(#lua-match? @symbol "^[a-z.]+$")
-				(#not-has-ancestor? @symbol field )
-			)
-			(
-				(ident)
-				@symbol
-				(#has-ancestor? @symbol math )
-				(#lua-match? @symbol "^[A-Za-z.]+$")
-				(#not-has-ancestor? @symbol field )
-				(#not-has-ancestor? @symbol sub )
-				(#not-has-ancestor? @symbol attach )
-			)
-			(
-				(ident)
-				@symbol
-				(#has-ancestor? @symbol math )
-				(#lua-match? @symbol "^[A-Za-z.]+$")
-				(#not-has-ancestor? @symbol field )
-				(#not-has-ancestor? @symbol sub )
-				(#has-parent? @symbol attach )
-			)
-		]]
-	)
-
-	local q_subsup = vim.treesitter.query.parse(
-		"typst",
-		[[
-			(attach sub: (_) @sub)
-			(attach sup: (_) @sup)
-		]]
-	)
-
-	local q_calls = vim.treesitter.query.parse(
-		"typst",
-		[[
-			(
-				(call)
-				@function
-				(#has-ancestor? @function math)
-			)
-		]]
-	)
+	vim.api.nvim_buf_clear_namespace(buf, ns_math, first, last)
 
 	-- subscripts and superscripts
 	for id, node, _ in q_subsup:iter_captures(root, buf, first, last) do
