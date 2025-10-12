@@ -26,7 +26,7 @@ return {
 		},
 		{
 			t("#!/bin/"),
-			i(1, "bash"),
+			i(1, vim.bo.filetype),
 			update_filetype(1),
 		}
 	),
