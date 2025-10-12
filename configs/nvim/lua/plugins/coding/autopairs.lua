@@ -23,10 +23,13 @@ return {
 				fastwarp = {
 					multi = true,
 					{},
-					{ faster = true, map = "<C-A-e>", cmap = "<C-A-e>" },
+					{ faster = true, map = "<A-e>", cmap = "<A-e>" },
 				},
 				extensions = {
 					utf8 = false, -- see https://github.com/altermo/ultimate-autopair.nvim/issues/74
+					fly = {
+						only_jump_end_pair = true,
+					},
 					cond = {
 						cond = {
 							function(fn, o)
@@ -73,32 +76,38 @@ return {
 						},
 					},
 				},
+				config_internal_pairs = {
+					{ '"', '"', suround = false },
+					{ "'", "'", suround = false },
+				},
 				{ "<", ">", disable_start = true },
 				-- comments
 				{ "/*",    "*/",    ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
-				{ "[=[",   "]=]",   ft = { "lua" } },
-				{ "[==[",  "]==]",  ft = { "lua" } },
-				{ "[===[", "]===]", ft = { "lua" } },
+				-- shell
+				{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
+				-- lua
+				{ "[[",   "]]",     ft = { "lua" }, newline = true },
+				{ "[=[",   "]=]",   ft = { "lua" }, newline = true },
+				{ "[==[",  "]==]",  ft = { "lua" }, newline = true },
+				{ "[===[", "]===]", ft = { "lua" }, newline = true },
+				{ "<Cmd>", "<CR>",  ft = { "lua" } },
 				-- LaTeX
-				{ "\\[", "\\]", disable_end = true, newline = true, ft = { "tex" } },
-				{ "\\(", "\\)", disable_end = true, newline = true, ft = { "tex" } },
+				{ "\\[", "\\]", ft = { "tex" }, disable_end = true, newline = true },
+				{ "\\(", "\\)", ft = { "tex" }, disable_end = true, newline = true },
 				-- typst
-				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true },
-				{ "/*", "*/",   ft = { "typst" }, cond = typst.in_text },
-				{ "_", "_",     ft = { "typst" }, cond = typst.in_text },
-				{ "`", "`",     ft = { "typst" }, cond = typst.in_text, space = true },
+				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true, newline = true, dosuround = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
+				{ "`", "`",     ft = { "typst" }, cond = typst.in_text, space = true },
+				{ "/*", "*/",   ft = { "typst" }, cond = typst.in_text, newline = true },
+				{ "_", "_",     ft = { "typst" }, cond = typst.in_text },
 				{ "*", "*",     ft = { "typst" }, cond = function(fn, obj) return typst.in_text(fn) and typst.not_import(fn, obj) end },
 				--markdown
 				{ "$", "$",     ft = { "markdown" }, cond = markdown.in_text },
-				{ "$$", "$$",   ft = { "markdown" }, cond = markdown.in_text },
+				{ "$$", "$$",   ft = { "markdown" }, cond = markdown.in_text, newline = true },
 				{ "*", "*",     ft = { "markdown" }, cond = markdown.in_text },
 				{ "**", "**",   ft = { "markdown" }, cond = markdown.in_text },
 				{ "~~", "~~",   ft = { "markdown" }, cond = markdown.in_text },
 				{ "```", "```", ft = { "markdown" }, cond = markdown.in_text, newline = true },
-				-- others
-				{ "[[", "]]", ft = { "bash", "zsh", "sh", "markdown" } },
-				{ "<Cmd>", "<CR>", ft = { "lua" } },
 			}
 		end,
 	},
