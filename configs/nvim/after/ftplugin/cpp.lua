@@ -75,8 +75,9 @@ vim.keymap.set("n", "<localleader>dbg", function()
 	vim.b[buf].compilation_completed = false
 	vim.system({
 		"clang++",
-		"-fstandalone-debug",
-		"--debug",
+		"-g",
+		"-O0",
+		"-std=c++23",
 		vim.fn.expand("%"),
 		"-o",
 		vim.fn.expand("%:r"),

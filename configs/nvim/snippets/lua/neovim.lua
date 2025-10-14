@@ -61,7 +61,7 @@ return {
 						nil,
 						fmt(
 							[=[
-							fmta(
+							fmt(
 									[[
 										<>
 									]],
@@ -89,7 +89,10 @@ return {
 			regTrig = true,
 			snippetType = "autosnippet",
 		},
-		t("<Cmd>")
+		{
+			t("<Cmd>"),
+			d(1, get_visual),
+		}
 	),
 	s(
 		{
@@ -119,7 +122,7 @@ return {
 		},
 		{
 			t("vim.notify(vim.inspect("),
-			i(1),
+			d(1, get_visual),
 			t("))"),
 		}
 	),
@@ -132,7 +135,7 @@ return {
 		},
 		{
 			t("vim.schedule(function() "),
-			i(1),
+			d(1, get_visual),
 			t(" end)"),
 		}
 	),

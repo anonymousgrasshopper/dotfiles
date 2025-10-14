@@ -5,11 +5,23 @@ return {
 		branch = "v0.6",
 		opts = function()
 			local typst = {}
-			typst.in_text = function(fn) return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" }) end
+			typst.in_text = function(fn, obj, pair)
+				if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
+					return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" })
+				else
+					return true
+				end
+			end
 			typst.not_import = function(_, obj) return not obj.line:match("^%s*#import") end
 
 			local markdown = {}
-			markdown.in_text = function(fn) return not fn.in_node({ "code_span", "fenced_code_block", "latex_block" }) end
+			markdown.in_text = function(fn, obj, pair)
+				if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
+					return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" })
+				else
+					return true
+				end
+			end
 
 			return {
 				filetype = {
@@ -32,21 +44,28 @@ return {
 					},
 					cond = {
 						cond = {
-							function(fn, o)
+							function(fn, obj)
 								if fn.get_mode() == "R" then -- disable in replace mode
 									return false
 								end
-								local line, col, ft = o.line, o.col, fn.get_ft()
+								local line, col, ft = obj.line, obj.col, fn.get_ft()
 								local function table_convert(arg) return type(arg) == "table" and arg or { arg } end
 								local conds = {
 									{
-										vim.api.nvim_replace_termcodes("<bs>", true, true, true),
+										"<bs>",
 										"*",
 										col - 2,
 										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
 									}, -- if the two characters before the cursor are paired, don't remove them
 									{
-										vim.api.nvim_replace_termcodes("<bs>", true, true, true),
+										"<bs>",
+										"*",
+										{ col - 1, col },
+										{ "<[^>]", "<" },
+										regex = true,
+									},
+									{
+										"<bs>",
 										"tex",
 										col - 4,
 										{ "\\(\\)", "\\[\\]" },
@@ -58,12 +77,18 @@ return {
 									{ "(", "lua", col - 9, "function" },
 								}
 								for _, cond in ipairs(conds) do
-									if cond[1] == "*" or cond[1] == o.key then
-										if cond[2] == "*" or vim.tbl_contains(table_convert(cond[2]), ft) then
-											local text = line:sub(cond[3], col - 1)
+									local key = #cond[1] == 1 and cond[1] or vim.api.nvim_replace_termcodes(cond[1], true, true, true)
+									if key == "*" or key == obj.key then
+										if
+											vim.tbl_contains(table_convert(cond[2]), function(v)
+												return v == "*" or v == ft
+											end, { predicate = true })
+										then
+											local start, stop = table_convert(cond[3])[1], table_convert(cond[3])[2] or col - 1
+											local text = line:sub(start, stop)
 											local patterns = table_convert(cond[4])
 											for _, pattern in ipairs(patterns) do
-												if cond.regex and text:match(pattern) or text == pattern then
+												if cond.regex and text:match("^" .. pattern .. "$") or text == pattern then
 													return false
 												end
 											end
@@ -90,12 +115,11 @@ return {
 				{ "[=[",   "]=]",   ft = { "lua" }, newline = true },
 				{ "[==[",  "]==]",  ft = { "lua" }, newline = true },
 				{ "[===[", "]===]", ft = { "lua" }, newline = true },
-				{ "<Cmd>", "<CR>",  ft = { "lua" } },
 				-- LaTeX
 				{ "\\[", "\\]", ft = { "tex" }, disable_end = true, newline = true },
 				{ "\\(", "\\)", ft = { "tex" }, disable_end = true, newline = true },
 				-- typst
-				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true, newline = true, dosuround = true },
+				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
 				{ "`", "`",     ft = { "typst" }, cond = typst.in_text, space = true },
 				{ "/*", "*/",   ft = { "typst" }, cond = typst.in_text, newline = true },

@@ -115,8 +115,8 @@ if program pacman; then
 	# install required packages
 	if program yay; then
 		package_manager="yay"
-		packages+=("abook" "cppman" "map-gnupg") # misc
-		packages+=("texlab" "tex-fmt" "asm-lsp") # Neovim
+		packages+=("abook" "cppman" "map-gnupg" "ttf-juliamono") # misc
+		packages+=("texlab" "tex-fmt" "asm-lsp")                 # Neovim
 	else
 		package_manager="sudo pacman"
 	fi

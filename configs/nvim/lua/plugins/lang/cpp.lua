@@ -146,10 +146,11 @@ return {
 				cpp = {
 					exec = "g++",
 					args = {
+						"-g",
+						"-O0",
+						"-std=c++23",
 						"-Wall",
 						"-Wextra",
-						"-pedantic",
-						"-std=c++20",
 						"-Wshadow",
 						"-Wformat=2",
 						"-Wfloat-equal",
@@ -159,6 +160,7 @@ return {
 						"-Wcast-qual",
 						"-Wcast-align",
 						"-Wno-sign-compare",
+						"-pedantic",
 						"-D_GLIBCXX_DEBUG",
 						"-D_GLIBCXX_DEBUG_PEDANTIC",
 						"-DLOCAL",
