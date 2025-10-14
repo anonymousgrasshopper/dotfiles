@@ -4,24 +4,24 @@ return {
 		event = { "InsertEnter", "CmdlineEnter" },
 		branch = "v0.6",
 		opts = function()
-			local typst = {}
-			typst.in_text = function(fn, obj, pair)
-				if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
-					return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" })
-				else
-					return true
+			local not_in_node = function(...)
+				local nodes = {...}
+				return function(fn, obj, pair)
+					if not obj then return false end
+					if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
+						return not fn.in_node(nodes)
+					else
+						return true
+					end
 				end
 			end
+
+			local typst = {}
+			typst.in_text = not_in_node("math", "raw_span", "raw_blck", "string", "code")
 			typst.not_import = function(_, obj) return not obj.line:match("^%s*#import") end
 
 			local markdown = {}
-			markdown.in_text = function(fn, obj, pair)
-				if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
-					return not fn.in_node({ "math", "raw_span", "raw_blck", "string", "code" })
-				else
-					return true
-				end
-			end
+			markdown.in_text = not_in_node("math", "raw_span", "raw_blck", "string", "code")
 
 			return {
 				filetype = {
