@@ -20,7 +20,7 @@ local function conceal_symbol_at(row, col, symbol)
 		end_row = row,
 		end_col = col + 1,
 		conceal = "",
-		hl_group = "TypstDelimsConceal",
+		hl_group = "TypstConcealDelims",
 	})
 end
 
@@ -132,7 +132,7 @@ local function translate_tokenwise(text, map)
 		end
 
 		if symbols[token] then
-			table.insert(out_parts, symbols[token])
+			table.insert(out_parts, symbols[token].cchar)
 		elseif token:match("^%a+$") and #token > 1 then
 			table.insert(out_parts, token)
 		else
@@ -236,7 +236,7 @@ local function math_conceal(first, last)
 			sc = sc - 1
 		end
 
-		conceal_at_positions(buf, sr, sc, er, ec, translated, "TypstScriptConceal")
+		conceal_at_positions(buf, sr, sc, er, ec, translated, "TypstConcealScript")
 	end
 
 	-- symbols
@@ -245,7 +245,11 @@ local function math_conceal(first, last)
 		local text = vim.treesitter.get_node_text(node, 0, { metadata = metadata })
 		local repl = symbols[text]
 		if repl then
-			conceal_at_positions(buf, sr, sc, er, ec, repl, "TypstSymbolsConceal")
+			conceal_at_positions(buf, sr, sc, er, ec, repl.cchar, symbols[text].hl)
+		else
+			if text == "ZZ" then
+				vim.notify(vim.inspect("wtf"))
+			end
 		end
 	end
 
@@ -263,8 +267,8 @@ local function math_conceal(first, last)
 				if char_at(child_er, child_ec) == "(" then
 					child_ec = child_ec + 1
 				end
-				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, delims[1], "TypstSurroundConceal")
-				conceal_at_positions(buf, er, ec - 1, er, ec, delims[2], "TypstSurroundConceal")
+				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, delims[1], "TypstConcealSurround")
+				conceal_at_positions(buf, er, ec - 1, er, ec, delims[2], "TypstConcealSurround")
 			end
 		end
 	end

@@ -4,11 +4,24 @@ return {
 		event = { "InsertEnter", "CmdlineEnter" },
 		branch = "v0.6",
 		opts = function()
+			local on_bs_check_pattern = function(match_length, pattern)
+				return function(_, obj)
+					if not obj then return false end
+					if obj.key == vim.api.nvim_replace_termcodes("<bs>", true, false, true) then
+						local line, col = obj.line, obj.col
+						if line:sub(col - match_length, col):match(pattern) then
+							return false
+						end
+					end
+					return true
+				end
+			end
+
 			local not_in_node = function(...)
 				local nodes = {...}
 				return function(fn, obj, pair)
 					if not obj then return false end
-					if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, false) then
+					if obj.key == vim.api.nvim_replace_termcodes(pair.pair, true, false, true) then
 						return not fn.in_node(nodes)
 					else
 						return true
@@ -57,19 +70,6 @@ return {
 										col - 2,
 										{ '""', "()", "[]", "{}", "''", "<>", "$$", "**", "~~", "``" },
 									}, -- if the two characters before the cursor are paired, don't remove them
-									{
-										"<bs>",
-										"*",
-										{ col - 1, col },
-										{ "<[^>]", "<" },
-										regex = true,
-									},
-									{
-										"<bs>",
-										"tex",
-										col - 4,
-										{ "\\(\\)", "\\[\\]" },
-									}, -- if the two characters before the cursor are paired, don't remove them
 									-- snippets
 									{ "*", { "markdown", "tex" }, col - 6, "\\left" },
 									{ "[", { "bash", "zsh", "sh" }, 1, { "if%s+$", "while%s+$" }, regex = true },
@@ -77,7 +77,7 @@ return {
 									{ "(", "lua", col - 9, "function" },
 								}
 								for _, cond in ipairs(conds) do
-									local key = #cond[1] == 1 and cond[1] or vim.api.nvim_replace_termcodes(cond[1], true, true, true)
+									local key = #cond[1] == 1 and cond[1] or vim.api.nvim_replace_termcodes(cond[1], true, false, true)
 									if key == "*" or key == obj.key then
 										if
 											vim.tbl_contains(table_convert(cond[2]), function(v)
@@ -105,7 +105,7 @@ return {
 					{ '"', '"', suround = false },
 					{ "'", "'", suround = false },
 				},
-				{ "<", ">", disable_start = true },
+				{ "<", ">", disable_start = true, cond = on_bs_check_pattern(1, "^<[^>]?$") },
 				-- comments
 				{ "/*",    "*/",    ft = { "c", "cpp", "css", "go" }, newline = true, space = true },
 				-- shell
@@ -116,8 +116,8 @@ return {
 				{ "[==[",  "]==]",  ft = { "lua" }, newline = true },
 				{ "[===[", "]===]", ft = { "lua" }, newline = true },
 				-- LaTeX
-				{ "\\[", "\\]", ft = { "tex" }, disable_end = true, newline = true },
-				{ "\\(", "\\)", ft = { "tex" }, disable_end = true, newline = true },
+				{ "\\[", "\\]", ft = { "tex" }, disable_end = true, newline = true, cond = on_bs_check_pattern(4, "\\(\\)") },
+				{ "\\(", "\\)", ft = { "tex" }, disable_end = true, newline = true, cond = on_bs_check_pattern(4, "\\[\\]" ) },
 				-- typst
 				{ "$", "$",     ft = { "typst" }, cond = typst.in_text, space = true, newline = true },
 				{ "```", "```", ft = { "typst" }, cond = typst.in_text, space = true, newline = true },

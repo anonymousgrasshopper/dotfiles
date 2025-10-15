@@ -7,13 +7,13 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 		if cmd_type == ":" then
 			if cmd_text == "s " then
 				vim.api.nvim_feedkeys(
-					vim.api.nvim_replace_termcodes("<C-u>%s@\\v@<Left>", true, true, true),
+					vim.api.nvim_replace_termcodes("<C-u>%s@\\v@<Left>", true, false, true),
 					"n",
 					false
 				)
 			elseif cmd_text == "'<,'>s " then
 				vim.api.nvim_feedkeys(
-					vim.api.nvim_replace_termcodes("<C-u>'<,'>s@\\v@<Left>", true, true, true),
+					vim.api.nvim_replace_termcodes("<C-u>'<,'>s@\\v@<Left>", true, false, true),
 					"n",
 					false
 				)
@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 				local match = cmd_text:match("(%d+,%s*%d+%s*s) ")
 				if match then
 					vim.api.nvim_feedkeys(
-						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "@\\v@<Left>", true, true, true),
+						vim.api.nvim_replace_termcodes("<C-u>" .. match .. "@\\v@<Left>", true, false, true),
 						"n",
 						false
 					)

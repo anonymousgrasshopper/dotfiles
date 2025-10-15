@@ -21,14 +21,13 @@ local vim_enter_early_redraw = function()
 		vim.api.nvim_set_hl(0, "StatusLineIconColor", { fg = color or "#6d8086" })
 
 		-- setup mock statusline
-		vim.opt.statusline = "%#StatusLineBlue# NORMAL %#StatusLineSeparatorBlue#%#StatusLineSeparatorGrey#%* %F %#StatusLineIconColor#"
-			.. (icon or " ")
-			.. '%=%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c %#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
+		vim.opt.statusline =
+			"%#StatusLineBlue# NORMAL %#StatusLineSeparatorBlue#%#StatusLineSeparatorGrey#"
+			.. "%* %F %#StatusLineIconColor#" .. (icon or " ")
+			.. "%=%#StatusLineSeparatorGrey#%#StatusLineGrey# %p%%  %l:%c "
+			.. '%#StatusLineSeparatorBlue#%#StatusLineBlue#  %{strftime("%H:%M")} '
 
-		if
-			not vim.tbl_contains({ "tex", "markdown", "zsh" }, ft)
-			and not (lang and pcall(vim.treesitter.start, buf, lang))
-		then
+		if not (lang and pcall(vim.treesitter.start, buf, lang)) then
 			vim.bo[buf].syntax = ft
 		end
 
@@ -95,10 +94,12 @@ return {
 					MarkdownQuote = { fg = palette.oniViolet },
 					MarkdownTable = { fg = "#54546d" },
 
-					TypstDelimsConceal = { link = "Operator" },
-					TypstSymbolsConceal = { link = "Special" },
-					TypstScriptConceal = { link = "Conceal" },
-					TypstSurroundConceal = { link = "Delimiter" },
+					TypstConcealDelims = { link = "Operator" },
+					TypstConcealSymbol = { link = "Operator" },
+					TypstConcealScript = { link = "Conceal" },
+					TypstConcealSurround = { link = "Delimiter" },
+					TypstConcealSet = { link = "Constant" },
+					["@markup.math.typst"] = { link = "Special" },
 
 					IlluminatedWordText = { bold = true },
 					IlluminatedWordRead = { bold = true },
