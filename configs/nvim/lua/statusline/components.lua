@@ -71,7 +71,6 @@ components.Git = {
 	components.Space,
 	{ -- git branch name
 		provider = function(self) return " " .. self.status_dict.head end,
-		hl = { bold = true },
 	},
 	components.Space,
 	{
@@ -166,7 +165,7 @@ components.FileNameBlock = utils.insert(
 components.Macro = {
 	condition = function() return vim.fn.reg_recording() ~= "" and vim.o.cmdheight == 0 end,
 	provider = function() return " " .. vim.fn.reg_recording() .. "  " end,
-	hl = { fg = "orange", bold = true },
+	hl = { fg = "orange"},
 	update = {
 		"RecordingEnter",
 		"RecordingLeave",

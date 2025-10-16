@@ -6,7 +6,6 @@ local SectionA = {
 		return {
 			fg = "bg",
 			bg = self:mode_color(),
-			bold = true,
 		}
 	end,
 	static = {
@@ -81,7 +80,6 @@ local SectionZ = {
 		return {
 			fg = "bg",
 			bg = self:mode_color(),
-			bold = true,
 		}
 	end,
 	static = {

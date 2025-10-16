@@ -67,7 +67,7 @@ function M.get_icon(config, node, state)
 				icon.highlight = hl
 			end
 		end
-		if not icon.ext then
+		if not icon.text then
 			if vim.uv.fs_access(node.path, "X") then
 				icon.text = ""
 				icon.highlight = "DevIconOut"

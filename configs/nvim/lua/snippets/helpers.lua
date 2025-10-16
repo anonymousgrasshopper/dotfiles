@@ -36,6 +36,13 @@ helpers.not_in_string_comment = make_cond(function()
 	)
 end)
 
+function helpers.line_match(pattern)
+	return make_cond(function()
+		local line = vim.api.nvim_get_current_line()
+		return line:match(pattern)
+	end)
+end
+
 function helpers.line_not_match(pattern)
 	return make_cond(function()
 		local line = vim.api.nvim_get_current_line()

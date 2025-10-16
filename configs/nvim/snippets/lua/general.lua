@@ -3,6 +3,7 @@ local s, i, d, f, fmt = ls.s, ls.i, ls.d, ls.f, ls.fmt
 local helpers = require("snippets.helpers")
 local line_begin = helpers.line_begin
 local get_visual = helpers.get_visual
+local line_match = helpers.line_match
 local line_not_match = helpers.line_not_match
 local check_not_expanded = helpers.check_not_expanded
 local not_in_string_comment = helpers.not_in_string_comment
@@ -66,7 +67,7 @@ return {
 			dscr = "function",
 			wordTrig = true,
 			snippetType = "autosnippet",
-			condition = line_begin * not_in_string_comment * check_not_expanded("%(.*%)$"),
+			condition = (line_begin + line_match("^local function")) * not_in_string_comment * check_not_expanded("%(.*%)$"),
 		},
 		fmt(
 			[[

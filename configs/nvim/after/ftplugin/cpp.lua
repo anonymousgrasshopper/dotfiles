@@ -82,7 +82,7 @@ vim.keymap.set("n", "<localleader>dbg", function()
 		"-o",
 		vim.fn.expand("%:r"),
 	}, {}, function(obj)
-		if obj.stderr ~= nil then
+		if obj.stderr then
 			if obj.stderr:match("error[^\n]*\n$") then
 				vim.notify(obj.stderr, vim.log.levels.ERROR, { title = "Compiler", icon = "" })
 			elseif obj.stderr ~= "" then
