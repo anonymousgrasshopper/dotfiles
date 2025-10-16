@@ -159,13 +159,6 @@ local queries = {
 				(attach sup: (_) @sup)
 			]]
 		),
-		subsup = vim.treesitter.query.parse(
-			"typst",
-			[[
-				(attach sub: (_) @sub)
-				(attach sup: (_) @sup)
-			]]
-		),
 	},
 	functions = vim.treesitter.query.parse(
 		"typst",
@@ -199,22 +192,12 @@ local function math_conceal(first, last)
 	end
 
 	-- subscripts and superscripts
-	for _, node in queries.scripts.subsup:iter_captures(root, buf, first, last) do
+	local function conceal_node_recursively(node, map)
 		local sr, sc, er, ec = node:range()
 		conceal_char_at(sr, sc - 1, ns_math, { "^", "_" })
 		conceal_char_at(sr, sc, ns_math, "(")
 		conceal_char_at(er, ec - 1, ns_math, ")")
 
-		pcall(vim.api.nvim_buf_set_extmark, buf, ns_math, sr, sc, {
-			end_row = er,
-			end_col = ec,
-			hl_group = "TypstConcealScript",
-			priority = 103,
-		})
-	end
-
-
-	local function conceal_node_recursively(node, map)
 		local concealed = ""
 
 		local function rec(node)
@@ -248,7 +231,6 @@ local function math_conceal(first, last)
 		end
 
 		rec(node)
-		local sr, sc, er, ec = node:range()
 		conceal_at_positions(buf, sr, sc, er, ec, concealed, "TypstConcealScript")
 	end
 
