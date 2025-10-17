@@ -122,26 +122,30 @@ local function conceal_at_positions(bufnr, sr, sc, er, ec, text, hl)
 	end
 end
 
+local function conceal_node_recursively(node, map, rec, hl)
+	local sr, sc, er, ec = node:range()
+	local concealed = rec(node, map, "", hl)
+	conceal_at_positions(buf, sr, sc, er, ec, concealed, hl)
+end
+
+
 local queries = {
 	symbols = vim.treesitter.query.parse(
 		"typst",
 		[[
 			(
 				(field) @symbol
-				(#lua-match? @symbol "^[a-z.]+$")
 				(#not-has-ancestor? @symbol field )
 				(#not-has-ancestor? @symbol attach)
 			)
 			(
 				(ident) @symbol
 				(#has-ancestor? @symbol math )
-				(#lua-match? @symbol "^[A-Za-z.]+$")
 				(#not-has-ancestor? @symbol field)
 				(#not-has-ancestor? @symbol attach)
 			)
 			(
 				attach . (ident) @symbol
-				(#lua-match? @symbol "^[A-Za-z.]+$")
 				(#not-has-ancestor? @symbol field)
 			)
 		]]
@@ -192,54 +196,55 @@ local function math_conceal(first, last)
 	end
 
 	-- subscripts and superscripts
-	local function conceal_node_recursively(node, map)
-		local sr, sc, er, ec = node:range()
-		conceal_char_at(sr, sc - 1, ns_math, { "^", "_" })
-		conceal_char_at(sr, sc, ns_math, "(")
-		conceal_char_at(er, ec - 1, ns_math, ")")
-
-		local concealed = ""
-
-		local function rec(node)
-			if node:type() == "field" or node:type() == "ident" then
-				local text = vim.treesitter.get_node_text(node, 0, {})
-				local repl = map[text]
-				if repl then
-					concealed = concealed .. repl
-				else
-					local repl = symbols[text]
-					if repl then
-						concealed = concealed .. repl.cchar
-					end
-				end
-			elseif node:type() == "letter" or node:type() == "symbol" then
-				local text = vim.treesitter.get_node_text(node, 0, {})
-				local repl = map[text]
-				if repl then
-					concealed = concealed .. repl
-				end
-			elseif node:type() == "number" then
-				local text = vim.treesitter.get_node_text(node, 0, {})
-				for i = 1, #text + 1 do
-					concealed = concealed .. (map[text:sub(i, i)] or "")
-				end
+	local function conceal_script(node, map, concealed)
+		if node:type() == "field" or node:type() == "ident" then
+			local text = vim.treesitter.get_node_text(node, 0, {})
+			local repl = map[text]
+			if repl then
+				concealed = concealed .. repl
 			else
-				for child in node:iter_children() do
-					rec(child)
+				local repl = symbols[text]
+				if repl then
+					concealed = concealed .. repl.cchar
 				end
 			end
+		elseif node:type() == "letter" or node:type() == "symbol" then
+			local text = vim.treesitter.get_node_text(node, 0, {})
+			local repl = map[text]
+			if repl then
+				concealed = concealed .. repl
+			end
+		elseif node:type() == "number" then
+			local text = vim.treesitter.get_node_text(node, 0, {})
+			for i = 1, #text + 1 do
+				concealed = concealed .. (map[text:sub(i, i)] or "")
+			end
+		elseif node:child_count() then
+			for child in node:iter_children() do
+				concealed = conceal_script(child, map, concealed)
+			end
+		else
+			local text = vim.treesitter.get_node_text(node, 0, {})
+			concealed = concealed .. text
 		end
-
-		rec(node)
-		conceal_at_positions(buf, sr, sc, er, ec, concealed, "TypstConcealScript")
+		return concealed
 	end
 
+
 	for _, node in queries.scripts.subscripts:iter_captures(root, buf, first, last) do
-		conceal_node_recursively(node, subscripts)
+		local sr, sc, er, ec = node:range()
+		conceal_char_at(sr, sc - 1, ns_math, "_")
+		conceal_char_at(sr, sc, ns_math, "(")
+		conceal_char_at(er, ec - 1, ns_math, ")")
+		conceal_node_recursively(node, subscripts, conceal_script, "TypstConcealScript")
 	end
 
 	for _, node in queries.scripts.superscripts:iter_captures(root, buf, first, last) do
-		conceal_node_recursively(node, superscripts)
+		local sr, sc, er, ec = node:range()
+		conceal_char_at(sr, sc - 1, ns_math, "^")
+		conceal_char_at(sr, sc, ns_math, "(")
+		conceal_char_at(er, ec - 1, ns_math, ")")
+		conceal_node_recursively(node, superscripts, conceal_script, "TypstConcealScript")
 	end
 
 	-- function calls
@@ -248,16 +253,35 @@ local function math_conceal(first, last)
 		local child = node:field("item")[1]
 		if child then
 			local name = vim.treesitter.get_node_text(child, 0, {})
-			local delims = functions[name]
-			if delims then
+			local repl = functions[name]
+			if repl and repl.left and repl.right then
 				local text = vim.treesitter.get_node_text(node, 0, {})
 				text = text:match("^" .. name .. "%((.*)%)$") or text
 				local child_sr, child_sc, child_er, child_ec = child:range()
 				if char_at(child_er, child_ec) == "(" then
 					child_ec = child_ec + 1
 				end
-				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, delims[1], "TypstConcealSurround")
-				conceal_at_positions(buf, er, ec - 1, er, ec, delims[2], "TypstConcealSurround")
+				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, repl.left, "TypstConcealSurround")
+				conceal_at_positions(buf, er, ec - 1, er, ec, repl.right, "TypstConcealSurround")
+			elseif repl then
+				local function conceal(node, map, concealed)
+					if node:type() == "letter" then
+						local text = vim.treesitter.get_node_text(node, 0, {})
+						local repl = map[text]
+						if repl then
+							concealed = concealed .. repl
+						end
+					elseif node:child_count() then
+						for child in node:iter_children() do
+							concealed = conceal(child, map, concealed)
+						end
+					else
+						local text = vim.treesitter.get_node_text(node, 0, {})
+						concealed = concealed .. text
+					end
+					return concealed
+				end
+				conceal_node_recursively(node, repl, conceal, "TypstConcealLetters")
 			end
 		end
 	end

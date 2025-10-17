@@ -99,6 +99,7 @@ return {
 					TypstConcealScript = { link = "Conceal" },
 					TypstConcealSurround = { link = "Delimiter" },
 					TypstConcealSet = { link = "Constant" },
+					TypstConcealLetters = { link = "Special" },
 					["@markup.math.typst"] = { link = "Special" },
 
 					IlluminatedWordText = { bold = true },
