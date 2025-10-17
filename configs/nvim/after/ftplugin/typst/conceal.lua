@@ -7,11 +7,7 @@ local function char_at(row, col)
 end
 
 local function conceal_char_at(row, col, ns, chars)
-	if type(chars) == "table" then
-		if not vim.tbl_contains(chars, char_at(row, col)) then return end
-	else
-		if char_at(row, col) ~= chars then return end
-	end
+	if char_at(row, col) ~= chars then return end
 
 	vim.api.nvim_buf_set_extmark(buf, ns, row, col, {
 		end_row = row,
@@ -124,10 +120,9 @@ end
 
 local function conceal_node_recursively(node, map, rec, hl)
 	local sr, sc, er, ec = node:range()
-	local concealed = rec(node, map, "", hl)
+	local concealed = rec(node, map)
 	conceal_at_positions(buf, sr, sc, er, ec, concealed, hl)
 end
-
 
 local queries = {
 	symbols = vim.treesitter.query.parse(
@@ -196,40 +191,41 @@ local function math_conceal(first, last)
 	end
 
 	-- subscripts and superscripts
-	local function conceal_script(node, map, concealed)
+	local function conceal_script(node, map)
+		local concealed = ""
 		if node:type() == "field" or node:type() == "ident" then
 			local text = vim.treesitter.get_node_text(node, 0, {})
 			local repl = map[text]
 			if repl then
-				concealed = concealed .. repl
+				return repl
 			else
 				local repl = symbols[text]
 				if repl then
-					concealed = concealed .. repl.cchar
+					return repl.cchar
 				end
 			end
 		elseif node:type() == "letter" or node:type() == "symbol" then
 			local text = vim.treesitter.get_node_text(node, 0, {})
 			local repl = map[text]
 			if repl then
-				concealed = concealed .. repl
+				return repl
 			end
 		elseif node:type() == "number" then
 			local text = vim.treesitter.get_node_text(node, 0, {})
 			for i = 1, #text + 1 do
 				concealed = concealed .. (map[text:sub(i, i)] or "")
 			end
+			return concealed
 		elseif node:child_count() then
 			for child in node:iter_children() do
-				concealed = conceal_script(child, map, concealed)
+				concealed = concealed .. conceal_script(child, map)
 			end
 		else
 			local text = vim.treesitter.get_node_text(node, 0, {})
-			concealed = concealed .. text
+			return text
 		end
 		return concealed
 	end
-
 
 	for _, node in queries.scripts.subscripts:iter_captures(root, buf, first, last) do
 		local sr, sc, er, ec = node:range()
@@ -264,24 +260,25 @@ local function math_conceal(first, last)
 				conceal_at_positions(buf, child_sr, child_sc, child_er, child_ec, repl.left, "TypstConcealSurround")
 				conceal_at_positions(buf, er, ec - 1, er, ec, repl.right, "TypstConcealSurround")
 			elseif repl then
-				local function conceal(node, map, concealed)
+				local function conceal_text(node, map)
+					local concealed = ""
 					if node:type() == "letter" then
 						local text = vim.treesitter.get_node_text(node, 0, {})
 						local repl = map[text]
 						if repl then
-							concealed = concealed .. repl
+							return repl
 						end
 					elseif node:child_count() then
 						for child in node:iter_children() do
-							concealed = conceal(child, map, concealed)
+							concealed = concealed .. conceal_text(child, map)
 						end
 					else
 						local text = vim.treesitter.get_node_text(node, 0, {})
-						concealed = concealed .. text
+						return text
 					end
 					return concealed
 				end
-				conceal_node_recursively(node, repl, conceal, "TypstConcealLetters")
+				conceal_node_recursively(node, repl, conceal_text, "TypstConcealLetters")
 			end
 		end
 	end
