@@ -202,6 +202,8 @@ local function math_conceal(first, last)
 				local repl = symbols[text]
 				if repl then
 					return repl.cchar
+				else
+					return text
 				end
 			end
 		elseif node:type() == "letter" or node:type() == "symbol" then
@@ -209,11 +211,13 @@ local function math_conceal(first, last)
 			local repl = map[text]
 			if repl then
 				return repl
+			else
+				return text
 			end
 		elseif node:type() == "number" then
 			local text = vim.treesitter.get_node_text(node, 0, {})
 			for i = 1, #text + 1 do
-				concealed = concealed .. (map[text:sub(i, i)] or "")
+				concealed = concealed .. (map[text:sub(i, i)] or text:sub(i, i))
 			end
 			return concealed
 		elseif node:child_count() then
